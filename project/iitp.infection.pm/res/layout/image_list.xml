@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	>
+	<TextView android:id="@+id/title"
+	    android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mp_select_photo"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:background="#a0a0a0"
+        android:padding="5dip"
+        android:layout_marginBottom="5dip"/>
+	<Button
+		android:id="@+id/all"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/mp_select_all"
+		android:layout_below="@+id/title"
+		/>
+	<Button
+		android:id="@+id/cancel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@+id/all"
+		android:text="@string/mp_unselect_all"
+		android:layout_below="@+id/title"
+		/>
+	<Button
+		android:id="@+id/set"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@+id/cancel"
+		android:layout_below="@+id/title"
+		android:text="@string/mp_ok"
+		/>
+		
+	<GridView
+		android:id="@+id/grid"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_below="@+id/all"
+		android:horizontalSpacing="2dip"
+		android:verticalSpacing="2dip"
+		android:numColumns="4"
+		/>
+</RelativeLayout>
