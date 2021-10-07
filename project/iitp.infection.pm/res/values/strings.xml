@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<resources>
+    <!-- 아래 app_package는 반드시 android package 이름과 동일하게 만들어야 한다(DO NOT DELETE !!!)-->
+	<string name="app_package">iitp.infection.pm</string>
+	
+	<string name="app_name">자가격리APP</string>
+	
+    <string name="hello">Hello World, HybridMobileApp!</string>
+    <string name="nbutton1">통신테스트</string>
+    <string name="nbutton2">네이티브화면</string>
+    <string name="nbutton3">UI웹화면</string>
+    <string name="sTitle1">받은 파라메터 데이터</string>
+    <string name="sTitle2">Network error</string>
+
+</resources>

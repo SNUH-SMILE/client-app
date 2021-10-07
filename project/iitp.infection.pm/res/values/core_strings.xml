@@ -1,0 +1,54 @@
+<resources>
+
+    <!-- 일반적인 app_name을 쓰지 않는 이유는 애플리케이션의 app_name과 중첩되지 않게 하기 위함임 -->
+    <string name="lib_name">Core</string>
+    
+    <string name="mp_ok">확인</string>
+    <string name="mp_cancel">취소</string>
+    <string name="mp_yes">예</string>
+    <string name="mp_back">뒤로</string>
+    <string name="mp_no">아니오</string>
+    <string name="mp_error">오류</string>
+    <string name="mp_notice">알림</string>
+    <string name="mp_exit">종료</string>
+    
+    <string name="mp_cannot_found_zip_file">압축 대상의 파일을 찾을 수 없습니다.</string>
+    <string name="mp_check_zip_file_extension">압축 후 저장 파일명의 확장자를 확인하세요</string>
+    
+    <string name="mp_cannot_find_server_name">설정파일에서 서버 이름을 찾을 수 없습니다.</string>
+        
+    <string name="mp_network_connection_error">네트워크 연결에 실패하였습니다.</string>
+    <string name="mp_network_error">네트워크 통신 중 오류가 발생하였습니다.</string>
+    <string name="mp_network_timeout">응답 시간을 초과하였습니다.</string>
+    <string name="mp_network_url_error">네트워크 연결값이 잘못되었습니다.</string>
+    
+    <string name="mp_file_send">파일 전송</string>
+    <string name="mp_file_sending">파일을 전송 중입니다.</string>
+    
+    <string name="mp_unselect_all">전체 선택 해제</string>
+    
+    <string name="mp_license_broken">라이센스 파일이 원본과 다릅니다.</string>
+    <string name="mp_license_error">라이센스 파일 검사 중 오류가 발생하였습니다.</string>
+
+    <string name="mp_regist_push_service">PUSH 서비스를 등록 중입니다.</string>
+    
+    <string name="mp_resource_copy_is_completed">프로그램 초기화 완료.</string>
+    <string name="mp_resource_is_copying">프로그램 초기화 중입니다.</string>
+        
+    <string name="mp_select_folder">폴더 선택</string>
+    <string name="mp_select_photo">미디어 선택</string>
+    <string name="mp_detail_photo">상세 보기</string>
+    <string name="mp_select_video">동영상 선택</string>
+    <string name="mp_media_scanning">미디어 스캐닝 중...</string>
+
+    <string name="mp_rooting_device_cannot_use">본 서비스 루팅된 단말기에서는 사용할수 없습니다.\n정상단말기에서 사용하시기 바랍니다.</string>
+    <string name="mp_rooted_device">Rooting 된 단말기 입니다.</string>
+    <string name="mp_fail_ftp_read_list">목록을 읽어 오는데 실패했습니다.</string>
+    <string name="mp_select_all">전체 선택</string>
+    <string name="mp_notice_check_proxy">정보 보호를 위해, proxy가 설정된 기기에서는 프로그램을 실행 할 수 없습니다.</string>
+	<string name="mp_manifest_error">Manifest.xml 파일을 읽을 수 없습니다.</string>
+    
+    
+    
+
+</resources>
