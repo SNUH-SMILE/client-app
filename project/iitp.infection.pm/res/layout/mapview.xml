@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+   	<LinearLayout
+        android:background="#3a486e"
+        android:layout_width="match_parent"
+        android:layout_height="50dip" >
+
+        <Button
+            android:id="@+id/title_before"
+            android:text="이전"
+            android:layout_gravity="center"
+            android:layout_width="70dip"
+            android:layout_height="40dip"/>
+        <TextView
+            android:id="@+id/title_name"
+            android:text="이름"
+            android:textColor="#ffffffff"
+            android:textSize="18dip"
+            android:textStyle="bold" 
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="70dip"
+             />
+        
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+	    <com.google.android.maps.MapView
+	        android:id="@+id/mapview"
+	        android:layout_width="fill_parent"
+	    	android:layout_height="fill_parent"
+	    	android:clickable="true"
+	        android:apiKey="0Iijp8kUgO0z8qgvgG1tSXdvQT5bKHzV5k8I5KQ">
+	    </com.google.android.maps.MapView>
+	</LinearLayout>
+</LinearLayout>
