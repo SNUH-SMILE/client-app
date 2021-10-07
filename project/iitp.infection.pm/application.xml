@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<application>
+	<projectName>iitp.infection.pm</projectName>
+	<applicationName>자가격리APP</applicationName>
+	<android>
+		<projectName>iitp.infection.pm</projectName>
+		<applicationName>자가격리APP</applicationName>
+		<packageName>iitp.infection.pm</packageName>
+		<compileSdk>android-29</compileSdk>
+	</android>
+	<ios>
+        <projectName>iitp.infection.pm</projectName>
+        <applicationName>자가격리APP</applicationName>
+        <bundleIdentifier>iitp.infection.pm</bundleIdentifier>
+        <deploymentTarget>iphoneos14.0</deploymentTarget>
+    </ios>
+	<components/>
+	<libraries>
+        <library api="2.1" id="m.client.library.core" revision="8.1" type="core"/>
+        <library api="2.1" id="m.client.library.addon.db" revision="4.10" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.file" revision="4.15" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.media" revision="5.34" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.net" revision="4.20" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.netExt" revision="4.30" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.popup" revision="4.29" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.zip" revision="4.3" type="addon"/>
+    </libraries>
+</application>
