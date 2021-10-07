@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Network Extension-->
+    <string name="mp_addon_net_ext_start_file_upload">파일 업로드를 시작합니다.</string>
+    <string name="mp_addon_net_ext_success_file_upload">파일 업로드가 완료되었습니다.</string>
+    <string name="mp_addon_net_ext_fail_file_upload">파일 업로드에 실패하였습니다.</string>
+    <string name="mp_addon_net_ext_start_file_download">파일 다운로드를 시작합니다.</string>
+    <string name="mp_addon_net_ext_success_file_download">파일 다운로드가 완료되었습니다.</string>
+    <string name="mp_addon_net_ext_fail_file_download">파일 다운로드에 실패하였습니다.</string>
+    <string name="mp_addon_net_ext_ftp_read_list">목록을 읽어 옵니다.</string>
+    <string name="mp_addon_net_ext_transfer_type_incorrect">전송 Type 설정이 잘못되었습니다.</string>
+    <string name="mp_addon_net_ext_resource_update_checking">리소스 업데이트 확인 중입니다.</string>
+
+</resources>
