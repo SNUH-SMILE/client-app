@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Audio Recording -->
+	<string name="mp_addon_audiorecoder_stop">Recoding</string>
+    <string name="mp_addon_audiorecoder_recoding">Ready</string>
+    <string name="mp_addon_audiorecoder_list">목록</string>
+    <string name="mp_addon_audiorecoder_save_complete">저장이 완료 되었습니다.</string>
+    
+    <!-- About Take Photo & Movie (media)-->
+    <string name="mp_addon_media_please_wait">잠시만 기다려주세요.</string>
+    <string name="mp_addon_maxpicker">사진은 총 %d개까지만 첨부 가능합니다.</string>
+</resources>
