@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffffff"
+		android:orientation="vertical" >
+	    <LinearLayout
+	        android:background="#3a486e"
+	        android:layout_width="match_parent"
+	        android:layout_height="50dip" >
+	
+	        <Button
+	            android:id="@+id/title_before"
+	            android:text="이전"
+	            android:layout_gravity="center"
+	            android:layout_width="70dip"
+	            android:layout_height="40dip"/>
+	        <TextView
+	            android:id="@+id/title_name"
+	            android:text="등록자 리스트"
+	            android:textColor="#ffffffff"
+	            android:textSize="18dip"
+	            android:textStyle="bold" 
+	            android:gravity="center"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_marginRight="70dip"
+	             />
+	        
+	    </LinearLayout>
+		<LinearLayout
+		    android:background="#5d6e94"
+			android:layout_width="fill_parent"
+			android:layout_height="50dp">
+			<TextView
+			    android:layout_width="wrap_content"
+			    android:layout_weight="8"
+			    android:layout_height="fill_parent"
+			    android:gravity="center"
+			    android:textColor="#ffffffff"
+			    android:text="성명" />
+			<LinearLayout
+			    android:background="@color/listitem_div"
+				android:layout_width="1dip"
+				android:layout_height="fill_parent"/>
+			<TextView
+			    android:layout_width="wrap_content"
+			    android:layout_weight="8"
+			    android:layout_height="fill_parent"
+			    android:gravity="center"
+			    android:textColor="#ffffffff"
+			    android:text="날짜" />
+			<LinearLayout
+			    android:background="@color/listitem_div"
+				android:layout_width="1dip"
+				android:layout_height="fill_parent"/>
+			<TextView
+			    android:layout_width="wrap_content"
+			    android:layout_weight="15"
+			    android:layout_height="fill_parent"
+			    android:gravity="center"
+			    android:textColor="#ffffffff"
+			    android:text="좌표" />
+		</LinearLayout>
+		<LinearLayout
+		    android:background="@color/listitem_div"
+			android:layout_width="fill_parent"
+			android:layout_height="1dip">
+		</LinearLayout>
+	    <ListView
+	        android:id="@+id/listView"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent" 
+	        android:layout_marginBottom="70dip">
+	    </ListView>
+	
+	    <!-- Bottom Tab menu -->
+		<LinearLayout
+			android:id="@+id/bottom"
+			android:layout_width="fill_parent" 
+			android:layout_height="70dip"
+			android:layout_alignParentBottom="true"
+			android:layout_marginTop="-70dp"
+			android:gravity="center"
+			>
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_weight="2"
+				android:layout_height="fill_parent"/>
+
+			<Button
+			    android:id="@+id/weblist"
+			    android:layout_width="wrap_content"
+			    android:layout_height="50dip"
+			    android:layout_weight="10"
+			    android:background="#3a486e"
+			    android:text="Web List"
+			    android:textColor="#ffffffff" />
+
+	        <LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_weight="2"
+				android:layout_height="fill_parent"/>
+	        <Button
+	            android:id="@+id/register"
+	            android:text="등록"
+	            android:textColor="#ffffffff"
+	            android:background="#3a486e"
+	            android:layout_marginLeft="10dip"
+	            android:layout_gravity="center"
+	            android:layout_width="wrap_content"
+				android:layout_weight="10"
+	            android:layout_height="50dip"/>
+	        <LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_weight="2"
+				android:layout_height="fill_parent"/>
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>
