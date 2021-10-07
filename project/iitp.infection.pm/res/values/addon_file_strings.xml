@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- file -->
+    <string name="mp_addon_file_reading_file">파일을 읽는 중 입니다.\n잠시만 기다려주세요.</string>
+    <string name="mp_addon_file_ready">준비중입니다.</string>    
+    
+</resources>
