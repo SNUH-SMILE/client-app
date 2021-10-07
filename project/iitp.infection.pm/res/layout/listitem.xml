@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content">
+	<LinearLayout
+	    android:id="@+id/list_item"
+	    android:background="#ffd2d8ed"
+		android:layout_width="fill_parent"
+		android:layout_height="50dp">
+
+		<TextView
+		    android:id="@+id/list_name"
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent"
+		    android:layout_weight="8"
+		    android:gravity="center"
+		    android:textColor="#ff000000"
+		    android:text="김남오" />
+		<LinearLayout
+		    android:background="@color/listitem_div"
+			android:layout_width="1dip"
+			android:layout_height="fill_parent"/>
+
+		<TextView
+		    android:id="@+id/list_date"
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent"
+		    android:layout_weight="8"
+		    android:gravity="center"
+		    android:textColor="#ff000000"
+		    android:text="2012.07.26" />
+		<LinearLayout
+		    android:background="@color/listitem_div"
+			android:layout_width="1dip"
+			android:layout_height="fill_parent"/>
+
+		<TextView
+		    android:id="@+id/list_location"
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent"
+		    android:layout_weight="15"
+		    android:gravity="left|center_vertical"
+		    android:textColor="#ff000000"
+		    android:text="37.936746" />
+	</LinearLayout>
+	<LinearLayout
+	    android:background="#ff8b94b3"
+		android:layout_width="fill_parent"
+		android:layout_height="1dip">
+	</LinearLayout>
+</LinearLayout>
