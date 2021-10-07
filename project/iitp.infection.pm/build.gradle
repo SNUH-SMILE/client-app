@@ -1,0 +1,123 @@
+buildscript {
+	repositories {
+		maven {url "https://maven.google.com"}
+		maven {url "https://jcenter.bintray.com"}
+	}
+	
+	dependencies {
+		classpath 'com.android.tools.build:gradle:4.0.1'
+	}
+}
+
+apply plugin: 'com.android.application'
+
+repositories {
+	maven {url "https://maven.google.com"}
+	maven {url "https://jcenter.bintray.com"}
+	
+}
+
+
+def assetDir = "assets"
+def properties = new Properties()
+if (project.rootProject.file('local.properties').exists()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    assetDir = properties.getProperty("asset.dir", "assets")
+}
+
+
+android {
+	compileSdkVersion 30
+	buildToolsVersion "28.0.3"
+	useLibrary 'org.apache.http.legacy'
+	sourceSets {
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+			java.srcDirs = ['src']
+			resources.srcDirs = ['src']
+			aidl.srcDirs = ['src']
+			renderscript.srcDirs = ['src']
+			res.srcDirs = ['res']
+			assets.srcDirs = [assetDir]
+			jniLibs {
+				srcDir 'libs'
+			}
+		}
+		
+		androidTest.setRoot('tests')
+		debug.setRoot('build-types/debug')
+		release.setRoot('build-types/release')
+	}
+	
+	dexOptions {
+		preDexLibraries = false
+	}
+	
+	defaultConfig{
+		minSdkVersion 14
+		targetSdkVersion 30
+	}
+	packagingOptions {
+		exclude "META-INF/LICENSE"
+		exclude "META-INF/DEPENDENCIES"
+	}	
+	lintOptions {
+		checkReleaseBuilds false
+		abortOnError false
+	}
+	
+	if (KEYSTORE_PATH?.trim()) {
+		signingConfigs{
+			releaseWithSignedKey {
+				storeFile file(KEYSTORE_PATH)
+				storePassword KEYSTORE_PW
+				keyAlias KEYSTORE_ALIAS
+				keyPassword KEYSTORE_ALIAS_PW
+			}
+		}
+	}
+	
+	buildTypes {
+		release {
+			//minifyEnabled true
+			//proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'morpheus_proguard-project.txt'
+			if (KEYSTORE_PATH?.trim()) {
+				signingConfig signingConfigs.releaseWithSignedKey
+			}
+		}
+	}
+}
+
+//추가
+repositories {
+    flatDir {
+        dirs 'libs', 'mcoreLibs'
+    }
+}
+
+
+
+dependencies {
+	implementation fileTree(dir: 'mcoreLibs', include: '*.jar')
+	
+	
+	/**
+	* ==========================================
+	* 외부라이브러리 적용시  [example.aar file]
+	* ==========================================
+	* implementation name: 'example-release', ext: 'aar'
+	*/
+	
+}
+
+import org.apache.tools.ant.taskdefs.condition.Os
+
+task  AppRunDebug (type: Exec, dependsOn: 'installDebug') {
+	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+		commandLine 'cmd', '/c', android.getAdbExe().toString(), 'shell', 'am', 'start', '-n', 'iitp.infection.pm/.Startup'
+	}
+	else if (Os.isFamily(Os.FAMILY_MAC)) {
+		commandLine android.getAdbExe().toString(), "shell", 'am', 'start', '-n', 'iitp.infection.pm/.Startup'
+	}
+}
+
