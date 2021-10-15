@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>FORM GUIDE</title>
+	<link rel="stylesheet" type="text/css" href="../css/guide.css" />
+	<link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css" />
+	<style type="text/css">
+		.area_con>*+* {
+			margin-top: 5px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="content_guide">
+		<h1>FORM GUIDE</h1>
+		<h2>INPUT BOX</h2>
+		<div class="area_con">
+			<div class="ipt-wrap">
+				<label for="ID">아이디</label>
+				<div class="ipt-box ipt-box-btn">
+					<input type="text" id="ID" title="내용입력1" placeholder="ipt-text">
+					<button type="button" class="btn-rnd line small">중복확인</button>
+				</div>
+			</div>
+			<br />
+			<div class="ipt-wrap">
+				<label for="password">비밀번호</label>
+				<div class="ipt-box">
+					<input type="password" id="password" title="비밀번호입력" placeholder="비밀번호">
+				</div>
+			</div>
+			<br />
+			<div class="ipt-wrap">
+				<label for="repassword">비밀번호 확인</label>
+				<div class="ipt-box">
+					<input type="password" id="repassword" title="비밀번호확인" placeholder="비밀번호 확인">
+				</div>
+				<p class="error_txt">*비밀번호가 일치하지 않습니다.</p>
+			</div>
+			<br />
+			<div class="ipt-wrap">
+				<label for="birth">생년월일</label>
+				<div class="ipt-box ipt-box-btn">
+					<input type="number" id="birth" title="생년월일" placeholder="생년월일">
+					<p class="ipt-line">
+						<input type="radio" name="gender" id="gender01" checked>
+						<label for="gender01">남</label>
+						<input type="radio" name="gender" id="gender02">
+						<label for="gender02">여</label>
+					</p>
+				</div>
+			</div>
+		</div>
+		<h3>SOURCE</h3>
+		<pre class="area_view">
+&lt;div class="ipt-wrap"&gt;
+	&lt;label for="ID"&gt;아이디&lt;/label&gt;
+	&lt;div class="ipt-box ipt-box-btn"&gt;
+		&lt;input type="text" id="ID" title="내용입력1" placeholder="ipt-text"&gt;
+		&lt;button type="button" class="btn-rnd line small"&gt;중복확인&lt;/button&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="ipt-wrap"&gt;
+	&lt;label for="password"&gt;비밀번호&lt;/label&gt;
+	&lt;div class="ipt-box"&gt;
+		&lt;input type="password" id="password" title="비밀번호입력" placeholder="비밀번호"&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="ipt-wrap"&gt;
+	&lt;label for="repassword"&gt;비밀번호 확인&lt;/label&gt;
+	&lt;div class="ipt-box"&gt;
+		&lt;input type="password" id="repassword" title="비밀번호확인" placeholder="비밀번호 확인"&gt;
+	&lt;/div&gt;
+	&lt;p class="error_txt"&gt;*비밀번호가 일치하지 않습니다.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="ipt-wrap"&gt;
+	&lt;label for="birth"&gt;생년월일&lt;/label&gt;
+	&lt;div class="ipt-box ipt-box-btn"&gt;
+		&lt;input type="number" id="birth" title="생년월일" placeholder="생년월일"&gt;
+		&lt;p class="ipt-line"&gt;
+			&lt;input type="radio" name="gender" id="gender01" checked&gt;
+			&lt;label for="gender01"&gt;남&lt;/label&gt;
+			&lt;input type="radio" name="gender" id="gender02"&gt;
+			&lt;label for="gender02"&gt;여&lt;/label&gt;
+		&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+		<h2>ipt-address</h2>
+		<div class="area_con">
+			<div class="ipt-wrap ipt-address">
+				<label for="address01">주소</label>
+				<div class="ipt-box">
+					<input type="number" id="address01" title="우편번호 입력" placeholder="도로명 주소 입력" disabled="">
+					<button type="button" class="btn-address">도로명 주소 검색</button>
+				</div>
+				<div class="ipt-box">
+					<input type="text" id="address02" title="상세주소 입력" placeholder="상세주소 입력하세요.">
+				</div>
+			</div>
+		</div>
+		<h3>SOURCE</h3>
+		<pre class="area_view">
+&lt;div class="ipt-wrap ipt-address"&gt;
+	&lt;label for="address01"&gt;주소&lt;/label&gt;
+	&lt;div class="ipt-box"&gt;
+		&lt;input type="number" id="address01" title="우편번호 입력" placeholder="도로명 주소 입력" disabled=""&gt;
+		&lt;button type="button" class="btn-address"&gt;도로명 주소 검색&lt;/button&gt;
+	&lt;/div&gt;
+	&lt;div class="ipt-box"&gt;
+		&lt;input type="text" id="address02" title="상세주소 입력" placeholder="상세주소 입력하세요."&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+		<h2>radio / switch</h2>
+		<div class="area_con">
+			<p class="ipt-line">
+				<input type="radio" name="rdbox" id="rdbox01" checked>
+				<label for="rdbox01">남</label>
+				<input type="radio" name="rdbox" id="rdbox02">
+				<label for="rdbox02">여</label>
+			</p>
+		</div>
+		<h3>SOURCE</h3>
+		<pre class="area_view">
+&lt;p class="ipt-line"&gt;
+	&lt;input type="radio" name="rdbox" id="rdbox01" checked&gt;
+	&lt;label for="rdbox01"&gt;남&lt;/label&gt;
+	&lt;input type="radio" name="rdbox" id="rdbox02"&gt;
+	&lt;label for="rdbox02"&gt;여&lt;/label&gt;
+&lt;/p&gt;
+</pre>
+
+		<!-- 
+		<h2>INPUT BOX</h2>
+		<div class="area_con">
+
+		</div>
+	 <h3>SOURCE</h3>
+<pre class="area_view">
+
+</pre>
+ -->
+	</div>
+	<script type="text/javascript" src="../../www/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../www/js/ui.js"></script>
+</body>
+
+</html>

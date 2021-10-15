@@ -1,0 +1,92 @@
+@charset "utf-8";
+/*
+파일명 :	guide.css
+기능설명:	코딩진행표 css
+*/
+
+/* COMMON */
+body {background-color:#fff; font-size:12px;overflow-y:auto !important;}
+*{margin:0; padding:0;font-size:12px}
+.guide_link {text-align:center; position:absolute; left:50%; top:50%; margin:-33px 0 0 -200px;}
+.guide_link a {position:relative; display:inline-block; width:200px; color:#fff; font-size:50px;}
+
+.important {font-weight:bold; color:red}
+/* coding_left */
+
+#content_guide_list {position:relative;padding:30px 0 0 10px}
+/*#content_guide_list:before {content:'';position:absolute;top:0;left:0;width:100%;height:10px;background:#000;}*/
+#content_guide_list h1 {margin-bottom:10px; padding:0 10px; height:4rem; line-height:4rem; background:#d5211d; border-bottom:1px solid #E9E9E9; color:#fff; font-weight:bold; font-size:16px;}
+#content_guide_list h2 {padding:0 0 10px 10px; font-size:12px;}
+#content_guide_list ol {position:relative;margin-right:10px;padding-bottom:30px; padding-left:20px;}
+#content_guide_list ol:before {content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;background:#ddd;}
+#content_guide_list ol li {list-style:decimal; list-style-position: inside; line-height:14px;}
+#content_guide_list ol li + li{margin-top:5px;}
+#content_guide_list ol li span {margin-left: 0px; font-size:12px;}
+
+
+.dtree {padding-left:2px; color:#000; font-size:11px; white-space:nowrap;}
+.area_btn {margin:25px 10px -20px 0; text-align:right;}
+.dtree img {margin-top:-2px; vertical-align:middle;}
+.dtree a {color:#444; text-decoration:none; line-height:150%;}
+.dtree a.node, .dtree a.nodeSel {padding: 1px 2px 1px 2px; white-space:nowrap;}
+.dtree a.nodeSel {background-color: #f0ff00;}
+.dtree .clip {overflow: hidden;}
+
+.txt_ing {color:#ccc;}
+.txt_ask {color:#333;}
+.txt_del{color:#ddd;text-decoration:line-through}
+/*.txt_confirm {color:#333;}*/
+.txt_modify {color:#587d9a;}
+/*.txt_today{color:#9c00ff;}*/
+
+.dtree .area_btn {margin: 25px 10px -20px 0;text-align: right;}
+
+/* coding_guide */
+#content_guide {padding:0 20px 10px;}
+
+#content_guide .guide-ttl-wrap{display:block;margin-bottom:20px;padding:30px 10px 30px;border-bottom:1px solid #eee;}
+#content_guide .guide-ttl-wrap .guide-ttl{display:block;padding-bottom: 14px;color:#666;font-size: 50px;font-weight:700;}
+#content_guide .guide-ttl-wrap .guide-ttl span{display:inline-block;margin-right:5px;color:#000;font-size: 50px;font-weight:700;}
+#content_guide .guide-ttl-wrap .guide-data{display:block;}
+#content_guide .guide-ttl-wrap .guide-data li{display:block;color:#666;font-size: 16px;}
+#content_guide .guide-ttl-wrap .guide-data li.guide-data-ttl{display:block;font-size: 26px;font-weight:700;color:#000;}
+#content_guide .guide-ttl-wrap .guide-data li + li{margin-top:5px;}
+
+#content_guide h1,#content_guide h2, #content_guide h3, #content_guide h4 {font-weight:bold}
+/*#content_guide > h1 {margin:0 -20px; padding:0 10px; height:4rem; line-height:4rem; background:#000; color:white; font-size:16px;}*/
+#content_guide > h1{display:block;margin-bottom:20px;padding:30px 10px 30px;border-bottom:1px solid #eee;color:#000;font-size: 50px;font-weight:700;line-height:95px;}
+#content_guide > h2 {margin:20px 0 10px; padding:13px 12px; color:#333; border:1px solid #e1e1e1; font-size:16px;line-height:16px;background:#f6f6f6;}
+#content_guide > h3 {margin:15px 0 5px; padding:0; color:#333; font-size:12px; line-height:16px;}
+#content_guide > h4 {margin:10px 0 5px; padding:0; font-size:12px; line-height:16px;}
+.area_con {overflow:auto; margin:0 0 10px; padding:9px; border:1px dashed #bbb; line-height:150%; font-size:12px;}
+.area_con p{display:block;font-size:12px;}
+.area_con strong{font-size:12px;font-weight:700;}
+.area_con a{font-size:12px;color:#00aeff;}
+.area_view {overflow:auto; margin:0 0 10px; padding:15px 10px; background-color:#999; color:#fff; font:11px Tahoma; line-height:14px;}
+.area_view em {color:#bd0;}
+.area_info {margin-bottom:5px;}
+
+
+/* 중첩된 스타일 정리 */
+/* layout */
+#content_guide .area_con #header h1 {margin:7px 0 6px; padding:0; font-size:0; line-height:0;}
+#content_guide .area_con #header, #content_guide .area_con .top, #content_guide .area_con .indicator .move {position:absolute;}
+#content_guide .area_con #nav {position:static;}
+#content_guide .area_con #header h1 {background-color:transparent;}
+#content.area_con {padding:9px !important;}
+.title_wrap, .area_title, .here {overflow:hidden;}
+
+.area_calendar .area_info {margin-bottom:0;}
+
+.txt_old {margin-top:20px; padding:10px; background-color:#999;}
+.txt_old, .txt_old a {color:#fff;}
+
+
+/* =====  Table ===== */
+/*table{border-collapse:collapse;empty-cells:show;border-spacing:0;table-layout:fixed;}
+table caption, fieldset legend{display:none;}
+table caption {font-size:0}
+.area_con table {width:100%}
+.area_con > table thead th {padding:5px 0;background:#666; color:#fff;}
+.area_con > table td {padding:3px; border:1px solid #ddd}
+.area_con > div {margin-bottom:5px;}*/

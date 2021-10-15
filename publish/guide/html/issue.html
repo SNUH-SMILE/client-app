@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>ISSUE LIST</title>
+	<link rel="stylesheet" type="text/css" href="../css/guide.css"/>
+	<link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css"/>
+<style type="text/css">
+	h1 + .area_con{margin-top:2rem;}
+	.area_con ul li + li{margin-top:2rem;}
+	.area_con ul li strong{display:block;font-weight:bold;margin-bottom:.5rem;}
+</style>
+</head>
+
+<body>
+	<div id="content_guide">
+		<h1>모피어스 프로젝트 시 발생했던 이슈 목록</h1>
+
+		<h2>A TAG 2중터치 이슈 (+ 개발)</h2>
+		<div class="area_con">
+			Android 4, iOS 5 이상 button tag 사용 권장
+		</div>
+
+		<h2>position fixed 사용시 iOS에서 display 움직임 현상</h2>
+		<div class="area_con">
+			position absolute 사용 및 footer 고정 등의 이슈가 있을 시 wrapper를 하나 더 만들어 구조를 사용. (Basic_template 참고)
+		</div>
+
+		<h2>:not 사용 금지</h2>
+		<div class="area_con">
+			:not은 지원이 되는 브라우저가 적다. (safari/iOS 9 이상) iOS를 제외한 브라우저에서 거의 지원이 되지 않으므로 사용하지 않는 것이 좋다.
+		</div>
+
+		<h2>iOS 하위 버전에서 생기는 word-break 이슈</h2>
+		<div class="area_con">
+			아래 코드를 사용합니다.<br />
+			html {word-break:keep-all; word-wrap:break-word; overflow-wrap:break-word; -webkit-hyphens:auto;  hyphens:auto;}
+		</div>
+
+		<h2>Android - google chrome의 inspect(chrome://inspect/#devices) 의 사용</h2>
+		<div class="area_con">
+			디바이스의 Android version이 4.4.0 이하의 경우 inspect를 사용할 수 없다.
+		</div>
+
+		<h2>css3 소스 사용 시 사용이 가능한지 여부는 꼭 대상 디바이스 및 버전 확인이 꼭 필요하다.</h2>
+		<div class="area_con">
+			<a href="https://caniuse.com">https://caniuse.com</a>에서 대상 디바이스/버전에서 사용이 가능한지 확인 후 작업을 하도록 한다.
+		</div>
+
+	</div>
+</body>
+</html>
