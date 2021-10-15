@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <title>IITP | 수면</title>
+    <link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css">
+</head>
+
+<body>
+    <!-- Wrapper -->
+    <div class="sub-chart-wrap wrapper">
+        <!-- Header -->
+        <header class="header">
+            <button type="button" class="btn-back">뒤로가기</button>
+            <h1>수면</h1>
+            <button type="button" class="btn-device">디바이스 연결</button>
+            <button type="button" class="btn-alim">알람<span class="badge"></span></button>
+        </header>
+        <!-- //Header -->
+
+        <!-- Content -->
+        <div class="content-wrap">
+            <div class="content scrollBox">
+
+                <div class="sub-cont-box">
+                    <div class="chart-box">
+                        <div class="date-box">
+                            <button type="button" class="btn-prev">
+                                전 일
+                            </button>
+                            <span>2022.07.05</span>
+                            <button type="button" class="btn-next">
+                                후 일
+                            </button>
+                        </div>
+                        <div class="chart-inner">
+                            <canvas id="sleepChart" style="width:100%;height:100%"></canvas>
+                        </div>
+                        <!-- 데이터 없을 때 보여지기 class="none" 지우면 됩니다. -->
+                        <div class="chart-none none">
+                            <p>측정된 정보가 없습니다.</p>
+                        </div>
+
+                        <div class="chart-mark sleep-mark">
+                            <span class="sleep-mark-item1">얕은 수면</span>
+                            <span class="sleep-mark-item2">깊은 수면</span>
+                            <span class="sleep-mark-item3">기상</span>
+                        </div>
+                    </div>
+                    <div class="sub-box-inner">
+                        <div class="data-box">
+                            <span class="data-box-ti data-ti6">수면</span>
+                            <div class="data-box-cont2 data-box-cont3">
+                                <div class="data-box-inner">
+                                    <span class="data-box-inner-ti">얕은 수면</span>
+                                    <span>1시간10분</span>
+                                </div>
+
+                                <div class="data-box-inner">
+                                    <span class="data-box-inner-ti">깊은 수면</span>
+                                    <span>1시간30분</span>
+                                </div>
+                                <div class="data-box-inner">
+                                    <span class="data-box-inner-ti">기상</span>
+                                    <span>1시간30분</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-cont-box list-box">
+                            <div class="info-list">
+                                <div class="list-box list-ti">
+                                    <div class="list-inner1">
+                                        <strong>수면 유형</strong>
+                                    </div>
+                                    <div class="list-inner3">
+                                        <strong>시작 시간</strong>
+                                    </div>
+                                    <div class="list-inner3">
+                                        <strong>종료 시간</strong>
+                                    </div>
+                                </div>
+
+                                <ol>
+                                    <li>
+                                        <div class="list-box list-cont">
+                                            <div class="list-inner1">
+                                                <p>기상</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner3">
+                                                <p>13시 10분</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner3">
+                                                <p>14시 10분</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="list-box list-cont">
+                                            <div class="list-inner1">
+                                                <p>얕은 수면</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner3">
+                                                <p>13시 10분</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner3">
+                                                <p>14시 10분</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="list-box list-cont">
+                                            <div class="list-inner1">
+                                                <p>깊은 수면</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner3">
+                                                <p>13시 10분</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner3">
+                                                <p>14시 10분</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Content -->
+    </div>
+    <!-- //Wrapper -->
+    <script type="text/javascript" src="../js/Chart.min.js"></script>
+    <script type="text/javascript">
+        var Chart4 = new Chart(sleepChart, {
+            type: 'horizontalBar',
+            data: {
+                labels: ["2021"],
+                datasets: [
+                    // {
+                    //     data: [200],
+                    //     barThickness: 60,
+                    //     backgroundColor: "transparent",
+                    //     hoverBackgroundColor: "transparent",
+                    // },
+                    {
+
+                        data: [361],
+                        barThickness: 60,
+                        backgroundColor: "#333c5c",
+                        hoverBackgroundColor: "#333c5c"
+                    }, {
+                        data: [120],
+                        barThickness: 60,
+                        backgroundColor: "#e6a524",
+                        hoverBackgroundColor: "#e6a524"
+                    }, {
+                        data: [138],
+                        barThickness: 60,
+                        backgroundColor: "#333c5c",
+                        hoverBackgroundColor: "#333c5c"
+                    },
+                    {
+                        data: [358],
+                        barThickness: 60,
+                        backgroundColor: "#5b74c8",
+                        hoverBackgroundColor: "#5b74c8"
+                    },
+                    {
+                        data: [280],
+                        barThickness: 60,
+                        backgroundColor: "#e6a524",
+                        hoverBackgroundColor: "#e6a524"
+
+                    }
+                ]
+            },
+            options: {
+                responsive: false,
+                layout: {
+                    padding: {
+                        left: 40,
+                        right: 20,
+                        bottom: 8
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: false
+                },
+                scales: {
+                    xAxes: [{
+                        offset: true,
+                        // display: true,
+                        stacked: true,
+                        gridLines: {
+                            padding: 3,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                            color: '#979797',
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        // display: true,
+                        stacked: true,
+                        gridLines: { 
+                            // 가로선
+                            drawOnChartArea: false,
+                            drawBorder: true,
+                            color: '#979797',
+                            drawTicks: false,
+                            // offset: false
+                        },
+                        
+                        ticks: {
+                            // position:'bottom',
+                            display: false //안 보임
+                            // crossAlign: bottom
+                            // align:'end'
+
+                            //      minRotation: 360,
+                            // labelOffset: 0,
+                            // padding: -30
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
