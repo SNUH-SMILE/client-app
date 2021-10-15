@@ -27,6 +27,14 @@
   width: 100%;
 }
 
+.chart-box{
+  padding: 0 4rem;
+}
+
+.temp-chart-box.chart-box{
+  padding: 0 6rem 0 6.3rem;
+}
+
 .cont-inner {
   /* -webkit-box-flex: 1;
   box-flex: 1; */
@@ -259,6 +267,10 @@
   background: #fff;
 }
 
+.main-cont-inner .temp-chart-inner{
+  padding: 0 2.3rem 0 2rem;
+}
+
 .main-cont-box .main-cont-inner:nth-child(even) {
   background: #f8f8f8;
   border-radius: 0 2.4rem 2.4rem 0;
@@ -379,20 +391,20 @@
   background: #e6a524;
 }
 
-.blood-chart span{
-   padding-left: 1.7rem;
+.blood-chart span {
+  padding-left: 1.7rem;
   background-position: left center;
   background-size: 1.1rem;
   background-repeat: no-repeat;
 }
 
-.blood-chart .blood-chart-item1{
+.blood-chart .blood-chart-item1 {
   background-image: url(../img/chart-mark3.svg);
 }
 
-.blood-chart .blood-chart-item2{
+.blood-chart .blood-chart-item2 {
   margin-left: 2.3rem;
- background-image: url(../img/chart-mark4.svg)
+  background-image: url(../img/chart-mark4.svg);
 }
 
 .date-box {
@@ -457,6 +469,18 @@
 }
 .sub-box-inner .data-box-ti.data-ti2 {
   background-image: url(../img/main-ic-bloodpre.png);
+}
+.sub-box-inner .data-box-ti.data-ti3 {
+  background-image: url(../img/main-ic-heartrate.png);
+}
+.sub-box-inner .data-box-ti.data-ti4 {
+  background-image: url(../img/maindoq-dkic-bloodpre.png);
+}
+.sub-box-inner .data-box-ti.data-ti5 {
+  background-image: url(../img/main-ic-stepsunm.png);
+}
+.sub-box-inner .data-box-ti.data-ti6 {
+  background-image: url(../img/main-ic-sleep.png);
 }
 
 .sub-box-inner .list-cont-box {
@@ -696,7 +720,7 @@
   }
   .sub-cont-box .sub-box-inner .data-box {
     position: relative;
-    width: 42%;
+    width: 46%;
     height: 32rem;
     padding: 0;
     border-radius: 2.4rem;
@@ -706,11 +730,13 @@
     content: "";
     display: block;
     position: absolute;
-    top: 10.7rem;
-    left: 37%;
-    width: 24%;
-    height: 24%;
-    /* margin-top: -4.3rem; */
+    top: 50%;
+    left: 45%;
+    width: 22%;
+    height: 22%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     background-image: -o-repeating-linear-gradient(
       135deg,
       transparent,
@@ -726,15 +752,20 @@
   }
 
   .sub-box-inner .data-box-ti {
-    width: 50%;
+    /* width: 50%; */
     margin-top: 8.1rem;
-    margin-left: 12%;
-    padding-left: 8rem;
+    /* margin-left: 12%; */
+    margin-left: 11%;
+    /* padding-left: 8rem; */
+    padding-left: 7.1rem;
     color: #628ce4;
-    font-size: 3.2rem;
+    /* font-size: 3.2rem; */
+    font-size: 3rem;
     font-weight: 500;
-    line-height: 8rem;
-    background-size: 8rem;
+    /* line-height: 8rem; */
+    line-height: 7rem;
+    /* background-size: 8rem; */
+    background-size: 7rem;
   }
   .sub-cont-box .sub-box-inner .list-cont-box {
     width: 50%;
@@ -743,35 +774,69 @@
   .sub-box-inner .data-box-cont {
     float: inherit;
     color: #000;
-    font-size: 4.6rem;
+    /* font-size: 4rem; */
+    font-size: 3.6rem;
     position: absolute;
-    right: 20%;
+    right: 12%;
     bottom: 9.9rem;
-    width: 50%;
+    /* width: 50%; */
     text-align: end;
   }
 
-  .data-box-cont2{
+  .data-box-cont2 {
     position: absolute;
-    right: 2rem;
+    right: 4%;
     bottom: 6.9rem;
     float: inherit;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
-        min-width: 60%;
+  }
+  .data-box-cont2.data-box-cont3 {
+    bottom: 2.7rem;
   }
 
-  .data-box-cont2 .data-box-inner{
-    width: 100%;
+  .data-box-cont2.data-box-cont3 .data-box-inner span + span {
+    margin-left: 2rem;
+  }
+
+  .data-box-cont2 .data-box-inner {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
     flex-direction: row;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    width: 100%;
+    min-height: auto;
   }
 
-  .data-box-cont2 .data-box-inner span{
+  .data-box-cont2 .data-box-inner span {
+    min-width: auto;
     color: #000;
-    font-size: 2.6rem;
+    font-size: 2.4rem;
     font-weight: 500;
   }
 
-  .data-box-cont2 .data-box-inner + .data-box-inner{
+  .data-box-cont2 .data-box-inner .data-box-inner-ti {
+    min-width: 5rem;
+    text-align: end;
+  }
+
+  .data-box-cont3.data-box-cont2 .data-box-inner .data-box-inner-ti {
+    min-width: 9rem;
+    text-align: start;
+  }
+
+  .data-box-cont2 .data-box-inner span + span {
+    margin-left: 4rem;
+    text-align: end;
+    width: 60%;
+  }
+
+  .data-box-cont2 .data-box-inner + .data-box-inner {
     margin-left: 0;
     margin-top: 1rem;
   }
