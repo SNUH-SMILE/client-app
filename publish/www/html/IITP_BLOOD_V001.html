@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <title>IITP | 혈압</title>
+    <link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css">
+</head>
+
+<body>
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Header -->
+        <header class="header">
+            <button type="button" class="btn-back">뒤로가기</button>
+            <h1>혈압</h1>
+            <button type="button" class="btn-device">디바이스 연결</button>
+            <button type="button" class="btn-alim">알람<span class="badge"></span></button>
+        </header>
+        <!-- //Header -->
+
+        <!-- Content -->
+        <div class="content-wrap">
+            <div class="content scrollBox">
+
+                <div class="sub-cont-box">
+                    <div class="chart-box">
+                        <div class="date-box">
+                            <button type="button" class="btn-prev">
+                                전 일
+                            </button>
+                            <span>2022.07.05</span>
+                            <button type="button" class="btn-next">
+                                후 일
+                            </button>
+                        </div>
+                        <div class="chart-inner">
+                            <canvas id="bloodChart" style="width:100%;height:100%"></canvas>
+                        </div>
+                        <!-- 데이터 없을 때 보여지기 class="none" 지우면 됩니다. -->
+                        <div class="chart-none none">
+                            <p>측정된 정보가 없습니다.</p>
+                        </div>
+
+                        <div class="chart-mark blood-chart">
+                            <span class="blood-chart-item1">최저혈압</span>
+                            <span class="blood-chart-item2">최고혈압</span>
+                        </div>
+                    </div>
+                    <div class="sub-box-inner">
+                        <div class="data-box">
+                            <span class="data-box-ti data-ti2">혈압</span>
+                            <div class="data-box-cont2">
+                                <div class="data-box-inner">
+                                    <span>최소</span>
+                                    <span>65mmHg</span>
+                                </div>
+
+                                <div class="data-box-inner">
+                                    <span>최고</span>
+                                    <span>150mmHg</span>
+                                </div>
+                            </div>
+                            <!-- <span class="data-box-cont data-box-cont2">
+                                최소 <br class="tb_none">
+                            </span>
+                            <span class="data-box-cont data-box-cont2">
+                                최고 <br class="tb_none"></em>
+                            </span> -->
+                        </div>
+                        <div class="list-cont-box list-box">
+                            <div class="info-list">
+                                <div class="list-box list-ti">
+                                    <div class="list-inner1">
+                                        <strong>측정 일시</strong>
+                                    </div>
+                                    <div class="list-inner3">
+                                        <strong>최저</strong>
+                                    </div>
+                                    <div class="list-inner3">
+                                        <strong>최고</strong>
+                                    </div>
+                                </div>
+
+                                <ol>
+                                    <li>
+                                        <div class="list-box list-cont">
+                                            <div class="list-inner1">
+                                                <p>2021.07 14:00</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner3">
+                                                <p>65mmHg</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner3">
+                                                <p>150mmHg</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="list-box list-cont">
+                                            <div class="list-inner1">
+                                                <p>2021.07 14:00</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner3">
+                                                <p>65mmHg</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner3">
+                                                <p>150mmHg</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Content -->
+    </div>
+    <!-- //Wrapper -->
+    <script type="text/javascript" src="../js/Chart.min.js"></script>
+    <!-- <script type="text/javascript" src="../js/Chart.js"></script> -->
+
+    <script type="text/javascript">
+        var pointRed = new Image();
+        pointRed.src = '../img/chart-mark4.svg';
+        var pointRedac = new Image();
+        pointRedac.src = '../img/chart-mark4-ac.svg';
+
+        var pointBlue = new Image();
+        pointBlue.src = '../img/chart-mark3.svg';
+        var pointBlueac = new Image();
+        pointBlueac.src = '../img/chart-mark3-ac.svg';
+
+
+        var lowPressure = {
+            type: 'line',
+            data: [77, 55, 50, 64],
+            fill: false,
+            pointStyle: [pointBlue, pointBlue, pointBlue, pointBlueac],
+            pointHoverStyle: [pointBlue, pointBlue, pointBlue, pointBlueac],
+            showLine: false,
+            pointBackgroundColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointBorderColor: '#608ae4',
+            pointRadius: 10,
+            pointHoverRadius: 10,
+        }
+
+        var highPressure = {
+            type: 'line',
+            data: [100, 65, 60, 120],
+            fill: false,
+            pointStyle: [pointRed, pointRed, pointRed, pointRedac],
+            pointHoverStyle: [pointRed, pointRed, pointRed, pointRedac],
+            showLine: false,
+            pointBackgroundColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointBorderColor: '#e46060',
+            pointRadius: 10,
+            pointHoverRadius: 10,
+        }
+
+        var Chart5 = new Chart(bloodChart, {
+
+            type: 'line',
+            label: 'Line Dataset',
+            data: {
+                labels: ['11:00', '12:00', '13:00', '14:00'],
+                datasets: [lowPressure, highPressure],
+            },
+            options: {
+                layout: {
+                    padding: {
+                        top: 10,
+                        left: 16,
+                        right: 21
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: false
+                },
+                scales: {
+                    yAxes: [{
+                        offset: true,
+                        gridLines: {
+                            borderDash: [2],
+                            color: '#979797',
+                            drawTicks: false,
+                            offset: true,
+
+                        },
+                        ticks: {
+                            min: 50,
+                            stepSize: 50,
+                            beginAtZero: true,
+                            padding: 3,
+                            fontColor: '#979797',
+                            fontSize: 12,
+                        }
+                    }],
+                    xAxes: [{
+                        offset: true,
+                        gridLines: {
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                            color: '#979797',
+                        },
+                        ticks: {
+                            fontColor: '#979797',
+                            fontSize: 12,
+                            stepSize: 1,
+                            beginAtZero: true,
+                            padding: 8
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
