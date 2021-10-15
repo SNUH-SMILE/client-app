@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Process</title>
+	<link rel="stylesheet" type="text/css" href="../css/guide.css"/>
+</head>
+
+<body >
+
+	<div id="content_guide">
+		<div class="guide-ttl-wrap">
+			<p class="guide-ttl"><span>IITP</span>Mark-up Guide</p>
+			<ul class="guide-data">
+				<li>URACLE UX / Publishing Team </li>
+			</ul>
+		</div>
+
+		<h2>퍼블리싱 일정 및 프로세스</h2>
+		<h3>1. 퍼블리싱 일정</h3>
+		<div class="area_con">
+			<strong>개발</strong> : 2021.10.07 ~ 2021.10.
+		</div>
+		<h3>2. 접근성 확인 및 스토리보드 검토</h3>
+		<div class="area_con">
+			접근성 관련 확인<br />
+			업무파악 및 UI/UX 기술 구현 가능 여부 확인
+		</div>
+		<h3>4. 플랫폼 / 디바이스 / 크로스브라우징 브라우저</h3>
+		<div class="area_con">
+			<p><strong>대고객용 서비스</strong></p><br/>
+
+			<p><strong>플랫폼</strong></p>
+			- APP : phone, tablet<br />
+			- Web : PC, MOBILE, RESPONSIVE(PC/TABLET/MOBILE)<br/><br/>
+
+			<p><strong>최소 OS Version</strong></p>
+			- IOS : IOS12 이상<br />
+			- Android : Android 6.0이상<br/><br/>
+
+			<p><strong>대상 디바이스</strong></p>
+			- IOS : iPhone 5S, iPhone 8, iPhone Xr max, iPhone 11 pro<br />
+			- Android : Galaxy S6, Galaxy S10, LG V50<br/><br/>
+
+			<p><strong>지원 브라우저</strong></p>
+			- ie 10이상<br />
+			- Chrome / Safari / FF 지원
+
+		</div>
+		<h3>4. 리소스 관련 협의(개발협의)</h3>
+		<div class="area_con">
+			리소스 폴더 구조 설계 및 리소스 파일 네이밍 가이드 수립.
+		</div>
+		<h3>5. 디자인시안(메인 및 디자인가이드) 검토</h3>
+		<div class="area_con">
+			- 컨텐츠 분석 및 정보의 논리적 선형화 작업<br />
+			- 논리적 구조에 따른 HTML 문서 구조화 작업<br />
+			- 공통 CSS, JS 가이드 작성<br />
+			- 디자인적 접근성 제고 여부 검토
+		</div>
+		<h3>6. 퍼블리싱</h3>
+		<div class="area_con">
+			- CSS, html 공통 가이드 수립<br />
+			- 문서내 ID / Class 구조화 및 정리<br />
+			- CSS 작성<br />
+			- 웹 표준, 앱접근성 지침을 기준으로 마크업 진행(마크업 유효성 검사) - W3C Markup Validator 이용<br />
+			- UI Jquery 개발<br />
+			- 디바이스 렌더링 화면과 시안 비교 및 테스트
+		</div>
+		<h3>7. 최종 산출물 확인</h3>
+		<div class="area_con">
+			- 기아 마크업 가이드 v1.0<br />
+			- 디바이스 렌더링 화면 테스트<br />
+			- 최종 웹 표준 검사(마크업 유효성 검사) - W3C Markup Validator 이용<br />
+			- 최종 앱접근성 검토(지침 기준별 평가)
+		</div>
+
+
+
+		<h2>기본 사항</h2>
+		<h3>css 단위<span class="important">(important)</span></h3>
+		<div class="area_con">
+			rem 단위 사용 (기존 코드 확장)
+		</div>
+		<h3>이미지 저장</h3>
+		<div class="area_con">
+			기본 png 사용
+		</div>
+		<h3>Validation 체크<span class="important">(important)</span></h3>
+		<div class="area_con">
+			태그 사용 등 관련 오류의 체크를 위해 사용합니다.<br/>
+			<a href="http://validator.w3.org/" target="_blank">http://validator.w3.org/</a><br />
+			<a href="http://validator.kldp.org/" target="_blank">http://validator.kldp.org/</a><br />
+			<!--<a href="http://jigsaw.w3.org/css-validator/" target="_blank">http://jigsaw.w3.org/css-validator/</a><br />
+			<a href="http://validator.kldp.org/" target="_blank">http://validator.kldp.org/</a><br />-->
+			Opera(Web Developer Tool  → Tools  Menu 이용하여 Check) 또는 Firefox 유효성검사 도구(Web Developer Tool  → Tools  Menu 이용하여 Check)를 사용
+		</div>
+		<h3>Browser 체크</h3>
+		<div class="area_con">
+			- Chrome 기준으로 Device 별로 해상도별 페이지 확인 <br />
+			- Web 화면은 Cross Browsing 확인
+		</div>
+
+		<h2>업무</h2>
+		<h3>HTML</h3>
+		<h4>띄어쓰기</h4>
+		<div class="area_con">
+			- 앞은 탭(1탭=4스페이스)으로 들여쓰고 그 이외 부분은 1스페이스로 합니다.
+		</div>
+		<h4>특수 기호</h4>
+		<div class="area_con">
+			- &lt;, &gt;, &amp; 등은 html 코드에 사용되어 오류가 날 수 있으므로 아래와 같이 표기합니다.
+		</div>
+		<div class="area_con">
+
+			<table>
+				<caption>Entity code</caption>
+				<colgroup>
+					<col style="width:15%">
+					<col style="width:15%">
+					<col style="width:15%">
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">문자</th>
+						<th scope="col">엔티티문자</th>
+						<th scope="col">엔티티숫자</th>
+						<th scope="col">설명</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>공백</td>
+						<td><xmp>&nbsp;</xmp></td>
+						<td><xmp>&#160;</xmp></td>
+						<td class="tleft">공백문자(Inserts a non-breaking blank space)</td>
+					</tr>
+					<tr>
+						<td>&amp;</td>
+						<td><xmp>&amp;</xmp></td>
+						<td><xmp>&#38;</xmp></td>
+						<td class="tleft">앤드(Ampersand)</td>
+					</tr>
+					<tr>
+						<td>''</td>
+						<td><xmp>&quot;</xmp></td>
+						<td><xmp>&#34;</xmp></td>
+						<td class="tleft">인용마크(Qutation mark)</td>
+					</tr>
+					<tr>
+						<td>"</td>
+						<td><xmp>&ldquo;</xmp></td>
+						<td><xmp>&#147;</xmp></td>
+						<td class="tleft">겹따옴표(쌍따옴표) 시작 (Openning Double Quotes)</td>
+					</tr>
+					<tr>
+						<td>"</td>
+						<td><xmp>&rdquo;</xmp></td>
+						<td><xmp>&#148;</xmp></td>
+						<td class="tleft">겹따옴표(쌍따옴표) 끝 (Closing Double Quotes)</td>
+					</tr>
+					<tr>
+						<td>'</td>
+						<td><xmp>&lsquo;</xmp></td>
+						<td><xmp>&#145;</xmp></td>
+						<td class="tleft">홑따옴표 시작(Openning Single Quote Makr)</td>
+					</tr>
+					<tr>
+						<td>'</td>
+						<td><xmp>&rsquo;</xmp></td>
+						<td><xmp>&#146;</xmp></td>
+						<td class="tleft">홑따옴표 끝(Closing Single Quote Mark)</td>
+					</tr>
+					<tr>
+						<td>．</td>
+						<td><xmp>&middot;</xmp></td>
+						<td><xmp>&#183;</xmp></td>
+						<td class="tleft">중간점(Medium List Dot)</td>
+					</tr>
+					<tr>
+						<td>。</td>
+						<td><xmp>&deg;</xmp></td>
+						<td><xmp>&#176;</xmp></td>
+						<td class="tleft">각도(Degree symbol)</td>
+					</tr>
+					<tr>
+						<td>&lt;</td>
+						<td><xmp>&lt;</xmp></td>
+						<td><xmp>&#60;</xmp></td>
+						<td class="tleft">~ 보다 작은 (Less than)</td>
+					</tr>
+					<tr>
+						<td>&gt;</td>
+						<td><xmp>&gt;</xmp></td>
+						<td><xmp>&#62;</xmp></td>
+						<td class="tleft">~ 보다 큰 (Greater than)</td>
+					</tr>
+					<tr>
+						<td>ⓒ</td>
+						<td><xmp>&copy;</xmp></td>
+						<td><xmp>&#169;</xmp></td>
+						<td class="tleft">저작권 (Copyright symbol)</td>
+					</tr>
+					<tr>
+						<td>ⓡ(대문자R)</td>
+						<td><xmp>&reg;</xmp></td>
+						<td><xmp>&#174;</xmp></td>
+						<td class="tleft">등록(Registered symbol)</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+<pre class="area_view">
+&lt; = & l t ;
+&gt; = & g t ;
+&amp; = & amp ;
+</pre>
+
+		<h3>1. CSS</h3>
+		<h4>작성 순서</h4>
+		<div class="area_con">
+			display / overflow / visibility / position(left, top) / z-index / float(clear) / <br />
+			width / height / margin / padding / <br />
+			background(color, image, position, repeat) / border / <br />
+			text-align(vertical-align) / color / <br />
+			font(weight, size, line-height) / text-overflow / text-decoration / <br />
+			zoom / content / other
+		</div>
+		<h4>이름 규칙 (class)</h4>
+		<div class="area_con">
+			- 직관적이고 누구나 알아볼 수 있으며 간단하게 작성하는 것이 좋습니다.<br />
+			- 소문자만 사용하며 단어 구분은 "-"로 표현합니다.<br />
+			- 레이아웃을 구성하는 내용만 id(wrapper, header, container, nav, content, footer) 값으로 넣었습니다.<br />
+		</div>
+		<h4>띄어쓰기</h4>
+		<div class="area_con">
+			- CSS에서의 띄어쓰기는 모두 1 스페이스로 합니다.
+		</div>
+
+		<h3>2. FORM</h3>
+		<h4>작성 순서 (속성)</h4>
+		<div class="area_con">
+			input / type / id / name / class / option(checked, selected)
+		</div>
+
+	</div>
+
+
+	</div>
+</body>
+</html>

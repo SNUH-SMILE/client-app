@@ -1,0 +1,125 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>코딩진행표</title>
+	<!-- <link rel="stylesheet" type="text/css" href="css/morpheus-style.css"/> -->
+	<link rel="stylesheet" type="text/css" href="guide/css/guide.css"/>
+	<style type="text/css">
+		body {background-color:#eee;}
+		img {width:auto !important}
+	</style>
+	<script type="text/javascript" src="guide/js/dtree.js"></script>
+</head>
+<body>
+
+<div id="content_guide_list">
+
+
+	<h2>프로세스</h2>
+	<ol>
+		<li><span class="txt_ing">코딩진행중(디자인 적용안함)</span></li>
+		<li><span class="txt_ask">코딩진행중(디자인 적용함)</span></li>
+		<li><span class="txt_del">코딩삭제</span></li>
+		<!-- <li><span class="txt_today">수정 및 변경, 추가작업</span></li> -->
+		<!---<li><span class="txt_confirm">개발전달</span></li> -->
+		<li><span class="txt_modify">개발전달후 수정</span></li>
+	</ol>
+
+		<div class="area_btn">
+			<a href="javascript: g.openAll();"><img src="guide/img/btn_expand.gif" alt="Expand All" /></a>
+			<a href="javascript: g.closeAll();"><img src="guide/img/btn_collapse.gif" alt="Collapse All" /></a>
+		</div>
+
+		<!-- Guide -->
+		<script type="text/javascript">
+			//<![CDATA[
+
+
+			g = new dTree('g');
+
+			g.add(0,-1,'WSG');
+
+			g.add(100,0,'기본결정사항','guide/html/basic.html','템플릿','mainFrame');
+
+			g.add(200,0,'디렉토리 구조','guide/html/directory.html','템플릿','mainFrame');
+
+			g.add(300,0,'Page Template');
+				g.add(301,300,'Login_Template','guide/html/page-login-wrap.html','템플릿','mainFrame');
+				g.add(302, 300, 'Main_Template', 'guide/html/page-main-wrap.html', '템플릿', 'mainFrame');
+				g.add(303, 300, 'Basic_Template', 'guide/html/page-template-wrap.html', '템플릿', 'mainFrame');
+				g.add(304, 300, 'LAYER_POPUP', 'guide/html/page-layerpopup-wrap.html', '템플릿', 'mainFrame');
+				g.add(3051, 300, 'ㄴLAYER_POPUP(alert)', 'guide/html/page-layeralert-wrap.html', '템플릿', 'mainFrame');
+
+			g.add(400, 0, 'Component');
+				g.add(401, 400, 'TEXT', 'guide/html/com_text.html', '템플릿', 'mainFrame');
+				g.add(402, 400, 'BUTTON', 'guide/html/com_button.html', '템플릿', 'mainFrame');
+				g.add(403, 400, 'FORM', 'guide/html/com_form.html', '템플릿', 'mainFrame');
+				g.add(404, 400, 'TAB', 'guide/html/com_tab.html', '템플릿', 'mainFrame');
+				g.add(405, 400, 'LIST', 'guide/html/com_list.html', '템플릿', 'mainFrame');
+				g.add(406, 400, 'NO_DATA', 'guide/html/com_nodata.html', '템플릿', 'mainFrame');
+
+			g.add(500,0,'CSS');
+				g.add(501,500,'morpheus-reset.css','guide/html/css-reset.html','템플릿','mainFrame');
+				g.add(502,500,'morpheus-common.css','guide/html/css-common.html','템플릿','mainFrame');
+
+			g.add(600,0,'ui.js');
+				g.add(601,600,'ui.js','guide/html/js.html','템플릿','mainFrame');
+
+			g.add(700,0,'Issue');
+				g.add(701,700,'issue-list','guide/html/issue.html','템플릿','mainFrame');
+
+
+			document.write(g);
+			g.openAll();
+
+			//]]>
+		</script>
+		<!-- //guide/ -->
+
+	<!-- 템플릿, 검수요청, 검수완료, 검수완료 -->
+	<div class="dtree">
+
+		<div class="area_btn">
+			<a href="javascript: d.openAll();"><img src="guide/img/btn_expand.gif" alt="Expand All" /></a>
+			<a href="javascript: d.closeAll();"><img src="guide/img/btn_collapse.gif" alt="Collapse All" /></a>
+		</div>
+
+<!-- Front -->
+		<script type="text/javascript">
+			//<![CDATA[
+
+			d = new dTree('d');
+
+			d.add(0,-1,'CODE');
+
+			d.add(1,0,'코딩중');
+			d.add(1.02, 1, '로그인', 'www/html/IITP_LOGIN_V001.html', '코딩중', 'mainFrame');
+			d.add(1.03, 1, '아이디/비밀번호 찾기', 'www/html/IITP_ID_V001.html', '코딩중', 'mainFrame');
+			d.add(1.04, 1, '아이디/비밀번호 찾기', 'www/html/IITP_PW_V001.html', '코딩중', 'mainFrame');
+			d.add(1.05, 1, '아이디 찾기', 'www/html/IITP_ID_P001.html', '코딩중', 'mainFrame');
+			d.add(1.06, 1, '비밀번호 재설정', 'www/html/IITP_PW_P002.html', '코딩중', 'mainFrame');
+			d.add(1.07, 1, '회원가입', 'www/html/IITP_JOIN_V001.html', '코딩중', 'mainFrame');
+			d.add(1.08, 1, '기기연동', 'www/html/IITP_DEVICE_V001.html', '코딩중', 'mainFrame');
+			d.add(1.09, 1, '기기조회 팝업', 'www/html/IITP_DEVICE_P001.html', '코딩중', 'mainFrame');
+			d.add(1.10, 1, '연결하기', 'www/html/IITP_DEVICE_V002.html', '코딩중', 'mainFrame');
+			d.add(1.11, 1, '기기연결 팝업', 'www/html/IITP_MAIN_P002.html', '코딩중', 'mainFrame');
+			d.add(1.12, 1, '메인', 'www/html/IITP_MAIN_V001.html', '코딩중', 'mainFrame');
+			d.add(1.13, 1, '체온', 'www/html/IITP_TEMPER_V001.html', '코딩중', 'mainFrame');
+			d.add(1.14, 1, '혈압', 'www/html/IITP_BLOOD_V001.html', '코딩중', 'mainFrame');
+
+			d.add(2,0,'코딩완료','HTML경로','코딩완료','mainFrame');
+
+			d.add(3,0,'코딩수정','HTML경로','수정','mainFrame');
+
+
+			document.write(d);
+			 d.closeAll();
+
+			//]]>
+		</script>
+<!-- Front -->
+</div>
+</div>
+</body>
+</html>

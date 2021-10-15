@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no, address=no, email=no">
+	<title>Layer Popup</title>
+	<link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css">
+</head>
+
+<body>
+	<!-- Popup -->
+	<div class="popup-wrap show">
+		<div class="popup-bg"></div>
+		<div class="popup-box">
+			<div class="popup">
+				<div class="popup-inner">
+					<div class="pop-title">
+						기기연결
+					</div>
+					<div class="pop-body">
+						<img src="../../www/img/img-loading.png" alt="로딩 이미지">
+						디바이스 검색하는 중 &#183;&#183;&#183;
+					</div>
+				</div>
+				<div class="btn-wrap">
+					<button type="button" class="btn-rnd confirm" disabled>연결하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //Popup -->
+
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Header -->
+		<header class="main header">
+			<div class="header-wrap">
+				<div class="header-ti-box">
+					<!-- <button type="button" class="btn-back">뒤로가기</button> -->
+					<h1>IITP 자가격리</h1>
+					<button type="button" class="btn-device">디바이스 연결</button>
+					<button type="button" class="btn-alim">알람<span class="badge"></span></button>
+				</div>
+				<div class="header-cont-box">
+					<span class="header-name">김하나</span>
+					<!-- 이탈시 정상에 class에 none 추가, 
+								정상시 이탈에 class에 none 추가
+							-->
+					<span class="header-badge normal-b">정상</span>
+					<span class="header-badge leaving-b" style="display: none;">이탈</span>
+					<p>격리 기간:2021.07.01 ~ 2021.07.14</p>
+					<span class="header-take">
+						담당자 박선호
+					</span>
+				</div>
+			</div>
+		</header>
+		<!-- //Header -->
+
+		<!-- Content -->
+		<div class="content-wrap">
+			<div class="content scrollBox">
+				<div style="height:100rem;border:1px solid blue;">
+					SCROLL_ABLE
+					<div class="main-cont-box">
+						<div class="cont-inner" style="height:200px; border:1px solid pink;"></div>
+						<div class="cont-inner" style="height:200px; border:1px solid pink;"></div>
+						<div class="cont-inner" style="height:200px; border:1px solid pink;"></div>
+						<div class="cont-inner" style="height:200px; border:1px solid pink;"></div>
+						<div class="cont-inner" style="height:200px; border:1px solid pink;"></div>
+						<div class="cont-inner" style="height:200px; border:1px solid pink;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //Content -->
+	</div>
+	<!-- //Wrapper -->
+	<script type="text/javascript" src="../../www/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../www/js/ui.js"></script>
+</body>
+
+</html>

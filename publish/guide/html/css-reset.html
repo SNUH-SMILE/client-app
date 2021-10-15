@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>morpheus-reset</title>
+	<link rel="stylesheet" type="text/css" href="../css/guide.css"/>
+	<link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css"/>
+</head>
+
+<body>
+	<div id="content_guide">
+		<h1>morpheus-reset.min.css</h1>
+		<h2>morpheus-reset</h2>
+		<div class="area_con">
+			morpheus-reset.min.css 파일은 수정이 없어야 하기 때문에 min파일로 압축하여 배포합니다.<br/>
+			모바일과 웹에 모두 사용 가능합니다.
+		</div>
+
+		<h2>Default 적용 내용</h2>
+		<div class="area_con">
+			<p>- 뷰포트 변환시 자동확대 방지</p>
+			<p>- box-sizing 적용</p>
+			<p>- margin, padding 0 적용</p>
+
+			<br/><strong class="bold">Link</strong>
+			<p>- text-decoration 제거</p>
+			<p>- outline 제거</p>
+
+			<br/><strong class="bold">Typography</strong>
+			<p>- hgroup : font weight normal 및 size 상속</p>
+			<p>- strong : font weight normal</p>
+			<p>- 그와 vertical align middle 적용</p>
+
+			<br/><strong class="bold">List</strong>
+			<p>- list style 제거</p>
+
+			<br/><strong class="bold">Forms</strong>
+			<p>- button cursor 적용</p>
+			<p>- border, outline 제거, bg color whit적용</p>
+			<p>- textarea vetical align top 적용 및 border 적용</p>
+
+			<br/><strong class="bold">Table</strong>
+			<p>- caption, legend display 제거</p>
+			<p>- border-collapes collapse 적용 및 빈 셀 보이기, border-spacing 제거</p>
+			<p>- table-layout fixed 적용</p>
+
+			<br/><strong class="bold">input</strong>
+			<p>- placeholder color #666 적용</p>
+			<p>- search, number 초기화</p>
+		</div>
+
+		<h2>공통 클래스 ; Align</h2>
+		<div class="area_con">
+			<p><strong class="bold">ta-r / right : </strong>우정렬</p>
+			<p><strong class="bold">al-l / left : </strong>좌정렬</p>
+			<p><strong class="bold">ta-c / center : </strong>중앙정렬</p>
+			<p><strong class="bold">va-t : </strong>위쪽 정렬</p>
+			<p><strong class="bold">va-m : </strong>중간 정렬</p>
+			<p><strong class="bold">va-b : </strong>아래쪽 정렬</p>
+			<p><strong class="bold">fl-l : </strong>display inline-block 변경 후 좌측 float</p>
+			<p><strong class="bold">fl-r : </strong>display inline-block 변경 후 우측 float</p>
+			<p><strong class="bold">over_-h : </strong>overflow hidden 적용</p>
+			<p><strong class="bold">clear / clear-l / clear-r : </strong>both / left / right float clear</p>
+			<p><strong class="bold">posi-a : </strong>position absolute 적용</p>
+			<p><strong class="bold">posi-r : </strong>position relativeㄷ 적용</p>
+		</div>
+
+		<h2>공통 클래스 ; Display</h2>
+		<div class="area_con">
+			<p><strong class="bold">block : </strong>display block 적용</p>
+			<p><strong class="bold">inline : </strong>display inline 적용</p>
+		</div>
+
+		<h2>공통 클래스 ; Font weight</h2>
+		<div class="area_con">
+			<p><strong class="bold">normal : </strong>기본 굵기로</p>
+			<p><strong class="bold">bold : </strong>굵게</p>
+		</div>
+
+		<h2>공통 클래스 ; Hidden</h2>
+		<div class="area_con">
+			<p><strong class="bold">blind : </strong>위치 및 높이값 유지하며 내용만 삭제</p>
+			<p><strong class="bold">none : </strong>display 자체를 삭제</p>
+		</div>
+
+		<h2>공통 클래스 ; Text overflow with ellipsis </h2>
+		<div class="area_con">
+			<p><strong class="bold">ellipsis : </strong>한줄 줄임말</p>
+			<p><strong class="bold">ellipsis2 : </strong>두줄 줄임말</p>
+		</div>
+
+		<h2>공통 클래스 ; word-break</h2>
+		<div class="area_con">
+			<p><strong class="bold">break : </strong>영역을 벗어나는 텍스트 줄 바꿈 처리(예:긴 URL)</p>
+		</div>
+
+		<h2>공통 클래스 ; webkit-box</h2>
+		<div class="area_con">
+			<strong class="bold" style="color:red"># Android 4.4 이상에서만 적용이 가능합니다.</strong>
+			<p><strong class="bold">hbox : </strong>row webkit box 적용</p>
+			<p><strong class="bold">vbox : </strong>column webkit box 적용</p>
+			<p>hbox, vbox 는 -webkit / -moz / -ms 가 모두 적용되어 있습니다. </p>
+			<p>hbox, vbox 의 바로 아래 자식은 display가 block 적용됩니다.</p>
+			<br/>
+			<p><strong class="bold">ss : </strong>가로/세로 중앙 정렬</p>
+			<p><strong class="bold">es : </strong>가로 끝 정렬 / 세로 중앙 정렬</p>
+			<p><strong class="bold">sc : </strong>가로 시작 정렬 / 세로 중앙 정렬</p>
+			<p><strong class="bold">ee : </strong>가로 끝 정렬 / 세로 끝 정렬</p>
+			<p><strong class="bold">cc : </strong>가로 중앙 정렬 / 세로 중앙 정렬</p>
+			<p><strong class="bold">js : </strong>가로 justify 정렬 / 세로 시작 정렬</p>
+			<p><strong class="bold">jc : </strong>가로 justify 정렬 / 세로 중앙 정렬</p>
+			<p><strong class="bold">je : </strong>가로 justify 정렬 / 세로 끝 정렬</p>
+			<p><strong class="bold">stretch : </strong>가로/세로 justify 정렬 및 높이 채움</p>
+			<br/>
+			<p><strong class="bold">flex : </strong>동일한 사이즈로 분배/적용</p>
+			<p>flex 의 바로 아래 자식은 동일한 속성을 가집니다.</p>
+			<p><strong class="bold">flex2 / flex3 / flex4 / flex5 / flex6: </strong>동일한 사이즈로 분배 후 클래스명에 기입된 숫자만큼 제곱됩니다. (flex 2 : X2)</p>
+
+			<p>예시</p>
+			<div class="hbox ss" style="height:100px;border:1px solid #aaa;padding:10px;">
+				<p style="background:red">hbox ss</p>
+			</div>
+			<div class="hbox cc" style="height:100px;border:1px solid #aaa;padding:10px;">
+				<p style="background:red">hbox cc</p>
+			</div>
+			<div class="hbox je" style="height:100px;border:1px solid #aaa;padding:10px;">
+				<p style="background:red">hbox je</p>
+			</div>
+			<Br/>
+			<div class="hbox stretch" style="height:100px;border:1px solid #aaa;padding:10px;">
+				<p class="flex" style="background:red">hbox stretch - flex</p>
+				<p class="flex" style="background:#eee">hbox stretch - flex</p>
+				<p class="flex" style="background:green">hbox stretch - flex</p>
+			</div>
+			<div class="hbox stretch" style="height:100px;border:1px solid #aaa;padding:10px;">
+				<p class="flex" style="background:red">hbox stretch - flex</p>
+				<p class="flex4" style="background:#eee">hbox stretch - flex4</p>
+				<p class="flex" style="background:green">hbox stretch - flex</p>
+			</div>
+		</div>
+
+		<h2>공통 클래스 ; full</h2>
+		<div class="area_con">
+			<p><strong class="bold">w100p/ full : </strong>width 100%</p>
+			<p><strong class="bold">h100p : </strong>height 100%</p>
+		</div>
+<!--
+		<h2>title</h2>
+		<div class="area_con"></div>
+<h3>source</h3>
+<pre class="area_view">
+</pre>
+		<h2>title</h2>
+		<div class="area_con"></div>
+<h3>source</h3>
+<pre class="area_view">
+</pre>
+		<h2>title</h2>
+		<div class="area_con"></div>
+<h3>source</h3>
+<pre class="area_view">
+</pre>
+		<h2>title</h2>
+		<div class="area_con"></div>
+<h3>source</h3>
+<pre class="area_view">
+</pre>
+ -->
+	</div>
+</body>
+</html>

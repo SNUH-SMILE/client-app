@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no, address=no, email=no">
+	<title>Basic Layout</title>
+	<link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css">
+	<style type="text/css">
+		/*가독편의를 위하여 스크롤바의 색을 별도로 지정합니다.*/
+		::-webkit-scrollbar {
+			width: 2px;
+		}
+
+		.scrollX::-webkit-scrollbar {
+			width: auto;
+			height: 2px;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background: red;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Header -->
+		<header class="header">
+			<button type="button" class="btn-back">뒤로가기</button>
+			<h1>Page Title</h1>
+			<button type="button" class="btn-device">디바이스 연결</button>
+			<button type="button" class="btn-alim">알람<span class="badge"></span></button>
+		</header>
+		<!-- //Header -->
+	
+		<!-- Content -->
+		<div class="content-wrap">
+			<div class="content scrollBox">
+				<div style="height:100rem;border:1px solid blue;">
+					SCROLL_ABLE
+	
+					<div class="sub-cont-box">
+						<div class="chart-box" style="height:200px; border:1px solid pink;"></div>
+						<div class="sub-box-inner">
+							<div class="data-box" style="height:200px; border:1px solid pink;"></div>
+							<div class="list-box" style="height:200px; border:1px solid pink;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //Content -->
+	</div>
+	<!-- //Wrapper -->
+	<!-- <script type="text/javascript" src="../../www/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../www/js/ui.js"></script> -->
+</body>
+
+</html>
