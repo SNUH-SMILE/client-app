@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <title>IITP | 산소포화도</title>
+    <link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css">
+</head>
+
+<body>
+    <!-- Wrapper -->
+    <div class="sub-chart-wrap wrapper">
+        <!-- Header -->
+        <header class="header">
+            <button type="button" class="btn-back">뒤로가기</button>
+            <h1>산소포화도</h1>
+            <button type="button" class="btn-device">디바이스 연결</button>
+            <button type="button" class="btn-alim">알람<span class="badge"></span></button>
+        </header>
+        <!-- //Header -->
+
+        <!-- Content -->
+        <div class="content-wrap">
+            <div class="content scrollBox">
+
+                <div class="sub-cont-box">
+                    <div class="chart-box">
+                        <div class="date-box">
+                            <button type="button" class="btn-prev">
+                                전 일
+                            </button>
+                            <span>2022.07.05</span>
+                            <button type="button" class="btn-next">
+                                후 일
+                            </button>
+                        </div>
+                        <div class="chart-inner">
+                            <canvas id="oxygenChart" style="width:100%;height:100%"></canvas>
+                        </div>
+                        <!-- 데이터 없을 때 보여지기 class="none" 지우면 됩니다. -->
+                        <div class="chart-none none">
+                            <p>측정된 정보가 없습니다.</p>
+                        </div>
+
+                        <!-- <div class="chart-mark temp-chart">
+                            <span class="line-chart-item1">체온</span>
+                            <span class="line-chart-item2">정상범위</span>
+                        </div> -->
+                    </div>
+                    <div class="sub-box-inner">
+                        <div class="data-box">
+                            <span class="data-box-ti data-ti4">산소포화도</span>
+                            <span class="data-box-cont">100%</span>
+                        </div>
+                        <div class="list-cont-box list-box">
+                            <div class="info-list">
+                                <div class="list-box list-ti">
+                                    <div class="list-inner1">
+                                        <strong>측정 일시</strong>
+                                    </div>
+                                    <div class="list-inner2">
+                                        <strong>산소포화도</strong>
+                                    </div>
+                                </div>
+
+                                <ol>
+                                    <li>
+                                        <div class="list-box list-cont">
+                                            <div class="list-inner1">
+                                                <p>2021.07 14:00</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner2">
+                                                <p>100%</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="list-box list-cont">
+                                            <div class="list-inner1">
+                                                <p>2021.07 14:00</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner2">
+                                                <p>100%</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="list-box list-cont">
+                                            <div class="list-inner1">
+                                                <p>2021.07 14:00</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                            <div class="list-inner2">
+                                                <p>100%</p>
+                                                <!-- 데이터가 없을 때 보여줌 class="none" 지워주시면 됩니다. -->
+                                                <p class="none">-</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Content -->
+    </div>
+    <!-- //Wrapper -->
+    <script type="text/javascript" src="../js/Chart.min.js"></script>
+    <script type="text/javascript">
+        var myoxygen = {
+            type: 'line',
+            label: 'Line Dataset',
+            data: [36.5, 36.4, 38, 38.6],
+            lineTension: 0,
+            fill: false,
+            borderWidth: 1,
+            borderColor: '#648ee5',
+            order: 1,
+            // radius: 1,
+            pointRadius: 8,
+            pointHoverRadius: 8,
+            pointBackgroundColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            borderDash: [2],
+            // pointStyle: myIcon
+            // 포인트 스타일
+            // pointStyle: ['circle', 'circle', 'circle', point],
+            // pointHoverStyle: ['circle', 'circle', 'circle', point],
+
+        }
+
+
+        // line chart - 산소 차트 시작
+        var Chart6 = new Chart(oxygenChart, {
+            data: {
+                datasets: [myoxygen],
+                labels: ['11:00', '12:00', '13:00', '14:00'],
+            },
+            options: {
+                // responsive: false,
+                layout: {
+                    padding: {
+                        top: 10,
+                        left: 23,
+                        right: 20
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: false
+                },
+                scales: {
+                    yAxes: [{
+                        weight: 10,
+                        offset: true,
+                        gridLines: {
+                            borderDash: [2],
+                            color: '#979797',
+                            drawTicks: false,
+                            offset: true,
+                        },
+                        ticks: {
+                            // autoSkip: true,
+                            min: 35,
+                            // max: 38,
+                            stepSize: 1,
+                            beginAtZero: true,
+                            padding: 3,
+                            fontColor: '#979797',
+                            fontSize: 12,
+                            // tickMarkLength: 10
+                        }
+                    }],
+                    xAxes: [{
+                        offset: true,
+                        gridLines: {
+                            offsetGridLines: true,
+                            padding: 3,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                            color: '#979797',
+                        },
+
+                        ticks: {
+                            maxTicksLimit: 20,
+                            fontColor: '#979797',
+                            fontSize: 12,
+                            stepSize: 1,
+                            beginAtZero: false,
+                            padding: 8
+                        }
+                    }]
+                },
+            }
+        });
+
+    </script>
+</body>
+
+</html>
