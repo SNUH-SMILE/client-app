@@ -1,6 +1,50 @@
-// line chart 나의 체온 데이터
-// var point = new Image();
-// point.src = 'images/line-point.png';
+/******************* 체온차트 시작***************/
+
+var horizonalLinePlugin = {
+    afterDraw: function (chartInstance) {
+        var yScale = chartInstance.scales["y-axis-0"];
+        var canvas = chartInstance.chart;
+        var ctx = canvas.ctx;
+        var index;
+        var line;
+        var style;
+
+        if (chartInstance.options.horizontalLine) {
+            for (index = 0; index < chartInstance.options.horizontalLine.length; index++) {
+                line = chartInstance.options.horizontalLine[index];
+
+                if (!line.style) {
+                    style = "rgba(169,169,169, .6)";
+                } else {
+                    style = line.style;
+                }
+
+                if (line.y) {
+                    yValue = yScale.getPixelForValue(line.y);
+                } else {
+                    yValue = 0;
+                }
+
+                ctx.lineWidth = 1;
+
+                if (yValue) {
+                    ctx.beginPath();
+                    ctx.moveTo(22, yValue);
+                    ctx.lineTo(canvas.width, yValue);
+                    ctx.strokeStyle = style;
+                    ctx.stroke();
+                }
+
+                if (line.text) {
+                    ctx.fillStyle = style;
+                    ctx.fillText(line.text, 0, yValue + ctx.lineWidth);
+                }
+            }
+            return;
+        };
+    }
+};
+Chart.pluginService.register(horizonalLinePlugin);
 
 var mark = new Image();
 mark.src = '../img/chart-mark1.svg';
@@ -19,7 +63,6 @@ var criterionData = {
     borderDash: [2],
     order: 2,
 }
-
 
 var mytempData = {
     type: 'line',
@@ -42,7 +85,7 @@ var mytempData = {
 
 }
 
-// line chart - 체온 차트 시작
+// 체온 차트 시작
 var Chart2 = new Chart(tempChart, {
     data: {
         datasets: [criterionData, mytempData],
@@ -50,11 +93,15 @@ var Chart2 = new Chart(tempChart, {
     },
     options: {
         // responsive: false,
+        "horizontalLine": [{
+            "y": 36.5,
+            "style": "#648ee5",
+        }],
         layout: {
             padding: {
                 top: 10,
-                left: 23,
-                right: 20
+                // left: 23,
+                // right: 20
             }
         },
         legend: {
@@ -80,8 +127,8 @@ var Chart2 = new Chart(tempChart, {
                     min: 35,
                     // max: 38,
                     stepSize: 1,
-                    beginAtZero: true,
                     padding: 3,
+                    beginAtZero: true,
                     fontColor: '#979797',
                     fontSize: 12,
                     // tickMarkLength: 10
@@ -109,13 +156,10 @@ var Chart2 = new Chart(tempChart, {
         },
     }
 });
+/******************* 체온차트 끝 ***************/
 
 
-/*******************혈압***************/
-setTimeout(() => {
-    
-
-
+/*******************혈압 차트 시작***************/ 
 var pointRed = new Image();
 pointRed.src = '../img/chart-mark4.svg';
 
@@ -151,6 +195,7 @@ var highPressure = {
     pointHoverRadius: 10,
 }
 
+// 혈압 차트 시작
 var Chart5 = new Chart(bloodChart, {
 
     type: 'line',
@@ -210,9 +255,10 @@ var Chart5 = new Chart(bloodChart, {
         }
     }
 });
-}, 500);
+/*******************혈압 차트 끝***************/
 
-/*******************심박수***************/
+
+/*******************심박수 차트 시작***************/
 
 var heartrateData = {
     type: 'line',
@@ -228,98 +274,10 @@ var heartrateData = {
     pointHoverRadius: 0,
 }
 
-
-// line chart - 심박수 차트 시작
+// 체온 차트 시작
 var Chart3 = new Chart(heartChart, {
     data: {
         datasets: [heartrateData],
-        labels: ['11:00', '12:00', '13:00', '14:00'],
-    },
-    options: {
-        // responsive: false,
-        layout: {
-            padding: {
-                top: 10
-            }
-        },
-        legend: {
-            display: false
-        },
-        tooltips: {
-            enabled: false
-        },
-        scales: {
-            yAxes: [{
-                gridLines: {
-                    // 가로선
-                    drawOnChartArea: false,
-                    drawBorder: true,
-                    color: '#979797',
-                    drawTicks: false,
-                    // offset: false
-                },
-                ticks: {
-                    // autoSkip: true,
-                    min: 50,
-                    // max: 38,
-                    stepSize: 50,
-                    padding: 3,
-                    beginAtZero: true,
-                    color: '#979797',
-                    // tickMarkLength: 10
-                }
-            }],
-            xAxes: [{
-                offset: true,
-                gridLines: {
-                    padding: 3,
-                    drawOnChartArea: false,
-                    drawTicks: false,
-                    color: '#979797',
-                },
-
-                ticks: {
-                    maxTicksLimit: 20,
-                }
-            }]
-        },
-    }
-});
-
-
-/****************산소포화도**************/
-// const img = new Image();
-// img.src = 'https://i.stack.imgur.com/gXQrT.png';
-
-// line chart 산소 기준 데이터
-
-var myoxygen = {
-    type: 'line',
-    label: 'Line Dataset',
-    data: [36.5, 36.4, 38, 38.6],
-    lineTension: 0,
-    fill: false,
-    borderWidth: 1,
-    borderColor: '#648ee5',
-    order: 1,
-    // radius: 1,
-    pointRadius: 8,
-    pointHoverRadius: 8,
-    pointBackgroundColor: '#fff',
-    pointHoverBackgroundColor: '#fff',
-    borderDash: [2],
-    // pointStyle: myIcon
-    // 포인트 스타일
-    // pointStyle: ['circle', 'circle', 'circle', point],
-    // pointHoverStyle: ['circle', 'circle', 'circle', point],
-
-}
-
-
-// line chart - 산소 차트 시작
-var Chart6 = new Chart(oxygenChart, {
-    data: {
-        datasets: [myoxygen],
         labels: ['11:00', '12:00', '13:00', '14:00'],
     },
     options: {
@@ -384,10 +342,105 @@ var Chart6 = new Chart(oxygenChart, {
     }
 });
 
+/*******************심박수 차트 끝***************/
 
 
-/***********걸음수********/
-// bar chart
+/****************산소포화도 차트 시작**************/
+// line chart 산소 기준 데이터
+
+var myoxygen = {
+    type: 'line',
+    label: 'Line Dataset',
+    data: [36.5, 36.4, 38, 38.6],
+    lineTension: 0,
+    fill: false,
+    borderWidth: 1,
+    borderColor: '#648ee5',
+    order: 1,
+    // radius: 1,
+    pointRadius: 8,
+    pointHoverRadius: 8,
+    pointBackgroundColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    borderDash: [2],
+    // pointStyle: myIcon
+    // 포인트 스타일
+    // pointStyle: ['circle', 'circle', 'circle', point],
+    // pointHoverStyle: ['circle', 'circle', 'circle', point],
+
+}
+
+// 산소 차트 시작
+var Chart6 = new Chart(oxygenChart, {
+    data: {
+        datasets: [myoxygen],
+        labels: ['11:00', '12:00', '13:00', '14:00'],
+    },
+    options: {
+        // responsive: false,
+        layout: {
+            padding: {
+                top: 10,
+                left: 23,
+                right: 20
+            }
+        },
+        legend: {
+            display: false
+        },
+        tooltips: {
+            enabled: false
+        },
+        scales: {
+            yAxes: [{
+                weight: 10,
+                offset: true,
+                gridLines: {
+                    borderDash: [2],
+                    color: '#979797',
+                    drawTicks: false,
+                    offset: true,
+                },
+                ticks: {
+                    // autoSkip: true,
+                    min: 35,
+                    // max: 38,
+                    stepSize: 1,
+                    beginAtZero: true,
+                    padding: 3,
+                    fontColor: '#979797',
+                    fontSize: 12,
+                    // tickMarkLength: 10
+                }
+            }],
+            xAxes: [{
+                offset: true,
+                gridLines: {
+                    offsetGridLines: true,
+                    padding: 3,
+                    drawOnChartArea: false,
+                    drawTicks: false,
+                    color: '#979797',
+                },
+
+                ticks: {
+                    maxTicksLimit: 20,
+                    fontColor: '#979797',
+                    fontSize: 12,
+                    stepSize: 1,
+                    beginAtZero: false,
+                    padding: 8
+                }
+            }]
+        },
+    }
+});
+
+/****************산소포화도 차트 끝**************/
+
+
+
+/*************걸음수 차트 시작****************/
 var Chart1 = new Chart(walkChart, {
     type: 'bar',
     data: {
@@ -482,8 +535,10 @@ var Chart1 = new Chart(walkChart, {
     }
 });
 
+/*************걸음수 차트 끝****************/
 
-/****************수면**************/
+
+/****************수면 차트 시작**************/
 
 var Chart4 = new Chart(sleepChart, {
     type: 'horizontalBar',
@@ -579,3 +634,4 @@ var Chart4 = new Chart(sleepChart, {
     }
 });
 
+/****************수면 차트 끝**************/
