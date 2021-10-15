@@ -26,7 +26,7 @@
             <div class="content scrollBox">
 
                 <div class="sub-cont-box">
-                    <div class="chart-box">
+                    <div class="temp-chart-box chart-box">
                         <div class="date-box">
                             <button type="button" class="btn-prev">
                                 전 일
@@ -122,6 +122,52 @@
     <!-- //Wrapper -->
     <script type="text/javascript" src="../js/Chart.min.js"></script>
     <script type="text/javascript">
+    var horizonalLinePlugin = {
+            afterDraw: function (chartInstance) {
+                var yScale = chartInstance.scales["y-axis-0"];
+                var canvas = chartInstance.chart;
+                var ctx = canvas.ctx;
+                var index;
+                var line;
+                var style;
+
+                if (chartInstance.options.horizontalLine) {
+                    for (index = 0; index < chartInstance.options.horizontalLine.length; index++) {
+                        line = chartInstance.options.horizontalLine[index];
+
+                        if (!line.style) {
+                            style = "rgba(169,169,169, .6)";
+                        } else {
+                            style = line.style;
+                        }
+
+                        if (line.y) {
+                            yValue = yScale.getPixelForValue(line.y);
+                        } else {
+                            yValue = 0;
+                        }
+
+                        ctx.lineWidth = 1;
+
+                        if (yValue) {
+                            ctx.beginPath();
+                            ctx.setLineDash([3]);
+                            ctx.moveTo(22, yValue);
+                            ctx.lineTo(canvas.width, yValue);
+                            ctx.strokeStyle = style;
+                            ctx.stroke();
+                        }
+
+                        if (line.text) {
+                            ctx.fillStyle = style;
+                            ctx.fillText(line.text, 0, yValue + ctx.lineWidth);
+                        }
+                    }
+                    return;
+                };
+            }
+        };
+        Chart.pluginService.register(horizonalLinePlugin);
         var mark = new Image();
         mark.src = '../img/chart-mark1.svg';
 
@@ -159,7 +205,6 @@
             // 포인트 스타일
             pointStyle: [mark, mark, mark, mark2],
             pointHoverStyle: [mark, mark, mark, mark2],
-
         }
 
         // line chart - 체온 차트 시작
@@ -170,11 +215,13 @@
             },
             options: {
                 // responsive: false,
+                    "horizontalLine": [{
+                    "y": 36.5,
+                    "style": "#648ee5",
+                }],
                 layout: {
                     padding: {
                         top: 10,
-                        left: 23,
-                        right: 20
                     }
                 },
                 legend: {
@@ -184,9 +231,10 @@
                     enabled: false
                 },
                 scales: {
+                    weight: 10,
                     yAxes: [{
-                        weight: 10,
-                        offset: true,
+                        weight: 100,
+                        // offset: true,
                         gridLines: {
                             // 가로선
                             drawOnChartArea: false,
@@ -196,6 +244,8 @@
                             // offset: false
                         },
                         ticks: {
+
+                            // labelOffset:-13, //위치 조정 : 잘림
                             // autoSkip: true,
                             min: 35,
                             // max: 38,
@@ -227,7 +277,8 @@
                         }
                     }]
                 },
-            }
+            },
+        
         });
     </script>
 </body>
