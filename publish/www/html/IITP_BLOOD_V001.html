@@ -37,7 +37,7 @@
                             </button>
                         </div>
                         <div class="chart-inner">
-                            <canvas id="bloodChart" style="width:100%;height:100%"></canvas>
+                            <canvas id="bloodChart"></canvas>
                         </div>
                         <!-- 데이터 없을 때 보여지기 class="none" 지우면 됩니다. -->
                         <div class="chart-none none">
@@ -45,7 +45,8 @@
                         </div>
 
                         <div class="chart-mark blood-chart">
-                            <span class="blood-chart-item1">최저혈압</span>
+                            <span class="blood-chart-item1">
+                                최저혈압</span>
                             <span class="blood-chart-item2">최고혈압</span>
                         </div>
                     </div>
@@ -132,23 +133,41 @@
             </div>
         </div>
         <!-- //Content -->
+
+        <!-- 차트 포인트 이미지 깜빡거리는 현상 때문에 포인트 이미지를 html에 넣어뒀습니다. 지우지 않고, 진행 부탁드리겠습니다. -->
+        <div class="none">
+            <img id="mark3" src="../img/chart-mark3.svg" alt="최저 혈압">
+            <img id="mark4" src="../img/chart-mark3-ac.svg" alt="현재 최저 혈압">
+            <img id="mark5" src="../img/chart-mark4.svg" alt="최고 혈압">
+            <img id="mark6" src="../img/chart-mark4-ac.svg" alt="현재 최고 혈압">
+            <!-- <img src="" alt=""> -->
+        </div>
     </div>
     <!-- //Wrapper -->
     <script type="text/javascript" src="../js/Chart.min.js"></script>
     <!-- <script type="text/javascript" src="../js/Chart.js"></script> -->
 
     <script type="text/javascript">
-        var pointRed = new Image();
-        pointRed.src = '../img/chart-mark4.svg';
-        var pointRedac = new Image();
-        pointRedac.src = '../img/chart-mark4-ac.svg';
+    
+        var pointRed = document.getElementById('mark5');
+        var pointRedac = document.getElementById('mark6');
+        var pointBlue = document.getElementById('mark3');
+        var pointBlueac = document.getElementById('mark4');
 
-        var pointBlue = new Image();
-        pointBlue.src = '../img/chart-mark3.svg';
-        var pointBlueac = new Image();
-        pointBlueac.src = '../img/chart-mark3-ac.svg';
+        var ctx = document.getElementById('bloodChart').getContext("2d");
+        var gradientStroke = ctx.createLinearGradient(0, 40, 0, 110);
+        gradientStroke.addColorStop(0, '#e46060');
+        gradientStroke.addColorStop(1, '#638de5');
 
+        var bar = {
+            type: 'bar',
+            // 최저, 최고 데이터 순으로 넣으시면 됩니다.
+            data: [[77, 80], [65, 100], [50, 60], [64, 120]],
+            maxBarThickness: 1,
+            backgroundColor: gradientStroke,
+        }
 
+        // 최저 데이터 따로
         var lowPressure = {
             type: 'line',
             data: [77, 65, 50, 64],
@@ -163,6 +182,7 @@
             pointHoverRadius: 10,
         }
 
+        // 최고 데이터 따로
         var highPressure = {
             type: 'line',
             data: [80, 100, 60, 120],
@@ -183,9 +203,10 @@
             label: 'Line Dataset',
             data: {
                 labels: ['11:00', '12:00', '13:00', '14:00'],
-                datasets: [lowPressure, highPressure],
-            },
-            options: {
+                datasets: [lowPressure, highPressure, bar],
+            }, options: {
+                // responsive: false,
+                maintainAspectRatio: false,
                 layout: {
                     padding: {
                         top: 10,
