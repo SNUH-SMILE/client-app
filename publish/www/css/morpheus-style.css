@@ -27,12 +27,12 @@
   width: 100%;
 }
 
-.chart-box{
+/* .chart-box{
   padding: 0 4rem;
-}
+} */
 
-.temp-chart-box.chart-box{
-  padding: 0 6rem 0 6.3rem;
+.temp-chart-box.chart-box {
+  padding: 0 2rem 0 2.3rem;
 }
 
 .cont-inner {
@@ -267,9 +267,9 @@
   background: #fff;
 }
 
-.main-cont-inner .temp-chart-inner{
+/* .main-cont-inner .temp-chart-inner {
   padding: 0 2.3rem 0 2rem;
-}
+} */
 
 .main-cont-box .main-cont-inner:nth-child(even) {
   background: #f8f8f8;
@@ -330,7 +330,8 @@
 .chart-inner {
   width: 100%;
   margin-top: 1.5rem;
-  padding-bottom: 15rem;
+  /* padding-bottom: 15rem; */
+  height: 15rem;
   position: relative;
 }
 
@@ -530,6 +531,22 @@
   margin-left: 1.7rem;
 }
 
+/* 수면 차트 시간 라벨 */
+.sleep-chart-box .chart-label {
+  padding: 0 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+}
+
+.sleep-chart-box .chart-label span{
+display: inline-block;
+font-size: 1.2rem;
+color: #979797;
+}
+
 /*=== RESPONSIVE === */
 @media only screen and (min-width: 768px) {
   .popup .pop-body {
@@ -704,7 +721,7 @@
   }
 
   .sub-chart-wrap .chart-inner {
-    padding-bottom: 24rem;
+   height: 24rem;
   }
   .sub-cont-box .sub-box-inner {
     display: -webkit-box;
@@ -752,20 +769,14 @@
   }
 
   .sub-box-inner .data-box-ti {
-    /* width: 50%; */
     margin-top: 8.1rem;
-    /* margin-left: 12%; */
     margin-left: 11%;
-    /* padding-left: 8rem; */
-    padding-left: 7.1rem;
+    padding-left: 5.1rem;
     color: #628ce4;
-    /* font-size: 3.2rem; */
     font-size: 3rem;
     font-weight: 500;
-    /* line-height: 8rem; */
-    line-height: 7rem;
-    /* background-size: 8rem; */
-    background-size: 7rem;
+    line-height: 5rem;
+    background-size: 5rem;
   }
   .sub-cont-box .sub-box-inner .list-cont-box {
     width: 50%;
