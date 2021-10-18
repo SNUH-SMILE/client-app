@@ -1,7 +1,7 @@
 /******************* 체온차트 시작***************/
 
 var horizonalLinePlugin = {
-    afterDraw: function (chartInstance) {
+    beforeDraw: function (chartInstance) {
         var yScale = chartInstance.scales["y-axis-0"];
         var canvas = chartInstance.chart;
         var ctx = canvas.ctx;
@@ -28,11 +28,14 @@ var horizonalLinePlugin = {
                 ctx.lineWidth = 1;
 
                 if (yValue) {
+                    ctx.save();
                     ctx.beginPath();
                     ctx.moveTo(22, yValue);
                     ctx.lineTo(canvas.width, yValue);
                     ctx.strokeStyle = style;
+                    ctx.setLineDash([5, 5]);
                     ctx.stroke();
+                    ctx.restore();
                 }
 
                 if (line.text) {
@@ -46,23 +49,11 @@ var horizonalLinePlugin = {
 };
 Chart.pluginService.register(horizonalLinePlugin);
 
-var mark = new Image();
-mark.src = '../img/chart-mark1.svg';
+// var mark = new Image();
+// mark.src = '../img/chart-mark1.svg';
 
 var mark2 = new Image();
 mark2.src = '../img/chart-mark2.svg';
-// line chart 체온 기준 데이터
-var criterionData = {
-    type: 'line',
-    label: 'Bar Dataset',
-    data: [36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5],
-    fill: false,
-    borderWidth: 1,
-    pointRadius: 0,
-    borderColor: '#648ee5',
-    borderDash: [2],
-    order: 2,
-}
 
 var mytempData = {
     type: 'line',
@@ -74,24 +65,23 @@ var mytempData = {
     borderColor: '#648ee5',
     order: 1,
     // radius: 1,
-    pointRadius: 8,
-    pointHoverRadius: 8,
+    pointRadius: 7,
+    pointHoverRadius: 7,
     pointBackgroundColor: '#fff',
     pointHoverBackgroundColor: '#fff',
-    // pointStyle: myIcon
     // 포인트 스타일
-    pointStyle: [mark, mark, mark, mark2],
-    pointHoverStyle: [mark, mark, mark, mark2],
-
+    pointStyle: ['circle', 'circle', 'circle', mark2],
+    pointHoverStyle: ['circle', 'circle', 'circle', mark2],
 }
 
 // 체온 차트 시작
 var Chart2 = new Chart(tempChart, {
     data: {
-        datasets: [criterionData, mytempData],
+        datasets: [mytempData],
         labels: ['11:00', '12:00', '13:00', '14:00'],
     },
     options: {
+        maintainAspectRatio: false,
         // responsive: false,
         "horizontalLine": [{
             "y": 36.5,
@@ -100,8 +90,6 @@ var Chart2 = new Chart(tempChart, {
         layout: {
             padding: {
                 top: 10,
-                // left: 23,
-                // right: 20
             }
         },
         legend: {
@@ -159,20 +147,39 @@ var Chart2 = new Chart(tempChart, {
 /******************* 체온차트 끝 ***************/
 
 
-/*******************혈압 차트 시작***************/ 
+/*******************혈압 차트 시작***************/
 var pointRed = new Image();
 pointRed.src = '../img/chart-mark4.svg';
+
+var pointRedac = new Image();
+pointRedac.src = '../img/chart-mark4-ac.svg';
 
 var pointBlue = new Image();
 pointBlue.src = '../img/chart-mark3.svg';
 
+var pointBlueac = new Image();
+pointBlueac.src = '../img/chart-mark3-ac.svg'
 
+var ctx = document.getElementById('bloodChart').getContext("2d");
+var gradientStroke = ctx.createLinearGradient(0, 40, 0, 105);
+gradientStroke.addColorStop(0, '#e46060');
+gradientStroke.addColorStop(1, '#638de5');
+
+var bar = {
+    type: 'bar',
+    // 최저, 최고 데이터 순으로 넣으시면 됩니다.
+    data: [[77, 100], [65, 80], [50, 60], [64, 120]],
+    maxBarThickness: 1,
+    backgroundColor: gradientStroke,
+}
+
+// 최저 데이터 따로
 var lowPressure = {
     type: 'line',
     data: [77, 65, 50, 64],
     fill: false,
-    pointStyle: [pointRed,pointRed,pointRed,pointRed],
-    pointHoverStyle: [pointRed,pointRed,pointRed,pointRed],
+    pointStyle: [pointRed, pointRed, pointRed, pointRedac],
+    pointHoverStyle: [pointRed, pointRed, pointRed, pointRedac],
     showLine: false,
     pointBackgroundColor: '#fff',
     pointHoverBackgroundColor: '#fff',
@@ -181,12 +188,13 @@ var lowPressure = {
     pointHoverRadius: 10,
 }
 
+// 최고 데이터 따로
 var highPressure = {
     type: 'line',
-    data: [100, 50, 60, 120],
+    data: [100, 80, 60, 120],
     fill: false,
-    pointStyle: [pointBlue,pointBlue,pointBlue,pointBlue],
-    pointHoverStyle: [pointBlue,pointBlue,pointBlue,pointBlue],
+    pointStyle: [pointBlue, pointBlue, pointBlue, pointBlueac],
+    pointHoverStyle: [pointBlue, pointBlue, pointBlue, pointBlueac],
     showLine: false,
     pointBackgroundColor: '#fff',
     pointHoverBackgroundColor: '#fff',
@@ -202,14 +210,15 @@ var Chart5 = new Chart(bloodChart, {
     label: 'Line Dataset',
     data: {
         labels: ['11:00', '12:00', '13:00', '14:00'],
-        datasets: [lowPressure, highPressure],
+        datasets: [lowPressure, highPressure, bar],
     },
     options: {
+        maintainAspectRatio: false,
         layout: {
             padding: {
                 top: 10,
-                left: 16,
-                right: 21
+                // left: 16,
+                // right: 21
             }
         },
         legend: {
@@ -282,11 +291,12 @@ var Chart3 = new Chart(heartChart, {
     },
     options: {
         // responsive: false,
+        maintainAspectRatio: false,
         layout: {
             padding: {
                 top: 10,
-                left: 23,
-                right: 20
+                // left: 23,
+                // right: 20
             }
         },
         legend: {
@@ -365,8 +375,8 @@ var myoxygen = {
     borderDash: [2],
     // pointStyle: myIcon
     // 포인트 스타일
-    // pointStyle: ['circle', 'circle', 'circle', point],
-    // pointHoverStyle: ['circle', 'circle', 'circle', point],
+    pointStyle: ['circle', 'circle', 'circle', mark2],
+    pointHoverStyle: ['circle', 'circle', 'circle', mark2],
 
 }
 
@@ -378,11 +388,12 @@ var Chart6 = new Chart(oxygenChart, {
     },
     options: {
         // responsive: false,
+        maintainAspectRatio: false,
         layout: {
             padding: {
                 top: 10,
-                left: 23,
-                right: 20
+                // left: 23,
+                // right: 20
             }
         },
         legend: {
@@ -478,6 +489,7 @@ var Chart1 = new Chart(walkChart, {
     },
     options: {
         // responsive: false,
+        maintainAspectRatio: false,
         layout: {
             padding: {
                 top: 10
@@ -584,11 +596,12 @@ var Chart4 = new Chart(sleepChart, {
         ]
     },
     options: {
-        responsive: false,
+        maintainAspectRatio: false,
         layout: {
             padding: {
-                left: 40,
-                right: 20,
+                top: 10,
+                // left: 40,
+                // right: 20,
                 bottom: 8
             }
         },
