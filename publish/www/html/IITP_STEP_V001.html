@@ -145,28 +145,39 @@
                         hoverBackgroundColor: 'transparent',
                         borderColor: '#5782e1',
                         borderWidth: 1,
-                        data: [300, 700, 800, null]
-
+                        data: [300, 700, 800, null],
+                        minBarThickness: 10, 
+                        maxBarThickness: 15,
+                        categoryPercentage: .5,
                     },
                     {
                         backgroundColor: "transparent",
                         hoverBackgroundColor: 'transparent',
                         borderColor: '#5782e1',
                         borderWidth: 1,
-                        data: [400, 900, null, null]
+                        data: [400, 900, null, null],
+                        minBarThickness: 10, 
+                        maxBarThickness: 15,
+                        categoryPercentage: .5,
                     },
                     {
                         backgroundColor: "transparent",
                         hoverBackgroundColor: 'transparent',
                         borderColor: '#5782e1',
                         borderWidth: 1,
-                        data: [700, 233, null, null]
+                        data: [700, 233, null, null],
+                        minBarThickness: 10, 
+                        maxBarThickness: 15,
+                        categoryPercentage: .5,
                     },
                     {
                         backgroundColor: "#5782e1",
                         hoverBackgroundColor: '#5782e1',
                         borderColor: '#5782e1',
-                        data: [null, null, null, 520]
+                        data: [null, null, null, 520],
+                        minBarThickness: 10,
+                        maxBarThickness: 15,
+                        categoryPercentage: .5,
                     }
                 ]
             },
@@ -208,7 +219,7 @@
                         }
                     }],
                     xAxes: [{
-                        offset: true,
+                        // offset: true,
                         gridLines: {
                             padding: 3,
                             drawOnChartArea: false,

@@ -140,7 +140,7 @@
             <img id="mark4" src="../img/chart-mark3-ac.svg" alt="현재 최저 혈압">
             <img id="mark5" src="../img/chart-mark4.svg" alt="최고 혈압">
             <img id="mark6" src="../img/chart-mark4-ac.svg" alt="현재 최고 혈압">
-            <!-- <img src="" alt=""> -->
+            <!-- <img id="barbg" src="../img/bg-gr.png" alt="바차트 배경"> -->
         </div>
     </div>
     <!-- //Wrapper -->
@@ -148,12 +148,12 @@
     <!-- <script type="text/javascript" src="../js/Chart.js"></script> -->
 
     <script type="text/javascript">
-    
         var pointRed = document.getElementById('mark5');
         var pointRedac = document.getElementById('mark6');
         var pointBlue = document.getElementById('mark3');
         var pointBlueac = document.getElementById('mark4');
 
+        // 바 차트 그라데이션 코드입니다. - 그라데이션 사용 안 하실 거면 지우셔도 됩니다.
         var ctx = document.getElementById('bloodChart').getContext("2d");
         var gradientStroke = ctx.createLinearGradient(0, 40, 0, 110);
         gradientStroke.addColorStop(0, '#e46060');
@@ -162,15 +162,17 @@
         var bar = {
             type: 'bar',
             // 최저, 최고 데이터 순으로 넣으시면 됩니다.
-            data: [[77, 80], [65, 100], [50, 60], [64, 120]],
+            data: [[20, 80], [65, 100], [50, 60], [64, 120]],
             maxBarThickness: 1,
             backgroundColor: gradientStroke,
+            // 그라데이션이 아니라, 한가지 색으로만 나오게 하고 싶다면 아래 코드 사용하시면 됩니다.
+            // backgroundColor: '#638de5'
         }
 
         // 최저 데이터 따로
         var lowPressure = {
             type: 'line',
-            data: [77, 65, 50, 64],
+            data: [20, 65, 50, 64],
             fill: false,
             pointStyle: [pointBlue, pointBlue, pointBlue, pointBlueac],
             pointHoverStyle: [pointBlue, pointBlue, pointBlue, pointBlueac],
@@ -228,10 +230,9 @@
                             color: '#979797',
                             drawTicks: false,
                             offset: true,
-
                         },
                         ticks: {
-                            min: 50,
+                            // min: 50,
                             stepSize: 50,
                             beginAtZero: true,
                             padding: 3,
