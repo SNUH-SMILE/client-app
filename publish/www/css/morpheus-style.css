@@ -183,8 +183,13 @@
   border-bottom: 1px solid #efefef;
 }
 
+.device-wrap.cont-inner .device-ico-wrap div {
+  font-size: 0;
+}
+
 .device-ico-wrap .device-ico {
   display: inline-block;
+  vertical-align: middle;
   padding-left: 4rem;
   color: #000;
   font-size: 1.8rem;
@@ -196,7 +201,9 @@
 }
 
 .device-ico-wrap .device-ico.device-item1 {
+  margin-top: 3px;
   background-image: url(../img/ic-beacon-con.png);
+      background-position: left bottom 3px;
 }
 .device-ico-wrap .device-ico.device-item2 {
   background-image: url(../img/ic-device-con.png);
@@ -206,7 +213,7 @@
 }
 
 .device-ico-wrap .btn-rnd {
-  margin: 0.7rem 0 0.7rem 0.6rem;
+  margin-left: 0.6rem;
 }
 
 .device-connect-wrap {
@@ -223,6 +230,7 @@
 }
 
 .device-connect-wrap p {
+  margin-top: 2px;
   color: #000;
   font-size: 1.8rem;
 }
@@ -541,10 +549,10 @@
   justify-content: space-around;
 }
 
-.sleep-chart-box .chart-label span{
-display: inline-block;
-font-size: 1.2rem;
-color: #979797;
+.sleep-chart-box .chart-label span {
+  display: inline-block;
+  font-size: 1.2rem;
+  color: #979797;
 }
 
 /*=== RESPONSIVE === */
@@ -554,10 +562,9 @@ color: #979797;
     background: url(../img/img-device-connect.png) top center / 33.4rem auto
       no-repeat;
   }
-  .popup .pop-body img {
+  .popup .pop-body .loading-img {
     top: 7.3rem;
     width: 11rem;
-    margin-left: -5.5rem;
   }
   .popup .pop-body p {
     font-size: 3.6rem;
@@ -721,7 +728,7 @@ color: #979797;
   }
 
   .sub-chart-wrap .chart-inner {
-   height: 24rem;
+    height: 24rem;
   }
   .sub-cont-box .sub-box-inner {
     display: -webkit-box;

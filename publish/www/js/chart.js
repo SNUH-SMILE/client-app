@@ -33,7 +33,7 @@ var horizonalLinePlugin = {
                     ctx.moveTo(22, yValue);
                     ctx.lineTo(canvas.width, yValue);
                     ctx.strokeStyle = style;
-                    ctx.setLineDash([5, 5]);
+                    ctx.setLineDash([2]);
                     ctx.stroke();
                     ctx.restore();
                 }
@@ -178,12 +178,12 @@ var lowPressure = {
     type: 'line',
     data: [77, 65, 50, 64],
     fill: false,
-    pointStyle: [pointRed, pointRed, pointRed, pointRedac],
-    pointHoverStyle: [pointRed, pointRed, pointRed, pointRedac],
+    pointStyle: [pointBlue, pointBlue, pointBlue, pointBlueac],
+    pointHoverStyle: [pointBlue, pointBlue, pointBlue, pointBlueac],
     showLine: false,
     pointBackgroundColor: '#fff',
     pointHoverBackgroundColor: '#fff',
-    pointBorderColor: '#e46060',
+    pointBorderColor: '#608ae4',
     pointRadius: 10,
     pointHoverRadius: 10,
 }
@@ -193,12 +193,12 @@ var highPressure = {
     type: 'line',
     data: [100, 80, 60, 120],
     fill: false,
-    pointStyle: [pointBlue, pointBlue, pointBlue, pointBlueac],
-    pointHoverStyle: [pointBlue, pointBlue, pointBlue, pointBlueac],
+    pointStyle: [pointRed, pointRed, pointRed, pointRedac],
+    pointHoverStyle: [pointRed, pointRed, pointRed, pointRedac],
     showLine: false,
     pointBackgroundColor: '#fff',
     pointHoverBackgroundColor: '#fff',
-    pointBorderColor: '#608ae4',
+    pointBorderColor: '#e46060',
     pointRadius: 10,
     pointHoverRadius: 10,
 }
@@ -462,6 +462,9 @@ var Chart1 = new Chart(walkChart, {
                 hoverBackgroundColor: 'transparent',
                 borderColor: '#5782e1',
                 borderWidth: 1,
+                minBarThickness: 10,
+                maxBarThickness: 15,
+                categoryPercentage: .5,
                 data: [300, 700, 800, null]
 
             },
@@ -470,6 +473,9 @@ var Chart1 = new Chart(walkChart, {
                 hoverBackgroundColor: 'transparent',
                 borderColor: '#5782e1',
                 borderWidth: 1,
+                minBarThickness: 10,
+                maxBarThickness: 15,
+                categoryPercentage: .5,
                 data: [400, 900, null, null]
             },
             {
@@ -477,12 +483,18 @@ var Chart1 = new Chart(walkChart, {
                 hoverBackgroundColor: 'transparent',
                 borderColor: '#5782e1',
                 borderWidth: 1,
+                minBarThickness: 10,
+                maxBarThickness: 15,
+                categoryPercentage: .5,
                 data: [700, 233, null, null]
             },
             {
                 backgroundColor: "#5782e1",
                 hoverBackgroundColor: '#5782e1',
                 borderColor: '#5782e1',
+                minBarThickness: 10,
+                maxBarThickness: 15,
+                categoryPercentage: .5,
                 data: [null, null, null, 520]
             }
         ]
@@ -600,7 +612,7 @@ var Chart4 = new Chart(sleepChart, {
         layout: {
             padding: {
                 top: 10,
-                // left: 40,
+                left: 20,
                 // right: 20,
                 bottom: 8
             }
