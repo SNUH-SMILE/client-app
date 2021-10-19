@@ -39,6 +39,7 @@
                         <div class="chart-inner">
                             <canvas id="tempChart" style="width:100%;height:100%"></canvas>
                         </div>
+
                         <!-- 데이터 없을 때 보여지기 class="none" 지우면 됩니다. -->
                         <div class="chart-none none">
                             <p>측정된 정보가 없습니다.</p>
@@ -118,18 +119,28 @@
             </div>
         </div>
         <!-- //Content -->
+        
+        <!-- 차트 포인트 이미지 깜빡거리는 현상 때문에 포인트 이미지를 html에 넣어뒀습니다. 지우지 않고, 진행 부탁드리겠습니다. -->
+        <div class="none">
+            <img id="mark2" src="../img/chart-mark2.svg" alt="현재 체온 아이콘">
+        </div>
     </div>
     <!-- //Wrapper -->
     <script type="text/javascript" src="../js/Chart.min.js"></script>
+
     <script type="text/javascript">
-    var horizonalLinePlugin = {
-            afterDraw: function (chartInstance) {
+
+        var mark2 = document.getElementById('mark2');
+
+        var horizonalLinePlugin = {
+            beforeDraw: function (chartInstance) {
                 var yScale = chartInstance.scales["y-axis-0"];
                 var canvas = chartInstance.chart;
                 var ctx = canvas.ctx;
                 var index;
                 var line;
                 var style;
+                var setLineDash;
 
                 if (chartInstance.options.horizontalLine) {
                     for (index = 0; index < chartInstance.options.horizontalLine.length; index++) {
@@ -150,12 +161,14 @@
                         ctx.lineWidth = 1;
 
                         if (yValue) {
+                            ctx.save();
                             ctx.beginPath();
-                            ctx.setLineDash([3]);
                             ctx.moveTo(22, yValue);
                             ctx.lineTo(canvas.width, yValue);
                             ctx.strokeStyle = style;
+                            ctx.setLineDash([5, 5]);
                             ctx.stroke();
+                            ctx.restore();
                         }
 
                         if (line.text) {
@@ -168,26 +181,8 @@
             }
         };
         Chart.pluginService.register(horizonalLinePlugin);
-        var mark = new Image();
-        mark.src = '../img/chart-mark1.svg';
 
-        var mark2 = new Image();
-        mark2.src = '../img/chart-mark2.svg';
-        // line chart 체온 기준 데이터
-        var criterionData = {
-            type: 'line',
-            label: 'Bar Dataset',
-            data: [36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5],
-            fill: false,
-            borderWidth: 1,
-            pointRadius: 0,
-            borderColor: '#648ee5',
-            borderDash: [2],
-            order: 2,
-        }
-
-
-        var mytempData = {
+        const mytempData = {
             type: 'line',
             label: 'Line Dataset',
             data: [36.5, 36.4, 38, 38.6],
@@ -203,21 +198,25 @@
             pointHoverBackgroundColor: '#fff',
             // pointStyle: myIcon
             // 포인트 스타일
-            pointStyle: [mark, mark, mark, mark2],
-            pointHoverStyle: [mark, mark, mark, mark2],
+            // pointStyle: [mark, mark, mark, mark2],
+            // pointHoverStyle: [mark, mark, mark, mark2],
+
+            pointStyle: ['circle', 'circle', 'circle', mark2],
+            pointHoverStyle: ['circle', 'circle', 'circle', mark2],
         }
 
         // line chart - 체온 차트 시작
         var Chart2 = new Chart(tempChart, {
             data: {
-                datasets: [criterionData, mytempData],
+                datasets: [mytempData],
                 labels: ['11:00', '12:00', '13:00', '14:00'],
             },
             options: {
                 // responsive: false,
-                    "horizontalLine": [{
+                maintainAspectRatio: false,
+                horizontalLine: [{
                     "y": 36.5,
-                    "style": "#648ee5",
+                    "style": "#648ee5"
                 }],
                 layout: {
                     padding: {
@@ -234,7 +233,7 @@
                     weight: 10,
                     yAxes: [{
                         weight: 100,
-                        // offset: true,
+                        offset: true,
                         gridLines: {
                             // 가로선
                             drawOnChartArea: false,
@@ -242,6 +241,7 @@
                             color: '#979797',
                             drawTicks: false,
                             // offset: false
+                            borderDash: [0]
                         },
                         ticks: {
 
@@ -265,6 +265,7 @@
                             drawOnChartArea: false,
                             drawTicks: false,
                             color: '#979797',
+                            borderDash: [0]
                         },
 
                         ticks: {
@@ -274,11 +275,12 @@
                             stepSize: 1,
                             beginAtZero: false,
                             padding: 8
+
                         }
                     }]
                 },
             },
-        
+
         });
     </script>
 </body>
