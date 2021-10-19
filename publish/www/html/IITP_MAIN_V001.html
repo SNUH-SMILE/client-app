@@ -55,9 +55,9 @@
                             </div>
 
                             <div class="temp-chart-inner">
-                            <div class="chart-inner">
-                                <canvas id="tempChart" style="width:100%;height:100%"></canvas>
-                            </div>
+                                <div class="chart-inner">
+                                    <canvas id="tempChart" style="width:100%;height:100%"></canvas>
+                                </div>
                             </div>
                             <!-- 데이터 없을 때 보여지기 class="none" 지우면 됩니다. -->
                             <div class="chart-none none">
@@ -145,9 +145,23 @@
                                 </div>
                                 <button type="button" class="btn-rnd line small">상세보기</button>
                             </div>
-
+                            <!-- 
                             <div class="chart-inner">
                                 <canvas id="sleepChart" style="width:100%;height:100%"></canvas>
+                            </div> -->
+
+                            <div class="sleep-chart-box">
+                                <div class="chart-inner">
+                                    <canvas id="sleepChart" style="width:100%;height:100%"></canvas>
+                                </div>
+
+                                <!-- 1시간마다 시간 변경 -->
+                                <div class="chart-label">
+                                    <span>11:00</span>
+                                    <span>12:00</span>
+                                    <span>13:00</span>
+                                    <span>14:00</span>
+                                </div>
                             </div>
                             <div class="chart-mark sleep-mark">
                                 <span class="sleep-mark-item1">얕은 수면</span>
@@ -164,6 +178,15 @@
             </div>
         </div>
         <!-- //Content -->
+
+        <!-- 차트 포인트 이미지 깜빡거리는 현상 때문에 포인트 이미지를 html에 넣어뒀습니다. 지우지 않고, 진행 부탁드리겠습니다. -->
+        <div class="none">
+            <img id="mark2" src="../img/chart-mark2.svg" alt="현재 체온 아이콘">
+            <img id="mark3" src="../img/chart-mark3.svg" alt="최저 혈압">
+            <img id="mark4" src="../img/chart-mark3-ac.svg" alt="현재 최저 혈압">
+            <img id="mark5" src="../img/chart-mark4.svg" alt="최고 혈압">
+            <img id="mark6" src="../img/chart-mark4-ac.svg" alt="현재 최고 혈압">
+        </div>
 
         <!-- 기기 연결 팝업 -->
         <!-- class="show" 추가시 보여짐 -->
