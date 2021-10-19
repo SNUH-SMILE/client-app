@@ -118,10 +118,17 @@
             </div>
         </div>
         <!-- //Content -->
+
+        <!-- 차트 포인트 이미지 깜빡거리는 현상 때문에 포인트 이미지를 html에 넣어뒀습니다. 지우지 않고, 진행 부탁드리겠습니다. -->
+        <div style="display:none;">
+            <img id="mark2" src="../img/chart-mark2.svg" alt="현재 산소 아이콘">
+        </div>
     </div>
     <!-- //Wrapper -->
     <script type="text/javascript" src="../js/Chart.min.js"></script>
     <script type="text/javascript">
+        var mark2 = document.getElementById('mark2');
+
         var myoxygen = {
             type: 'line',
             label: 'Line Dataset',
@@ -136,11 +143,9 @@
             pointHoverRadius: 8,
             pointBackgroundColor: '#fff',
             pointHoverBackgroundColor: '#fff',
-            borderDash: [2],
-            // pointStyle: myIcon
             // 포인트 스타일
-            // pointStyle: ['circle', 'circle', 'circle', point],
-            // pointHoverStyle: ['circle', 'circle', 'circle', point],
+            pointStyle: ['circle', 'circle', 'circle', mark2],
+            pointHoverStyle: ['circle', 'circle', 'circle', mark2],
 
         }
 
@@ -153,6 +158,8 @@
             },
             options: {
                 // responsive: false,
+                maintainAspectRatio: false,
+
                 layout: {
                     padding: {
                         top: 10,
