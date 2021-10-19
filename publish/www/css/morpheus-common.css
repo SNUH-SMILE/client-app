@@ -76,15 +76,20 @@ body, .wrapper{height:100%;}
 .popup .pop-title{display:block;margin:2rem 0 3.8rem;color: #6791e6;font-size:2.8rem;line-height: 3.8rem;}
 .popup .pop-body{-webkit-box-flex:1;box-flex:1;position:relative;overflow-y:auto;-webkit-overflow-scrolling: touch;padding-top:14.7rem;padding-bottom: 5.9rem;color: #000;font-size: 1.8rem;line-height: 1;background: url(../img/img-device-connect.png) top center /auto 12.4rem no-repeat;}
 .popup .pop-body p{color: #fff;font-size: 1.8rem;}
-.popup .pop-body img{position: absolute;top: 3.7rem;left: 50%;width: 5.4rem;margin-left: -2.7rem;;-webkit-animation:spin 2s linear infinite;animation:spin 2s linear infinite; pointer-events: none;}
+.popup .pop-body .loading-img{position: absolute;top: 3.7rem;left: 50%;width: 5.4rem;-webkit-transform: translateX(-50%);-ms-transform: translateX(-50%);transform: translateX(-50%);}
+.popup .pop-body img{display: block;width: 100%;-webkit-animation:spin 2s linear infinite;animation:spin 2s linear infinite; pointer-events: none;}
 @-webkit-keyframes spin { 
-    100% { -webkit-transform: rotate(360deg); } 
+    /* 100% { -webkit-transform: rotate(360deg); }  */
+	 from { transform: rotate(0deg); }
+  to { transform: rotate(359deg); }
 }
 @keyframes spin { 
-    100% { 
+		 from { transform: rotate(0deg); }
+  to { transform: rotate(359deg); }
+    /* 100% { 
         -webkit-transform: rotate(360deg); 
         transform:rotate(360deg); 
-    } 
+    }  */
 }
 .popup .btn-wrap{margin-top:1rem;}
 
