@@ -203,7 +203,7 @@
 .device-ico-wrap .device-ico.device-item1 {
   margin-top: 3px;
   background-image: url(../img/ic-beacon-con.png);
-      background-position: left bottom 3px;
+  background-position: left bottom 3px;
 }
 .device-ico-wrap .device-ico.device-item2 {
   background-image: url(../img/ic-device-con.png);
@@ -553,6 +553,71 @@
   display: inline-block;
   font-size: 1.2rem;
   color: #979797;
+}
+
+/* 211025- 인트로 추가 */
+.intro-wrap {
+  background-image: -o-linear-gradient(297deg, #6892e7, #5782e1);
+  background-image: linear-gradient(153deg, #6892e7, #5782e1);
+}
+
+.intro-wrap .content-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.intro-wrap .intro-box h1 {
+  color: transparent;
+  font-size: 0px;
+  text-indent: -999999px;
+  line-height: 6.4rem;
+  background: url(../img/intro-logo.png) center / 15.4rem 6.4rem no-repeat;
+}
+
+.intro-wrap .intro-box p {
+  margin-top: 2rem;
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 2.2rem;
+  text-align: center;
+}
+
+.intro-wrap .intro-box p > span {
+  color: #01263a;
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+.intro-wrap .loding-img {
+  padding-top: 11.1rem;
+  text-align: center;
+}
+.intro-wrap .loding-img img {
+  width: 5.4rem;
+  height: 5.4rem;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  pointer-events: none;
+}
+
+.intro-wrap .version {
+  position: absolute;
+  bottom: 1.6rem;
+  width: 100%;
+  color: #92b2f7;
+  font-size: 1.4rem;
+  line-height: 2.6rem;
+  text-align: center;
 }
 
 /*=== RESPONSIVE === */
@@ -946,6 +1011,27 @@
 
   .device-wrap.cont-inner .device-ico-wrap + .device-ico-wrap {
     margin-top: 2rem;
+  }
+
+  .intro-wrap .content-wrap {
+    padding-bottom: 0;
+  }
+
+  .intro-wrap .intro-box {
+    padding-top: 8%;
+  }
+
+  .intro-wrap .intro-box p {
+    font-size: 1.6rem;
+  }
+
+  .intro-wrap .intro-box p > span {
+    font-size: 1.6rem;
+  }
+
+  .intro-wrap .version{
+    bottom: 1.6rem;
+    font-size: 1.6rem;
   }
 }
 
