@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <title>IITP | 설정</title>
+    <link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css">
+</head>
+
+<body>
+    <!-- Wrapper -->
+    <div class="set-wrap wrapper">
+        <!-- Header -->
+        <header class="header">
+            <button type="button" class="btn-back">뒤로가기</button>
+            <h1>개인정보 수정</h1>
+            <button type="button" class="btn-device">디바이스 연결</button>
+            <button type="button" class="btn-alim">알람<span class="badge"></span></button>
+            <button type="button" class="btn-set">설정</button>
+        </header>
+        <!-- //Header -->
+
+        <!-- Content -->
+        <div class="content-wrap">
+            <div class="content scrollBox">
+                <div class="container-wrap ipt-cont-box">
+                    <div class="ipt-wrap">
+                        <p class="ttl">아이디</p>
+                        <p class="txt">ㅁㅁㅁㅁㅁㅁ</p>
+                    </div>
+
+                    <div class="ipt-wrap pr-10 tb-float">
+                        <p class="ttl">성명</p>
+                        <p class="txt">김하나</p>
+                    </div>
+
+                    <div class="ipt-wrap pr-10 tb-float">
+                        <p class="ttl">생년월일</p>
+                        <div class="hbox">
+                            <p class="txt flex">123456</p>
+                            <p class="ipt-line">
+                                <input type="radio" name="gender" id="gender01" checked disabled>
+                                <label for="gender01">남</label>
+                                <input type="radio" name="gender" id="gender02" disabled>
+                                <label for="gender02">여</label>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="ipt-wrap pr-10 tb-float">
+                        <label for="myphone">휴대폰 번호</label>
+                        <div class="ipt-box">
+                            <input type="tel" id="myphone" title="휴대폰 번호입력" placeholder="(-)구분 없이 입력" value="010-1234-5678" />
+                        </div>
+                    </div>
+
+                    <div class="ipt-wrap pr-10 tb-float">
+                        <label for="guardianphone">보호자 연락처</label>
+                        <div class="ipt-box">
+                            <input type="tel" id="guardianphone" title="(-)구분 없이 입력입력" placeholder="(-)구분 없이 입력" value="010-1234-5678" />
+                        </div>
+                    </div>
+
+                    <div class="ipt-wrap ipt-address pr-10">
+                        <label for="address01">주소</label>
+                        <div class="tb-flex">
+                            <div class="ipt-box">
+                                <input type="text" class="ipt-address-inner" id="address01" title="우편번호 입력" placeholder="도로명 주소 입력" value="서울특별시 강남구 영동대로"  disabled="">
+                                <button type="button" class="btn-address">도로명 주소 검색</button>
+                            </div>
+                            <div class="ipt-box">
+                                <input type="text" id="address02" title="상세주소 입력" placeholder="상세주소 입력하세요." value="123-12">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-wrap">
+                    <button type="button" class="btn-rnd confirm" disabled>수정</button>
+                </div>
+            </div>
+        </div>
+        <!-- //Content -->
+    </div>
+    <!-- //Wrapper -->
+</body>
+
+</html>
