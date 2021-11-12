@@ -11,5 +11,10 @@
     <string name="nbutton3">UI웹화면</string>
     <string name="sTitle1">받은 파라메터 데이터</string>
     <string name="sTitle2">Network error</string>
+    <string name="not_support_ble">Bluetooth 4.0을 지원하지 않는 기기입니다.</string>
+    <string name="bluetooth_Disabled">블루투스를 활성화 해 주십시오.</string>
+    <string name="connect">Connected</string>
+    <string name="disconnect">Disconnected</string>
+
 
 </resources>
