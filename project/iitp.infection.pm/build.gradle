@@ -28,7 +28,7 @@ if (project.rootProject.file('local.properties').exists()) {
 
 android {
 	compileSdkVersion 30
-	buildToolsVersion "28.0.3"
+	buildToolsVersion "30.0.3"
 	useLibrary 'org.apache.http.legacy'
 	sourceSets {
 		main {
@@ -54,7 +54,7 @@ android {
 	}
 	
 	defaultConfig{
-		minSdkVersion 14
+		minSdkVersion 18
 		targetSdkVersion 30
 	}
 	packagingOptions {
@@ -107,7 +107,7 @@ dependencies {
 	* ==========================================
 	* implementation name: 'example-release', ext: 'aar'
 	*/
-	
+	implementation name: 'ute_sdk_v2.9.4', ext: 'aar'
 }
 
 import org.apache.tools.ant.taskdefs.condition.Os
