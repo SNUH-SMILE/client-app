@@ -4,11 +4,20 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 	<title>Hello! Mobile!</title>
+	<style>
+		.bandlist li{width:100%;height:35px;line-height:35px;border: 1px solid;}
+
+	</style>
 </head>
 
 <body>
 	<h1>Hello! Mobile!</h1>
-	
+	<button onclick="bandScan()">Check Fit Band 스켄</button>
+	<div>
+		<ul class="bandlist">
+
+		</ul>
+	</div>
 </body>
 
 <script type="text/javascript" src="../js/mcore.min.js"></script>
@@ -25,6 +34,22 @@ M.onHide(function(e){
 M.onRestore(function(e) {
 	
 });
+function bandScan(){
+	var obj = {};
+	obj.schBand = "COVID";
+	obj.callback = M.response.on( function( result ) {
+		var strbuffer = new StringBuffer();
+		for(var i=0; i<result.list.length; i++){
+			strbuffer.append('<li onclick="bandItemClick(\''+result.list[i].band_addr+'\');">'+result.list[i].band_name+'</li>');
+		}
+		$(".bandlist").html(strbuffer.toString());
+	}).toString();
+	M.execute('exBandScan',obj);
+}
+
+function bandItemClick(addr){
+	M.execute('exBandConnect',addr);
+}
 
 </script>
 

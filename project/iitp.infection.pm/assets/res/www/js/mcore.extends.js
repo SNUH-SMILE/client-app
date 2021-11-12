@@ -6,6 +6,7 @@ thisFileName = "mcore.extends.js",
 
 importFiles = [
 	"wnInterface.extends.js",
+	"libs/jquery-3.1.1.min.js",
 	"ui/common.js"
 ];
 
