@@ -620,6 +620,27 @@
   text-align: center;
 }
 
+
+/* 20211105 */
+.login-cont .terms-list-item{padding: 1.7rem 0}
+.btn-terms-view{display: inline-block;height: 3rem;color: #999999;font-size: 1.4rem;font-weight: 400;line-height: 1.6rem;text-decoration:underline;}
+
+.container-wrap.type-list{-webkit-box-flex:1;-moz-box-flex:1;-ms-flex:1;flex:1;}
+.set-list-box{}
+.set-list-item{display: block;width: 100%;padding: 1.4rem 3rem;border-bottom: 1px solid #EFEFEF;display:-webkit-box;display:-ms-flexbox;display:-moz-box;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;-moz-box-orient:horizontal;flex-direction:row;text-align:left;}
+button.set-list-item{padding-right: 3.8rem;background: url(../img/ico-list-btn.png) 100% 50% no-repeat;background-size:3.8rem;}
+.set-list-item .ttl{-webkit-box-flex:1;-moz-box-flex:1;-ms-flex:1;flex:1;font-size: 1.8rem;padding: 0.4rem 0;color: #000;line-height: 2.2rem;overflow: hidden;text-overflow:ellipsis;white-space:nowrap;}
+.alrm-list-box{}
+.alrm-list-item{display: block;width: 100%;padding: 1.8rem 3rem;border-bottom: 1px solid #EFEFEF;text-align:left;}
+.alrm-list-item .ttl{display: block;color: #000;font-size: 1.6rem;line-height: 2.0rem;}
+.alrm-list-item .date{display: block;margin-top: 1rem;color: #9c9c9c;font-size: 1.6rem;line-height: 1}
+
+.ipt-wrap .ttl{display: block;color: #999;font-size: 1.6rem;font-weight: 500;}
+.ipt-wrap .txt{display: block;color: #000;font-size: 1.8rem;font-weight: 500;}
+.ipt-wrap .txt *{color: #000;font-size: 1.8rem;font-weight: 500;}
+.ipt-wrap .ttl + *{margin-top: 1.5rem}
+
+
 /*=== RESPONSIVE === */
 @media only screen and (min-width: 768px) {
   .popup .pop-body {
@@ -1032,6 +1053,18 @@
   .intro-wrap .version{
     bottom: 1.6rem;
     font-size: 1.6rem;
+  }
+  /*20211105 추가*/
+  .set-wrap.wrapper .ipt-wrap {
+    width: calc(50% - 2rem);
+  }
+  .set-wrap.wrapper .ipt-wrap.ipt-address {
+    clear: both;
+    width: 100%;
+    padding-top: 5rem;
+  }
+  .set-wrap.wrapper .ipt-wrap.ipt-address .ipt-box {
+    width: calc(50% - 2rem);
   }
 }
 
