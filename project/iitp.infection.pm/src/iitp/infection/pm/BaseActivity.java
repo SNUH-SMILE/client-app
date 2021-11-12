@@ -1,13 +1,14 @@
 package iitp.infection.pm;
 
-import m.client.android.library.core.utils.Logger;
+import iitp.infection.pm.samples.utils.ComListener;
+
 import m.client.android.library.core.view.MainActivity;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 /**
  * BaseActivity Class
@@ -30,6 +31,7 @@ import android.webkit.WebView;
  */
 
 public class BaseActivity extends MainActivity {
+	private int REQUEST_ENABLE_BT = 1;
 	/**
 	 * Webview가 시작 될 때 호출되는 함수
 	 */
@@ -45,5 +47,29 @@ public class BaseActivity extends MainActivity {
 	public void onPageFinished(WebView view, String url)  {
 		super.onPageFinished(view, url);
 		
+	}
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		ComListener.mPermissionsResultListener.onPermissionsResultListener(requestCode,permissions,grantResults);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED) {
+			Toast.makeText(this, R.string.bluetooth_Disabled, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_OK) {
+			ComListener.mBluetoothResultListener.onBluetoothResultListener();
+			return;
+		}
+
 	}
 }

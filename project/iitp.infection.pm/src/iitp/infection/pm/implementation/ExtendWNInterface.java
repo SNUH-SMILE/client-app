@@ -1,13 +1,23 @@
 package iitp.infection.pm.implementation;
 
+import iitp.infection.pm.band.BandCont;
+import iitp.infection.pm.band.BandScan;
+import iitp.infection.pm.band.CommConfig;
 import m.client.android.library.core.bridge.InterfaceJavascript;
+import m.client.android.library.core.managers.ActivityHistoryManager;
 import m.client.android.library.core.utils.PLog;
 import m.client.android.library.core.view.AbstractActivity;
+import m.client.android.library.core.view.MainActivity;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * ExtendWNInterface Class
@@ -26,7 +36,8 @@ import android.webkit.WebView;
  * 166 Samseong-dong, Gangnam-gu, Seoul, 135-090, Korea All Rights Reserved.
  */
 public class ExtendWNInterface extends InterfaceJavascript {
-
+	private String CLASS_TAG = ExtendWNInterface.class.getSimpleName();
+	final MainActivity topAct = (MainActivity) ActivityHistoryManager.getInstance().getTopActivity();
 	/**
 	 * 아래 생성자 메서드는 반드시 포함되어야 한다. 
 	 * @param callerObject
@@ -113,22 +124,72 @@ public class ExtendWNInterface extends InterfaceJavascript {
 	public void onExtendActivityResult(Integer requestCode, Integer resultCode, Intent data) {
 		PLog.i("", ">>> 여기는 ExtendWNInterface onExtendActivityResult!!!  requestCode => [ " + requestCode + " ], resultCode => [ " + resultCode + " ]");
 	}
-	
-	/*
-	public String syncTest(String param1, String param2) {
-		return param1 + param2;
+	/**
+	* 밴드 스켄 시작
+ 	* 추후 밴드 종류에 따라 Scan 클래스는 달라져야 할 수도 있음
+ 	* new BandScan 은 Check fit 스마트 워치 업체에서 제공하는 SDK API 사용에 연결되어 있음
+	* */
+	private BandScan mBandScan;
+	public void exBandScan(String schBand, final String callback){
+		Log.d(CLASS_TAG, "exBandScan");
+		//CommConfig.CHECKFIT_SMART_WATCH = schBand;
+		if(schBand.equals(CommConfig.CHECKFIT_SMART_WATCH)){
+			mBandScan = new BandScan(topAct,callerObject.getApplicationContext(),callback);
+		}
 	}
-	
-	public void asyncTest(final String callback) {
-		callerObject.runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				String format = "javascript:%s('abc', 1, {'a':'b'});";
-				String jsString = String.format(format, callback);
-				PLog.d("asyncTest", jsString);
-    			webView.loadUrl(jsString);
+	public void exBandScan(String obj){
+
+		try {
+			JSONObject object = new JSONObject(obj);
+			Log.d(CLASS_TAG, "exBandScan ");
+			//CommConfig.CHECKFIT_SMART_WATCH = object.optString("schBand","COVID") ;
+			String schBand = object.optString("schBand","");
+			if(schBand.equals(CommConfig.CHECKFIT_SMART_WATCH)){
+				mBandScan = new BandScan(topAct,callerObject.getApplicationContext(),object.optString("callback","cbBandList"));
 			}
-		});
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
 	}
-	*/
+	/**
+	 * 밴드 스켄 중지
+	 * 추후 밴드 종류에 따라 Scan 중지 클래스는 달라져야 할 수도 있음
+	 * bandScanStop() 은 Check fit 스마트 워치 업체에서 제공하는 SDK API 사용에 연결되어 있음
+	 * */
+	public void exBandScanStop(){
+		mBandScan.getInstance(topAct,callerObject.getApplicationContext()).bandScanStop();
+	}
+	/**
+	 * 밴드 connect
+	 * 추후 밴드 종류에 따라 connect 클래스는 달라져야 할 수도 있음
+	 * new BandCont 은 Check fit 스마트 워치 업체에서 제공하는 SDK API 사용에 연결되어 있음
+	 * */
+	private BandCont mBandCont;
+	public void exBandConnect(String connBand, String bandAddr){
+		if(connBand.equals(CommConfig.CHECKFIT_SMART_WATCH)){
+			mBandScan.getInstance(topAct,callerObject.getApplicationContext()).bandScanStop();
+			//mBandScan.bandScanStop();
+			mBandCont = new BandCont(topAct,callerObject.getApplicationContext());
+			mBandCont.BandConnect(bandAddr);
+		}
+	}
+	/**
+	 * 밴드 데이터 동기화
+	 * 추후 밴드 종류에 따라 데이터 동기화 클래스는 달라져야 할 수도 있음
+	 * bandDataSync 은 Check fit 스마트 워치 업체에서 제공하는 SDK API 사용에 연결되어 있음
+	 **/
+	public void exBandDataSync(){
+		mBandCont.getInstance(topAct,callerObject.getApplicationContext()).bandDataSync(mBandCont.BAND_SYNC_STEP);//스텝 싱크 시작
+		//mBandCont.bandDataSync(mBandCont.BAND_SYNC_STEP);
+
+	}
+	/**
+	* 메인 화면에서 사용할 당일 전체 Check Fit 데이터
+	**/
+	public void exMainAllData(String callback){
+
+	}
+
+
 }

@@ -8,7 +8,9 @@ import m.client.android.library.core.common.CommonLibHandler;
 import m.client.android.library.core.utils.Logger;
 import android.app.Activity;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.webkit.WebView;
 
 
 /**
@@ -41,6 +43,9 @@ public class Startup extends Activity {
   	
 
     	super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
         ////////////////////////////////////////////////////////////////////////////////
         // - 중요 -
         // 최초 시작 Activity에 아래의 코드를 넣어야 한다. 
