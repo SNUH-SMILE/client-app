@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,23 +35,20 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
     private boolean mScanning;
     private Handler mHandler;
     // Stops scanning after 10 seconds.
-    private final long SCAN_PERIOD = 10000;
+    private final long SCAN_PERIOD = 3000;
     private BLEServiceOperate mBLEServiceOperate;
     private static BandScan instance = null;
-    JSONArray bandInfoList = new JSONArray();
+    JSONArray bandInfoList; //= new JSONArray();
 
 
-    public static BandScan getInstance(MainActivity activity, Context context) {
+    public static BandScan getInstance(MainActivity activity, Context context,String callback) {
         if (instance == null) {
-            instance = new BandScan(activity, context);
+            instance = new BandScan(activity, context, callback);
+        }else{
+            instance.bleServiceOperate();
         }
         return instance;
 
-    }
-    public BandScan(MainActivity activity, Context applicationContext){
-        mContext = applicationContext;
-        mActivity = activity;
-        bleServiceOperate();
     }
     public BandScan(MainActivity activity, Context applicationContext, String callback){
         mContext = applicationContext;
@@ -85,6 +83,7 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
 
     //밴드 스캔
     public void scanLeDevice(final boolean enable) {
+        bandInfoList = new JSONArray();
         //Bluetooth가 활성화되어 있는지 체크
         if (!mBLEServiceOperate.isBleEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -102,7 +101,7 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
 
                         @Override
                         public void run() {
-                            Log.d(CLASS_TAG, "scanLeDevice band Stop & list Callback ");
+                            Log.d(CLASS_TAG, "scanLeDevice band Stop & list Callback "+mCallback);
                             mActivity.getWebView().loadUrl("javascript:" + mCallback + "("+new CommUtils().setJSONData("list",bandInfoList)+")");
                         }
                     });
@@ -121,6 +120,7 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
     }
     //밴드 스켄 중지
     public void bandScanStop(){
+        Log.i(CLASS_TAG,"bandScanStop");
         if (mScanning) {
             mBLEServiceOperate.stopLeScan();
             mScanning = false;

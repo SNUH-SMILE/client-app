@@ -50,7 +50,7 @@ public class ComListener {
     }
 
     /**
-    * Bluetooth 활성화 Result 관련 리스
+    * Bluetooth 활성화 Result 관련 리스너 
     **/
     public interface BluetoothResultListener{
         void onBluetoothResultListener();

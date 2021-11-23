@@ -2,5 +2,10 @@
 <network-security-config>
 	<domain-config cleartextTrafficPermitted="true">
 		<domain includeSubdomains="true">127.0.0.1</domain>
+		<domain includeSubdomains="true">postcode.map.daum.net</domain>
+		<domain includeSubdomains="true">t1.daumcdn.net</domain>
+		<domain includeSubdomains="true">stlog1-local.kakao.com</domain>
+		<domain includeSubdomains="true">suggest-bar.daum.net</domain>
+
 	</domain-config>
 </network-security-config>

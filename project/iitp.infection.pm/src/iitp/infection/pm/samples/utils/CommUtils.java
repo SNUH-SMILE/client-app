@@ -21,20 +21,21 @@ public class CommUtils {
 
     }
     //데이터 JSON object로 set
-    public JSONObject setJSONData(String key, String value){
+    public JSONObject setJSONData(String code, String msg){
         JSONObject obj = new JSONObject();
         try {
-            obj.put(key, value);
+            obj.put("result_code", code);
+            obj.put("result_msg", msg);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return obj;
     }
 
-    public JSONObject setJSONData(String list, JSONArray bandInfoList) {
+    public JSONObject setJSONData(String key, JSONArray array) {
         JSONObject obj = new JSONObject();
         try {
-            obj.put(list, bandInfoList);
+            obj.put(key, array);
         } catch (JSONException e) {
             e.printStackTrace();
         }
