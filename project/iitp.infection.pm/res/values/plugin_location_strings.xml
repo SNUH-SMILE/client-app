@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alert_title">위치 서비스 사용</string>
+    <string name="confirm_button">확인</string>
+    <string name="gps_on">설정하기</string>
+    <string name="gps_off">취소</string>
+    <string name="searching_message">현재 위치를 찾는 중입니다.</string>
+    <string name="not_use_alert_message">정확한\n위치정보 제공에 제약이 있을 수 있습니다.</string>
+    <string name="check_gps_alert_message">자동 위치정보전송을 동의하시겠습니까?</string>
+</resources>
