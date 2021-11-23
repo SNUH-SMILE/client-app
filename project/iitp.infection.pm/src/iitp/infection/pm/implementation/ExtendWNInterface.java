@@ -3,6 +3,7 @@ package iitp.infection.pm.implementation;
 import iitp.infection.pm.band.BandCont;
 import iitp.infection.pm.band.BandScan;
 import iitp.infection.pm.band.CommConfig;
+import iitp.infection.pm.gps.GpsTracker;
 import m.client.android.library.core.bridge.InterfaceJavascript;
 import m.client.android.library.core.managers.ActivityHistoryManager;
 import m.client.android.library.core.utils.PLog;
@@ -11,6 +12,7 @@ import m.client.android.library.core.view.MainActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.os.Build;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -130,11 +132,11 @@ public class ExtendWNInterface extends InterfaceJavascript {
  	* new BandScan 은 Check fit 스마트 워치 업체에서 제공하는 SDK API 사용에 연결되어 있음
 	* */
 	private BandScan mBandScan;
-	public void exBandScan(String schBand, final String callback){
+	public void exBandScan(String schBluetooth, final String callback){
 		Log.d(CLASS_TAG, "exBandScan");
-		//CommConfig.CHECKFIT_SMART_WATCH = schBand;
-		if(schBand.equals(CommConfig.CHECKFIT_SMART_WATCH)){
-			mBandScan = new BandScan(topAct,callerObject.getApplicationContext(),callback);
+		//CommConfig.CHECKFIT_SMART_WATCH = schBluetooth;
+		if(schBluetooth.equals(CommConfig.CHECKFIT_SMART_WATCH)){
+			mBandScan = BandScan.getInstance(topAct,callerObject.getApplicationContext(),callback);
 		}
 	}
 	public void exBandScan(String obj){
@@ -142,10 +144,10 @@ public class ExtendWNInterface extends InterfaceJavascript {
 		try {
 			JSONObject object = new JSONObject(obj);
 			Log.d(CLASS_TAG, "exBandScan ");
-			//CommConfig.CHECKFIT_SMART_WATCH = object.optString("schBand","COVID") ;
-			String schBand = object.optString("schBand","");
-			if(schBand.equals(CommConfig.CHECKFIT_SMART_WATCH)){
-				mBandScan = new BandScan(topAct,callerObject.getApplicationContext(),object.optString("callback","cbBandList"));
+			//CommConfig.CHECKFIT_SMART_WATCH = object.optString("schBluetooth","COVID") ;
+			String schBluetooth = object.optString("schBluetooth","");
+			if(schBluetooth.equals(CommConfig.CHECKFIT_SMART_WATCH)){
+				mBandScan = BandScan.getInstance(topAct,callerObject.getApplicationContext(),object.optString("callback","cbBandList"));
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -158,7 +160,7 @@ public class ExtendWNInterface extends InterfaceJavascript {
 	 * bandScanStop() 은 Check fit 스마트 워치 업체에서 제공하는 SDK API 사용에 연결되어 있음
 	 * */
 	public void exBandScanStop(){
-		mBandScan.getInstance(topAct,callerObject.getApplicationContext()).bandScanStop();
+		mBandScan.bandScanStop();
 	}
 	/**
 	 * 밴드 connect
@@ -166,12 +168,19 @@ public class ExtendWNInterface extends InterfaceJavascript {
 	 * new BandCont 은 Check fit 스마트 워치 업체에서 제공하는 SDK API 사용에 연결되어 있음
 	 * */
 	private BandCont mBandCont;
-	public void exBandConnect(String connBand, String bandAddr){
-		if(connBand.equals(CommConfig.CHECKFIT_SMART_WATCH)){
-			mBandScan.getInstance(topAct,callerObject.getApplicationContext()).bandScanStop();
-			//mBandScan.bandScanStop();
-			mBandCont = new BandCont(topAct,callerObject.getApplicationContext());
-			mBandCont.BandConnect(bandAddr);
+	public void exBandConnect(String obj){
+		try {
+			JSONObject object = new JSONObject(obj);
+			String schBluetooth = object.optString("schBluetooth","");
+			String bandAddr = object.optString("bandAddr","");
+			String callback = object.optString("callback","connectResult");
+			if(schBluetooth.equals(CommConfig.CHECKFIT_SMART_WATCH)){
+				mBandScan.bandScanStop();
+				mBandCont = BandCont.getInstance(topAct,callerObject.getApplicationContext(),callback);
+				mBandCont.BandConnect(bandAddr);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 	}
 	/**
@@ -180,9 +189,7 @@ public class ExtendWNInterface extends InterfaceJavascript {
 	 * bandDataSync 은 Check fit 스마트 워치 업체에서 제공하는 SDK API 사용에 연결되어 있음
 	 **/
 	public void exBandDataSync(){
-		mBandCont.getInstance(topAct,callerObject.getApplicationContext()).bandDataSync(mBandCont.BAND_SYNC_STEP);//스텝 싱크 시작
-		//mBandCont.bandDataSync(mBandCont.BAND_SYNC_STEP);
-
+		mBandCont.bandDataSync(mBandCont.BAND_SYNC_STEP);//스텝 싱크 시작
 	}
 	/**
 	* 메인 화면에서 사용할 당일 전체 Check Fit 데이터
@@ -190,6 +197,31 @@ public class ExtendWNInterface extends InterfaceJavascript {
 	public void exMainAllData(String callback){
 
 	}
+	private GpsTracker mMyGpsTracker;
+	public void exWnCurrentLocationStart() {
+		if (mMyGpsTracker == null) {
+			mMyGpsTracker = new GpsTracker(callerObject.getApplicationContext());
+		}
 
+		mMyGpsTracker.setOnLocationListener(new GpsTracker.OnLocationListener() {
+			@Override
+			public void onResult(final Location location) {
+				// TODO Auto-generated method stub
+				Log.d(CLASS_TAG, "location = " + location);
+				Log.d(CLASS_TAG, "location.getLatitude() = " + location.getLatitude());
+				Log.d(CLASS_TAG, "location.getLongitude() = " + location.getLongitude());
+				callerObject.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						((MainActivity)callerObject).getWebView().loadUrl("javascript:OnCurrentLocation('" + location.getLatitude() + "','"+location.getLongitude()+"');");
+					}
+				});
+			}
+		});
+		mMyGpsTracker.startCurrentLocation();
+	}
+	public void exWnCurrentLocationStop() {
+		GpsTracker.getInstance(callerObject.getApplicationContext()).stopCurrentLocation();
+	}
 
 }

@@ -13,6 +13,7 @@
 <body>
 	<h1>Hello! Mobile!</h1>
 	<button onclick="bandScan()">Check Fit Band 스켄</button>
+	<button onclick="mapPage()">Map(GPS 테스트)</button>
 	<div>
 		<ul class="bandlist">
 
@@ -36,21 +37,36 @@ M.onRestore(function(e) {
 });
 function bandScan(){
 	var obj = {};
-	obj.schBand = "COVID";
-	obj.callback = M.response.on( function( result ) {
-		var strbuffer = new StringBuffer();
-		for(var i=0; i<result.list.length; i++){
-			strbuffer.append('<li onclick="bandItemClick(\''+result.list[i].band_addr+'\');">'+result.list[i].band_name+'</li>');
-		}
-		$(".bandlist").html(strbuffer.toString());
-	}).toString();
+	obj.schBluetooth = "COVID";
+	obj.callback = "scanResult";
 	M.execute('exBandScan',obj);
 }
-
-function bandItemClick(addr){
-	M.execute('exBandConnect',addr);
+function scanResult(result){
+	var strbuffer = new StringBuffer();
+	for(var i=0; i<result.list.length; i++){
+		strbuffer.append('<li onclick="bandItemClick(\''+result.list[i].band_addr+'\',this);">'+result.list[i].band_name+'</li>');
+	}
+	$(".bandlist").html(strbuffer.toString());
 }
 
+var conBandElThis;
+function bandItemClick(addr,_this){
+	var obj = {};
+	obj.schBluetooth = "COVID";
+	obj.bandAddr = addr;
+	obj.callback = "connectResult";
+	//M.execute('exBandConnect',"COVID",addr);
+	conBandElThis = _this;
+	M.execute('exBandConnect',obj);
+}
+function connectResult(result){
+	$(conBandElThis).remove();
+	//connect 성공 result_code = 19, result_msg = CONNECT
+}
+
+function mapPage(){
+	M.page.html("map.html")
+}
 </script>
 
 </html>
