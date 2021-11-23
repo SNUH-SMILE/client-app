@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<title>Hello! Mobile!</title>
+	<style>
+		.addrWarp {text-align: center; height: 45px; padding-bottom: 10px;}
+		.addrWarp > * {display: inline-block; height:45px;}
+		.addrWarp input {width : 75%; border:1px solid; float: left;}
+		.addrWarp button {width : 20%; float: right;}
+		#map{height:450px;}
+		.gps-in-map{display:block;overflow:hidden;position:relative;width:100%;height:24.6rem;background:#efefef}
+		.gps-in-map img#mapLocSelect{z-index: 999;position: absolute;margin: auto; top: 50%;left: 50%;margin-left: -1.7rem;margin-top: -4.3rem;}
+
+		/* popup */
+		.none{display:none!important}
+		.popup-wrap{position:fixed;top:0;left:0;z-index:100;width:100%;height:100%;}
+		.popup-bg{position:absolute;top:0;left:0;z-index:101;width:100%;height:100%;background:#000;opacity:.75;}
+		.popup-box{position:relative;display:table;z-index:102;width:100%;height:100%;table-layout:fixed;}
+		.popup-box .popup-mid{display:table-cell;width:100%;padding:0 2rem;height:auto;vertical-align:middle;}
+		.popup-box .popup-btm{display:table-cell;width:100%;height:auto;vertical-align:bottom;}
+		.popup-box .popup{width:100%;margin:0 auto;padding:0;border-radius:3px;background-color:#fff;text-align:center;}
+		.popup-box .popup .pop-hd{position:relative;padding:1.5rem 2rem;}
+		.popup-box .popup .pop-hd .hd-ttl{color:#333;font-size:1.8rem;font-weight:700;}
+		.popup-box .popup .pop-hd .btn-pop-close{display:inline-block;overflow:hidden;position:absolute;top:0;width:5rem;right:0;height:5rem;background-position:50% 50%;background-repeat:no-repeat;background-image:url(../img/btn-hd-close.png);background-size:1.7rem;text-indent:-999px;z-index:1;}
+		.popup-box .popup .pop-bd{max-height:80vh;}
+		.popup-box .popup .pop-bd .pop-subttl{padding:1rem 2rem;color:#070707;font-size:1.5rem;line-height:2.3rem;}
+		.popup-box .popup .pop-bd .pop-ttl{padding:3rem 2rem 2rem;}
+		.popup-box .popup .pop-bd .pop-ttl,
+		.popup-box .popup .pop-bd .pop-ttl *{color:#666;font-size:1.5rem;font-weight:700;line-height:2.3rem;}
+		.popup-box .popup .pop-bd .pop-txt{padding:0 2rem;color:#666;font-size:1.4rem;line-height:2.3rem;}
+		.popup-box .popup .pop-ft, .permi-ft{margin-top:1.5rem;padding:0 2rem 3rem;}
+		.popup-box .popup .pop-ft .btn-pop-txt, .permi-ft .btn-pop-txt{width:100%;height:4.5rem;border-radius:3px;color:#fff;}
+		.popup-box .popup .pop-ft .btn-pop-txt + .btn-pop-txt{margin-top:1rem;}
+		.popup-box .popup .pop-ft .btn-pop-txt.gray{background-color:#6e7174;}
+		.popup-box .popup .pop-ft .btn-pop-txt.blue, .permi-ft .btn-pop-txt.blue{background-color:#2f87f1;}
+
+	</style>
+</head>
+
+<body>
+	<h1>Map</h1>
+	<div class="addrWarp">
+		<input id="userAddr" value="" type="text" disabled>
+		<button onclick="addrSch()">주소검색</button>
+	</div>
+
+	<div class="gps-in-map" id="map">
+
+	</div>
+	<div>
+		<h3>위치정보</h3>
+		<div>사용자 선택 위치 : <span id="selPoint"></span></div>
+		<div>현재 수신 위치 : <span id="curPoint"></span></div>
+		<div>오차범위 : <span id="calPoint"></span></div>
+	</div>
+	<!-- 팝업 -->
+	<div class="popup-wrap none">
+		<div class="popup-bg"></div>
+		<div class="popup-box">
+			<div class="popup-mid">
+				<div class="popup">
+					<div class="pop-hd"><p class="hd-ttl bd-b">주소검색</p><button type="button" class="btn-pop-close">팝업닫기</button></div>
+					<div class="pop-bd" id="pop-bd">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="../js/mcore.min.js"></script>
+<script type="text/javascript" src="../js/common/google_map.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKA3OVV567lC3afY_TPXNDu7K_AIR6G2A&libraries=geometry&v=weekly" async defer></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript">
+
+M.onReady(function(e) {
+	$(".btn-pop-close").on("click",function(){
+		popupClose()
+	})
+	initMap();
+	/*setTimeout(function(){
+		$("#map").append('<img id="mapLocSelect" src="../img/ic-user-pin.png">');
+	},300);*/
+
+});
+
+M.onHide(function(e){
+	
+});
+
+M.onRestore(function(e) {
+	
+});
+
+function addrSch(){
+	var element_layer = document.getElementById('pop-bd');
+	popupOpen();
+	new daum.Postcode({
+        oncomplete: function(data) {
+             // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수(도로명으로 선택하는 경우 조합된 항목을 주소 뒤에 붙여 주기 위한 변수)
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+            } else {
+                extraAddr ="";
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            $("#userAddr").val(addr + extraAddr);
+			codeAddress();
+
+            // 커서를 상세주소 필드로 이동한다.
+            //$("#detailAddr").focus();
+            popupClose();
+        },
+        width : '100%',
+        height : '100%',
+        maxSuggestItems : 5
+    }).embed(element_layer);
+    // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+    initLayerPosition(element_layer);
+}
+// 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
+// resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
+// 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
+var initLayerPosition = function(element_layer){
+    var width = 100; //우편번호서비스가 들어갈 element의 width
+    var height = 470; //우편번호서비스가 들어갈 element의 height
+    var borderWidth = 0; //샘플에서 사용하는 border의 두께
+
+    // 위에서 선언한 값들을 실제 element에 넣는다.
+    element_layer.style.width = width + '%';
+    element_layer.style.height = height + 'px';
+    element_layer.style.border = borderWidth + 'px solid';
+    // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+    element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+    element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+}
+
+//팝업 오픈/ close
+function popupOpen(){
+    $(".popup-wrap").removeClass("none");
+}
+function popupClose(){
+    $(".popup-wrap").addClass("none");
+}
+</script>
+
+</html>
