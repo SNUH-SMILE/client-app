@@ -2,9 +2,9 @@
 <resources>
     <!-- 아래 app_package는 반드시 android package 이름과 동일하게 만들어야 한다(DO NOT DELETE !!!)-->
 	<string name="app_package">iitp.infection.pm</string>
-	
+
 	<string name="app_name">자가격리APP</string>
-	
+
     <string name="hello">Hello World, HybridMobileApp!</string>
     <string name="nbutton1">통신테스트</string>
     <string name="nbutton2">네이티브화면</string>
@@ -15,6 +15,6 @@
     <string name="bluetooth_Disabled">블루투스를 활성화 해 주십시오.</string>
     <string name="connect">Connected</string>
     <string name="disconnect">Disconnected</string>
-
-
+    <string name="band_sync_ok">밴드 동기화 완료</string>
+    <string name="band_sync_fail">밴드 동기화 실패</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,6 +40,8 @@ import com.yc.pedometer.sdk.WriteCommandToBLE;
 import com.yc.pedometer.utils.BreatheUtil;
 import com.yc.pedometer.utils.GlobalVariable;
 
+import org.json.JSONObject;
+
 import iitp.infection.pm.R;
 import iitp.infection.pm.samples.utils.CommUtils;
 import m.client.android.library.core.view.MainActivity;
@@ -49,6 +52,7 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
     private static BandCont instance = null;
     private static Context mContext;
     private MainActivity mActivity;
+    private String mCallback;
     private BLEServiceOperate mBLEServiceOperate;
     private BluetoothLeService mBluetoothLeService;
     private SharedPreferences sp;
@@ -97,17 +101,20 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
     private final int OFFLINE_24_HOUR_RATE_SYNC_OK_MSG = 43;
     private final int OFFLINE_SLEEP_SYNC_OK_MSG = 44;
     private final int SYNC_TEMPERATURE_COMMAND_OK_MSG = 45;
+    private final int SYNC_TIME_OK_MSG = 46;
     private final int BAND_SYNC_DATA_FAIL = 9990;
-    public static BandCont getInstance(MainActivity activity, Context context) {
+
+    public static BandCont getInstance(MainActivity activity, Context context,String callback) {
         if (instance == null) {
-            instance = new BandCont(activity, context);
+            instance = new BandCont(activity, context,callback);
         }
         return instance;
 
     }
-    public BandCont(MainActivity activity, Context applicationContext){
+    public BandCont(MainActivity activity, Context applicationContext,String callback){
         mContext = applicationContext;
         mActivity = activity;
+        mCallback = callback;
         sp = mContext.getSharedPreferences(GlobalVariable.SettingSP, 0);
         mySQLOperate = UTESQLOperate.getInstance(mContext);// 2.2.1版本修改
     }
@@ -131,24 +138,28 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
         mWriteCommand = WriteCommandToBLE.getInstance(mContext);
        // mWriteCommand.sendBandLanguageToBle(BandLanguageUtil.BAND_LANGUAGE_KO);//언어설정 국어
         String lastConnectAddr0 = sp.getString(GlobalVariable.LAST_CONNECT_DEVICE_ADDRESS_SP,"00:00:00:00:00:00");
-        Log.i(CLASS_TAG, "BandConnect lastConnectAddr0:["+lastConnectAddr0+"] new addr ["+bandAddr+"]");
+        Log.i(CLASS_TAG, "BandConnect lastConnectAddr01:["+lastConnectAddr0+"] new addr ["+bandAddr+"]");
         if(lastConnectAddr0 != bandAddr){
             newBandContAble = true;
-            boolean isBandConnect = sp.getBoolean(GlobalVariable.BLE_CONNECTED_SP,false);
-            if (isBandConnect) {
-                Log.d(CLASS_TAG, "step Sync isBandConnect :"+isBandConnect);
-                mBLEServiceOperate.disConnect();
-            }
+        }
+        boolean isBandConnect = sp.getBoolean(GlobalVariable.BLE_CONNECTED_SP,false);
+        if (isBandConnect) {
+            Log.d(CLASS_TAG, "isBandConnect :"+isBandConnect);
+            mBLEServiceOperate.disConnect();
+        }else{
+
         }
         mBLEServiceOperate.connect(bandAddr);
         CommUtils.showLoading(mActivity,"",false);
-
     }
     //밴드 연결 해제
     public void BandDisConnect(){
         if (mBluetoothLeService != null) {
             mBLEServiceOperate.disConnect();
+            mBLEServiceOperate=null;
         }
+
+
     }
     private void dataProcessingListenerInit(){
         mDataProcessing = DataProcessing.getInstance(mContext);
@@ -220,8 +231,18 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
                             }
                         }
                     }).start();
-//                    CURRENT_STATUS = CONNECTED;
-                    Toast.makeText(mContext, mContext.getString(R.string.connect), Toast.LENGTH_SHORT).show();
+                    mActivity.runOnUiThread(new Runnable(){
+                        @Override
+                        public void run() {
+                            Log.d(CLASS_TAG, "Band Connect Callback ");
+                            JSONObject setJsonDt = new CommUtils().setJSONData(String.valueOf(CONNECTED_MSG),"CONNECT");
+                            Toast.makeText(mContext, mContext.getString(R.string.connect), Toast.LENGTH_SHORT).show();
+                            mActivity.getWebView().loadUrl("javascript:" + mCallback + "("+setJsonDt+")");
+                        }
+                    });
+
+                    break;
+                case SYNC_TIME_OK_MSG:
                     bandDataSync(BAND_SYNC_STEP);//스텝 싱크 시작
                     break;
                 case UPDATE_STEP_UI_MSG://걸음수가 Change되는 경우
@@ -248,7 +269,7 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
                     }
                     break;
                 case OFFLINE_STEP_SYNC_OK_MSG://스탭 싱크가 완료된 경우
-                    new DataQuery().queryStepInfo(mySQLOperate,"");
+                    //new DataQuery().queryStepInfo(mySQLOperate,"");
                     bandDataSync(BAND_SYNC_SLEEP);//수면 싱크 시작
                     break;
                 case OFFLINE_SLEEP_SYNC_OK_MSG://수면 싱크가 완료된 경우
@@ -260,12 +281,14 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
                 case OFFLINE_BLOOD_PRESSURE_SYNC_OK_MSG://혈압 싱크가 완료된 경우
                     bandDataSync(BAND_SYNC_TEMPERATURE);//혈압 싱크 시작
                     break;
-                case SYNC_TEMPERATURE_COMMAND_OK_MSG:
-                    CommUtils.hideLoading(mActivity);//
+                case SYNC_TEMPERATURE_COMMAND_OK_MSG://체온 데이터 동기화 완료된 경우
+                    CommUtils.hideLoading(mActivity);//로딩 팝업 종료
+                    Toast.makeText(mContext,R.string.band_sync_ok,Toast.LENGTH_LONG).show();
                     break;
                 case BAND_SYNC_DATA_FAIL:
                     Log.d(CLASS_TAG, "mHandler status : "+bundle.getInt("status"));
                     CommUtils.hideLoading(mActivity);
+                    Toast.makeText(mContext,R.string.band_sync_fail,Toast.LENGTH_LONG).show();
                     break;
                 default:
                     break;
@@ -446,14 +469,6 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
                 break;
             case ICallbackStatus.CONNECTED_STATUS://connect
                 mHandler.sendEmptyMessage(CONNECTED_MSG);
-//                mHandler.postDelayed(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        mWriteCommand.sendToQueryPasswardStatus();
-//                    }
-//                }, 600);// 2.2.1版本修改
-
                 break;
             case ICallbackStatus.OFFLINE_STEP_SYNC_OK://스텝 동기화 완료
                 mHandler.sendEmptyMessage(OFFLINE_STEP_SYNC_OK_MSG);
@@ -499,6 +514,7 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
                 // to read
                 // localBleVersion
                 // mWriteCommand.sendToReadBLEVersion();
+                mHandler.sendEmptyMessage(SYNC_TIME_OK_MSG);
                 break;
             case ICallbackStatus.GET_BLE_VERSION_OK:// 获取固件版本成功后会回调到这里，延迟20毫秒，设置身高体重到手环
                 // localBleVersion
@@ -646,8 +662,9 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
     }
 
     @Override
-    public void onCharacteristicWriteCallback(int i) {
-
+    public void onCharacteristicWriteCallback(int status) {
+        // 写入操作的系统回调，status = 0为写入成功，其他或无回调表示失败
+        Log.d(CLASS_TAG, "Write System callback status = " + status);
     }
 
     @Override

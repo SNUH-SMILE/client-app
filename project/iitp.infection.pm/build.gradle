@@ -108,6 +108,7 @@ dependencies {
 	* implementation name: 'example-release', ext: 'aar'
 	*/
 	implementation name: 'ute_sdk_v2.9.4', ext: 'aar'
+
 }
 
 import org.apache.tools.ant.taskdefs.condition.Os
