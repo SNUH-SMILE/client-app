@@ -24,5 +24,6 @@
         <library api="2.1" id="m.client.library.addon.netExt" revision="4.30" type="addon"/>
         <library api="2.1" id="m.client.library.addon.popup" revision="4.29" type="addon"/>
         <library api="2.1" id="m.client.library.addon.zip" revision="4.3" type="addon"/>
+        <library api="2.1" id="m.client.library.plugin.location" revision="0.8" type="plugin"/>
     </libraries>
 </application>

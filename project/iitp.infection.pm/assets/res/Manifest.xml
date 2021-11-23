@@ -34,7 +34,9 @@
             <path>m.client.library.addon.popup.WNInterfacePopup</path>
             <path>m.client.library.addon.zip.WNInterfaceZip</path>
         </addons>
-        <plugins/>
+        <plugins>
+            <path>m.client.library.plugin.location.WNInterfaceLocation</path>
+        </plugins>
     </library>
     <network>
         <http/>
