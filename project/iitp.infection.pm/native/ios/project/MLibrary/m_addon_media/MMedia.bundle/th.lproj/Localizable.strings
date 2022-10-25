@@ -1,0 +1,29 @@
+// common
+"mp_ok" = "ตกลง";
+"mp_cancel" = "ยกเลิก";
+"mp_done" = "เสร็จสิ้น";
+"mp_notice" = "การประกาศ";
+"mp_loading_please_wait" = "โหลด\nโปรดรอสักครู่";
+
+// voice
+"mp_list" = "รายการ";
+"mp_recoding" = "บันทึก";
+"mp_stop" = "หยุด";
+
+// image
+"mp_select_photo" = "เลือกภาพ";
+"mp_select_video" = "เลือกวิดีโอ";
+"mp_select_album" = "เลือกอัลบั้ม";
+"mp_select_all" = "ตัวเลือก";
+"mp_select" = "เลือก";
+"mp_select_index" = "%@ เลือก";
+"mp_unselect" = "ยกเลิกการเลือก";
+"mp_detail_photo" = "รายละเอียดรูปภาพ";
+"mp_detail_video" = "รายละเอียดวิดีโอ";
+
+"mp_media_scanning" = "สื่อการสแกน";
+
+// movie
+"mp_movie_player_error" = "ล้มเหลวในการเล่นวิดีโอ";
+
+"mp_crop_title" = "Crop";

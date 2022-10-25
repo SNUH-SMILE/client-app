@@ -1,0 +1,15 @@
+"mp_fail_file_download" = "File download failed.";
+"mp_fail_file_upload" = "File upload failed.";
+"mp_file_downloading" = "Downloading";
+"mp_file_uploading" = "Uploading";
+"mp_invalid_connection_info" = "There is a problem with the connection information.";
+"mp_invalid_file_info" = "There is a problem with the file information.";
+"mp_no" = "No";
+"mp_retry_yes_no" = "Would you like to try again?";
+"mp_start_file_download" = "To start downloading the file.";
+"mp_start_file_upload" = "To start uploading the file.";
+"mp_success_file_download" = "File download is complete.";
+"mp_success_file_upload" = "File upload is complete.";
+"mp_upload_invalid_file" = "There is a problem with the file.";
+"mp_upload_over_max_size" = "Capacity of upload file has exceeded the maximum size.";
+"mp_yes" = "Yes";

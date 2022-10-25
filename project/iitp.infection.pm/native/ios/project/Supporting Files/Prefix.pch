@@ -1,0 +1,47 @@
+//
+// Prefix header for all source files of the 'ExampleProject' target in the 'ExampleProject' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+	#warning "This project uses features only available in iPhone SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <MCore/MCore.h>
+    #import "UIView+Toast.h"
+#endif
+
+
+// NSLog
+#ifdef DEBUG
+
+#else
+    #define NSLog(...) {}
+#endif
+
+// SHARED
+#define SHARED_h +(instancetype) shared;
+#define SHARED_m(CLASS) \
++ (instancetype)shared { \
+    static CLASS *instance = nil; \
+    static dispatch_once_t onceToken; \
+    \
+    dispatch_once(&onceToken, ^{ \
+        if (!instance) { \
+            instance = [[CLASS alloc] initPrivate]; \
+        } \
+    }); \
+    return instance; \
+}
+#define SHARED_init \
+- (instancetype)init { \
+    @throw [NSException exceptionWithName:@"Object is singleton" reason:@"" userInfo:nil]; \
+}
+
+// WEB VIEW
+#define WEBVIEW ((PPHybridViewController *)[PPNavigationController ppNavigationController].currentViewCtrl)
+

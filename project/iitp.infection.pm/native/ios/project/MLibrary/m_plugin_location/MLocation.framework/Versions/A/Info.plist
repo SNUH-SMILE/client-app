@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>ko_KR</string>
+	<key>CFBundleExecutable</key>
+	<string>MLocation</string>
+	<key>CFBundleIdentifier</key>
+	<string>m.client.library.plugin.location</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>CFBundleName</key>
+	<string>MLocation</string>
+	<key>CFBundlePackageType</key>
+	<string>FRMK</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.1.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>2.1.0.2</string>
+</dict>
+</plist>

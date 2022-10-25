@@ -1,0 +1,15 @@
+"mp_fail_file_download" = "Tập tin tải về không thành công.";
+"mp_fail_file_upload" = "Tập tin tải lên được.";
+"mp_file_downloading" = "tải về";
+"mp_file_uploading" = "Tải lên";
+"mp_invalid_connection_info" = "Có một vấn đề với các thông tin kết nối.";
+"mp_invalid_file_info" = "Có một vấn đề với các thông tin tập tin.";
+"mp_no" = "không";
+"mp_retry_yes_no" = "Bạn có muốn thử lại không?";
+"mp_start_file_download" = "Để bắt đầu tải về các tập tin.";
+"mp_start_file_upload" = "Để bắt đầu tải lên các tập tin.";
+"mp_success_file_download" = "Tập tin tải về hoàn tất.";
+"mp_success_file_upload" = "Tập tin tải lên hoàn tất.";
+"mp_upload_invalid_file" = "Có một vấn đề với các tập tin.";
+"mp_upload_over_max_size" = "Năng lực của các tập tin tải lên đã vượt quá kích thước tối đa.";
+"mp_yes" = "vâng";

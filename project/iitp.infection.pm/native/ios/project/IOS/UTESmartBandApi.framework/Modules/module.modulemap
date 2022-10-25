@@ -1,0 +1,11 @@
+framework module UTESmartBandApi {
+  umbrella header "UTESmartBandApi.h"
+
+  export *
+  module * { export * }
+}
+
+module UTESmartBandApi.Swift {
+    header "UTESmartBandApi-Swift.h"
+    requires objc
+}

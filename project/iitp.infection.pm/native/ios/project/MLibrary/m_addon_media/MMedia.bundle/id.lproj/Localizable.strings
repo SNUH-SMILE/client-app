@@ -1,0 +1,29 @@
+// common
+"mp_ok" = "oke";
+"mp_cancel" = "membatalkan";
+"mp_done" = "matang";
+"mp_notice" = "pemberitahuan";
+"mp_loading_please_wait" = "Memuat.\nMohon tunggu sebentar.";
+
+// voice
+"mp_list" = "daftar";
+"mp_recoding" = "catatan";
+"mp_stop" = "berhenti";
+
+// image
+"mp_select_photo" = "Pilih foto";
+"mp_select_video" = "Pilih video";
+"mp_select_album" = "Pilih Album";
+"mp_select_all" = "Pilih Item";
+"mp_select" = "Pilih";
+"mp_select_index" = "%@ Pilih";
+"mp_unselect" = "Unselect";
+"mp_detail_photo" = "foto Detil";
+"mp_detail_video" = "Video Detail";
+
+"mp_media_scanning" = "pemindaian Media";
+
+// movie
+"mp_movie_player_error" = "Gagal untuk memutar video.";
+
+"mp_crop_title" = "Crop";

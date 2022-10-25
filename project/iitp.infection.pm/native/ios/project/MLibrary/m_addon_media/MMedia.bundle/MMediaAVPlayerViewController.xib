@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment version="2304" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MMediaAVPlayerViewController">
+            <connections>
+                <outlet property="btnDone" destination="yAW-ML-dg4" id="YnF-Fu-Z9N"/>
+                <outlet property="view" destination="EVP-dc-hf0" id="LyC-7L-0Fi"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="EVP-dc-hf0">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAW-ML-dg4">
+                    <rect key="frame" x="10" y="40" width="50" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="4Cz-ug-Iit"/>
+                        <constraint firstAttribute="width" constant="50" id="GIG-UA-Rpa"/>
+                    </constraints>
+                    <state key="normal" title="DONE"/>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="yAW-ML-dg4" firstAttribute="top" secondItem="dfN-yS-hub" secondAttribute="top" constant="20" id="hvo-Kl-MTX"/>
+                <constraint firstItem="yAW-ML-dg4" firstAttribute="leading" secondItem="dfN-yS-hub" secondAttribute="leading" constant="10" id="xKt-rN-HsN"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="dfN-yS-hub"/>
+            <point key="canvasLocation" x="-1016.25" y="-639.08450704225356"/>
+        </view>
+    </objects>
+</document>

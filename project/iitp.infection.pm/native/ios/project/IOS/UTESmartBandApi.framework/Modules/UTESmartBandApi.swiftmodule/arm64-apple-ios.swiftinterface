@@ -1,0 +1,22 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target arm64-apple-ios9.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name UTESmartBandApi
+import CoreBluetooth
+import Swift
+import UIKit
+@_exported import UTESmartBandApi
+@objc public protocol SYDUpdateDelegate {
+  @objc optional func sydUpdateProccess(proccess: Swift.Float)
+  @objc optional func sydUpdateSuccess()
+  @objc optional func sydUpdateFail()
+}
+@_inheritsConvenienceInitializers @objc open class SYDUpdate : ObjectiveC.NSObject {
+  @objc weak open var delegate: UTESmartBandApi.SYDUpdateDelegate?
+  @objc open func updateSYD(for characteristic: CoreBluetooth.CBCharacteristic!, cb: CoreBluetooth.CBPeripheral!, binData: Foundation.Data!)
+  @objc open func oc_clearParam()
+  @objc open func didWriteValue(data: Foundation.Data)
+  @objc open func didUpdateValue(data: Foundation.Data)
+  @objc open func peripheralReady()
+  @objc deinit
+  @objc override dynamic public init()
+}

@@ -1,0 +1,28 @@
+// common
+"mp_ok" = "確認";
+"mp_cancel" = "キャンセル";
+"mp_done" = "完了";
+"mp_notice" = "通知";
+"mp_loading_please_wait" = "読み込んでいます.\nしばらくお待ちください.";
+
+// voice
+"mp_list" = "リスト";
+"mp_recoding" = "記録";
+"mp_stop" = "停止";
+
+// image
+"mp_select_photo" = "写真を選択";
+"mp_select_video" = "ビデオを選択";
+"mp_select_all" = "項目を選択";
+"mp_select" = "選択";
+"mp_select_index" = "%@ 選択";
+"mp_unselect" = "選択を解除";
+"mp_detail_photo" = "写真 詳細を見る";
+"mp_detail_video" = "ビデオ 詳細を見る";
+
+"mp_media_scanning" = "スキャンメディア";
+
+// movie
+"mp_movie_player_error" = "動画を再生できませんでした.";
+
+"mp_crop_title" = "Crop";

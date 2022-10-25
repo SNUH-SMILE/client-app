@@ -1,0 +1,29 @@
+// common
+"mp_ok" = "確認";
+"mp_cancel" = "取消";
+"mp_done" = "做完";
+"mp_notice" = "通知";
+"mp_loading_please_wait" = "載入中\n請稍等片刻.";
+
+// voice
+"mp_list" = "表";
+"mp_recoding" = "記錄";
+"mp_stop" = "停止";
+
+// image
+"mp_select_photo" = "選擇圖片";
+"mp_select_video" = "選擇一個視頻";
+"mp_select_all" = "可選";
+"mp_select_album" = "選擇相冊";
+"mp_select" = "選擇";
+"mp_select_index" = "%@ 選擇";
+"mp_unselect" = "取消選擇";
+"mp_detail_photo" = "圖片詳細";
+"mp_detail_video" = "視頻細節";
+
+"mp_media_scanning" = "媒體掃描...";
+
+// movie
+"mp_movie_player_error" = "未能播放視頻.";
+
+"mp_crop_title" = "Crop";

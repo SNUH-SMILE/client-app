@@ -1,0 +1,15 @@
+"mp_fail_file_download" = "文件下载失败.";
+"mp_fail_file_upload" = "文件上传失败.";
+"mp_file_downloading" = "下载";
+"mp_file_uploading" = "上传";
+"mp_invalid_connection_info" = "这里有一个问题中的连接信息.";
+"mp_invalid_file_info" = "有一个问题的文件信息.";
+"mp_no" = "没有";
+"mp_retry_yes_no" = "你想再试一次吗？";
+"mp_start_file_download" = "要开始下载文件.";
+"mp_start_file_upload" = "要开始上载文件.";
+"mp_success_file_download" = "文件下载完成.";
+"mp_success_file_upload" = "文件上传完成.";
+"mp_upload_invalid_file" = "与该文件有一个问题.";
+"mp_upload_over_max_size" = "上傳文件的容量已經超過了最大容量.";
+"mp_yes" = "是";

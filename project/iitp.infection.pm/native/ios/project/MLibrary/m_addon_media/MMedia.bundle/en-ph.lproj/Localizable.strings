@@ -1,0 +1,29 @@
+// common
+"mp_ok" = "OK";
+"mp_cancel" = "Cancel";
+"mp_done" = "Done";
+"mp_notice" = "Notification";
+"mp_loading_please_wait" = "Loading.\nPlease wait a moment.";
+
+// voice
+"mp_list" = "List";
+"mp_recoding" = "Record";
+"mp_stop" = "Stop";
+
+// image
+"mp_select_photo" = "Select photo";
+"mp_select_video" = "Select video";
+"mp_select_album" = "Select Album";
+"mp_select_all" = "Select Item";
+"mp_select" = "Select";
+"mp_select_index" = "%@ Selected";
+"mp_unselect" = "Unselect";
+"mp_detail_photo" = "Photo Detail";
+"mp_detail_video" = "Video Detail";
+
+"mp_media_scanning" = "Scanning media";
+
+// movie
+"mp_movie_player_error" = "Failed to play videos.";
+
+"mp_crop_title" = "Crop";
