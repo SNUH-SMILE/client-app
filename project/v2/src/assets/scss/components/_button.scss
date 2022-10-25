@@ -1,0 +1,317 @@
+/*===  BUTTON ===*/
+button {
+  &:hover {
+    opacity: 0.8;
+  }
+  &:disabled:hover {
+    opacity: 1;
+  }
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.btn-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2rem;
+
+  > button {
+    // flex: 1;
+    width: 100%;
+    padding: 0 1rem;
+
+    &:first-child {
+      width: 40%;
+    }
+    &:last-child {
+      width: 60%;
+    }
+    &:only-child {
+      width: 100%;
+    }
+  }
+  > * + * {
+    margin-left: 0.6rem;
+  }
+
+  &.ratio-1-1 {
+    > button {
+      width: 50%;
+    }
+  }
+}
+.btn-txt {
+  font-size: 1.8rem;
+  font-weight: 500;
+  height: 5.8rem;
+  border-radius: 1.6rem;
+
+  &.navy {
+    background-color: $color-secondary;
+    color: #fff;
+  }
+  &.blue {
+    background-color: $color-primary;
+    color: #fff;
+  }
+  &.white {
+    background-color: $color-white;
+    color: $color-primary;
+    font-weight: normal;
+  }
+  &:disabled {
+    background-color: $color-gray-light03;
+    color: $color-gray-disabled;
+  }
+}
+.btn-line {
+  font-size: 1.8rem;
+  font-weight: normal;
+  height: 5.8rem;
+  border-radius: 1.6rem;
+
+  &.navy {
+    border: 1px solid $color-secondary;
+  }
+  &:disabled {
+    background-color: $color-gray-light03;
+    color: $color-gray-disabled;
+    border-color: $color-gray-light03;
+  }
+}
+.btn-line-rnd {
+  min-width: 8rem;
+  border: 1px solid #000;
+  border-radius: 1.5rem;
+  padding: 0 1.2rem;
+  line-height: 2.8rem;
+
+  &.small {
+    line-height: 2.2rem;
+    font-size: 1.4rem;
+  }
+}
+.btn-rnd {
+  min-width: 8.4rem;
+  padding: 0 1rem;
+  max-height: 2.4rem;
+  line-height: 2.4rem;
+  border-radius: 1.5rem;
+
+  &.blue {
+    background-color: $color-primary;
+    color: $color-white;
+  }
+  &:disabled {
+    background-color: #eee;
+    color: $color-gray-txt02;
+  }
+  &.dis-gray:disabled {
+    color: #bbb;
+  }
+  &.dis-blue:disabled {
+    background-color: $color-primary;
+    color: $color-white;
+    opacity: 0.5;
+  }
+}
+.btn-link {
+  height: 2.4rem;
+  line-height: 1.33;
+  text-decoration: underline;
+  font-size: 1.6rem;
+
+  &.blue {
+    color: $color-blue;
+  }
+  &.gray {
+    color: $color-gray-txt01;
+  }
+}
+.btn-txt-reset {
+  width: 3.6rem;
+  height: 2.4rem;
+  @include bg(component-input-x, center, center, 2.4rem);
+}
+.btn-calendar {
+  width: 3.6rem;
+  height: 2.4rem;
+  @include bg(icon-calendar, center, center, 2.4rem);
+}
+.btn-ic-detail {
+  width: 3.8rem;
+  height: 3.8rem;
+  @include bg(btn-list-arrow);
+}
+.btn-txt-detail {
+  padding-right: 3.8rem;
+  @include bg(btn-list-arrow, right, center, 3.8rem);
+}
+.btn-full-detail {
+  padding: 2rem 4.8rem 2rem 2rem;
+  width: 100%;
+  text-align: left;
+  font-size: 1.6rem;
+  font-weight: 500;
+  @include bg(btn-list-arrow, right 1rem, center, 3.8rem);
+}
+.btn-ic-txt {
+  padding-right: 1.6rem;
+
+  $imageNames: (arrow, refresh);
+  @each $imageName in $imageNames {
+    &.#{$imageName} {
+      @include bg(icon-#{$imageName}, right, center, 1.2rem);
+    }
+  }
+}
+.btn-top {
+  position: fixed;
+  z-index: 10;
+  bottom: 3.8rem;
+  right: 2rem;
+  width: 5.4rem;
+  height: 5.4rem;
+  border-radius: 50%;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+  background: rgba(99, 141, 229, 0.9) url('../img/btn-floating-top-arrow.svg') no-repeat center center;
+  background-size: 2.2rem auto;
+
+  &.is-btm {
+    bottom: 9.6rem;
+  }
+}
+.btn-pw-show {
+  width: 3rem;
+  height: 2.4rem;
+  @include bg(component-input-view-off, left, center, 2.4rem);
+
+  &.show {
+    @include bg(component-input-view-on, left, center, 2.4rem);
+  }
+}
+.btn-line-list {
+  > li {
+    border-bottom: 1px solid $color-gray-line;
+
+    button {
+      padding: 2rem 4.8rem 2rem 3rem;
+      width: 100%;
+      text-align: left;
+      font-size: 1.6rem;
+      font-weight: bold;
+      @include bg(btn-list-arrow, right 1rem, center, 3.8rem);
+    }
+  }
+}
+.btn-info {
+  padding-left: 2.5rem;
+  text-decoration: underline;
+  line-height: 1.43;
+  @include bg(icon-info, left, center, 1.8rem);
+}
+
+/*===  TAB ===*/
+.tab-box {
+  .tab {
+    display: flex;
+    flex-direction: row;
+
+    > li {
+      flex: 1;
+      width: 100%;
+
+      &.selected {
+        > button {
+          background-color: $color-primary;
+          color: $color-white;
+        }
+      }
+
+      > button {
+        width: 100%;
+        line-height: 5.4rem;
+        color: #6f6f6f;
+        font-size: 1.6rem;
+        background-color: $color-gray-light03;
+      }
+    }
+  }
+  &.type02 {
+    .tab {
+      padding: 1.5rem 2rem;
+      background-color: $color-gray-light02;
+
+      > li {
+        flex: none;
+        width: auto;
+
+        & + li {
+          margin-left: 0.4rem;
+        }
+
+        &.selected {
+          > button {
+            background-color: $color-primary;
+            border-color: $color-primary;
+            color: $color-white;
+          }
+        }
+
+        > button {
+          background-color: $color-white;
+          border: 1px solid #bbb;
+          line-height: 3.8rem;
+          padding: 0 1.5rem;
+          border-radius: 2rem;
+        }
+      }
+    }
+  }
+}
+
+/* tablet */
+@include mq('tablet-small') {
+  .btn-top,
+  .btn-top.is-btm {
+    right: 3.2rem;
+    bottom: 11.6rem;
+  }
+  .btn-top.tb-left {
+    right: unset;
+    left: calc(45% - 9.4rem);
+    bottom: 3.8rem;
+  }
+  .btn-top.tb-left-btm {
+    right: unset;
+    left: calc(45% - 9.4rem);
+    bottom: 12.8rem;
+  }
+  .btn-wrap {
+    > button {
+      &:first-child {
+        width: 50%;
+      }
+      &:last-child {
+        width: 50%;
+      }
+      &:only-child {
+        width: 100%;
+      }
+    }
+  }
+  .btn-line-list {
+    > li {
+      button {
+        padding: 2rem 4.8rem 2rem 3rem;
+        min-height: 7.5rem;
+      }
+    }
+  }
+  .btn-full-detail {
+    padding: 2rem 4.8rem 2rem 3rem;
+    min-height: 7.5rem;
+  }
+}

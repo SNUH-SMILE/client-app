@@ -1,0 +1,474 @@
+/*===  FORM ===*/
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #aeaeae;
+  font-weight: normal;
+}
+
+.form-item {
+  text-align: left;
+
+  .form-ttl {
+    display: block;
+    font-size: 1.5rem;
+    color: $color-gray-txt01;
+    line-height: 1.33;
+
+    & + .cr-list {
+      margin-top: 2rem;
+    }
+  }
+
+  & + & {
+    margin-top: 3rem;
+  }
+
+  .ipt-wrap + .ipt-wrap {
+    margin-top: 0.8rem;
+  }
+
+  .hbox {
+    > * + * {
+      margin-left: 2rem;
+    }
+    > .ipt-wrap {
+      flex: 1;
+
+      & + .ipt-wrap {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .unit {
+    padding-right: 0.6rem;
+    font-size: 1.6rem;
+    color: $color-gray-txt02;
+  }
+
+  .cr-list {
+    .ipt-chk,
+    .ipt-rdo {
+      display: block;
+    }
+    .ipt-chk + .ipt-chk {
+      margin-top: 1.2rem;
+    }
+    .ipt-rdo + .ipt-rdo {
+      margin-top: 2rem;
+    }
+
+    &.half {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .ipt-rdo,
+      .ipt-chk {
+        width: calc(50% - 0.5rem);
+
+        &:nth-child(2) {
+          margin-top: 0;
+        }
+        &:nth-child(2n) {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}
+.ipt-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.ipt-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  border-bottom: 1px solid #7f7f7f;
+
+  &:focus-within {
+    border-color: $color-primary;
+  }
+
+  > * + * {
+    margin-left: 0.6rem;
+  }
+
+  > input {
+    flex: 1;
+    width: 100%;
+    padding-left: 0.6rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    min-height: 5rem;
+    outline: none;
+
+    &:disabled {
+      color: rgba($color: $color-gray-disabled, $alpha: 0.5);
+    }
+  }
+
+  & + .ipt-txt {
+    margin-top: 0.8rem;
+    color: $color-gray-txt01;
+  }
+
+  &.disabled {
+    border-color: rgba($color: #7f7f7f, $alpha: 0.5);
+  }
+}
+.ipt-txt {
+  &.possible {
+    color: $color-green;
+  }
+  &.error {
+    color: $color-red;
+  }
+}
+/* radio & check */
+.ipt-chk,
+.ipt-rdo {
+  position: relative;
+  padding-left: 2.4rem;
+  text-align: left;
+  min-height: 2.4rem;
+  display: inline-block;
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2.4rem;
+    height: 2.4rem;
+    @include bg(component-chackbox-off);
+    transition: 0.3s background;
+
+    & + label {
+      display: inline-block;
+      padding: 0.2rem 0;
+      margin-left: 2rem;
+      line-height: 1.33;
+      font-size: 1.5rem;
+    }
+    &:checked {
+      @include bg(component-chackbox-on);
+    }
+  }
+}
+.ipt-rdo input[type='radio'] {
+  @include bg(component-radio-off);
+
+  &:checked {
+    @include bg(component-radio-on);
+
+    & + label {
+      font-weight: bold;
+    }
+  }
+}
+.ipt-rdo-box {
+  &.count02 {
+    font-size: 0;
+
+    > * {
+      display: inline-block;
+      width: 50%;
+      margin-top: 2rem;
+      padding-right: 1rem;
+    }
+  }
+}
+.ipt-chk-box {
+  margin-top: 2rem;
+
+  > * + * {
+    margin-top: 1.2rem;
+  }
+}
+/* switch */
+.ipt-switch {
+  display: inline-block;
+
+  input {
+    position: relative;
+    width: 5rem;
+    height: 2.6rem;
+    border-radius: 1.3rem;
+    border: 1px solid #ccc;
+
+    &::after {
+      content: '';
+      position: absolute;
+      @include yCenter;
+      left: 0.2rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      background-color: #ccc;
+      transition: all 0.3s;
+    }
+    &:checked {
+      border-color: $color-primary-txt;
+    }
+    &:checked::after {
+      left: calc(100% - 2.2rem - 0.2rem);
+      background-color: $color-primary-txt;
+    }
+  }
+}
+/* radio switch */
+.ipt-rdo-switch {
+  display: inline-block;
+  position: relative;
+  width: 8rem;
+  height: 3rem;
+  font-size: 0;
+  border: 1px solid #6791e6;
+  border-radius: 1.5rem;
+
+  > * {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+  }
+  input[type='radio'] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+
+  label {
+    width: 50%;
+    height: 100%;
+    font-size: 1.2rem;
+    line-height: 3rem;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 1.5rem;
+  }
+
+  input[type='radio']:checked + label {
+    color: $color-white;
+    background-color: $color-primary;
+  }
+  &.disabled {
+    border-color: $color-gray-disabled;
+  }
+  input[type='radio']:disabled + label {
+    color: $color-gray-disabled;
+  }
+  input[type='radio']:checked:disabled + label {
+    color: $color-white;
+    background-color: $color-gray-disabled;
+  }
+}
+/* radio switch */
+.ipt-rdo-txt {
+  position: relative;
+  font-size: 0;
+
+  > .item {
+    display: inline-block;
+
+    & + .item {
+      margin-left: 1rem;
+    }
+  }
+
+  input[type='radio'] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+
+    &:checked + label {
+      background-color: $color-primary;
+      border-color: $color-primary;
+      color: #fff;
+      font-weight: bold;
+    }
+    &:disabled + label {
+      color: rgba($color: $color-black, $alpha: 0.4);
+      border-color: rgba($color: $color-black, $alpha: 0.4);
+    }
+  }
+
+  label {
+    display: inline-block;
+    height: 3rem;
+    line-height: 3rem;
+    min-width: 7.6rem;
+    padding: 0 1rem;
+    border: 1px solid $color-black;
+    border-radius: 1.5rem;
+    text-align: center;
+    transition: background 0.3s;
+
+    & ~ label {
+      margin-left: 1rem;
+    }
+  }
+}
+/* textarea */
+textarea {
+  display: block;
+  width: 100%;
+  padding: 1.5rem 0.6rem;
+  border: 0;
+  border-bottom: 1px solid #7f7f7f;
+  font-size: 1.8rem;
+  line-height: 1.29;
+  min-height: 20.7rem;
+}
+/* select box */
+.ipt-select {
+  select {
+    display: inline-block;
+    line-height: 2.4rem;
+    padding-right: 2.8rem;
+    position: relative;
+    @include bg(component-input-dropdown, right, center, 2.4rem);
+    text-overflow: ellipsis;
+    outline: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
+/* table */
+.tbl-wrap.line-box {
+  overflow: hidden;
+}
+.tbl {
+  width: 100%;
+}
+.tbl-info {
+  thead {
+    background-color: $color-gray-line;
+
+    th {
+      padding: 0.8rem 1rem;
+      color: #666;
+      font-weight: normal;
+    }
+  }
+  tbody {
+    tr {
+      border-bottom: 1px solid $color-gray-line;
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+    th,
+    td {
+      font-size: 1.5rem;
+      padding: 1rem;
+      line-height: 1.33;
+      text-align: center;
+    }
+    th {
+      font-weight: normal;
+    }
+  }
+  &.no-line {
+    tbody {
+      tr:first-child {
+        th,
+        td {
+          padding-top: 2rem;
+        }
+      }
+      tr:last-child {
+        th,
+        td {
+          padding-bottom: 2rem;
+        }
+      }
+    }
+    tr {
+      border-bottom: 0;
+    }
+  }
+}
+
+/* tablet */
+@include mq('tablet-small') {
+  .form-item {
+    .ipt-address-wrap {
+      display: flex;
+      flex-direction: row;
+
+      .ipt-wrap {
+        flex: 1;
+
+        & + .ipt-wrap {
+          margin-left: 4rem;
+        }
+      }
+    }
+
+    // & + & {
+    //   margin-top: 5rem;
+    // }
+  }
+
+  .form-box {
+    &.tb-half {
+      font-size: 0;
+
+      > .form-item {
+        width: calc(50% - 2rem);
+        display: inline-block;
+        vertical-align: top;
+
+        &.tb-inblock:nth-of-type(2n + 1) {
+          margin-left: 4rem;
+        }
+      }
+    }
+  }
+  /* table */
+  .tbl-wrap.line-box {
+    overflow: hidden;
+  }
+  .tbl {
+    width: 100%;
+  }
+  .tbl-info {
+    thead {
+      th {
+        padding: 1.2rem 1rem;
+      }
+    }
+    tbody {
+      th,
+      td {
+        padding: 1.9rem 1rem;
+      }
+    }
+    &.no-line {
+      tbody {
+        tr:first-child {
+          th,
+          td {
+            padding-top: 3rem;
+          }
+        }
+        tr:last-child {
+          th,
+          td {
+            padding-bottom: 3rem;
+          }
+        }
+      }
+    }
+  }
+}
