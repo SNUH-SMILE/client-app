@@ -1,52 +1,161 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="iitp.infection.pm">
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:versionCode="4" android:versionName="1.0.3" package="iitp.infection.pm">
+	
+	<!-- 안드로이드 8.0 이상 필수, 라이브러리 버전 4.1.0.7 이상부터 추가된 리시버 등록 시 권한 등록위해 선언 (없으면 앱 디폴트 권한) -->
+	<permission android:name="${applicationId}.permission.MPUSH_PERMISSION" android:protectionLevel="signature" />
+	<uses-permission android:name="${applicationId}.permission.MPUSH_PERMISSION" />
+	
+	<!-- 안드로이드 9.0 이상 필수 : targetSdkVersion = 28 이상인 경우 -->
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+	
 	<!-- requestLegacyExternalStorage 관련 오류 발생시, Properties 에서 Android의 project Build Target을  Android 10 으로 지정 하거나, requestLegacyExternalStorage 를 삭제 -->
-	<application android:allowBackup="false" android:icon="@drawable/icon" android:label="@string/app_name" android:name=".implementation.ExtendApplication" android:networkSecurityConfig="@xml/network_security_config">
-		<uses-library android:name="org.apache.http.legacy" android:required="false" />
+	<application android:allowBackup="true" android:icon="@drawable/icon" android:label="@string/app_name" android:name=".implementation.ExtendApplication" android:networkSecurityConfig="@xml/network_security_config" android:supportsRtl="true">
+		<!--  改成你的key，请联系sdk开发者申请提供 -->
+		<meta-data android:name="YCAPPKEY" android:value="dcd05f241b65ec7b6af0bbe6f05145c2" tools:replace="android:value"/>
+		<uses-library android:name="org.apache.http.legacy" android:required="false"/>
 		<!-- 에러 발생시, ${applicationId} 를 packagename 으로 변경-->
-		<provider android:authorities="iitp.infection.pm.provider" android:exported="false" android:grantUriPermissions="true" android:name="android.support.v4.content.FileProvider">
-			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/mcore_provider_paths" />
+		<provider android:authorities="iitp.infection.pm.provider" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
+			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/mcore_provider_paths"/>
 		</provider>
 		<activity android:name=".Startup" android:theme="@android:style/Theme.Black.NoTitleBar">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:imeOptions="actionSend|flagNoEnterAction" android:name=".BaseActivity" />
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.ImageList1Activity" />
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.ImageList2Activity" />
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.ImageDetailsActivity" />
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.StartActivity" />
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.SampleActivity" />
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.SampleActivity2" />
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.BatchTempActivity" />
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.SampleNativeListActivity" />
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.SampleNativeMapActivity" />
-		<activity android:name=".samples.activity.ShowPushPopup" android:screenOrientation="portrait" android:windowSoftInputMode="adjustUnspecified|adjustPan" />
-		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:imeOptions="actionSend|flagNoEnterAction" android:name="m.client.android.library.core.view.MainActivity" />
-		<provider android:authorities="@string/app_package" android:name="m.client.android.library.core.managers.LocalFileContentProvider" />
-		<activity android:configChanges="locale|keyboardHidden|orientation" android:name="m.client.library.addon.media.AudioRecoderActivity" />
-		<activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="m.client.library.addon.media.MediaPlayActivity" android:theme="@android:style/Theme.Black.NoTitleBar" />
-		<activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="m.client.library.addon.media.crop.CropImageActivity" android:theme="@android:style/Theme.Black.NoTitleBar" />
+		<!-- push service&receiver -->
+		<!-- 5.1.x 버전 추가 : JobScheduler 를 이용한 서비스 Start-->
+		<service
+			android:name="m.client.push.library.service.UPNSJobService"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
+			</intent-filter>
+		</service>
+
+		<service android:name="m.client.push.library.service.UPNSConnectService"
+			android:exported="false"/>
+
+		<!-- 5.1.x 버전 추가 : JobScheduler 를 이용한 서비스 End-->
+
+		<receiver android:name="m.client.push.library.receiver.ServiceHandleReceiver">
+			<intent-filter>
+				<action android:name="${applicationId}.START_PUSHSERVICE" />
+				<action android:name="${applicationId}.STOP_PUSHSERVICE" />
+				<action android:name="${applicationId}.RESTART_PUSHSERVICE" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+				<action android:name="android.intent.action.SCREEN_OFF" />
+				<action android:name="android.intent.action.SCREEN_ON" />
+				<action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+			</intent-filter>
+		</receiver>
+
+		<receiver android:name="m.client.push.library.receiver.UpnsActionReceiver">
+			<intent-filter>
+				<action android:name="${applicationId}.ACTION_UPNS" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</receiver>
+
+		<!-- FCM setting start -->
+		<!-- push service&receiver -->
+		<service android:name="m.client.push.library.service.FCMIntentService" android:exported="false">
+			<intent-filter>
+				<action android:name="com.google.firebase.MESSAGING_EVENT" />
+			</intent-filter>
+		</service>
+		<service android:exported="true" android:name="m.client.push.library.service.FCMInstanceIDListenerService">
+			<intent-filter android:priority="501">
+				<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+			</intent-filter>
+		</service>
+
+
+		<!-- FCM setting End -->
+
+		<receiver android:name=".push.MessageArrivedReceiver">
+			<intent-filter>
+				<action android:name="${applicationId}.GCM_MESSAGE_ARRIVED" />
+				<action android:name="${applicationId}.UPNS_MESSAGE_ARRIVED" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</receiver>
+
+		<receiver android:name=".push.PushActionReceiver">
+			<intent-filter>
+				<action android:name="${applicationId}.ACTION_COMPLETED" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</receiver>
+
+		<receiver android:name="m.client.push.library.receiver.GcmActionReceiver">
+			<intent-filter>
+				<action android:name="${applicationId}.ACTION_GCM" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</receiver>
+		<receiver android:name=".push.PushStatusCheckReceiver">
+			<intent-filter>
+				<action android:name="${applicationId}.ACTION_NOTIFICATION_HANDLE"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</receiver>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".PushMessageManager"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:imeOptions="actionSend|flagNoEnterAction" android:name=".BaseActivity"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.ImageList1Activity"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.ImageList2Activity"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.ImageDetailsActivity"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.StartActivity"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.SampleActivity"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.SampleActivity2"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.BatchTempActivity"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.SampleNativeListActivity"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.SampleNativeMapActivity"/>
+		<activity android:name=".samples.activity.ShowPushPopup" android:screenOrientation="portrait" android:windowSoftInputMode="adjustUnspecified|adjustPan"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:imeOptions="actionSend|flagNoEnterAction" android:name="m.client.android.library.core.view.MainActivity"/>
+		<provider android:authorities="@string/app_package" android:name="m.client.android.library.core.managers.LocalFileContentProvider"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation" android:name="m.client.library.addon.media.AudioRecoderActivity"/>
+		<activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="m.client.library.addon.media.MediaPlayActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
+		<activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="m.client.library.addon.media.crop.CropImageActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
+		<service android:enabled="true" android:exported="true" android:name="com.realsil.sdk.dfu.DfuService"/>
+		<service android:enabled="true" android:name="com.yc.pedometer.sdk.BluetoothLeService"/>
+		<service android:name=".IitpFGService" android:exported="false" />
+		<receiver android:name=".IitpBootReceiver" android:enabled="true">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+		</receiver>
 	</application>
-	<uses-feature android:name="android.hardware.telephony" android:required="false" />
-	<uses-permission android:name="android.permission.RESTART_PACKAGES" />
-	<uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.GET_TASKS" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-	<uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<uses-feature android:name="android.hardware.camera" />
-	<uses-permission android:name="android.permission.RECORD_AUDIO" />
-	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.FLASHLIGHT" />
+	<uses-feature android:name="android.hardware.telephony" android:required="false"/>
+	<uses-permission android:name="android.permission.RESTART_PACKAGES"/>
+	<uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
+	<uses-permission android:name="android.permission.VIBRATE"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.GET_TASKS"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	<uses-feature android:name="android.hardware.camera"/>
+	<uses-permission android:name="android.permission.RECORD_AUDIO"/>
+	<uses-permission android:name="android.permission.CAMERA"/>
+	<uses-permission android:name="android.permission.FLASHLIGHT"/>
+	<uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
+	<uses-permission android:name="android.permission.BLUETOOTH" android:required="false"/>
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-feature android:name="android.hardware.location" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.network" android:required="false"/>
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 </manifest>
