@@ -1,0 +1,60 @@
+/*===  LAYOUT ===*/
+.wrapper{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.content-wrap{
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .content{
+        flex: 1;
+        height: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .cont-inner{
+        padding: 3rem 0;
+    }
+}
+
+/* tablet */
+@include mq('tablet-small'){
+  .content-wrap{
+      .content{
+          flex: none;
+          height: auto;
+          overflow-y: unset;
+          min-height: calc(100% - 13.8rem);
+      }
+      
+      .cont-inner{
+        width: 51%;
+        min-width: 66rem;
+        margin: 0 auto;
+        padding: 3rem 10rem;
+
+        &.tb-full{
+          width: 100%;
+          min-width: unset;
+        }
+    }
+
+      > .btn-wrap{
+          width: 51%;
+          min-width: 66rem;
+          margin: auto auto 0;
+          padding-left: 10rem;
+          padding-right: 10rem;
+          padding-bottom: 5rem;
+      }
+  }
+}
+
