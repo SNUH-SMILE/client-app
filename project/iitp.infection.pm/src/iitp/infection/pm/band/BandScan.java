@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
-import android.support.v4.app.ActivityCompat;
+import androidx.core.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -31,7 +31,7 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
     private String mCallback;
     //public static String schBandNM = "COVID";//특정 밴드만 목록으로 조회할 명칭
     private static Context mContext;
-    private MainActivity mActivity;
+    private static MainActivity mActivity;
     private boolean mScanning;
     private Handler mHandler;
     // Stops scanning after 10 seconds.
@@ -46,6 +46,7 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
             instance = new BandScan(activity, context, callback);
         }else{
             instance.bleServiceOperate();
+            mActivity = activity;
         }
         return instance;
 
@@ -102,7 +103,15 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
                         @Override
                         public void run() {
                             Log.d(CLASS_TAG, "scanLeDevice band Stop & list Callback "+mCallback);
-                            mActivity.getWebView().loadUrl("javascript:" + mCallback + "("+new CommUtils().setJSONData("list",bandInfoList)+")");
+                            JSONObject resultObj = new JSONObject();
+                            try {
+                                resultObj = new CommUtils().setJSONResutlCode(mContext.getString(R.string.CD_0000),mContext.getString(R.string.MSG_0000));
+                                resultObj.put("list",bandInfoList);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                resultObj = new CommUtils().setJSONResutlCode(mContext.getString(R.string.CD_9999),mContext.getString(R.string.MSG_9999));
+                            }
+                            mActivity.getWebView().loadUrl("javascript:" + mCallback + "("+resultObj+")");
                         }
                     });
 
@@ -111,7 +120,7 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
 
             mScanning = true;
             mBLEServiceOperate.startLeScan();
-            CommUtils.showLoading(mActivity,"밴드 스캔 중입니다.",false);
+            //CommUtils.showLoading(mActivity,"밴드 스캔 중입니다.",false);
             Log.i(CLASS_TAG,"startLeScan");
         } else {
             bandScanStop();
@@ -124,7 +133,7 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
         if (mScanning) {
             mBLEServiceOperate.stopLeScan();
             mScanning = false;
-            CommUtils.hideLoading(mActivity);
+            //CommUtils.hideLoading(mActivity);
         }
     }
     //스캔된 밴드 리스트 생성
@@ -133,7 +142,7 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
         boolean repeat = false;
         for (int i=0; i < bandInfoList.length(); i++){
             JSONObject parseObj = (JSONObject) bandInfoList.get(i);
-            if(parseObj.get("band_addr").equals(device.getString("band_addr"))){
+            if(parseObj.get("deviceId").equals(device.getString("deviceId"))){
                 bandInfoList.remove(i);
                 bandInfoList.put(device);
                 repeat = true;
@@ -154,12 +163,14 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
                     if (TextUtils.isEmpty(device.getName())) {
                         return;
                     }
-                    Log.i(CLASS_TAG,"LeScanCallback [deviceNM : "+device.getName() + "] [deviceAddr : "+device.getAddress() +"] [rssi : "+rssi+"]");
+
                     BandDevices mBleDevices = new BandDevices(device.getName(),device.getAddress(), rssi);
                     try {
-                        bandInfo.put("band_name",device.getName());
-                        bandInfo.put("band_addr",device.getAddress());
-                        if(device.getName().contains(CommConfig.CHECKFIT_SMART_WATCH)){//CHECK FIT 스마트 워치만 목록으로 담기
+                        bandInfo.put("deviceNm",device.getName());
+                        bandInfo.put("deviceId",device.getAddress());
+                        Log.i(CLASS_TAG,"LeScanCallback device [deviceNM : "+device.getName() + "] [deviceAddr : "+device.getAddress() +"]");
+                        if(device.getAddress().contains(CommConfig.SMART_WATCH_FILTER[0])){//CHECK FIT 스마트 워치만 목록으로 담기
+                            Log.i(CLASS_TAG,"LeScanCallback device Add [deviceNM : "+device.getName() + "] [deviceAddr : "+device.getAddress() +"] [rssi : "+rssi+"]");
                             addBandList(bandInfo);
                         }
                     } catch (JSONException e) {
