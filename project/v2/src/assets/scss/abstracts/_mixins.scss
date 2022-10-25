@@ -1,0 +1,66 @@
+@mixin mq($screen-width) {
+  @if $screen-width == 'tablet-small' {
+    @media screen and (min-width: 768px) {
+      @content;
+    }
+  } @else if $screen-width == 'tablet-medium' {
+    @media screen and (min-width: 1024px) {
+      @content;
+    }
+  } @else if $screen-width == 'tablet-large' {
+    @media screen and (min-width: 1280px) {
+      @content;
+    }
+  } @else if $screen-width == 'mobile' {
+    @media screen and (max-width: 767px) {
+      @content;
+    }
+  }
+}
+
+@mixin ellipsis($line: 1) {
+  @if ($line == 1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $line;
+  }
+}
+
+@mixin yCenter {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin xCenter {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin xyCenter {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin iconLeftPosition($w, $h) {
+  position: absolute;
+  left: 0;
+  @include yCenter;
+  width: $w;
+  height: $h;
+}
+
+@mixin bg($img-name, $x: center, $y: center, $size: 100%) {
+  background: url('../img/#{$img-name}.svg') no-repeat $x $y;
+  background-size: $size auto;
+}
+@mixin bgPng($img-name, $x: center, $y: center, $size: 100%) {
+  background: url('../img/#{$img-name}.png') no-repeat $x $y;
+  background-size: $size auto;
+}
