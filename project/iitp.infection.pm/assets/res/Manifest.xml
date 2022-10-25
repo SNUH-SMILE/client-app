@@ -6,17 +6,40 @@
         <base_version>000000</base_version>
         <target>app</target>
         <update>
-            <server/>
-            <trcode/>
-            <mode/>
+            <server></server>
+            <trcode></trcode>
+            <mode></mode>
         </update>
     </resource>
     <startpage>
-        <name>www/html/index.html</name>
+        <name>http://192.168.10.113:8080/</name>
+<!--        <name>www/html/index.html</name>-->
         <orient>default</orient>
         <orient-tablet>default</orient-tablet>
     </startpage>
-    <settings/>
+    <settings>
+		<push>
+			<receiver>
+				<android-push-type>FCM</android-push-type>
+                <timeout>20000</timeout>
+                <security-indexes>0x16d 0x51c 0x77e 0x46f 0x71b 0x721 0x53c 0x51c 0x5cf 0x101 0x2be 0x2b1 0x4d5 0x26c 0x1ec 0x542</security-indexes>
+                <server>http://receiver.morpheus.kr</server>
+                <policy>device</policy>
+				<use-phone_number>N</use-phone_number>
+				<log>y</log>
+				<version>5.0</version>
+				<use-permission>Y</use-permission>
+                <fcm-sender-id>578198317303</fcm-sender-id>
+			</receiver>
+			<upns>
+				<agent-restart-interval>120</agent-restart-interval>
+				<reallocate-interval>10,30,50</reallocate-interval>
+				<retry-regist-count>3</retry-regist-count>
+				<reconnect-interval>10,20,30</reconnect-interval>
+				<agent-service-type>inapp</agent-service-type>
+			</upns>
+		</push>
+	</settings>
     <default_action>
         <orient>default</orient>
         <orient-tablet>default</orient-tablet>
@@ -36,10 +59,19 @@
         </addons>
         <plugins>
             <path>m.client.library.plugin.location.WNInterfaceLocation</path>
+            <path>m.client.library.plugin.push.WNInterfacePush</path>
         </plugins>
     </library>
     <network>
-        <http/>
+        <http>
+			<HTTP_DEV>
+				<path>iitp.infection.pm.implementation.HttpHealthNetworkManager</path>
+				<address>http://210.116.119.130:8080</address>
+				<timeout>5000</timeout>
+				<encoding>utf-8</encoding>
+				<type>rest</type>
+			</HTTP_DEV>
+		</http>
         <socket/>
     </network>
     <application>
