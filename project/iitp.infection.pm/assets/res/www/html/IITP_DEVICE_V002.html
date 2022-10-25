@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <title>IITP | 연결하기</title>
+    <link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css">
+</head>
+
+<body>
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Header -->
+        <header class="header">
+            <button type="button" class="btn-back">뒤로가기</button>
+            <h1>연결하기</h1>
+        </header>
+        <!-- //Header -->
+
+        <!-- Content -->
+        <div class="content-wrap">
+            <div class="content scrollBox">
+                <div class="container-wrap device-wrap cont-inner">
+                    <span class="block">사용하실 <em class="fc-main1">기기를 선택</em>하여<br>연결해 주세요.</span>
+                    <ul id="deviceList">
+                      <!-- <li class="device-connect-wrap">
+                            <p>조회된 디바이스가 없습니다.</p>
+                        </li>
+
+                        <li class="device-connect-wrap">
+                            <p>/디바이스명/</p>
+
+                            완료됐을 때 보이는 버튼 class="none" 빼면 보입니다.
+                            <button type="button" class="btn-rnd line small none" disabled>완료</button>
+                            연결할 때 보이는 버튼 class="none" 빼면 보입니다.
+                            <button type="button" class="btn-rnd line small">연결하기</button>
+                        </li>
+
+                        <li class="device-connect-wrap">
+                            <p>/디바이스명/</p>
+
+                            완료됐을 때 보이는 버튼 class="none" 빼면 보입니다.
+                            <button type="button" class="btn-rnd line small none" disabled>완료</button>
+                            연결할 때 보이는 버튼 class="none" 빼면 보입니다.
+                            <button type="button" class="btn-rnd line small">연결하기</button>
+                        </li> -->
+                    </ul>
+                </div>
+                <div class="btn-wrap">
+                    <button type="button" id="okBtn" class="btn-rnd confirm" disabled>완료</button>
+                </div>
+            </div>
+        </div>
+        <!-- //Content -->
+
+        <!-- 기기 조회 팝업 -->
+        <!-- class="show" 추가시 보여짐 -->
+        <div class="popup-wrap">
+            <div class="popup-bg"></div>
+            <div class="popup-box">
+                <div class="popup">
+                    <div class="pop-body">
+                        <div class="loading-img">
+                            <img src="../../www/img/img-loading.png" alt="로딩 이미지">
+                        </div>
+                        <p>
+                            기기를 조회 중입니다 &#183;&#183;&#183;
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //Wrapper -->
+</body>
+<script type="text/javascript" src="../js/mcore.min.js"></script>
+</html>
