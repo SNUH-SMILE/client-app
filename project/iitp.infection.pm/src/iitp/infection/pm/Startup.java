@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import iitp.infection.pm.database.DBConfig;
+import iitp.infection.pm.database.DBHelper;
 import m.client.android.library.core.common.CommonLibHandler;
 import m.client.android.library.core.utils.Logger;
 import android.app.Activity;
@@ -49,7 +51,9 @@ public class Startup extends Activity {
         ////////////////////////////////////////////////////////////////////////////////
         // - 중요 -
         // 최초 시작 Activity에 아래의 코드를 넣어야 한다. 
-        
+        //1. 앱 구동전 밴드 데이터를 관리할 공통 DB 파일 및 Table를 생성 한다.
+        DBHelper dbHelper = new DBHelper(getApplicationContext(), DBConfig.COM_DB_NAME,DBConfig.COM_DB_VER);
+        dbHelper.getWritableDatabase();
         commLibHandle.processAppInit(this);
         ////////////////////////////////////////////////////////////////////////////////    
 
