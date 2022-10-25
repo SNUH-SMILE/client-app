@@ -1,0 +1,16 @@
+# Default
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+
+# Build
+dist
+
+# config
+
+.eslintrc.js
+babel.config.js
+
+# public
+**/public
