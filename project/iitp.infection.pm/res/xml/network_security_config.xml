@@ -6,6 +6,8 @@
 		<domain includeSubdomains="true">t1.daumcdn.net</domain>
 		<domain includeSubdomains="true">stlog1-local.kakao.com</domain>
 		<domain includeSubdomains="true">suggest-bar.daum.net</domain>
-
+		<domain includeSubdomains="true">receiver.morpheus.kr</domain>
+		<domain includeSubdomains="true">210.116.119.130</domain>
+		<domain includeSubdomains="true">192.168.10.113</domain>
 	</domain-config>
 </network-security-config>

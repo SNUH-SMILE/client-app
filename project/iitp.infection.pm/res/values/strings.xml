@@ -15,6 +15,17 @@
     <string name="bluetooth_Disabled">블루투스를 활성화 해 주십시오.</string>
     <string name="connect">Connected</string>
     <string name="disconnect">Disconnected</string>
+    <string name="band_not_connect">밴드가 연결되어 있지 않습니다.\n밴드 연결 후 이용해 주세요.</string>
+    <string name="band_lang_not_support">밴드 언어 설정 기능은 지원하지 않습니다</string>
     <string name="band_sync_ok">밴드 동기화 완료</string>
     <string name="band_sync_fail">밴드 동기화 실패</string>
+
+    <!--Result Code-->
+    <string name="CD_0000">0000</string>
+    <string name="CD_9990">9990</string>
+    <string name="CD_9999">9999</string>
+    <!--Result Code-->
+    <string name="MSG_0000">SUCCESS</string>
+    <string name="MSG_9990">필수 파라메타를 확인하세요.</string>
+    <string name="MSG_9999">알수 없는 오류</string>
 </resources>
