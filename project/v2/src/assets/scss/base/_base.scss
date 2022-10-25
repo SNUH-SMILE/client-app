@@ -1,0 +1,32 @@
+//base & common style
+html {
+  font-size: 62.5%; // rem 기준 폰트 사이즈
+}
+@media only screen and (max-width: 320px) {
+  html {
+    font-size: 50%;
+  }
+}
+body {
+  position: relative;
+  min-height: 100%;
+  height: 100%;
+  line-height: 1.1;
+  color: #000;
+  font-family: 'Apple SD Gothic Neo', sans-serif, 'dotum', '돋움';
+}
+* {
+  word-wrap: break-word;
+  word-break: keep-all;
+  font-size: 1.4rem;
+}
+img {
+  width: 100%;
+}
+strong {
+  font-weight: bold;
+  vertical-align: baseline;
+}
+button {
+  color: #000;
+}

@@ -1,0 +1,90 @@
+/*===  TYPOGRAPHY ===*/
+.txt-blind {
+  position: absolute;
+  overflow: hidden;
+  border: 0;
+  width: 1px;
+  height: 1px;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+}
+.iht {
+  font-size: inherit;
+  color: inherit;
+}
+.main-ttl {
+  font-size: 2.2rem;
+  line-height: 1.5;
+}
+.ttl {
+  &-l {
+    font-size: 2.8rem;
+    line-height: 1.36;
+
+    > * {
+      font-size: inherit;
+    }
+  }
+  &-m {
+    font-size: 2.2rem;
+    line-height: 1.5;
+
+    > * {
+      font-size: inherit;
+    }
+  }
+  &-b {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $color-primary;
+
+    > * {
+      font-size: inherit;
+    }
+  }
+}
+.txtc {
+  &-b {
+    color: $color-black !important;
+  }
+  &-blue {
+    color: $color-primary-txt !important;
+  }
+  &-w {
+    color: $color-white !important;
+  }
+  &-gray {
+    color: #bbb !important;
+  }
+}
+.fw {
+  &-100 {
+    font-weight: 100 !important;
+  }
+  &-500 {
+    font-weight: 500 !important;
+  }
+  &-nm {
+    font-weight: normal !important;
+  }
+}
+.fs {
+  &-nm {
+    font-size: 1.4rem !important;
+  }
+  &-15 {
+    font-size: 1.5rem !important;
+  }
+  &-16 {
+    font-size: 1.6rem !important;
+  }
+  &-18 {
+    font-size: 1.8rem !important;
+  }
+}
+.point-txt {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $color-primary;
+}
