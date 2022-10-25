@@ -1,12 +1,17 @@
 package iitp.infection.pm;
 
+import iitp.infection.pm.band.BandCont;
 import iitp.infection.pm.samples.utils.ComListener;
 
+import iitp.infection.pm.samples.utils.CommUtils;
 import m.client.android.library.core.view.MainActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
 
@@ -32,6 +37,7 @@ import android.widget.Toast;
 
 public class BaseActivity extends MainActivity {
 	private int REQUEST_ENABLE_BT = 1;
+	private String CLASS_TAG = BaseActivity.class.getSimpleName();
 	/**
 	 * Webview가 시작 될 때 호출되는 함수
 	 */
@@ -48,9 +54,29 @@ public class BaseActivity extends MainActivity {
 		super.onPageFinished(view, url);
 		
 	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		//우선 임시로 시작하자마자 foreground 서비스를 구동 시키자
+		//추후에는 해당 영역 주석으로 막고 사용자가 자가격리 주소를 저장하고, 로그인을 하는 시점에 foreground 서비스를 화면단에서 호출하는 형태로 변
+		boolean isForegroundRunning = new CommUtils().isServiceRunning(this,IitpFGService.class.getName());
+		Log.d(CLASS_TAG,"onCreate() isForegroundRunning:"+isForegroundRunning);
+		if(!isForegroundRunning){
+			Intent intent = new Intent(this, IitpFGService.class);
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+				startForegroundService(intent);
+			}else{
+				startService(intent);
+			}
+		}
+
+	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		//BandCont.getInstance(this,getApplicationContext(),null).mUnRegisterReceiver();
 	}
 
 	@Override
