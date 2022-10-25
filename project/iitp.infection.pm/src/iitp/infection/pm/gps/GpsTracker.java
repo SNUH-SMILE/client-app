@@ -9,7 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import android.support.v4.app.ActivityCompat;
+import androidx.core.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -90,9 +90,9 @@ public class GpsTracker implements LocationListener {
         }
 
         Criteria criteria = new Criteria();
-//        criteria.setHorizontalAccuracy(Criteria.ACCURACY_HIGH);
-//        criteria.setVerticalAccuracy(Criteria.ACCURACY_HIGH);
-        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        criteria.setHorizontalAccuracy(Criteria.ACCURACY_HIGH);
+        criteria.setVerticalAccuracy(Criteria.ACCURACY_HIGH);
+        //criteria.setAccuracy(Criteria.ACCURACY_COARSE);
         criteria.setPowerRequirement(Criteria.POWER_HIGH);
         criteria.setAltitudeRequired(false);
         criteria.setSpeedRequired(true);
