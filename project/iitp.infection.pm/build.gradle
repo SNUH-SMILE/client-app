@@ -2,6 +2,8 @@ buildscript {
 	repositories {
 		maven {url "https://maven.google.com"}
 		maven {url "https://jcenter.bintray.com"}
+		mavenCentral()
+		google()
 	}
 	
 	dependencies {
@@ -29,7 +31,7 @@ if (project.rootProject.file('local.properties').exists()) {
 
 
 android {
-	compileSdkVersion 29
+	compileSdkVersion 30
 	buildToolsVersion "29.0.3"
 	useLibrary 'org.apache.http.legacy'
 	sourceSets {
