@@ -1,0 +1,42 @@
+<template>
+  <div class="progress-wrap">
+    <div class="progress-box">
+      <!-- 진행률에 따라 width 값을 변경해주세요. -->
+      <transition appear @before-enter="beforeStart" @after-enter="start">
+        <div class="bar"></div>
+      </transition>
+    </div>
+    <div class="txt">STEP {{ ing }}/{{ total }}</div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'v-step-progress',
+  props: {
+    percent: {
+      type: Number,
+      default: 0,
+    },
+    ing: {
+      type: Number,
+      default: 1,
+    },
+    total: {
+      type: Number,
+      default: 2,
+    },
+  },
+  methods: {
+    beforeStart(el) {
+      el.style.width = 0;
+    },
+    start(el) {
+      el.style.width = `${this.percent}%`;
+      el.style.transition = `width 1s linear`;
+    },
+  },
+};
+</script>
+
+<style></style>
