@@ -6,7 +6,7 @@
 	<title>Hello! Mobile!</title>
 	<style>
 		.bandlist li{width:100%;height:35px;line-height:35px;border: 1px solid;}
-
+		button{height:45px; margin-bottom:5px;}
 	</style>
 </head>
 
@@ -14,7 +14,40 @@
 	<h1>Hello! Mobile!</h1>
 	<button onclick="bandScan()">Check Fit Band 스켄</button>
 	<button onclick="mapPage()">Map(GPS 테스트)</button>
-	<div>
+	<button onclick="mainAllData()">메인 전체 데이터</button>
+	<button onclick="detailBodyData('STEP')">걸음수 상세</button>
+	<button onclick="detailBodyData('RATE')">심박 상세</button>
+	<button onclick="detailBodyData('TEMP')">체온 상세</button>
+	<button onclick="detailBodyData('BLOOD')">혈압 상세</button>
+	<button onclick="detailBodyData('SLEEP')">수면 상세</button>
+	<button onclick="detailBodyData('OXYGEN')">혈중산소포화도 상세</button>
+    <button onclick="bloodPresureTestStart()">혈압측정시작</button>
+    <button onclick="bloodPresureTestStop()">혈압측정종료</button>
+    <button onclick="spo2TestStart()">혈중산소포화도측정시작</button>
+    <button onclick="spo2TestStop()">혈중산소포화도측정종료</button>
+<!--    <button onclick="bodyTempTestStart()">체온읽어오기</button>-->
+<!--    <button onclick="bodyTempTestStop()">체온측정정지</button>-->
+<!--    <button onclick="heartRateTestStart()">심박수측정시작</button>-->
+<!--    <button onclick="heartRateTestStop()">심박수측정정지</button>-->
+    <button onclick="bandDisconnect()">디바이스연결끊기</button>
+    <button onclick="bandScanStop()">스캔중지</button>
+	<button onclick="isBandConnected()">밴드 연결 상태</button>
+    <button onclick="lastDeviceId()">제일마지막연결한디바이스</button>
+	<button onclick="fgStart()">Foreground Service Start</button>
+	<button onclick="fgStop()">Foreground Service Stop</button>
+	<button onclick="allDataSync()">밴드 데이터 동기화1</button>
+    <button onclick="allDataSync()">밴드 데이터 동기화2</button>
+    <button onclick="getSyncData()">서버동기화 할 데이터 조회</button>
+    <button onclick="setSyncDataFinish()">서버동기화 할 완료</button>
+    <button onclick="startBL()">백그라운드 위치서비스 시작</button>
+    <button onclick="stopBL()">백그라운드 위치서비스 종료</button>
+    <button onclick="stateBL()">백그라운드 위치서비스 상태</button>
+<!--    <button onclick="deviceReset()">밴드데이터초기화 (로컬디비 해당디바이스 데이터삭제)</button>-->
+<!--    <button onclick="dbReset()">로컬디비전체삭제</button>-->
+    <button onclick="test()">테스트</button>
+	<button onclick="setBandLang()">밴드언어 셋팅</button>
+	<button onclick="getBandLang()">밴드언어 확인</button>
+    <div>
 		<ul class="bandlist">
 
 		</ul>
@@ -24,6 +57,14 @@
 <script type="text/javascript" src="../js/mcore.min.js"></script>
 <script type="text/javascript">
 
+    
+function test() {
+    M.execute('exTest');
+}
+    
+    
+    
+    
 M.onReady(function(e) {
 	
 });
@@ -37,14 +78,14 @@ M.onRestore(function(e) {
 });
 function bandScan(){
 	var obj = {};
-	obj.schBluetooth = "COVID";
+	obj.schBluetooth = "C";
 	obj.callback = "scanResult";
 	M.execute('exBandScan',obj);
 }
 function scanResult(result){
 	var strbuffer = new StringBuffer();
 	for(var i=0; i<result.list.length; i++){
-		strbuffer.append('<li onclick="bandItemClick(\''+result.list[i].band_addr+'\',this);">'+result.list[i].band_name+'</li>');
+		strbuffer.append('<li onclick="bandItemClick(\''+result.list[i].deviceId+'\',this);">'+result.list[i].deviceNm+'</li>');
 	}
 	$(".bandlist").html(strbuffer.toString());
 }
@@ -52,20 +93,321 @@ function scanResult(result){
 var conBandElThis;
 function bandItemClick(addr,_this){
 	var obj = {};
-	obj.schBluetooth = "COVID";
+	obj.schBluetooth = "C";
 	obj.bandAddr = addr;
+    obj.resetType = "2";  // resetType - 0 : 디바이스/디비 초기화 , 1 : 디바이스 초기화 , 2 : 초기화 없음
 	obj.callback = "connectResult";
-	//M.execute('exBandConnect',"COVID",addr);
 	conBandElThis = _this;
 	M.execute('exBandConnect',obj);
 }
 function connectResult(result){
 	$(conBandElThis).remove();
-	//connect 성공 result_code = 19, result_msg = CONNECT
+	//connect 성공 result_code = 0000, result_msg = SUCCESS
+    
+    console.log(result);
+}
+function isBandConnect(){
+	var state = M.execute('exIsBandConnect');
+	alert(state)
+}
+function mainAllData(){
+	M.execute('exMainAllData',"mainAllResult");
+}
+function mainAllResult(result){
+	console.log(result);
 }
 
+function detailBodyData(type){
+	var obj = {};
+	obj.schDate = "20220104";
+	obj.queryDataType = type;//STEP(걸음정보),SLEEP(수면정보),RATE(심박정보),BLOOD(혈압정보),TEMP(체온정보),OXYGEN(혈중산소포화도 정보)
+	if(type == "STEP"){
+		obj.callback = "stepDetailResult";
+	}else if(type == "SLEEP"){
+		obj.callback = "sleepDetailResult";
+	}else if(type == "RATE"){
+		obj.callback = "rateDetailResult";
+	}else if(type == "BLOOD"){
+		obj.callback = "bloodDetailResult";
+	}else if(type == "TEMP"){
+		obj.callback = "tempDetailResult";
+	}else if(type == "OXYGEN"){
+		obj.callback = "oxygenDetailResult";
+	}
+
+	M.execute('exBodyDetailData',obj);
+    
+    // 테스트 코드
+    // M.execute('exBodyDetailData', {'schDate':'20211207', 'queryDataType':'OXYGEN', 'callback':'oxygenDetailResult'});
+}
+function stepDetailResult(result){
+	console.log(result)
+}
+function sleepDetailResult(result){
+	console.log(result)
+}
+function rateDetailResult(result){
+	console.log(result)
+}
+function bloodDetailResult(result){
+	console.log(result)
+}
+function oxygenDetailResult(result){
+	console.log(result)
+}
+function tempDetailResult(result){
+	console.log(result)
+}
 function mapPage(){
 	M.page.html("map.html")
+}
+
+
+
+    
+    
+    
+// IOS 결과 코드
+// 00XX - 성공
+//     0000 - 성공
+//     ---- (삭제) ---- 0061 - BLOOD PRESURE START (혈압측정시작)
+//     ---- (삭제) ---- 0062 - BLOOD PRESURE STOP (혈압측정종료)
+//     ---- (삭제) ---- 0063 - 산소포화도측정시작
+//     ---- (삭제) ---- 0064 - 산소포화도측정종료
+//     ---- (삭제) ---- 0065 - 산소포화도측정진행중
+// 01XX - 공통부분
+//     0101 - BLUETOOTH STATE ERROR (블루투스 상태가 사용할수 없는 경우, 블루투스 off / 권한 없음)
+//     0102 - IN SYNC (동기화 중 , 동기화 중에 또 동기화 요청한 경우)
+//     0103 - DEVICE IS NOT CONNECTED (동기화 요청시 연결된 디바이스가 없는 경우)
+//     0104 - DEVICE DISCONNECTED (디바이스 연결이 끊어진 경우에 연결성공 콜백으로 보냄)
+//     0105 - DEVICE NOT SUPPORT (해당 기능을 지원하지 않는 경우)
+// 02XX - 디바이스 검색
+// 03XX - 디바이스 연결
+//     0301 - DEVICE NOT EXISTS (디바이스 연결시 디바이스가 검색된 리스트에 없는 경우)
+//     0302 - HAS CONNECTTED DEVICE (연결된 디바이스가 있는 경우에, 또 연결을 시도할 경우)
+// 04XX - 메인 동기화 (해당 없음)
+//     0401 - SYNC FAIL (동기화 실패).      해당경우에, 디바이스가 계속 연결되여 있는지 확인하여야 함, 동기화 중에 연결이 끊기면, 해당 오류가 떨어지지만, 디바이스 연결 끊김 오류가 발생하는지 확인못함.
+// 05XX - 각각 정보 동기화 (해당 없음)
+// 06XX - 실시간 정보 닫을 경우 (해당 없음)
+//     ---- (삭제) ---- 0601 - 혈압측정시 ERROR
+//     ---- (삭제) ---- 0602 - 산소포화도측정시 ERROR
+
+// 체온변화 콜백 함수, 함수명 확정
+function onChangeTemp(temp) {
+    console.log("temp : "+temp);
+}
+
+// 걸음수 변환 콜백 함수, 함수명 확정
+function onChangeStep(step,dist) {
+    console.log("step : "+step);
+    console.log("dist : "+dist);
+}
+
+// 10분 심박수 콜백 함수, 함수명 확정
+function onChangeRate(rate) {
+
+    console.log("rate : "+rate);
+}
+    
+function bloodPresureTestStart() {
+    // 혈압측정시작
+    M.execute("exBloodPresureTestStart");
+}
+    
+function bloodPresureTestStop() {
+    // 중지
+    M.execute("exBloodPresureTestStop");
+}
+
+/*
+ 혈압측정 콜백 필요없고, DB 에만 싸여주면 됨.
+function bpCallback(result) {
+    
+    console.log(result);
+    // 해당 콜백함수 명은 디바이스 연결시에 넘김
+    // 3가지 상태 결과가 있음.
+    // 0000 - 테스트 결과 보여주기
+    // 0061 - 혈압측정 시작
+    // 0062 - 혈압측정 종료
+}
+ */
+    
+function spo2TestStart() {
+    // 산소포화도측정시작
+    M.execute("exSpo2TestStart");
+}
+    
+function spo2TestStop() {
+    // 중지
+    M.execute("exSpo2TestStop");
+}
+
+/*
+ 산소포화도 콜백 필요없고, DB 에만 싸여주면 됨.
+function spo2Callback(result) {
+        
+    console.log(result);
+    // 해당 콜백함수 명은 디바이스 연결시에 넘김
+    // 3가지 상태 결과가 있음.
+    // 0000 - 테스트 결과 보여주기
+    // 0063 - 혈압측정 시작
+    // 0064 - 혈압측정 종료
+    // 0065 - 혈압측정 진행중
+}
+*/
+
+/*
+ 심박수 측정 기능 필요없음.
+function heartRateTestStart() {
+    M.execute("exHRMTestStart");
+    
+    // hrmCurrentCallback 로 콜백
+}
+
+function heartRateTestStop() {
+    M.execute("exHRMTestStop");
+}
+*/
+
+/*
+ 실시간 맥박수 필요없음.
+function hrmCallback(min, max, avg) {
+    console.log(min);
+    console.log(max);
+    console.log(avg);
+}
+*/
+
+
+/*
+ 체온 측정 기능 필요없음
+function bodyTempTestStart() {
+    M.execute("exBodyTemperatureTestStart");
+}
+*/
+
+// function bodyTempTestStop() {
+//    M.execute("exBodyTemperatureTestStop");
+// }
+
+function bandDisconnect() {
+    // 디바이스 연결 끊기, 콜백 함수는 연결시 보냄.
+    M.execute("exBandDisconnect");
+}
+
+function bandScanStop() {
+    // 디바이스 스캔 중지, 콜백은 스캔 함수 콜백으로 옴. 0104 코드로
+    M.execute('exBandScanStop');
+}
+
+function lastDeviceId() {
+    
+    // 제일 마지막에 연결된 디바이스 ID 를 가져온다.
+    // 자동연결이 필요한 경우에 필요
+    //     스캔 시작후, 해당 ID 가 스캔되면, 자동 연결
+    M.execute("exLastDeviceId", "lastDeviceIdCallback");
+}
+    
+function lastDeviceIdCallback(result) {
+
+    // 제일 마직막 연결된 디바이스 ID 를 조회하기 위한 콜백 함수
+    // 해당 값은 가져온후에, 따로 js 변수에 저장, 새로운 디바이스 연동시 js 변수 값 변경
+    console.log(result);
+}
+
+// ios 관련 저장된 데이터 조회
+// 싱크 된 데이터와 화면에 표시되는 내용이 정확한지 확인이 필요한 경우에 저장된 데이터를 조회하여 비교 할수 있음.
+function queryIosRawData() {
+    
+    // table
+    //   SbSyncStep        : 걸음수
+    //   SbSyncSleep       : 수면
+    //   SbSyncHRM         : 심박
+    //   SbSyncBP          : 혈압
+    //   SbSyncTemperature : 체온
+    //   SbSyncOxygen      : 산소포화도
+    //   SbDevice          : 디바이스 관련 정보 - 동기화최초시간 , 동기화최후시간 , 최후연결된 디바이스 (자동연결시 필요할것 같음)
+    M.db.execute({
+        path:'SmartBand.db',
+        sql: 'select * from SbSyncStep',
+        callback: function(status, result, name){
+            console.log(result);
+        }
+    });
+}
+
+// 서버 동기화 할 데이터 조회
+function getSyncData() {
+    M.execute("exServerSyncData", "exServerSyncDataFinish");
+}
+
+//
+function exServerSyncDataFinish(result){
+    console.log(result)
+}
+// 서버 동기화 완료 표기
+function setSyncDataFinish() {
+    M.execute("exServerSyncDataFinish");
+}
+
+// 데이터 동기화
+function allDataSync(){
+	M.execute("exBandAllDataSync","false");
+}
+
+// 데이터 동기화
+function allDataSync(){
+    M.execute("exBandAllDataSync","true");
+}
+
+// 밴드 연결 여부
+function isBandConnected(){
+	M.execute("exIsBandConnect");
+}
+
+function startBL() {
+    M.execute("exLocationStart", "user_id_1", "http://192.168.100.209:8080/location");
+    
+    if (result == 'Y') {
+        // 위치서비스 작동중
+    } else {
+        
+    }
+}
+    
+function stopBL() {
+    M.execute("exLocationStop");
+}
+    
+function stateBL() {
+    var state = M.execute("exLocationState");
+    
+    if (state == 'Y') {
+        // 백그라운드 위치 서비스 관련
+    }
+}
+
+function fgStart(){
+	M.execute("exForeGroundStart");
+}
+function fgStop(){
+	M.execute("exForeGroundStop");
+}
+    
+//function deviceReset() {
+//    // 해당 디바이스 초기화 & 로컬 디비에 있는 해당 디바이스 데이터 삭제
+//    M.execute("exDeviceReset");
+//}
+
+//function dbReset() {
+//    // 로컬디비 전체 데이터 삭제
+//    M.execute("exDbClearAll");
+//}
+function setBandLang(){
+	M.execute("exWNSetBandLang",3);//한국어 : 3
+}
+function getBandLang(){
+	var getlang = M.execute("exWNGetBandLang");//한국어 : 3
 }
 </script>
 
