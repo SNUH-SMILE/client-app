@@ -15,7 +15,7 @@ apply plugin: 'com.android.application'
 repositories {
 	maven {url "https://maven.google.com"}
 	maven {url "https://jcenter.bintray.com"}
-	jcenter()
+	mavenCentral()
 	google()
 }
 
