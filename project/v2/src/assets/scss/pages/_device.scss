@@ -1,0 +1,106 @@
+/*===  DEVICE_V003 ===*/
+.top-line-box {
+  padding: 3rem;
+  border-bottom: 0.4rem solid $color-gray-line;
+
+  & + .device-info-list {
+    margin-top: 5rem;
+  }
+}
+
+.device-info-list {
+  > li {
+    padding: 0 3rem;
+
+    & + li {
+      margin-top: 8rem;
+    }
+  }
+
+  .num {
+    display: block;
+    font-size: 2.4rem;
+    font-weight: 100;
+  }
+
+  .txt {
+    font-size: 1.8rem;
+    line-height: 1.56;
+
+    strong {
+      font-size: 1.8rem;
+    }
+  }
+
+  .icon-box {
+    margin: 2rem 0 2.4rem;
+  }
+}
+.icon-box {
+  font-size: 0;
+
+  .img-icon + .img-icon {
+    margin-left: 2rem;
+  }
+}
+.img-icon {
+  display: inline-block;
+  width: 5rem;
+  height: 5rem;
+
+  &.googleplay {
+    @include bg(icon-googleplay, center, center, 4.5rem);
+  }
+  &.appstore {
+    @include bg(icon-appstore, center, center, 5rem);
+  }
+  &.garmin {
+    @include bg(icon-garmin, center, center, 5rem);
+  }
+  &.idcard {
+    @include bg(icon-idcard, center, center, 5rem);
+  }
+}
+
+/* tablet */
+@include mq('tablet-small') {
+  .top-line-box {
+    padding: 8rem 0 7rem;
+    border-bottom: none;
+
+    & + .device-info-list {
+      margin-top: 0;
+    }
+  }
+
+  .device-info-list {
+    > li {
+      display: flex;
+      flex-direction: row;
+      padding: 0;
+
+      & + li {
+        margin-top: 6rem;
+      }
+    }
+
+    .num {
+      margin-right: 3rem;
+    }
+    .icon-box {
+      margin: 0;
+    }
+  }
+
+  .device-info {
+    flex: 1;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+
+    .txt {
+      flex: 1;
+      padding-right: 1rem;
+    }
+  }
+}

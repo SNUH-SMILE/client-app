@@ -1,0 +1,32 @@
+/*===  DOCTOR_V001 ===*/
+.diagnosis-box{
+    padding: 4rem 1rem;
+    text-align: center;
+    border: 1px solid $color-gray-line;
+    border-radius: .8rem;
+
+    .ttl{
+        display: block;
+        padding-top: 11rem;
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: $color-primary-txt;
+        &.ic-d-no{
+            @include bg(icon-diagnosis-no, center, top, 9.4rem);
+        }
+        &.ic-d-ing{
+            @include bg(icon-diagnosis-ing, center, top, 9.4rem);
+        }
+        &.ic-d-end{
+            @include bg(icon-diagnosis-end, center, top, 9.4rem);
+        }
+    }
+
+    .sub-txt{
+        margin-top: .8rem;
+        line-height: 1.43;
+        font-size: 1.6rem;
+    }
+}
+
+/* tablet */

@@ -1,0 +1,392 @@
+/*=== POPUP FULL ===*/
+.pg-fp {
+  .hd-ttl {
+    padding-left: 2rem;
+  }
+}
+
+/*=== POPUP LAYER LAYOUT ===*/
+.popup-wrap {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+
+  &.show {
+    display: block;
+  }
+
+  .popup-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    transition: opacity 0.3s ease;
+  }
+}
+/* popup animaiton */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+  .popup-mid,
+  .popup-btm {
+    transition: transform 0.5s;
+  }
+}
+.fade-enter, .fade-leave-active /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  .popup-btm {
+    transform: translateY(100%);
+  }
+}
+
+.popup {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+
+  .popup-box {
+    position: relative;
+
+    & + .btn-wrap {
+      margin-top: 3rem;
+      width: calc(85% - 2rem - 2rem);
+      max-width: 32rem;
+
+      .btn-txt {
+        border-radius: 1.6rem;
+      }
+    }
+  }
+  &.popup-mid {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 2rem;
+
+    .popup-box {
+      display: block;
+      width: 100%;
+      max-width: 36rem;
+      background: #fff;
+      border-radius: 1.6rem;
+    }
+    .pop-body {
+      width: 100%;
+      padding: 0 3rem 4rem;
+      max-height: calc(100vh - 6rem - 11.8rem - 8rem - 5.8rem);
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+
+      > * {
+        display: block;
+      }
+      .pop-txt {
+        padding-top: 2rem;
+        font-size: 1.6rem;
+        line-height: 1.43;
+
+        &.ic-write {
+          padding-top: 11.4rem;
+          @include bg(icon-write, center, top, 9.4rem);
+        }
+      }
+    }
+    .pop-foot {
+      overflow: hidden;
+      border-radius: 0 0 1.6rem 1.6rem;
+    }
+    .btn-wrap {
+      padding: 0;
+
+      > button {
+        height: 5.8rem;
+        font-size: 1.6rem;
+        border-radius: 0;
+        width: 100%;
+        flex: 1;
+
+        &.white {
+          border-top: 2px solid $color-gray-light02;
+        }
+        &.blue {
+          border-top: 2px solid $color-primary;
+        }
+
+        & + button {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+  &.popup-btm {
+    align-items: center;
+    justify-content: flex-end;
+
+    .popup-box {
+      display: block;
+      width: 100%;
+      background-color: $color-white;
+      border-radius: 1.6rem 1.6rem 0 0;
+    }
+    .pop-head {
+      padding: 2rem;
+    }
+  }
+  .btn-pop-close {
+    position: absolute;
+    top: 0;
+    @include xCenter;
+    width: 5.6rem;
+    height: 3rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 1.2rem;
+      display: block;
+      width: 100%;
+      height: 0.5rem;
+      background-color: $color-gray-line;
+      border-radius: 0.25rem;
+    }
+  }
+}
+
+.pop-head {
+  padding: 3rem 1rem;
+
+  .pop-ttl {
+    display: block;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: $color-primary;
+  }
+}
+.device-search-full {
+  background: transparent !important;
+}
+.device-search-box {
+  position: relative;
+  padding-top: 14.7rem;
+  padding-bottom: 5.9rem;
+  background: url(../img/img-device-connect.png) top center / auto 12.4rem no-repeat;
+
+  .loading {
+    position: absolute;
+    top: 3.7rem;
+    width: 5.4rem;
+    @include xCenter;
+  }
+
+  .txt {
+    font-size: 1.8rem;
+  }
+}
+.popup {
+  .popup-box + .ipt-chk-noti {
+    width: 100%;
+    max-width: 36rem;
+    text-align: right;
+    margin-top: 1.8rem;
+
+    input[type='checkbox'] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      opacity: 0;
+
+      &:checked + label {
+        @include bg('btn-check-w-on', right, center, 2.4rem);
+      }
+    }
+
+    label {
+      padding: 0.5rem;
+      padding-right: 3.4rem;
+      color: $color-white;
+      @include bg('btn-check-w-off', right, center, 2.4rem);
+    }
+  }
+}
+/*===  POPUP TOAST ===*/
+.toast-wrap {
+  display: none;
+  position: fixed;
+  bottom: 2.4rem;
+  left: 0;
+  width: 100%;
+  z-index: 101;
+
+  &.show {
+    display: block;
+  }
+  .toast-txt {
+    width: 83.5%;
+    max-width: 36rem;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+    border-radius: 2.5rem;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: $color-white;
+    font-size: 1.6rem;
+    line-height: normal;
+    text-align: center;
+  }
+  &.is-btm {
+    bottom: 9.6rem;
+  }
+}
+
+/*=== TIME PICKER ===*/
+.list-select-wrap {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    height: 100%;
+    @include xCenter;
+    width: 1px;
+    background-color: $color-gray-line;
+  }
+  .list-select-title {
+    display: flex;
+    flex-direction: row;
+    padding-top: 1rem;
+
+    > * {
+      flex: 1;
+      width: 100%;
+      display: inline-block;
+      text-align: center;
+      padding: 0.3rem 1.5rem;
+      font-size: 1.6rem;
+      color: $color-gray-txt01;
+    }
+  }
+
+  .mbsc-w-p {
+    width: 100%;
+  }
+
+  .dwwc {
+    max-width: inherit !important;
+  }
+  .dw-hl {
+    background-color: $color-white;
+  }
+  .dw-li {
+    color: $color-black;
+    &.dw-sel {
+      color: $color-primary;
+      font-weight: bold;
+    }
+    .dw-i {
+      font-size: 1.6rem;
+    }
+  }
+
+  .mbsc-mobiscroll {
+    .dwwol {
+      border: none;
+    }
+    .dwc {
+      padding: 0;
+    }
+  }
+  .dwfl {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+  }
+}
+
+/*=== INTRO_P001 & P002 & P003 ===*/
+.pop-body {
+  .ic-list {
+    margin-top: 3.6rem;
+  }
+  .gray-info-box {
+    margin: 0 -3rem;
+  }
+  * + .gray-info-box {
+    margin-top: 4rem;
+  }
+}
+.ic-list {
+  text-align: left;
+
+  &-item {
+    padding: 0.3rem 0 0.3rem 5.6rem;
+    color: $color-gray-txt02;
+    line-height: normal;
+    @include bg(icon-agree-mic, left, top, 4.4rem);
+
+    & + .ic-list-item {
+      margin-top: 2.4rem;
+    }
+
+    $imageNames: (mic, location, bluetooth);
+    @each $imageName in $imageNames {
+      &.#{$imageName} {
+        @include bg(icon-agree-#{$imageName}, left, top, 4.4rem);
+      }
+    }
+    .ttl {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: $color-black;
+    }
+  }
+}
+
+/* tablet */
+@include mq('tablet-small') {
+  .popup {
+    &.popup-mid {
+      .pop-body {
+        max-height: calc(100vh - 9rem - 16.7rem - 8rem - 5.8rem);
+      }
+    }
+    &.popup-btm {
+      .popup-box {
+        max-width: 66rem;
+      }
+    }
+  }
+  .device-search-full {
+    .device-search-box {
+      padding-top: 29.4rem;
+      background: url(../img/img-device-connect.png) top center / 33.4rem auto no-repeat;
+
+      .loading {
+        top: 7.3rem;
+        width: 11rem;
+      }
+
+      .txt {
+        font-size: 3.6rem;
+      }
+    }
+  }
+
+  .toast-wrap {
+    bottom: 5.7rem;
+  }
+}

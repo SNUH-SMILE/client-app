@@ -1,0 +1,222 @@
+/*===  MEDICNE_V001 ===*/
+.alarm-list {
+  padding: 1rem 0;
+  * {
+    font-size: 1.5rem;
+  }
+
+  > li {
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .ttl,
+    .txt {
+      display: block;
+      flex: 1;
+      width: 100%;
+      text-align: center;
+      line-height: normal;
+    }
+  }
+}
+
+.time-line-list {
+  padding: 1rem 0;
+
+  * {
+    font-size: 1.5rem;
+    line-height: normal;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem 2rem;
+
+    .time {
+      display: block;
+      margin-right: 2rem;
+      width: 8rem;
+      text-align: center;
+    }
+  }
+  .medicine-info {
+    flex: 1;
+
+    .ttl {
+      display: inline-block;
+      width: 72%;
+      padding-right: 0.5rem;
+    }
+    .txt {
+      display: inline-block;
+      width: 28%;
+      text-align: center;
+    }
+    .sub {
+      margin-top: 0.3rem;
+    }
+  }
+}
+/*===  MEDICNE_P001 ===*/
+.md-set-list {
+  > li + li {
+    border-top: 1px solid $color-gray-line;
+  }
+  .hbox {
+    padding: 1.5rem 2rem;
+    min-height: 6rem;
+  }
+  .right-area {
+    flex: 1;
+    text-align: right;
+    .txt {
+      font-size: 1.5rem;
+    }
+  }
+  .ttl {
+    min-width: 9.2rem;
+    padding-right: 3rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+  .ipt-wrap {
+    input {
+      min-height: 4rem;
+      background-color: inherit;
+    }
+  }
+  .ipt-form {
+    > .ipt-select {
+      margin-left: 1.2rem;
+    }
+  }
+  select {
+    min-width: 5.6rem;
+    max-width: 8rem;
+    height: 3rem;
+  }
+
+  &.pd-type02 {
+    .hbox {
+      padding: 1.5rem 3rem;
+    }
+
+    .sub-info-box {
+      > li {
+        padding: 2rem 3rem;
+      }
+    }
+  }
+  .nodata-box {
+    border-radius: 0;
+  }
+}
+.btn-txt-detail {
+  height: 2.8rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $color-primary;
+}
+
+.sub-info-box {
+  background-color: $color-gray-light02;
+
+  > li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1.5rem 2rem;
+  }
+
+  .sub-ttl {
+    padding-right: 1.5rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+}
+
+/*===  MEDICNE_V002 ===*/
+.txt-info-box {
+  .ttl {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .txt {
+    padding: 1rem;
+    font-size: 2.2rem;
+    line-height: 1.5;
+  }
+
+  & + .section-box02 {
+    margin-top: 2.6rem;
+  }
+}
+
+.medicine-list {
+  > li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2rem;
+
+    .ttl {
+      flex: 1;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+/* tablet */
+@include mq('tablet-small') {
+  .alarm-list {
+    > li {
+      padding: 2rem 3rem;
+    }
+  }
+
+  .time-line-list {
+    .item {
+      padding: 2rem 3rem;
+
+      .time {
+        margin-right: 2rem;
+        width: 10rem;
+      }
+    }
+    .medicine-info {
+      .ttl {
+        padding-right: 1rem;
+      }
+      .sub {
+        margin-top: 0.8rem;
+      }
+    }
+  }
+
+  .md-set-list {
+    .hbox {
+      padding: 2rem 3rem;
+      min-height: 7.5rem;
+    }
+
+    .ttl {
+      padding-right: 5rem;
+    }
+  }
+
+  .sub-info-box {
+    > li {
+      padding: 2rem 3rem;
+      min-height: 6.5rem;
+    }
+  }
+
+  .medicine-list {
+    > li {
+      padding: 2.5rem 4rem;
+    }
+  }
+}

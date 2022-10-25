@@ -1,0 +1,248 @@
+/*=== HELP_V003 ===*/
+.noti-list {
+  > li {
+    border-bottom: 1px solid $color-gray-line;
+  }
+
+  button {
+    width: 100%;
+    padding: 2rem;
+    text-align: left;
+  }
+
+  .title-box {
+    display: block;
+
+    &.new {
+      .ttl {
+        font-weight: bold;
+      }
+
+      .badge {
+        display: inline-block;
+      }
+    }
+    .ttl {
+      display: inline-block;
+      max-width: calc(100% - 2.8rem);
+      font-size: 1.6rem;
+      line-height: normal;
+      // @include ellipsis;
+    }
+
+    .badge {
+      display: none;
+      vertical-align: middle;
+      margin-top: -0.3rem;
+      margin-left: 0.8rem;
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: $color-white;
+      background-color: $color-primary;
+    }
+  }
+  .sub-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+
+  .date {
+    display: inline-block;
+    margin-right: 0.8rem;
+    color: $color-gray-txt01;
+  }
+  .point-txt {
+    display: inline-block;
+    font-size: 1.4rem;
+  }
+}
+/*=== HELP_V004 ===*/
+.noti-top {
+  padding: 1.8rem 2rem;
+  border-bottom: 1px solid $color-gray-line;
+  background-color: $color-white;
+
+  .ttl {
+    font-size: 1.6rem;
+    font-weight: bold;
+    line-height: 1.43;
+  }
+  .date {
+    display: block;
+    margin-top: 0.5rem;
+    color: $color-gray-txt01;
+  }
+}
+.noti-btm {
+  padding: 2rem;
+  background-color: $color-white;
+
+  .pre-box {
+    display: block;
+    line-height: 1.43;
+    white-space: pre-wrap;
+  }
+}
+.answer-box {
+  .noti-top,
+  .noti-btm {
+    background-color: $color-gray-light02;
+  }
+  .nodata-box {
+    padding-top: 13.4rem;
+  }
+}
+/*=== HELP_V006 ===*/
+.acdn-list {
+  .acdn-title {
+    position: relative;
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 2rem 5.8rem 2rem 4.1rem;
+    border-bottom: 1px solid $color-gray-light01;
+
+    &::before {
+      content: 'Q.';
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      font-size: 1.6rem;
+      line-height: 1.13;
+      color: $color-primary;
+      font-weight: normal;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 3.8rem;
+      height: 3.8rem;
+      @include bg(btn-list-arrow-down);
+    }
+
+    &.selected {
+      font-weight: bold;
+      color: $color-primary;
+
+      &::after {
+        transform: rotate(180deg);
+      }
+    }
+
+    > span {
+      font-size: 1.6rem;
+      line-height: 1.25;
+    }
+  }
+
+  .acdn-content {
+    > p {
+      padding: 2rem;
+      background-color: $color-gray-light02;
+      line-height: 1.43;
+    }
+  }
+}
+.accordion-enter-active,
+.accordion-leave-active {
+  will-change: height, opacity;
+  transition: height 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.accordion-enter,
+.accordion-leave-to {
+  height: 0 !important;
+  opacity: 0;
+}
+
+/* tablet */
+@include mq('tablet-small') {
+  .half-cont-inner {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+
+    .left-area {
+      width: 45%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .noti-list {
+        flex: 1;
+      }
+
+      .gray-info-box {
+        padding: 2.6rem 3rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .txt {
+          flex: 1;
+          padding-right: 1rem;
+          font-size: 1.5rem;
+          color: $color-gray-txt02;
+        }
+        .btn-txt {
+          min-width: 20rem;
+          padding: 0 1rem;
+        }
+      }
+    }
+    .right-area {
+      width: 55%;
+      height: 100%;
+      border-left: 0.6rem solid $color-gray-line;
+    }
+  }
+  .noti-list {
+    button {
+      padding-right: 5.4rem;
+      @include bg(btn-list-arrow-gray, right 2.6rem, center, 3.8rem);
+
+      &:focus,
+      &:active {
+        @include bg(btn-list-arrow-on, right 2.6rem, center, 3.8rem);
+      }
+    }
+    .sub-box {
+      justify-content: flex-start;
+    }
+
+    &.tb-icon-none {
+      button {
+        background: none;
+      }
+    }
+  }
+  .noti-btm {
+    .pre-box {
+      min-height: 12rem;
+    }
+  }
+
+  .acdn-list {
+    .acdn-title {
+      &::after {
+        right: 2rem;
+      }
+    }
+    .acdn-content {
+      > p {
+        padding-left: 4.2rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,131 @@
+/*===  EXERCISE_V001 ===*/
+.center-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.ic-info-txt {
+  padding-top: 16rem;
+  font-size: 1.6rem;
+  line-height: 1.43;
+
+  &.check {
+    @include bg('icon-state01', center, top, 12rem);
+  }
+  &.rest {
+    @include bg('icon-state02', center, top, 12rem);
+  }
+}
+
+/*===  EXERCISE_V003 ===*/
+.video-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  > li {
+    overflow: hidden;
+    border: 1px solid $color-gray-line;
+    border-radius: 0.8rem;
+
+    button {
+      width: 100%;
+      text-align: left;
+    }
+  }
+  .ttl {
+    display: block;
+    padding: 0.8rem 1.2rem;
+    min-height: 6rem;
+
+    > .ellipsis2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 1.33;
+    }
+  }
+}
+.thumbnail-box {
+  position: relative;
+  display: block;
+  padding-top: 56.13%;
+  overflow: hidden;
+
+  > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+  .time {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    padding: 0.3rem 1rem;
+    text-align: right;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    color: $color-white;
+  }
+}
+
+/*===  EXERCISE_V009 ===*/
+.ex-info-wrap {
+  .info-box {
+    padding: 1.8rem 2rem;
+    border-bottom: 2px solid $color-gray-line;
+    .divide-list {
+      > * + * {
+        margin-left: 2.1rem;
+
+        &::before {
+          left: -1rem;
+        }
+      }
+    }
+
+    .time {
+      color: $color-gray-txt01;
+    }
+    .ttl {
+      margin-top: 1rem;
+      font-size: 1.6rem;
+      font-weight: bold;
+      line-height: normal;
+    }
+  }
+  .ds-box {
+    padding: 2rem;
+    line-height: normal;
+  }
+}
+
+/* tablet */
+@include mq('tablet-small') {
+  .video-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cont-inner.tb-divide {
+    padding-top: 8.2rem;
+  }
+  .tb-divide {
+    display: flex;
+    flex-direction: row;
+
+    .img-box {
+      max-width: 46rem;
+      width: 45%;
+    }
+    .ex-info-wrap {
+      flex: 1;
+      margin-left: 3rem;
+    }
+  }
+}

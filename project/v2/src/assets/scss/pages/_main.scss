@@ -1,0 +1,210 @@
+/*===  MAIN ===*/
+.pg-main {
+  .cont-inner {
+    padding-top: 0;
+    padding-bottom: 7.8rem;
+  }
+}
+.section-box {
+  padding: 3rem 2rem;
+
+  & + & {
+    border-top: 1px solid $color-gray-line;
+  }
+  .section-ttl-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    .section-ttl {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: $color-primary;
+    }
+  }
+}
+.health-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  > li {
+    border: 1px solid $color-gray-line;
+    border-radius: 0.8rem;
+    overflow: hidden;
+  }
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    min-height: 11rem;
+    padding: 1.7rem 1rem 2rem;
+    vertical-align: top;
+
+    > * {
+      display: block;
+      width: 100%;
+    }
+
+    .txtc-gray {
+      text-align: center;
+      line-height: 1.43;
+    }
+  }
+
+  &-ttl {
+    position: relative;
+    margin-bottom: 1.7rem;
+    padding-left: 3rem;
+    text-align: left;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -0.7rem;
+      left: 0;
+      width: 2.8rem;
+      height: 2.8rem;
+    }
+
+    $imageNames: (temp, blood, heart, oxygen, walk, sleep);
+    @each $imageName in $imageNames {
+      &.ic-#{$imageName}::before {
+        @include bg(icon-#{$imageName});
+      }
+    }
+  }
+  .data {
+    margin-top: 0.4rem;
+    font-size: 1.6rem;
+
+    .num {
+      font-size: 2.2rem;
+    }
+  }
+}
+.question-list {
+  > li + li {
+    margin-top: 0.7rem;
+  }
+  button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.3rem 2rem;
+    border-radius: 0.8rem;
+    color: $color-black;
+    border: 1px solid $color-primary;
+
+    &:disabled {
+      background-color: $color-gray-light01;
+      border-color: $color-gray-light01;
+
+      .lb-rnd-txt {
+        color: $color-gray-txt02;
+        border: 1px solid #bbb;
+        background-color: $color-gray-light01;
+      }
+    }
+  }
+  .ttl {
+    flex: 1;
+    padding-right: 1rem;
+    font-size: 1.5rem;
+    text-align: left;
+  }
+}
+
+.info-center-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 11rem;
+  padding: 2rem 3rem;
+  background-color: $color-gray-light01;
+  font-size: 1.5rem;
+  border-radius: 0.8rem;
+
+  .txt-info {
+    text-align: center;
+  }
+
+  .ic-txt {
+    font-size: 1.8rem;
+  }
+  .sub-txt {
+    width: 100%;
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #555;
+    border-top: 1px solid #e5e5e5;
+  }
+}
+
+/* tablet */
+@include mq('tablet-small') {
+  .pg-main {
+    .cont-inner {
+      &.tb-full {
+        padding: 7rem 5.5rem;
+      }
+
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5rem 4rem;
+    }
+  }
+  .section-box {
+    padding: 0rem;
+    &:nth-of-type(3) {
+      grid-column: span 2;
+    }
+    & + & {
+      border-top: none;
+    }
+  }
+  .health-list {
+    gap: 1.1rem 1rem;
+    grid-template-columns: repeat(3, 1fr);
+
+    > li {
+      button {
+        min-height: 13rem;
+      }
+    }
+
+    &-ttl {
+      margin-bottom: 2.7rem;
+    }
+  }
+  .info-center-box {
+    min-height: 17rem;
+  }
+}
+
+@include mq('tablet-medium') {
+  .pg-main {
+    .cont-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5rem 4rem;
+    }
+  }
+  .section-box {
+    &:nth-of-type(3) {
+      grid-row: span 2;
+      grid-column: unset;
+    }
+  }
+  .health-list {
+    gap: 1.4rem 1rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
