@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <title>IITP | 설정</title>
+    <link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css">
+</head>
+
+<body>
+    <!-- Wrapper -->
+    <div class="set-wrap wrapper">
+        <!-- Header -->
+        <header class="header">
+            <button type="button" class="btn-back">뒤로가기</button>
+            <h1>설정</h1>
+            <button type="button" class="btn-device">디바이스 연결</button>
+            <button type="button" class="btn-alim">알람<span class="badge"></span></button>
+        </header>
+        <!-- //Header -->
+
+        <!-- Content -->
+        <div class="content-wrap">
+            <div class="content scrollBox">
+                <div class="container-wrap type-list">
+                    <ul class="set-list-box">
+                        <li>
+                            <button type="button" id="disconnectBtn" class="set-list-item">
+                                <span class="ttl">디바이스 연결 끊기</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" id="updateInfoBtn" class="set-list-item">
+                                <span class="ttl">회원정보 수정</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" id="logoutBtn" class="set-list-item">
+                                <span class="ttl">로그아웃</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" id="version" class="set-list-item no-item">
+                                <span class="ttl"></span>
+                            </button>
+                        </li>
+<!--                        <li>-->
+<!--                            <button type="button" class="set-list-item">-->
+<!--                                <span class="ttl">화상 진료 알림함</span>-->
+<!--                            </button>-->
+<!--                        </li>-->
+                        <li class="none">
+                            <p class="set-list-item">
+                                <span class="ttl">디바이스 언어 한글로 표시</span>
+                                <label for="watchLangKorean" class="switch"><input id="watchLangKorean" type="checkbox" title="워치 언어 한글로 표시"><span></span></label>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+<!--                <div class="btn-wrap">-->
+<!--                    <button type="button" class="btn-rnd confirm" disabled>완료</button>-->
+<!--                </div>-->
+            </div>
+        </div>
+        <!-- //Content -->
+    </div>
+    <!-- //Wrapper -->
+</body>
+<script type="text/javascript" src="../js/mcore.min.js"></script>
+</html>
