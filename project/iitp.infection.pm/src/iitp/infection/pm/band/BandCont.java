@@ -1,5 +1,9 @@
 package iitp.infection.pm.band;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +19,11 @@ import android.widget.Toast;
 import com.yc.pedometer.info.BreatheInfo;
 import com.yc.pedometer.info.HeartRateHeadsetSportModeInfo;
 import com.yc.pedometer.info.OxygenInfo;
+import com.yc.pedometer.info.SleepTimeInfo;
 import com.yc.pedometer.info.SportsModesInfo;
+import com.yc.pedometer.info.StepInfo;
 import com.yc.pedometer.info.StepOneDayAllInfo;
+import com.yc.pedometer.info.StepOneHourInfo;
 import com.yc.pedometer.info.TemperatureInfo;
 import com.yc.pedometer.listener.BreatheRealListener;
 import com.yc.pedometer.listener.OxygenRealListener;
@@ -37,13 +44,26 @@ import com.yc.pedometer.sdk.SleepChangeListener;
 import com.yc.pedometer.sdk.StepChangeListener;
 import com.yc.pedometer.sdk.UTESQLOperate;
 import com.yc.pedometer.sdk.WriteCommandToBLE;
+import com.yc.pedometer.utils.BandLanguageUtil;
 import com.yc.pedometer.utils.BreatheUtil;
+import com.yc.pedometer.utils.CalendarUtils;
+import com.yc.pedometer.utils.GetFunctionList;
 import com.yc.pedometer.utils.GlobalVariable;
+import com.yc.pedometer.utils.OxygenUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import iitp.infection.pm.R;
+import iitp.infection.pm.database.DBConfig;
+import iitp.infection.pm.database.DBHelper;
 import iitp.infection.pm.samples.utils.CommUtils;
+import m.client.android.library.core.utils.FileLogger;
 import m.client.android.library.core.view.MainActivity;
 
 public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallbackListener, RateCalibrationListener,
@@ -51,25 +71,23 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
     private String CLASS_TAG = BandCont.class.getSimpleName();
     private static BandCont instance = null;
     private static Context mContext;
-    private MainActivity mActivity;
-    private String mCallback;
+    private static MainActivity mActivity;
+    private static String mCallback;
     private BLEServiceOperate mBLEServiceOperate;
     private BluetoothLeService mBluetoothLeService;
     private SharedPreferences sp;
+    private SharedPreferences.Editor spEditor;
     private DataProcessing mDataProcessing;
     private WriteCommandToBLE mWriteCommand;//밴드 데이터 가져오기 위함
     private UTESQLOperate mySQLOperate;
-    private boolean newBandContAble = false;//현재 연결된 밴드가 아닌 새로운 Check fit 밴드가 연결되는지 확인
-    //private boolean isBandConnect;
-//    private final int CONNECTED = 1;
-//    private final int CONNECTING = 2;
-//    private final int DISCONNECTED = 3;
-//    private int CURRENT_STATUS = DISCONNECTED;
+    public boolean newBandContAble = false;//현재 연결된 밴드가 아닌 새로운 Check fit 밴드가 연결되는지 확인
+    public boolean IS_OXYGEN_CHECKING = false;
     public final int BAND_SYNC_STEP = 0;
     public final int BAND_SYNC_SLEEP = 1;
     public final int BAND_SYNC_RATE = 2;
     public final int BAND_SYNC_BLOOD = 3;
     public final int BAND_SYNC_TEMPERATURE = 4;
+    public final int BAND_SYNC_OXYGEN = 5;
 
     private final int UPDATE_STEP_UI_MSG = 0;
     private final int UPDATE_SLEEP_UI_MSG = 1;
@@ -102,11 +120,22 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
     private final int OFFLINE_SLEEP_SYNC_OK_MSG = 44;
     private final int SYNC_TEMPERATURE_COMMAND_OK_MSG = 45;
     private final int SYNC_TIME_OK_MSG = 46;
+    private final int OFFLINE_OXYGEN_SYNC_OK_MSG = 47;
+    private final int TEMP_CHECKING = 48;
+    private final int TEMP_CHECKING_START = 49;
+    private final int OXYGEN_CHECK_START = 0063;
+    private final int OXYGEN_CHECK_STOP = 0064;
+    private final int OXYGEN_CHECKING = 0065;
     private final int BAND_SYNC_DATA_FAIL = 9990;
 
     public static BandCont getInstance(MainActivity activity, Context context,String callback) {
+        Log.d("BandCont", "BandConnect getInstance instance :"+instance+"/// callback:"+callback);
         if (instance == null) {
             instance = new BandCont(activity, context,callback);
+        }else{
+            mActivity = activity;
+            mContext = context;
+            mCallback = callback;
         }
         return instance;
 
@@ -116,6 +145,7 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
         mActivity = activity;
         mCallback = callback;
         sp = mContext.getSharedPreferences(GlobalVariable.SettingSP, 0);
+        spEditor = sp.edit();
         mySQLOperate = UTESQLOperate.getInstance(mContext);// 2.2.1版本修改
     }
     //밴드 연결
@@ -123,6 +153,8 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
         mBLEServiceOperate = BLEServiceOperate.getInstance(mContext);
         mBLEServiceOperate.setServiceStatusCallback(this);
         mBluetoothLeService = mBLEServiceOperate.getBleService();
+        Log.d(CLASS_TAG, "BandConnect mBLEServiceOperate:"+mBLEServiceOperate);
+        Log.d(CLASS_TAG, "BandConnect mBluetoothLeService:"+mBluetoothLeService);
         if (mBluetoothLeService != null) {
             mBluetoothLeService.setICallback(this);
 
@@ -132,19 +164,21 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
             mBluetoothLeService.setOxygenListener(this);//Oxygen(산소) Listener
             mBluetoothLeService.setBreatheRealListener(this);//Breathe Listener
 
+        }else{
+            Log.i(CLASS_TAG, "BandConnect mBluetoothLeService Null return");
+            return;
         }
-        mRegisterReceiver();//밴드 버전 및 배터리 체크를 위한 리시버 등록
+        //mRegisterReceiver();//밴드 버전 및 배터리 체크를 위한 리시버 등록
         dataProcessingListenerInit();//밴드 생체 데이터 sync 리스너 등록
         mWriteCommand = WriteCommandToBLE.getInstance(mContext);
-       // mWriteCommand.sendBandLanguageToBle(BandLanguageUtil.BAND_LANGUAGE_KO);//언어설정 국어
         String lastConnectAddr0 = sp.getString(GlobalVariable.LAST_CONNECT_DEVICE_ADDRESS_SP,"00:00:00:00:00:00");
         Log.i(CLASS_TAG, "BandConnect lastConnectAddr01:["+lastConnectAddr0+"] new addr ["+bandAddr+"]");
-        if(lastConnectAddr0 != bandAddr){
+        if(!lastConnectAddr0.equals(bandAddr)){
             newBandContAble = true;
         }
-        boolean isBandConnect = sp.getBoolean(GlobalVariable.BLE_CONNECTED_SP,false);
+        boolean isBandConnect = isBandConnected();//sp.getBoolean(GlobalVariable.BLE_CONNECTED_SP,false);
+        Log.d(CLASS_TAG, "BandConnect isBandConnect :"+isBandConnect);
         if (isBandConnect) {
-            Log.d(CLASS_TAG, "isBandConnect :"+isBandConnect);
             mBLEServiceOperate.disConnect();
         }else{
 
@@ -156,14 +190,98 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
     public void BandDisConnect(){
         if (mBluetoothLeService != null) {
             mBLEServiceOperate.disConnect();
+            spEditor.putString(GlobalVariable.LAST_CONNECT_DEVICE_ADDRESS_SP,"00:00:00:00:00:00");
+            spEditor.commit();
             mBLEServiceOperate=null;
         }
-
+    }
+    //밴드 연결 상태 확인
+    public boolean isBandConnected(){
+        String lastConnectAddr0 = sp.getString(GlobalVariable.LAST_CONNECT_DEVICE_ADDRESS_SP,"00:00:00:00:00:00");
+        int connectionState = BluetoothProfile.STATE_DISCONNECTED;
+        BluetoothManager bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
+        BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(lastConnectAddr0);
+        Log.d(CLASS_TAG,"isBandConnected() device : "+device);
+        if(device != null && bluetoothManager != null){
+            connectionState = bluetoothManager.getConnectionState(device,BluetoothProfile.GATT_SERVER);
+        }
+        Log.d(CLASS_TAG,"isBandConnected() connectionState : "+connectionState);
+        if(connectionState == BluetoothProfile.STATE_CONNECTED){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    //연결되어 있는 밴드 정보
+    public BluetoothDevice isBandConnectedInfo(){
+        String lastConnectAddr0 = sp.getString(GlobalVariable.LAST_CONNECT_DEVICE_ADDRESS_SP,"00:00:00:00:00:00");
+        int connectionState = BluetoothProfile.STATE_DISCONNECTED;
+        BluetoothManager bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
+        BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(lastConnectAddr0);
+        Log.d(CLASS_TAG,"isBandConnected() device : "+device);
+        if(device != null && bluetoothManager != null){
+            connectionState = bluetoothManager.getConnectionState(device,BluetoothProfile.GATT_SERVER);
+        }
+        Log.d(CLASS_TAG,"isBandConnected() connectionState : "+connectionState);
+        if(connectionState == BluetoothProfile.STATE_CONNECTED){
+            return device;
+        }else{
+            return null;
+        }
+    }
+    //스마트 밴드 언어 셋팅
+    public void setBandLanguage(int lang){
+        if(!isBandConnected()){
+            Toast.makeText(mContext, mContext.getString(R.string.band_not_connect), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(GetFunctionList.isSupportFunction_Second(mContext,GlobalVariable.IS_SUPPORT_BAND_LANGUAGE_FUNCTION)){
+            //언어 셋팅을 지원하면 BandLanguageUtil.BAND_LANGUAGE_KO
+            mWriteCommand.syncBandLanguage(lang);
+        }else{
+            Toast.makeText(mContext, mContext.getString(R.string.band_lang_not_support), Toast.LENGTH_SHORT).show();
+        }
+    }
+    //현재 밴드에 셋팅되어 있는 언어 정보 확인
+    public int getBandLanguage(){
+        int bandLang = sp.getInt(GlobalVariable.BAND_LANGUAGE_SP,0);
+        return bandLang;
+    }
+    /**
+     * 데이터 초기화
+     * state : 0 (밴드 데이터 초기화 & 로컬 공통 DB 데이터초기화)
+     * state : 1 (밴드 데이터 초기)화
+     * state : 2 무시
+    **/
+    public void bandDeviceResetAndSync(/*String state*/){
+        Log.d(CLASS_TAG,"bandDeviceResetAndSync() resetType : "+ CommConfig.dataResetType);
+        if(CommConfig.dataResetType.equals("0")){
+            mWriteCommand.deleteDevicesAllData();
+            //공통 DB 테이블 초기화
+            DBHelper comDB = new DBHelper(mContext, DBConfig.COM_DB_NAME,DBConfig.COM_DB_VER);
+            comDB.dataDelect(DBConfig.DB_T_BP);
+            comDB.dataDelect(DBConfig.DB_T_STEP);
+            comDB.dataDelect(DBConfig.DB_T_SLEEP);
+            comDB.dataDelect(DBConfig.DB_T_HRM);
+            comDB.dataDelect(DBConfig.DB_T_OXYGEN);
+            comDB.dataDelect(DBConfig.DB_T_TEMP);
+            //Check Fit 스마트 밴드 SDK에서 생성한 DB 데이터 초기화
+            comDB = new DBHelper(mContext, DBConfig.BAND_SDK_DB_NAME,DBConfig.BAND_SDK_DB_VER);
+            comDB.dataDelect(DBConfig.SDK_DB_24RATE);
+            comDB.dataDelect(DBConfig.SDK_DB_OXYGEN);
+            comDB.dataDelect(DBConfig.SDK_DB_SLEEP);
+            comDB.dataDelect(DBConfig.SDK_DB_STEP);
+            comDB.dataDelect(DBConfig.SDK_DB_TEMP);
+            comDB.dataDelect(DBConfig.SDK_DB_BLOOD);
+        }else if(CommConfig.dataResetType.equals("1")){
+            mWriteCommand.deleteDevicesAllData();
+        }
+        CommConfig.dataResetType = "2";
 
     }
     private void dataProcessingListenerInit(){
         mDataProcessing = DataProcessing.getInstance(mContext);
-        mDataProcessing.setOnStepChangeListener(mOnStepChangeListener);//걸음
+        mDataProcessing.setOnStepChangeListener(mOnStepChangeListener);//걸음수
         mDataProcessing.setOnSleepChangeListener(mOnSleepChangeListener);//수면
         mDataProcessing.setOnRateListener(mOnRateListener);//심박
         mDataProcessing.setOnRateOf24HourListenerRate(mOnRateOf24HourListener);//Max 심박, min심박, 평균치 심박
@@ -175,6 +293,10 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
         mFilter.addAction(GlobalVariable.READ_BATTERY_ACTION);
         mFilter.addAction(GlobalVariable.READ_BLE_VERSION_ACTION);
         mActivity.registerReceiver(mReceiver, mFilter);
+    }
+    //밴드 버전 및 배터리 체크 리시버 해제
+    public void mUnRegisterReceiver(){
+        mActivity.unregisterReceiver(mReceiver);
     }
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -196,24 +318,29 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
         }
     };
     private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
+        public void handleMessage(final Message msg) {
             final Bundle bundle = msg.getData();
+            DataQuery mDataQuery = new DataQuery(mContext,DBConfig.BAND_SDK_DB_NAME,13);
+            String bandLastAddr = sp.getString(GlobalVariable.LAST_CONNECT_DEVICE_ADDRESS_SP,"00:00:00:00:00:00");
 
             switch (msg.what) {
                 case DISCONNECT_MSG:
                     Toast.makeText(mContext, "disconnect", Toast.LENGTH_SHORT).show();
-                    if(!newBandContAble){
+                    Log.i(CLASS_TAG, "disconnect newBandContAble:["+newBandContAble+"]");
+                    Log.i(CLASS_TAG, "disconnect lastConnectAddr0:["+bandLastAddr+"]");
+                    if(!newBandContAble && !bandLastAddr.equals("00:00:00:00:00:00")){
                         //마지막에 연결되었던 밴드 재 연결
-                        String lastConnectAddr0 = sp.getString(GlobalVariable.LAST_CONNECT_DEVICE_ADDRESS_SP,"00:00:00:00:00:00");
-                        boolean connectResute0 = mBLEServiceOperate.connect(lastConnectAddr0);
-                        mBLEServiceOperate.connect(lastConnectAddr0);
-                        Log.i(CLASS_TAG, "disconnect lastConnectAddr0:["+lastConnectAddr0+"]");
-                    }else{
-                        newBandContAble = false;
-                    }
+                        //String lastConnectAddr0 = sp.getString(GlobalVariable.LAST_CONNECT_DEVICE_ADDRESS_SP,"00:00:00:00:00:00");
+                        //boolean connectResute0 = mBLEServiceOperate.connect(bandLastAddr);
+                        mBLEServiceOperate.connect(bandLastAddr);
 
+                    }else{
+//                        newBandContAble = false;
+                    }
+                    CommUtils.hideLoading(mActivity);//로딩 팝업 종료
                     break;
                 case CONNECTED_MSG://밴드 연결 성공
+                    CommUtils.hideLoading(mActivity);//로딩 팝업 종료
                     mBluetoothLeService.setRssiHandler(mHandler);
                     new Thread(new Runnable() {
                         @Override
@@ -231,59 +358,148 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
                             }
                         }
                     }).start();
-                    mActivity.runOnUiThread(new Runnable(){
-                        @Override
-                        public void run() {
-                            Log.d(CLASS_TAG, "Band Connect Callback ");
-                            JSONObject setJsonDt = new CommUtils().setJSONData(String.valueOf(CONNECTED_MSG),"CONNECT");
-                            Toast.makeText(mContext, mContext.getString(R.string.connect), Toast.LENGTH_SHORT).show();
-                            mActivity.getWebView().loadUrl("javascript:" + mCallback + "("+setJsonDt+")");
-                        }
-                    });
+                    Log.d(CLASS_TAG,"handleMessage() activity : "+mActivity);
+                    if(mActivity != null) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d(CLASS_TAG, "Band Connect Callback :"+mCallback);
+                                JSONObject setJsonDt = new CommUtils().setJSONResutlCode(mContext.getString(R.string.CD_0000), mContext.getString(R.string.MSG_0000));
+                                String lastConnectAddr0 = sp.getString(GlobalVariable.LAST_CONNECT_DEVICE_ADDRESS_SP, "00:00:00:00:00:00");
+                                try {
+                                    setJsonDt.put("deviceId", lastConnectAddr0);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                Toast.makeText(mContext, mContext.getString(R.string.connect), Toast.LENGTH_SHORT).show();
+                                if (mCallback != null) {
+                                    mActivity.getWebView().loadUrl("javascript:" + mCallback + "(" + setJsonDt + ")");
+                                }
+                                newBandContAble = false;
 
+                            }
+                        });
+                    }
+                    //setTempAutoChecking(true,10);
                     break;
                 case SYNC_TIME_OK_MSG:
-                    bandDataSync(BAND_SYNC_STEP);//스텝 싱크 시작
+                    //체온 측정 10분 단위로 자동 측정
+                    setTempAutoChecking(true,10);
+
+                    if(CommConfig.dataResetType.equals("2")){
+                        Log.d(CLASS_TAG,"handle SYNC_TIME_OK_MSG : dataResetType 2");
+                        bandDataSync(BAND_SYNC_STEP);//스텝 싱크 시작
+                    }else{
+                        //밴드 연결이 성공 후 시간 셋팅이 완료되면  밴드 초기화 값에 따라 초기화를 진행을 먼저 시도 한다.
+                        Log.d(CLASS_TAG,"handle SYNC_TIME_OK_MSG : dataResetType != 2");
+                        bandDeviceResetAndSync();
+                    }
+                    //bandDataSync(BAND_SYNC_STEP);//스텝 싱크 시작
                     break;
                 case UPDATE_STEP_UI_MSG://걸음수가 Change되는 경우
-                    //final Bundle bundle = msg.getData();
-                    Log.d(CLASS_TAG, "step : "+bundle.getInt("step")+" distance: "+bundle.getInt("distance")+" calories:"+bundle.getInt("calories"));
-//                    mActivity.runOnUiThread(new Runnable(){
-//                        @Override
-//                        public void run() {
-//                            mActivity.getWebView().loadUrl("javascript:exCBStepCnt("+bundle.getInt("step")+")");
-//                        }
-//                    });
+                    final StepOneDayAllInfo stepInfo = (StepOneDayAllInfo) msg.obj;
+                    Log.d(CLASS_TAG,"onStepChange() step : "+stepInfo.getStep());
+                    Log.d(CLASS_TAG,"onStepChange() distance : "+stepInfo.getDistance());
+                    //걸음수가 Change되는 경우 밴드 업체 SDK를 통하여 자동 저장되는 Step 마지막 데이터를 가져와서 공통 DB에도 저장한다.
+                    try {
+                        BandQueryDataSet.isDetailQuery = true;
+                        JSONArray stepQueryArry = mDataQuery.queryStepCustom(CalendarUtils.getCalendar(0)).getJSONArray("stepCountList");
+                        JSONObject lastData = stepQueryArry.getJSONObject(stepQueryArry.length()-1);
+                        mDataQuery.changeStepInsert(bandLastAddr,lastData);
+                        BandQueryDataSet.isDetailQuery = false;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if(mActivity != null) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mActivity.getWebView().loadUrl("javascript:onChangeStep(" + stepInfo.getStep() + "," + stepInfo.getDistance() + ")");
+                            }
+                        });
+                    }
                     break;
                 case UPDATE_SLEEP_UI_MSG://수면 정보
-                    new DataQuery().querySleepInfo(mySQLOperate,"");
+                    //new DataQuery().querySleepInfo(mySQLOperate,"",false);
+                    mDataQuery.queryAllSleepInsert(bandLastAddr,CalendarUtils.getCalendar(0));
                     Log.d(CLASS_TAG, "UPDATE_SLEEP_UI_MSG");
                     break;
                 case UPDATA_REAL_RATE_MSG://심박 측정 정보
-                    //final Bundle bundle = msg.getData();
-                    if (bundle.getInt("status") == GlobalVariable.RATE_TEST_FINISH) {
-                        //new DataQuery().UpdateUpdataRateMainUI(mySQLOperate,"");//최저,최고,평균 심박이 필요한 경우 사용
-                        //그렇지 않을 경우 그냥 현재 심박만
-                        int rate = bundle.getInt("rate");
+                    if (bundle.getInt("status") == GlobalVariable.RATE_TEST_FINISH || bundle.getInt("status") == GlobalVariable.RATE_TESTING) {
+                        final int rate = bundle.getInt("rate");
+                        if(bundle.getInt("status") == GlobalVariable.RATE_TEST_FINISH){
+                            //공통 DB에 저장
+                        }
+                        if(mActivity != null) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                final TemperatureInfo tempInfo = (TemperatureInfo) msg.obj;
+
+                                @Override
+                                public void run() {
+                                    mActivity.getWebView().loadUrl("javascript:onChangeRate(" + rate + ")");
+                                }
+                            });
+                        }
                         Log.d(CLASS_TAG, "UPDATA_REAL_RATE_MSG 심박 : " + rate);
                     }
                     break;
                 case OFFLINE_STEP_SYNC_OK_MSG://스탭 싱크가 완료된 경우
                     //new DataQuery().queryStepInfo(mySQLOperate,"");
+                    //업체 SDK를 이용하여 밴드에서 스마트폰 로컬 DB로 sync된 데이터를 따로 관리하는 공통 DB로 inster 한다.
+                    mDataQuery.queryAllStepInsert(bandLastAddr);
                     bandDataSync(BAND_SYNC_SLEEP);//수면 싱크 시작
                     break;
                 case OFFLINE_SLEEP_SYNC_OK_MSG://수면 싱크가 완료된 경우
+                    mDataQuery.queryAllSleepInsert(bandLastAddr,"");
                     bandDataSync(BAND_SYNC_RATE);//심박 싱크 시작
                     break;
                 case OFFLINE_24_HOUR_RATE_SYNC_OK_MSG://심박 싱크가 완료된 경우
+                    mDataQuery.queryAllRateInsert(bandLastAddr);
                     bandDataSync(BAND_SYNC_BLOOD);//혈압 싱크 시작
                     break;
                 case OFFLINE_BLOOD_PRESSURE_SYNC_OK_MSG://혈압 싱크가 완료된 경우
-                    bandDataSync(BAND_SYNC_TEMPERATURE);//혈압 싱크 시작
+                    mDataQuery.queryAllBloodInsert(bandLastAddr);
+                    bandDataSync(BAND_SYNC_TEMPERATURE);//체온 싱크 시작
                     break;
                 case SYNC_TEMPERATURE_COMMAND_OK_MSG://체온 데이터 동기화 완료된 경우
+                    //bandDataSync(BAND_SYNC_OXYGEN);//혈중산소포화도 싱크 시작 동기화 진행은 정상적으로 완료되나, 로컬 DB에 정보를 쌓지 않고 있어서 동기화 과정 제외하고 측정할 때마다 강제 DB적제
+                    mDataQuery.queryAllTempInsert(bandLastAddr);
                     CommUtils.hideLoading(mActivity);//로딩 팝업 종료
                     Toast.makeText(mContext,R.string.band_sync_ok,Toast.LENGTH_LONG).show();
+                    break;
+                case OFFLINE_OXYGEN_SYNC_OK_MSG://혈중 산소포화도 동기화 완료된 경우
+//                    CommUtils.hideLoading(mActivity);//로딩 팝업 종료
+//                    Toast.makeText(mContext,R.string.band_sync_ok,Toast.LENGTH_LONG).show();
+                    break;
+                case OXYGEN_CHECK_START://산소포화도 체크 시
+                case OXYGEN_CHECKING://산소포화도 체크 중
+                    IS_OXYGEN_CHECKING = true;
+                    break;
+                case OXYGEN_CHECK_STOP://산소포화도 체크 종료 작
+                    //우선 산소포화도는 강제로 로컬 DB에 적제한다.
+                    if(tempOxygenInfo !=null){
+                        //DataQuery mDataQuery = new DataQuery(mContext,DBConfig.BAND_SDK_DB_NAME,13);
+                        OxygenInfo oxygenInfo = tempOxygenInfo;
+                        mDataQuery.insertOxygenCustom(oxygenInfo,bandLastAddr);
+                    }
+
+                    IS_OXYGEN_CHECKING = false;
+                    break;
+                case TEMP_CHECKING_START://최초 체온 측정 시작 시 들어오는 체온 정보를 공통 DB에 적재한다.
+                    TemperatureInfo tempInfo = (TemperatureInfo) msg.obj;
+                    mDataQuery.changeTempInsert(bandLastAddr,tempInfo);
+                    mDataQuery.changeRateInsert(bandLastAddr,tempInfo.getCalendar(),tempInfo.getSecondTime()/60);
+                case TEMP_CHECKING://웹 화면에 밴드에서 측정 중인 체온 데이터를 화면 갱신용도록 체온 정보만 전달 한다.
+                    if(mActivity != null) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            final TemperatureInfo tempInfo = (TemperatureInfo) msg.obj;
+
+                            @Override
+                            public void run() {
+                                mActivity.getWebView().loadUrl("javascript:onChangeTemp(" + tempInfo.getBodyTemperature() + ")");
+                            }
+                        });
+                    }
                     break;
                 case BAND_SYNC_DATA_FAIL:
                     Log.d(CLASS_TAG, "mHandler status : "+bundle.getInt("status"));
@@ -305,9 +521,9 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
             @Override
             public void run() {
                 boolean isBandConnect = sp.getBoolean(GlobalVariable.BLE_CONNECTED_SP,false);
-                Log.d(CLASS_TAG, "step Sync isBandConnect :"+isBandConnect);
+                Log.d(CLASS_TAG, "bandDataSync isBandConnect :"+isBandConnect);
                 if (isBandConnect) {
-                    Log.d(CLASS_TAG, "step Sync");
+                    Log.d(CLASS_TAG, "bandDataSync syncType :: "+syncType);
                     switch (syncType){
                         case BAND_SYNC_STEP:
                             Log.d(CLASS_TAG, "step Sync");
@@ -325,6 +541,9 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
                             break;
                         case BAND_SYNC_TEMPERATURE:
                             mWriteCommand.syncAllTemperatureData();//체온 동기화 밴드에 존재하는 데이터 앱 내의 DB로 동기화
+                            break;
+                        case BAND_SYNC_OXYGEN:
+                            mWriteCommand.syncOxygenData();//OnResult(true, ICallbackStatus.OXYGEN_DATA_SYNCING) and OnResult(true, ICallbackStatus.SYNC_OXYGEN_COMMAND_OK)
                             break;
                         default:
                             break;
@@ -346,24 +565,8 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
         @Override
         public void onStepChange(StepOneDayAllInfo info) {
             Message message = mHandler.obtainMessage();
-            Bundle bundle = new Bundle();
+            message.obj = info;
             message.what = UPDATE_STEP_UI_MSG;
-            //message.obj = info;
-            if (info!=null) {
-                bundle.putInt("step",info.getStep());
-                bundle.putFloat("distance",info.getDistance());
-                bundle.putFloat("calories",info.getCalories());
-                bundle.putInt("runSteps",info.getRunSteps());
-                bundle.putFloat("runDistance",info.getRunDistance());
-                bundle.putFloat("runCalories",info.getRunCalories());
-                bundle.putFloat("runDurationTime",info.getRunDurationTime());
-                bundle.putFloat("walkSteps",info.getWalkSteps());
-                bundle.putFloat("walkCalories",info.getWalkCalories());
-                bundle.putFloat("walkDistance",info.getWalkDistance());
-                bundle.putFloat("walkDurationTime",info.getWalkDurationTime());
-                message.setData(bundle);
-
-            }
             mHandler.sendMessage(message);
 
         }
@@ -378,7 +581,6 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
         }
     };
 
-
     /**
      * 현재 심박
      **/
@@ -386,9 +588,6 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
 
         @Override
         public void onRateChange(int rate, int status) {
-//            tempRate = rate;
-//            tempStatus = status;
-//            Log.i(TAG, "Rate_tempRate =" + tempRate);
             Log.i(CLASS_TAG, "mOnRateListener rate =" + rate+",status="+status);
             Message message = mHandler.obtainMessage();
             Bundle bundle = new Bundle();
@@ -447,16 +646,51 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
     public void BloodPressureCheck(String type){
         boolean isBandConnect = sp.getBoolean(GlobalVariable.BLE_CONNECTED_SP,false);
         if (isBandConnect) {
-            if(type =="START"){
-                mWriteCommand.sendBloodPressureTestCommand(GlobalVariable.BLOOD_PRESSURE_TEST_START);
-            }else{
-                mWriteCommand.sendBloodPressureTestCommand(GlobalVariable.BLOOD_PRESSURE_TEST_STOP);
+            if (GetFunctionList.isSupportFunction_Fifth(mContext, GlobalVariable.IS_SUPPORT_BLOOD_PRESSURE_FUNCTION)) {
+                if(type =="START"){
+                    mWriteCommand.sendBloodPressureTestCommand(GlobalVariable.BLOOD_PRESSURE_TEST_START);
+                }else{
+                    mWriteCommand.sendBloodPressureTestCommand(GlobalVariable.BLOOD_PRESSURE_TEST_STOP);
+                }
+            } else {
+                Toast.makeText(mContext, "No support",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            Toast.makeText(mContext, mContext.getString(R.string.disconnect),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+    /**
+     * 산소포화도 측정 시작 & 종료
+     **/
+    public void OxgenPressureCheck(String type){
+        boolean isBandConnect = sp.getBoolean(GlobalVariable.BLE_CONNECTED_SP,false);
+        if (isBandConnect) {
+            if (GetFunctionList.isSupportFunction_Fifth(mContext, GlobalVariable.IS_SUPPORT_OXYGEN)) {
+                if(type =="START"){
+                    mWriteCommand.startOxygenTest();//onTestResult
+                }else{
+                    mWriteCommand.stopOxygenTest();//onTestResult
+                }
+            } else {
+                Toast.makeText(mContext, "No support",
+                        Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(mContext, mContext.getString(R.string.disconnect),
                     Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * 체온 자동 체킹 시작
+    **/
+    public void setTempAutoChecking(boolean status,int interval){
+        mWriteCommand.syncTemperatureAutomaticTestInterval(status,interval);
+    }
+
     /**
      * 메소드 Override 영역
      **/
@@ -485,7 +719,9 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
             case ICallbackStatus.SYNC_TEMPERATURE_COMMAND_OK://체온데이터 동기화 완료
                 mHandler.sendEmptyMessage(SYNC_TEMPERATURE_COMMAND_OK_MSG);
                 break;
-
+            case ICallbackStatus.SYNC_OXYGEN_COMMAND_OK://혈중 산소 포화도 동기화 완료
+                mHandler.sendEmptyMessage(OFFLINE_OXYGEN_SYNC_OK_MSG);
+                break;
             case ICallbackStatus.OFFLINE_STEP_SYNC_TIMEOUT:
             case ICallbackStatus.OFFLINE_SLEEP_SYNC_TIMEOUT:
             case ICallbackStatus.OFFLINE_RATE_SYNC_TIMEOUT:
@@ -632,24 +868,73 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
 
     }
 
+    /**
+     * Oxygen 측정 데이터
+    **/
+    OxygenInfo tempOxygenInfo = null;
     @Override
-    public void onTestResult(int i, OxygenInfo oxygenInfo) {
+    public void onTestResult(int status, OxygenInfo info) {
+        Message message = new Message();
 
+        if (status == OxygenUtil.OXYGEN_TEST_START_HAS_VALUE) { //산소 포화도 측정 중
+            message.what = OXYGEN_CHECKING;//status;
+            //message.obj = info;
+            if(info.getCalendar() !=null){
+                tempOxygenInfo = info;
+            }
+        } else if (status == OxygenUtil.OXYGEN_TEST_START_NO_VALUE) { //산소 포화도 측정 시작
+            message.what = OXYGEN_CHECK_START;//status;
+            tempOxygenInfo = null;
+        } else if (status == OxygenUtil.OXYGEN_TEST_STOP_HAS_VALUE) { //산소포화도 측정 종료
+            message.what = OXYGEN_CHECK_STOP;//status;
+            //message.obj = info;//oxygen value is "info.getOxygenValue()"
+            if(info.getCalendar() !=null){
+                tempOxygenInfo = info;
+            }
+        } else if (status == OxygenUtil.OXYGEN_TEST_STOP_NO_VALUE) {//stop has no oxygen value
+            message.what = status;
+        } else if (status == OxygenUtil.OXYGEN_TEST_TIME_OUT) {//Test time out
+            message.what = status;
+        }
+        Log.d(CLASS_TAG,"onTestResult status =" + status + ",info =" + info.getCalendar()+"///"+info.getStartDate()+"////"+info.getTime()+"///"+info.getOxygenValue());
+        mHandler.sendMessage(message);
     }
 
     @Override
     public void onRateCalibrationStatus(int i) {
-
+        Log.d(CLASS_TAG,"onRateCalibrationStatus()");
     }
 
     @Override
-    public void onTestResult(TemperatureInfo temperatureInfo) {
-
+    public void onTestResult(TemperatureInfo tempInfo) {
+        Log.d(CLASS_TAG,"onTestResult() TempInfo calendar =" + tempInfo.getCalendar() + ",startDate =" + tempInfo.getStartDate() + ",secondTime =" + tempInfo.getSecondTime()
+                + ",bodyTemperature =" + tempInfo.getBodyTemperature());
     }
-
+    /**
+    * 체온 측정 시 콜백 리스너
+    **/
+    int oldTempSecondTime = 0;
     @Override
-    public void onSamplingResult(TemperatureInfo temperatureInfo) {
-
+    public void onSamplingResult(TemperatureInfo tempInfo) {
+        Log.d(CLASS_TAG,"onSamplingResult() TempInfo type ="+tempInfo.getType()+",calendar =" + tempInfo.getCalendar() + ",startDate =" + tempInfo.getStartDate() + ",secondTime =" + tempInfo.getSecondTime()
+                + ",bodyTemperature =" + tempInfo.getBodyTemperature()+",bodySurfaceTemperature ="+tempInfo.getBodySurfaceTemperature()
+                +",ambientTemperature ="+tempInfo.getAmbientTemperature());
+        Message message = new Message();
+        message.obj = tempInfo;
+        if(oldTempSecondTime == 0){
+            //온도 측정 시작 시에 들어온 체온 데이터를 공통 DB(COM_DB_NAME = "SmartBand.db")에 저장하자.
+            message.what = TEMP_CHECKING_START;
+        }else if(oldTempSecondTime != 0 && (tempInfo.getSecondTime() - oldTempSecondTime) < 5){
+            //온도 측정 시간이 이전 측정 시간의 차가 5초 이하면 계속 밴드에서 온도 측정중임으로 판단하고 onChangeTemp 호출하여 웹뷰 화면으로 값을 화면 갱신용 정도로만 사용할 수 있도록 전달 하자.
+            message.what = TEMP_CHECKING;
+        }else{
+            //5초 이상이면 밴드에서 온도 측정이 종료 되었다가 다시 측정되었다는 의미로 간주하고 체온 데이터를 공통 DB(COM_DB_NAME = "SmartBand.db")에 저장하자.
+            message.what = TEMP_CHECKING_START;
+            oldTempSecondTime = 0;
+        }
+        Log.d(CLASS_TAG,"onSamplingResult() TempInfo oldSecondTime : "+oldTempSecondTime + ", oldTM-curTM : "+(tempInfo.getSecondTime() - oldTempSecondTime)+",message.what : "+message.what);
+        mHandler.sendMessage(message);
+        oldTempSecondTime = tempInfo.getSecondTime();
     }
 
     @Override
@@ -657,8 +942,8 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
 
     }
     @Override
-    public void OnDataResult(boolean b, int i, byte[] bytes) {
-
+    public void OnDataResult(boolean result, int status, byte[] bytes) {
+        Log.i(CLASS_TAG, "OnDataResult() result=" + result + ",status=" + status);
     }
 
     @Override
@@ -694,7 +979,7 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
 
     @Override
     public void OnResultHeartRateHeadset(boolean b, int i, int i1, int i2, HeartRateHeadsetSportModeInfo heartRateHeadsetSportModeInfo) {
-
+        Log.d(CLASS_TAG,"OnResultHeartRateHeadset()");
     }
 
     @Override
@@ -703,8 +988,18 @@ public class BandCont implements ICallback, ServiceStatusCallback, OnServerCallb
     }
 
     @Override
-    public void OnServiceStatuslt(int i) {
-
+    public void OnServiceStatuslt(int status) {
+        Log.d(CLASS_TAG, "OnServiceStatuslt status ="+status);
+        if (status == ICallbackStatus.BLE_SERVICE_START_OK) {
+            Log.d(CLASS_TAG, "OnServiceStatuslt mBluetoothLeService ="+mBluetoothLeService);
+            if (mBluetoothLeService == null) {
+                mBluetoothLeService = mBLEServiceOperate.getBleService();
+                mBluetoothLeService.setICallback(this);
+                Log.d(CLASS_TAG, "OnServiceStatuslt mBluetoothLeService22 ="+mBluetoothLeService);
+                String bandLastAddr = sp.getString(GlobalVariable.LAST_CONNECT_DEVICE_ADDRESS_SP,"00:00:00:00:00:00");
+                BandConnect(bandLastAddr);
+            }
+        }
     }
 
 }
