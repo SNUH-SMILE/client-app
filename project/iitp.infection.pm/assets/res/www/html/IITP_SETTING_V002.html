@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <title>IITP | 설정</title>
+    <link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css">
+</head>
+
+<body>
+    <!-- Wrapper -->
+    <div class="set-wrap wrapper">
+        <!-- Header -->
+        <header class="header">
+            <button type="button" class="btn-back">뒤로가기</button>
+            <h1>개인정보 수정</h1>
+            <button type="button" class="btn-device">디바이스 연결</button>
+            <button type="button" class="btn-alim">알람</button>
+            <button type="button" class="btn-set">설정</button>
+        </header>
+        <!-- //Header -->
+
+        <!-- Content -->
+        <div class="content-wrap">
+            <div class="content scrollBox">
+                <div class="container-wrap ipt-cont-box">
+                    <div class="ipt-wrap">
+                        <p class="ttl">아이디</p>
+                        <p class="txt" id="loginId"></p>
+                    </div>
+
+                    <div class="ipt-wrap pr-10 tb-float">
+                        <p class="ttl">성명</p>
+                        <p class="txt" id="patientNm"></p>
+                    </div>
+
+                    <div class="ipt-wrap pr-10 tb-float">
+                        <p class="ttl">생년월일</p>
+                        <div class="hbox">
+                            <p class="txt flex" id="birthDate"></p>
+                            <p class="ipt-line">
+                                <input type="radio" name="gender" id="gender01" value="M" checked disabled>
+                                <label for="gender01">남</label>
+                                <input type="radio" name="gender" id="gender02" value="F" disabled>
+                                <label for="gender02">여</label>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="ipt-wrap pr-10 tb-float">
+                        <label for="cellPhone">휴대폰 번호</label>
+                        <div class="ipt-box">
+                            <input type="tel" id="cellPhone" title="휴대폰 번호입력" placeholder="(-)구분 없이 입력" maxlength="11" />
+                        </div>
+                    </div>
+
+                    <div class="ipt-wrap pr-10 tb-float">
+                        <label for="guardianCellPhone">보호자 연락처</label>
+                        <div class="ipt-box">
+                            <input type="tel" id="guardianCellPhone" title="(-)구분 없이 입력입력" placeholder="(-)구분 없이 입력" maxlength="11" />
+                        </div>
+                    </div>
+
+                    <div class="ipt-wrap ipt-address pr-10">
+                        <label for="address01">주소</label>
+                        <div class="tb-flex">
+                            <div class="ipt-box">
+                                <input type="text" class="ipt-address-inner" id="address01" title="우편번호 입력" placeholder="도로명 주소 입력" disabled="">
+                                <button type="button" class="btn-address">도로명 주소 검색</button>
+                            </div>
+                            <div class="ipt-box">
+                                <input type="text" id="address02" title="상세주소 입력" placeholder="상세주소 입력하세요.">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-wrap">
+                    <button type="button" class="btn-rnd confirm" id="joinSaveBtn">수정</button>
+                </div>
+            </div>
+        </div>
+        <!-- //Content -->
+    </div>
+    <!-- //Wrapper -->
+    <div class="popup-wrap">
+        <div class="popup-bg"></div>
+        <div class="popup-box">
+            <div class="popup">
+                <div class="popup-inner">
+                    <div class="pop-title mtb20">
+                        주소검색
+                    </div>
+                    <div id="pop-bd">
+
+                    </div>
+                </div>
+                <div class="btn-wrap">
+                    <button type="button" id="cancelBtn" class="btn-rnd confirm">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/mcore.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKA3OVV567lC3afY_TPXNDu7K_AIR6G2A&libraries=geometry&v=weekly" async defer></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</html>
