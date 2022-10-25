@@ -1,0 +1,51 @@
+[
+  {
+    "order": "1",
+    "question": "코로나-19 확진 일자가 언제입니까?",
+    "answerType": "DatePicker",
+    "labels": "날짜선택",
+    "answerRequired": "required"
+  },
+  {
+    "order": "2",
+    "question": "코로나-19 검사방법이 어떻게 되십니까? (중복 선택 가능)",
+    "answerType": "CheckboxFactory",
+    "labels": ["자가검사키트", "전문가용 신속 항원검사(의료기관)", "PCR검사"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "3",
+    "question": "최근 2주 이내 발열이 있으셨습니까?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니오"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "4",
+    "question": "최근 2주 이내 발열이 있었다면, '마지막 발열'날짜는 언제입니까?",
+    "answerType": "RadioCalendar",
+    "labels": ["캘린더", "없음"],
+    "answerRequired": ""
+  },
+  {
+    "order": "5",
+    "question": "최근 2주 이내 코로나-19 확진자와 접촉하신 이력이 있습니까?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요", "알수 없음"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "6",
+    "question": "함께 거주 중인 가족이 코로나-19에 감염된 사실이 있습니까?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "7",
+    "question": "알레르기가 있습니까?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  }
+]
