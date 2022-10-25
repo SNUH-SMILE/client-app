@@ -1,0 +1,473 @@
+[
+  {
+    "order": "38",
+    "question": "기침이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "39",
+    "question": "기침이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
+    "answerType": "RadioFactory",
+    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "40",
+    "question": "가래가 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "41",
+    "question": "가래가 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
+    "answerType": "RadioFactory",
+    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "42",
+    "question": "발열이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "43",
+    "question": "발열이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
+    "answerType": "RadioFactory",
+    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "44",
+    "question": "콧물이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "45",
+    "question": "콧물이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
+    "answerType": "RadioFactory",
+    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "46",
+    "question": "인후통이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "47",
+    "question": "인후통이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
+    "answerType": "RadioFactory",
+    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "48",
+    "question": "호흡곤란 증상이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "49",
+    "question": "호흡곤란 증상이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
+    "answerType": "RadioFactory",
+    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "50",
+    "question": "흉통이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "51",
+    "question": "흉통이 있는 경우, 빈도가 (감소/유지/증가) 하였나요?",
+    "answerType": "RadioFactory",
+    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "52",
+    "question": "오심(속이 메슥거리고 토할 것 같은 느낌) 증상이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "53",
+    "question": "구토가 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "54",
+    "question": "복부 불편감이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "55",
+    "question": "변비가 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "56",
+    "question": "설사가 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "57",
+    "question": "복통이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "58",
+    "question": "현재 통증이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "59",
+    "question": "통증의 부위, 강도, 양상을 구체적으로 기술하여 주시기 바랍니다.통증의 정도는 10점 척도 (0점이 통증 없음, 10점 극심한 통증)로 작성하여 주시면 이해하기 쉽습니다. (예: 인후통/5점/침 삼킬 때만 칼칼하게 아픔)",
+    "answerType": "InputFactory",
+    "answers": [{ "type": "text" }, { "type": "number", "unit": "점" }, { "type": "text" }],
+    "answerRequired": "required"
+  },
+  {
+    "order": "60",
+    "question": "현재 수면장애(잠들기가 어려움, 수면 중 자주 깸 등 수면과 관련된 불편한 증상)가 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "61",
+    "question": "앞서 제시된 증상 외 기타 증상이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "62",
+    "question": "기타 증상의 내용을 구체적으로 적어주시길 바랍니다. (해당 없을 시, '해당 없음' 기입)",
+    "answerType": "InputFactory",
+    "answers": [{ "type": "text" }],
+    "answerRequired": "required"
+  },
+  {
+    "order": "63",
+    "question": "이상 후각(냄새가 맡아지지 않거나 이상한 냄새가 나는 경우)이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "64",
+    "question": "이상 후각이 있다면 몇 점 정도 입니까? 최대 10점 (이상 후각 증상이 없을 경우 0 기입)",
+    "answerType": "RadioFactory",
+    "labels": ["0(이상 후각 증상 미미)", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10(이상 후각 증상 심함)"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "65",
+    "question": "이상 후각 발생 시기는 언제입니까?",
+    "answerType": "RadioFactory",
+    "labels": ["확진 오래 전", "확진 직전", "확진 직후", "정확히 잘 모름", "기타"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "66",
+    "question": "이상 미각(맛을 정상적으로 느끼지 못하여 불편한 상태) 이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "67",
+    "question": "이상 미각이 있다면 몇 점 정도 입니까? 최대 10점 (이상 미각 없을 경우 0 기입)",
+    "answerType": "RadioFactory",
+    "labels": ["0(이상 후각 증상 미미)", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10(이상 후각 증상 심함)"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "68",
+    "question": "이상 미각 발생 시기는 언제입니까?",
+    "answerType": "RadioFactory",
+    "labels": ["확진 오래 전", "확진 직전", "확진 직후", "정확히 잘 모름", "기타"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "69",
+    "question": "격리 해제 후 위치",
+    "answerType": "RadioFactory",
+    "labels": ["자택", "병원"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "70",
+    "question": "병원 입원 사유 (해당 없음 경우 '해당 없음' 기입)",
+    "answerType": "InputFactory",
+    "answers": [{ "type": "text" }],
+    "answerRequired": "required"
+  },
+  {
+    "order": "33-1",
+    "question": "기분이 가라앉거나, 우울하거나, 희망이 없다고 느꼈다.",
+    "answerType": "RadioFactory",
+    "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "33-2",
+    "question": "평소 하던 일에 대한 흥미가 없어지거나 즐거움을 느끼지 못했다.",
+    "answerType": "RadioFactory",
+    "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "33-3",
+    "question": "잠들기가 어렵거나 자주 깼다 / 혹은 너무 많이 잤다.",
+    "answerType": "RadioFactory",
+    "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "33-4",
+    "question": "평소보다 식욕이 줄었다 / 혹은 평소보다 많이 먹었다.",
+    "answerType": "RadioFactory",
+    "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "33-5",
+    "question": "다른 사람들이 눈치 챌 정도로 평소보다 말과 행동이 느려졌다. 혹은 너무 안절부절 못해서 가만히 앉아있을 수 없었다.",
+    "answerType": "RadioFactory",
+    "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "33-6",
+    "question": "피곤하고 기운이 없었다.",
+    "answerType": "RadioFactory",
+    "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "33-7",
+    "question": "내가 잘못 했거나, 실패했다는 생각이 들었다. 혹은 자신과 가족을 실망시켰다고 생각했다.",
+    "answerType": "RadioFactory",
+    "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "33-8",
+    "question": "내가 잘못 했거나, 실패했다는 생각이 들었다. 혹은 자신과 가족을 실망시켰다고 생각했다.",
+    "answerType": "RadioFactory",
+    "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "33-9",
+    "question": "차라리 죽는 것이 더 낫겠다고 생각했다/ 혹은 자해할 생각을 했다.",
+    "answerType": "RadioFactory",
+    "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "34-1",
+    "question": "지난 한 달 동안 당신이 스트레스를 받았다면 어떤 문제로 인해 가장 큰 영향을 받았습니까? 중요하다고 생각되는 것을 하나만 선택하세요.",
+    "answerType": "RadioFactory",
+    "labels": [
+      "(스스로 원하든 원치 않던 간에) 일, 직업 및 학교와 관련된 일",
+      "대인관계(가족 및 기타 중요한 사람들과의 관계)",
+      "대인관계의 변화(사망, 출생, 이혼, 결혼 등)",
+      "자신 혹은 타인의 병이나 상해",
+      "금전적인 문제",
+      "일상적인 것이 아닌 사건들(범죄, 자연재해, 우발사고, 이사 등)"
+    ],
+    "answerRequired": "required"
+  },
+  {
+    "order": "34-2",
+    "question": "기분이 가라앉거나, 우울하거나, 희망이 없다고 느꼈다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
+    "points": [1, 2, 3, 4, 5],
+    "answerRequired": "required"
+  },
+  {
+    "order": "34-3",
+    "question": "다른 사람으로부터 비난받거나 심판받는다고 느껴진다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
+    "points": [1, 2, 3, 4, 5],
+    "answerRequired": "required"
+  },
+  {
+    "order": "34-4",
+    "question": "정신적으로 지친다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
+    "points": [1, 2, 3, 4, 5],
+    "answerRequired": "required"
+  },
+  {
+    "order": "34-5",
+    "question": "긴장을 풀기 어렵다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
+    "points": [1, 2, 3, 4, 5],
+    "answerRequired": "required"
+  },
+  {
+    "order": "34-6",
+    "question": "화가 난다",
+    "answerType": "PointFactory",
+    "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
+    "points": [1, 2, 3, 4, 5],
+    "answerRequired": "required"
+  },
+  {
+    "order": "34-7",
+    "question": "의욕이 떨어진다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
+    "points": [1, 2, 3, 4, 5],
+    "answerRequired": "required"
+  },
+  {
+    "order": "34-8",
+    "question": "신경이 날카로워졌다",
+    "answerType": "PointFactory",
+    "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
+    "points": [1, 2, 3, 4, 5],
+    "answerRequired": "required"
+  },
+  {
+    "order": "34-9",
+    "question": "무언가를 부수고 싶다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
+    "points": [1, 2, 3, 4, 5],
+    "answerRequired": "required"
+  },
+  {
+    "order": "34-10",
+    "question": "아무런 생각을 하고 싶지 않다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
+    "points": [1, 2, 3, 4, 5],
+    "answerRequired": "required"
+  },
+  {
+    "order": "35-1",
+    "question": "초조하거나 불안, 조마조마하게 느낀다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 방해받지 않았다", "며칠 방해를 받았다", "절반 이상을 방해받았다", "거의 매일 방해받았다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "35-2",
+    "question": " 걱정하는 것을 멈추거나 조절할 수가 없다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 방해받지 않았다", "며칠 방해를 받았다", "절반 이상을 방해받았다", "거의 매일 방해받았다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "35-3",
+    "question": "여러 가지 것들에 대해 걱정을 너무 많이 한다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 방해받지 않았다", "며칠 방해를 받았다", "절반 이상을 방해받았다", "거의 매일 방해받았다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "35-4",
+    "question": "편하게 있기가 어렵다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 방해받지 않았다", "며칠 방해를 받았다", "절반 이상을 방해받았다", "거의 매일 방해받았다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "35-5",
+    "question": "너무 안절부절 못해서 가만히 있기가 힘들다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 방해받지 않았다", "며칠 방해를 받았다", "절반 이상을 방해받았다", "거의 매일 방해받았다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "35-6",
+    "question": "쉽게 짜증이 나거나 쉽게 성을 내게 된다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 방해받지 않았다", "며칠 방해를 받았다", "절반 이상을 방해받았다", "거의 매일 방해받았다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "35-7",
+    "question": "마치 끔찍한 일이 생길 것처럼 두렵게 느껴진다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 방해받지 않았다", "며칠 방해를 받았다", "절반 이상을 방해받았다", "거의 매일 방해받았다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "36-1",
+    "question": "잠들기가 어렵다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 없다", "약간 있다", "중간", "심하다", "매우 심하다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "36-2",
+    "question": "잠을 유지하기가 어렵다. ",
+    "answerType": "PointFactory",
+    "labels": ["전혀 없다", "약간 있다", "중간", "심하다", "매우 심하다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "36-3",
+    "question": "새벽에 너무 일찍 잠에서 깬다.",
+    "answerType": "PointFactory",
+    "labels": ["전혀 없다", "약간 있다", "중간", "심하다", "매우 심하다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "36-4",
+    "question": "나는 현재 나의 수면 패턴에 대해 만족한다.",
+    "answerType": "PointFactory",
+    "labels": ["매우 불만족", "조금 불만족", "중간", "조금 만족", "매우 만족"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "36-5",
+    "question": "불면증으로 인한 삶의 질 손상의 정도가 다른 사람들에게 어떻게 보인다고 생각합니까?",
+    "answerType": "PointFactory",
+    "labels": ["전혀 보이지 않는다", "조금 보인다", "중간", "많이 보인다", "매우 잘 보인다"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "36-6",
+    "question": "나의 수면 문제가 일상 생활을 어느 정도 방해한다고 생각합니까?",
+    "answerType": "PointFactory",
+    "labels": ["전혀 방해하지 않는다", "약간 방해된다", "중간", "많이 방해된다", "매우 많이 방해된다"],
+    "answerRequired": "required"
+  }
+]
