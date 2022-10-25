@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <title>IITP | 기기연동</title>
+    <link rel="stylesheet" type="text/css" href="../../www/css/morpheus-style.css">
+</head>
+
+<body>
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Header -->
+        <header class="header">
+            <button type="button" class="btn-back">뒤로가기</button>
+            <h1>기기연동</h1>
+        </header>
+        <!-- //Header -->
+
+        <!-- Content -->
+        <div class="content-wrap">
+            <div class="content scrollBox">
+                <div class="container-wrap device-wrap cont-inner">
+                    <span class="block">정확하고 빠른 측정을 위해 <br> 모든 <em class="fc-main1">디바이스를 연결</em>해 주세요</span>
+                    <ul>
+                        <li class="device-ico-wrap none">
+                            <div>
+                                <span class="device-ico device-item1">비콘 연결하기</span>
+                                <button type="button" class="btn-rnd line small" disabled>완료</button>
+                            </div>
+
+                            <button type="button" class="btn-ico-next">
+                                이동하기
+                            </button>
+                        </li>
+
+                        <li class="device-ico-wrap" id="deviceScanBtn">
+                            <div>
+                                <span class="device-ico device-item2">디바이스 연결하기</span>
+                            </div>
+
+                            <button type="button" class="btn-ico-next">
+                                이동하기
+                            </button>
+                        </li>
+
+                        <li class="device-ico-wrap none">
+                            <div>
+                                <span class="device-ico device-item3">체온계 연결하기</span>
+                            </div>
+
+                            <button type="button" class="btn-ico-next">
+                                이동하기
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-wrap">
+                    <button type="button" class="btn-rnd confirm" id="okBtn" disabled>완료</button>
+                </div>
+            </div>
+        </div>
+        <!-- //Content -->
+
+        <!-- 기기 조회 팝업 -->
+        <!-- class="show" 추가시 보여짐 -->
+        <div class="popup-wrap">
+            <div class="popup-bg"></div>
+            <div class="popup-box">
+                <div class="popup">
+                    <div class="pop-body">
+                            <div class="loading-img">
+                                <img src="../../www/img/img-loading.png" alt="로딩 이미지">
+                            </div>
+                        <p>
+                            기기를 조회 중입니다 &#183;&#183;&#183;
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //Wrapper -->
+</body>
+<script type="text/javascript" src="../js/mcore.min.js"></script>
+</html>
