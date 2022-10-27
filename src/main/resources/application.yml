@@ -1,0 +1,36 @@
+spring:
+  profiles:
+    active: dev
+  thymeleaf:
+    suffix: .html
+    check-template-location: true
+    mode: HTML
+    cache: false
+    render-hidden-markers-before-checkboxes: true
+  mvc:
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+      date: yyyy-MM-dd
+      time: HH:mm:ss
+  servlet:
+    multipart:
+      enabled: true
+      location: ${smile.multipart.location}
+      max-file-size: ${smile.multipart.max-file-size}
+      max-request-size: ${smile.multipart.max-request-size}
+      file-size-threshold: 0B
+msp:
+  security:
+    security-type: all
+    login-page: /login
+  storage:
+    path: ${smile.storage.path}
+    url: ${smile.storage.url:/files}
+  swagger:
+    enable: true
+mybatis:
+  mapper-locations:
+    - classpath:sqlmap/${smile.datasource.platform}/**/*.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+    default-enum-type-handler: kr.uracle.smile.support.mybatis.type.EnumTypeHandler

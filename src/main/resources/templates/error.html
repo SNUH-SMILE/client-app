@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="format-detection" content="telephone=no, address=no, email=no">
+<title>UMS 에러페이지</title>
+<style th:inline="text">
+	/* reset */
+	*{-webkit-text-size-adjust:none;word-break:break-all;margin:0;padding:0;-webkit-box-sizing:border-box;box-sizing:border-box;-moz-box-sizing:border-box;vertical-align:middle;-webkit-appearance:none;appearance:none;-moz-appearance:none;resize:none;}html,body{position:relative;width:100%;height:100%;-webkit-tap-highlight-color:rgba(255,255,255,0)}
+	a:link{text-decoration:none}a:focus{outline:thin dotted}a:active,a:hover{text-decoration:none}a:visited{text-decoration:none}
+	button{background:transparent;border:0;}
+	/* style */
+	*{color: #000;font-size: 12px;font-family: 'Apple SD Gothic Neo', sans-serif, 'dotum', '돋움';}
+	.wrapper.pg-error{padding: 152px 100px;max-width: 789px;}
+	.wrapper.pg-error .title{padding-top: 124px;background: url([[@{/img/img_notpage.png}]]) no-repeat left top;background-size: 134px auto;font-size: 28px;color: #3a99ff;line-height: 1.1;font-weight: 500;}
+	.toggle-box{width: 539px;margin-top: 20px;padding:10px 0;border: 1px solid #f3f3f3;-webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.10);box-shadow: 0 2px 2px 0 rgba(0,0,0,0.10);border-radius: 6px;}
+	.toggle-box .toggle-cont{padding: 10px 20px 6px;max-height: 120px;overflow-y: auto;}
+	.toggle-box .toggle-cont > p{line-height: 16px;color: #7D7D7D;}
+	.sub-txt{margin-top: 20px;font-weight: 500;line-height: 1.34;}
+	.btn-txt{display: inline-block;margin-top: 34px;padding: 12px 44px;background: #3A99FF;border-radius: 2px;color: #FFFFFF;font-weight: 500;}
+</style>
+</head>
+<body>
+<!-- Wrapper -->
+	<div class="wrapper pg-error">
+		<h1 class="title" th:text="${#strings.toUpperCase(reason)}">PAGE NOT FOUND</h1>
+		<div class="toggle-box">
+			<div id="cont-toggle" class="toggle-cont">
+				<p th:text="${error}"></p>
+			</div>
+		</div>
+		<p class="sub-txt" th:text="${#temporals.format(timestamp, 'yyyy-MM-dd HH:mm:ss')}"></p>
+		<a th:href="@{/}" class="btn-txt blue">홈으로 이동</a>
+	</div>
+<!-- //Wrapper -->
+</body>
+</html>

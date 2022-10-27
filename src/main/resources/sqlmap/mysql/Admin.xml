@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.uracle.smile.module.authentication.AdminMapper">
+
+	<resultMap id="admin" type="kr.uracle.smile.module.authentication.Admin" autoMapping="true">
+	</resultMap>
+
+    <select id="getAdmin" resultMap="admin">
+		SELECT ADMIN_ID AS USERNAME
+			 ,PASSWORD
+			 ,ADMIN_NM AS NAME
+			 ,EMAIL
+			 ,MOBILE
+			 ,USE_YN AS ENABLED
+			 ,REG_ID
+			 ,REG_DATE
+			 ,MOD_ID
+			 ,MOD_DATE
+		FROM ADMIN
+		WHERE ADMIN_ID = #{username}
+    </select>
+
+</mapper>

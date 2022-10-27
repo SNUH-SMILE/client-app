@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly>
+    <id>SRC</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory></outputDirectory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <excludes>
+                <exclude>.idea/**</exclude>
+                <exclude>.classpath</exclude>
+                <exclude>.factorypath</exclude>
+                <exclude>.project</exclude>
+                <exclude>target/**</exclude>
+                <exclude>bin/**</exclude>
+                <exclude>build/**</exclude>
+            </excludes>
+        </fileSet>
+    </fileSets>
+</assembly>

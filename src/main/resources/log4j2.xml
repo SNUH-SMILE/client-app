@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="Morpheus" monitorInterval="60">
+
+	<!-- Appenders -->
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<!-- <PatternLayout pattern="%d{MM/dd HH:mm:ss}, %-5p (%C{3}) : %m%n" /> -->
+			<PatternLayout pattern="[%date] [%thread] [%level] [%c{0}:%L] : %msg %n" />
+		</Console>
+		<RollingFile name="file" fileName="./log/trace.log" filePattern="./log/trace.log.%d{yyyy-MM-dd}">
+			<PatternLayout>
+				<!--  pattern>%d{MM/dd HH:mm:ss}, %-5p (%C{3}) : %m%n</pattern>-->
+				<pattern>[%date] [%thread] [%level] [%c{0}:%L]: %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+
+	<!-- Application Loggers -->
+	<Loggers>
+		<Logger name="kr.msp" level="info" />
+		<Logger name="kr.uracle" level="info" />
+		<Logger name="kr.uracle.smile.config" level="trace" />
+		<Logger name="kr.uracle.smile.module" level="trace" />
+		<Logger name="kr.uracle.smile.support.aop.RequestLoggingAspect" level="trace" />
+		<Logger name="org.mybatis.spring" level="debug" />
+		<Logger name="org.mybatis.spring.mapper" level="info" />
+		<Logger name="org.mybatis.spring.SqlSessionFactoryBean" level="info" />
+		
+		<Root level="info">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="file" />
+		</Root>
+	</Loggers>
+</Configuration>

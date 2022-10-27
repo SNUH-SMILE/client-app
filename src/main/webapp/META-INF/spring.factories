@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+kr.uracle.smile.config.DataSourceConfiguration.JndiDataSourceConfiguration, \
+kr.uracle.smile.config.DataSourceConfiguration.PooledDataSourceConfiguration

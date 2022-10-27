@@ -1,0 +1,21 @@
+smile:
+  datasource:
+    platform: mysql
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${db_host}:3306/EDUCATION?useSSL=false&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    username: ${db_username}
+    password: ${db_password}
+  storage:
+    nas: true
+    path: ${storage_path}
+  multipart:
+    location: /tmp
+    max-file-size: 5MB
+    max-request-size: 20MB
+  pagination:
+    list: 10
+    page: 10
+
+
+
+
