@@ -62,10 +62,10 @@
               <button type="button" @click="navigate">
                 <span class="health-list-ttl ic-blood">혈압</span>
                 <!-- nodata -->
-                <span class="txtc-gray" v-if="!today.bp">오늘은 측정된 정보가 없습니다.</span>
+                <span class="txtc-gray" v-if="!today.bp.sbp">오늘은 측정된 정보가 없습니다.</span>
                 <!-- yesdata -->
                 <span class="data" v-else
-                  ><strong class="num">{{ today.hr.high }}/{{ today.hr.low }}</strong> mmHg</span
+                  ><strong class="num">{{ today.bp.sbp }}/{{ today.bp.dbp }}</strong> mmHg</span
                 >
               </button>
             </router-link>
@@ -114,11 +114,12 @@
               <button type="button" @click="navigate">
                 <span class="health-list-ttl ic-sleep">수면</span>
                 <!-- nodata -->
-                <span class="txtc-gray" v-if="!today.sleep">오늘은 측정된 정보가 없습니다.</span>
+                <span class="txtc-gray" v-if="!today.sleep.hour">오늘은 측정된 정보가 없습니다.</span>
                 <!-- yesdata -->
                 <span class="data" v-else
-                  ><strong class="num">{{ today.sleep }}</strong
-                  >시간 <strong class="num">30</strong>분</span
+                  ><strong class="num">{{ today.sleep.hour }}</strong
+                  >시간 <strong class="num">{{ today.sleep.minute }}</strong
+                  >분</span
                 >
               </button>
             </router-link>
@@ -166,6 +167,8 @@
 </template>
 
 <script>
+import _each from 'lodash/each';
+import moment from 'moment';
 import { detailBodyData, exMainData } from '@/services/native/health.js';
 const DETAIL_BEALTH_FUNC_NM = '__onDetailHealthCB';
 const ON_CNANGE_TEMP_FUNC_NM = 'onChangeTemp';
@@ -198,11 +201,19 @@ export default {
       pillShow: false, //복약관리
       exerciseShow: false, //운동하기
       today: {
-        bp: null, // 혈압
+        bp: {
+          // 혈압
+          sbp: null, // 최대
+          dbp: null, // 최소
+        },
         bt: null, // 체온
-        hr: null, // 심박수 br : {high : 120, low : 80}
-        sleep: null, // 수면
-        spo2: null, // 산소포화도
+        hr: null, // 심박수
+        sleep: {
+          // 수면
+          hour: null, // 시간
+          minute: null, // 분
+        },
+        spO2: null, // 산소포화도
         step: null, // 걸음
       },
     };
@@ -216,6 +227,7 @@ export default {
     },
   },
   created() {
+    //TODO : 모든 헬스 체크는 기기가 연결 되었을떄만 보낼것.
     window[DETAIL_BEALTH_FUNC_NM] = (args) => {
       if (args.code === '0000') {
         // bp: null, // 혈압
@@ -225,12 +237,28 @@ export default {
         // spo2: null, // 산소포화도
         // step: null, // 걸음
         console.log(args);
-        // this.today.bp = args.todayBpList[-1];
-        this.today.bt = args.todayBtList.at(-1).bt;
-        this.today.hr = args.todayHrList.at(-1).hr;
-        this.today.sleep = args.todayTotalSleepTime;
-        this.today.spo2 = args.todaySpO2List.at(-1).spO2;
-        this.today.step = args.todayStepCountList.at(-1).stepCount;
+        this.today.bp.sbp = args.todayBpList.at(-1) === undefined ? null : args.todayBpList.at(-1).sbp;
+        this.today.bp.dbp = args.todayBpList.at(-1) === undefined ? null : args.todayBpList.at(-1).dbp;
+        this.today.bt = args.todayBtList.at(-1) === undefined ? null : args.todayBtList.at(-1).bt;
+        this.today.hr = args.todayHrList.at(-1) === undefined ? null : args.todayHrList.at(-1).hr;
+        let sumOfStep = 0;
+        _each(args.todayStepCountList, (element) => {
+          sumOfStep += parseInt(element.stepCount);
+        });
+        this.today.step = sumOfStep === 0 ? null : sumOfStep;
+        // TODO 걸음 수, 수면시간은 더해야함.
+        this.today.spO2 = args.todaySpO2List.at(-1) === undefined ? null : args.todaySpO2List.at(-1).spO2;
+        let sumOfSleepMinutes = 0;
+        _each(args.todaySleepTimeList, (element) => {
+          const startTime = moment(element.sleepStartDate + ' ' + element.sleepStartTime, 'YYYYMMDD hhmmss');
+          const endTime = moment(element.sleepEndDate + ' ' + element.sleepEndTime, 'YYYYMMDD hhmmss');
+          const duration = moment.duration(endTime.diff(startTime)).asMinutes(); // 1440
+          sumOfSleepMinutes += duration;
+        });
+        const hour = parseInt(sumOfSleepMinutes / 60);
+        const minute = sumOfSleepMinutes % 60;
+        this.today.sleep.hour = sumOfSleepMinutes === 0 ? null : hour;
+        this.today.sleep.minute = sumOfSleepMinutes === 0 ? null : minute;
       }
     };
     window[ON_CNANGE_TEMP_FUNC_NM] = (args) => {
@@ -247,7 +275,7 @@ export default {
       console.log(args);
       // this.today.hr = hr;
     };
-    this.getHealthData();
+    // this.getHealthData();
   },
 };
 </script>

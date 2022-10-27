@@ -1,7 +1,7 @@
 <template>
   <div class="content-wrap">
     <div class="content">
-      <date-box date="22.07.05" />
+      <date-box :date="date" />
       <div class="cont-inner mb-space20 tb-space20">
         <div class="chart-data-wrap" v-if="chartShow">
           <div class="chart-box">
@@ -10,8 +10,10 @@
               <span class="chart-mark-circle">이완기 혈압</span>
             </div>
             <div class="chart-inner">
-              <canvas id="bloodChart"></canvas>
-              <span class="unit">mmHg</span>
+              <!-- <BarChart /> -->
+              <blood-chart :originsDatas="tableData" />
+              <!-- <canvas id="bloodChart"></canvas>
+              <span class="unit">mmHg</span> -->
             </div>
           </div>
 
@@ -34,9 +36,9 @@
               </thead>
               <tbody>
                 <tr v-for="item in tableData" :key="item.index">
-                  <td>{{ item.time }}</td>
-                  <td>{{ item.valueShrink }}</td>
-                  <td>{{ item.valueRelax }}</td>
+                  <td>{{ item.time.substring(0, 2) }}:{{ item.time.substring(2, 4) }}</td>
+                  <td>{{ item.sbp }}</td>
+                  <td>{{ item.dbp }}</td>
                 </tr>
               </tbody>
             </table>
@@ -59,31 +61,46 @@
 }
 </route>
 <script>
+import { detailBodyData } from '@/services/native/health.js';
 import DateBox from '@/common/components/DateBox.vue';
-
+// import BarChart from '@/components/BarChart.vue';
+import BloodChart from '@/components/BloodChart.vue';
 const INIT_STATE = () => ({});
-
+const DETAIL_BLOOD_PRESSURE_CB_NM = '__detailBloodPresure';
+const getTableData = (item) => {
+  return {
+    time: item.resultTime,
+    sbp: item.sbp,
+    dbp: item.dbp,
+  };
+};
 export default {
   data() {
     return {
       state: INIT_STATE(),
-      tableData: [
-        {
-          time: '09:00',
-          valueShrink: 70,
-          valueRelax: 100,
-        },
-        {
-          time: '10:00',
-          valueShrink: 75,
-          valueRelax: 112,
-        },
-      ],
-      chartShow: false,
+      tableData: [],
+      data: '',
     };
   },
   components: {
     DateBox,
+    BloodChart,
+  },
+  created() {
+    window[DETAIL_BLOOD_PRESSURE_CB_NM] = (args) => {
+      args.bpList.forEach((item) => {
+        this.tableData.push(getTableData(item));
+      });
+      console.log(args);
+    };
+    detailBodyData('20221026', 'BLOOD', DETAIL_BLOOD_PRESSURE_CB_NM);
+  },
+  computed: {
+    chartShow() {
+      if (this.tableData.length > 0) {
+        return true;
+      } else return false;
+    },
   },
 };
 </script>

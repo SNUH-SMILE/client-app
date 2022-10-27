@@ -55,9 +55,15 @@ function isBandConnectedFunc() {
   });
 }
 
+// 데이터 동기화
+function allDataSyncFunc() {
+  M.execute('exBandAllDataSync', 'true');
+}
+
 export const bandScan = factory({ android: bandScanFunc });
 export const bandDisconnect = factory({ android: bandDisconnectFunc });
 export const bandScanStop = factory({ android: bandScanStopFunc });
 export const lastDeviceId = factory({ android: lastDeviceIdFunc });
 export const isBandConnected = factory({ android: isBandConnectedFunc });
 export const bandConnect = factory({ android: bandConnectFunc });
+export const allDataSync = factory({ android: allDataSyncFunc });

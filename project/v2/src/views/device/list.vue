@@ -55,7 +55,7 @@
 <script>
 import Loading from '@/common/components/Loading.vue';
 import { bindNativeEvent } from '@/services/native';
-import { bandScan, bandConnect, isBandConnected, lastDeviceId, bandScanStop, bandDisconnect } from '@/services/native/device.js';
+import { bandScan, bandConnect, isBandConnected, lastDeviceId, bandScanStop, bandDisconnect, allDataSync } from '@/services/native/device.js';
 
 const SCAN_CB_FUNC_NM = '__onBandScanCB';
 const BAND_CONNECT_FUNC_NM = '__onBandConnectCB';
@@ -106,6 +106,9 @@ export default {
      */
     IsBandConnectedService() {
       isBandConnected().then((result) => {
+        if (result === 'true') {
+          allDataSync();
+        }
         console.log('band connected state:' + result);
       });
     },

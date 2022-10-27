@@ -1,23 +1,5 @@
 import { factory } from '@/services/native/nativeFactory.js';
 import { execute } from './';
-const stepDetailResult = function stepDetailResult(result) {
-  console.log(result);
-};
-const sleepDetailResult = function sleepDetailResult(result) {
-  console.log(result);
-};
-const rateDetailResult = function rateDetailResult(result) {
-  console.log(result);
-};
-const bloodDetailResult = function bloodDetailResult(result) {
-  console.log(result);
-};
-const oxygenDetailResult = function oxygenDetailResult(result) {
-  console.log(result);
-};
-const tempDetailResult = function tempDetailResult(result) {
-  console.log(result);
-};
 
 /**
  * @describe 건강 상태 정보 조회
@@ -27,7 +9,7 @@ const tempDetailResult = function tempDetailResult(result) {
  */
 const detailBodyDataFunction = function detailBodyData(date, type, callbackFunc) {
   var obj = {};
-  obj.schDate = date; //'20220104';
+  obj.schDate = '20221026'; // date;
   obj.queryDataType = type; //STEP(걸음정보),SLEEP(수면정보),RATE(심박정보),BLOOD(혈압정보),TEMP(체온정보),OXYGEN(혈중산소포화도 정보)
   obj.callback = callbackFunc;
   // if (type == 'STEP') {
@@ -45,7 +27,7 @@ const detailBodyDataFunction = function detailBodyData(date, type, callbackFunc)
   // }
   execute('exBodyDetailData', obj);
 };
-const exMainAllDataFunc = function exMainAllDataFunction(callback) {
+const exMainAllDataFunc = function exMainAllDataFunc(callback) {
   execute('exMainAllData', callback);
 };
 

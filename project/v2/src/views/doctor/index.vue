@@ -1,4 +1,4 @@
-발<template>
+<template>
   <div class="content-wrap">
     <div class="content">
       <div class="gray-top-box center">
