@@ -1,7 +1,7 @@
 <template>
   <div class="content-wrap">
     <div class="content">
-      <date-box date="22.07.05" />
+      <date-box :value="date" @change="handleValue" />
       <div class="cont-inner mb-space20 tb-space20">
         <div class="chart-data-wrap" v-if="chartShow">
           <div class="chart-box">
@@ -9,7 +9,7 @@
               <span class="chart-mark-circle">심박수</span>
             </div>
             <div class="chart-inner">
-              <canvas id="heartChart"></canvas>
+              <line-chart :originData="tableData" :options="options" />
               <span class="unit">회/분</span>
             </div>
           </div>
@@ -31,7 +31,7 @@
               </thead>
               <tbody>
                 <tr v-for="item in tableData" :key="item.index">
-                  <td>{{ item.time }}</td>
+                  <td>{{ item.time.substring(0, 2) }}:{{ item.time.substring(2, 4) }}</td>
                   <td>{{ item.value }}</td>
                 </tr>
               </tbody>
@@ -55,29 +55,56 @@
 }
 </route>
 <script>
+import { detailBodyData } from '@/services/native/health.js';
 import DateBox from '@/common/components/DateBox.vue';
+import LineChart from '@/components/LineChart.vue';
 
-const INIT_STATE = () => ({});
+const DETAIL_HEART_CB_NM = '__detailHeart';
+const getTableData = (item) => {
+  return {
+    time: item.resultTime,
+    value: item.hr,
+  };
+};
 
 export default {
   data() {
     return {
-      state: INIT_STATE(),
-      tableData: [
-        {
-          time: '09:00',
-          value: 70,
-        },
-        {
-          time: '10:00',
-          value: 75,
-        },
-      ],
-      chartShow: false,
+      tableData: [],
+      date: this.$dayjs().format('YYYYMMDD'),
+      options: {},
     };
   },
   components: {
     DateBox,
+    LineChart,
+  },
+  computed: {
+    chartShow() {
+      if (this.tableData.length > 0) {
+        return true;
+      } else return false;
+    },
+  },
+  methods: {
+    getHeartDate() {
+      detailBodyData(this.date, 'RATE', DETAIL_HEART_CB_NM);
+    },
+    handleValue(value) {
+      this.date = value;
+      this.getHeartDate();
+    },
+  },
+  created() {
+    window[DETAIL_HEART_CB_NM] = (args) => {
+      this.tableData.splice(0);
+      console.log(args);
+      args.hrList.forEach((item) => {
+        this.tableData.push(getTableData(item));
+      });
+      console.log(args);
+    };
+    this.getHeartDate();
   },
 };
 </script>

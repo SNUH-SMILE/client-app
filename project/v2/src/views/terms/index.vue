@@ -18,7 +18,7 @@
                   <input type="checkbox" id="chk01" />
                   <label for="chk01" class="">IITP 자가 격리 앱 서비스 이용약관</label>
                 </p>
-                <router-link custom v-slot="{ navigate }" :to="{ name: 'terms-id' }">
+                <router-link custom v-slot="{ navigate }" :to="{ path: 'terms/app' }">
                   <button type="button" class="btn-ic-detail" @click="navigate">
                     <span class="txt-blind">상세보기</span>
                   </button>
@@ -30,7 +30,7 @@
                   <input type="checkbox" id="chk02" />
                   <label for="chk02" class="">개인정보 수집 및 이용 동의</label>
                 </p>
-                <router-link custom v-slot="{ navigate }" :to="{ name: 'terms-id' }">
+                <router-link custom v-slot="{ navigate }" :to="{ path: 'terms/info' }">
                   <button type="button" class="btn-ic-detail" @click="navigate">
                     <span class="txt-blind">상세보기</span>
                   </button>
@@ -41,7 +41,7 @@
                   <input type="checkbox" id="chk03" />
                   <label for="chk03" class="">개인정보 제3자 제공 동의</label>
                 </p>
-                <router-link custom v-slot="{ navigate }" :to="{ name: 'terms-id' }">
+                <router-link custom v-slot="{ navigate }" :to="{ path: 'terms/personal-information' }">
                   <button type="button" class="btn-ic-detail" @click="navigate">
                     <span class="txt-blind">상세보기</span>
                   </button>
@@ -75,6 +75,7 @@ export default {
       state: INIT_STATE(),
     };
   },
+  computed: {},
 };
 </script>
 

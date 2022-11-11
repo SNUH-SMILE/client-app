@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 export default {
   layout: 'none',
 
@@ -26,12 +25,10 @@ export default {
       this.$router.replace({ name: 'login' });
     },
   },
-  created() {
-    // console.log(vueMoment().format('MMM Do YY'));
-  },
+  created() {},
   computed: {
     now() {
-      return moment().format('YYYY.MM.DD HH:mm');
+      return this.$dayjs().format('YYYY.MM.DD HH:MM');
     },
   },
 };

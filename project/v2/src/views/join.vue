@@ -9,10 +9,10 @@
                 <template>
                   <button type="button" class="btn-line-rnd">중복확인</button>
                 </template>
-                <template slot="noti">
+                <!-- <template slot="noti">
                   <p class="ipt-txt error">이미 사용중인 아이디입니다.</p>
                   <p class="ipt-txt possible">사용 가능한 아이디 입니다.</p>
-                </template>
+                </template> -->
               </text-field>
             </validation-provider>
             <validation-provider name="비밀번호" rules="required" immediate tag="fragment">
@@ -21,7 +21,7 @@
             <validation-provider name="비밀번호 확인" immediate tag="fragment">
               <text-field id="pwChk" class="tb-inblock" type="password" label="비밀번호 확인" v-model="state.pw2">
                 <template slot="noti">
-                  <p class="ipt-txt error">비밀번호가 일치하지 않습니다.</p>
+                  <!-- <p class="ipt-txt error">비밀번호가 일치하지 않습니다.</p> -->
                 </template>
               </text-field>
             </validation-provider>

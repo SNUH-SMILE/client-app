@@ -21,24 +21,26 @@ export default {
   methods: {
     haveAllPermission() {
       //TODO: 위치, 마이크, 블루투스 권한
+      // TODO 여기 있을것이 아니라 계속 요청해야함
       console.log('저는 위치, 마이크, 블루투스 권한을 가지고 있습니다.');
-      return false;
+      return true;
     },
     havePushPermission() {
       //TODO : 체크하기
+      // TODO 여기 있을것이 아니라 계속 요청해야함
       console.log('저는 푸시 권한을 가지고 있습니다.');
-      return false;
+      return true;
     },
   },
   mounted() {
     setTimeout(() => {
       if (!this.haveAllPermission()) {
-        this.$router.replace('/intro/permission');
+        return this.$router.replace({ name: 'intro-permission' });
       }
       if (!this.havePushPermission()) {
-        this.$router.replace('/intro/push');
+        return this.$router.replace({ name: 'intro-push' });
       }
-      this.$router.replace('/login');
+      return this.$router.replace('/login');
     }, 1000);
   },
 };

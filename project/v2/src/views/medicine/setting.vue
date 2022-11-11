@@ -6,9 +6,9 @@
           <ul class="md-set-list">
             <li>
               <div class="hbox jc">
-                <p class="ttl">개인정보 수정</p>
+                <p class="ttl">복용 시작일</p>
                 <div class="right-area">
-                  <strong class="txt txtc-blue">2022.01.01</strong>
+                  <strong class="txt txtc-blue">{{ date }}</strong>
                 </div>
               </div>
             </li>
@@ -17,8 +17,14 @@
                 <p class="ttl">복용 일수</p>
                 <div class="right-area">
                   <p class="ipt-select">
-                    <select title="복용 일수">
-                      <option value="">1일</option>
+                    <select title="복용 일수" name="noticeDate">
+                      <option value="1">1일</option>
+                      <option value="2">2일</option>
+                      <option value="3">3일</option>
+                      <option value="4">4일</option>
+                      <option value="5">5일</option>
+                      <option value="6">6일</option>
+                      <option value="7">7일</option>
                     </select>
                   </p>
                 </div>
@@ -29,7 +35,7 @@
                 <p class="ttl">알림 이름 <br /><span class="fs-nm">(필수 입력)</span></p>
                 <div class="right-area">
                   <div class="ipt-wrap">
-                    <text-field type="text" title="약물 이름" placeholder="입력해 주세요." />
+                    <text-field type="text" title="약물 이름" placeholder="입력해 주세요." v-model="alarmName" />
                   </div>
                 </div>
               </div>
@@ -38,53 +44,20 @@
               <div class="hbox jc">
                 <p class="ttl">약물 정보 <br /><span class="fs-nm">(선택 입력)</span></p>
                 <div class="right-area">
-                  <button type="button" class="btn-line-rnd">추가</button>
+                  <button type="button" class="btn-line-rnd" @click="addMedicine">추가</button>
                 </div>
               </div>
-              <ul class="sub-info-box">
-                <li>
-                  <p class="ttl">약물 이름</p>
-                  <div class="right-area">
-                    <div class="ipt-wrap">
-                      <text-field type="text" title="약물 이름" placeholder="입력해 주세요." />
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <p class="ttl">복용량 <br /><span class="fs-nm">(선택 입력)</span></p>
-                  <div class="right-area ipt-form">
-                    <div class="ipt-wrap flex">
-                      <text-field type="number" title="복용량" placeholder="입력해 주세요." />
-                    </div>
-                    <p class="ipt-select">
-                      <select title="복용량">
-                        <option value="">알</option>
-                      </select>
-                    </p>
-                  </div>
-                </li>
-              </ul>
+              <medicine-item v-for="(item, index) in medicineList" :key="index" v-model="medicineList[index]" />
             </li>
             <li>
               <div class="hbox jc">
-                <p class="ttl">복용 일수</p>
+                <p class="ttl">알림 시간</p>
                 <div class="right-area">
-                  <button type="button" class="btn-line-rnd">추가</button>
+                  <button type="button" class="btn-line-rnd" @click="addAlarm">추가</button>
                 </div>
               </div>
               <ul class="sub-info-box">
-                <li>
-                  <p class="sub-ttl">알림 1</p>
-                  <div class="right-area">
-                    <button type="button" class="btn-txt-detail" @click="showModal">09:00</button>
-                  </div>
-                </li>
-                <li>
-                  <p class="sub-ttl">알림 2</p>
-                  <div class="right-area">
-                    <button type="button" class="btn-txt-detail" @click="showModal">12:00</button>
-                  </div>
-                </li>
+                <medicine-alarm v-for="(item, index) in alarmList" :key="index" v-model="alarmList[index].time" />
               </ul>
             </li>
           </ul>
@@ -92,11 +65,10 @@
       </div>
       <div class="btn-wrap">
         <router-link custom v-slot="{ navigate }" :to="{ name: 'medicine' }">
-          <button type="button" class="btn-txt navy" @click="navigate" disabled>저장</button>
+          <button type="button" class="btn-txt navy" @click="navigate" :disabled="!isActiveSaveButton">저장</button>
         </router-link>
       </div>
     </validation-observer>
-    <toast text="알림 설정 내용이 저장되었습니다." class="is-btm" v-show="toastShow" />
   </div>
 </template>
 <route>
@@ -107,36 +79,72 @@
 }
 </route>
 <script>
-import Toast from '@/common/components/Toast.vue';
+import insertService from '@/services/native/db.js';
+import MedicineItem from '@/components/MedicineItem.vue';
+import MedicineAlarm from '@/components/MedicineAlarm.vue';
 
-const INIT_STATE = () => ({});
+const QUERY_DB_CB_NM = '__queryDBcb';
+window[QUERY_DB_CB_NM] = (...args) => {
+  console.log(...args);
+};
+const medicineItemForm = () => ({
+  medicineName: '',
+  capacity: '',
+  unit: '',
+});
 
 export default {
   components: {
-    Toast,
+    MedicineItem,
+    MedicineAlarm,
   },
   data() {
     return {
-      state: INIT_STATE(),
+      alarmName: '',
+      date: this.$dayjs().format('YYYY.MM.DD'),
+      medicineList: [],
+      alarmList: [],
       toastShow: false,
     };
+  },
+  methods: {
+    showModal() {
+      this.$eventBus.$emit('openTimePicker');
+    },
+    showToast() {
+      this.$toast({ text: '알림 설정 내용이 저장되었습니다.' });
+    },
+    submit() {
+      this.showToast();
+    },
+    addMedicine() {
+      this.medicineList.push(medicineItemForm());
+    },
+    addAlarm() {
+      this.alarmList.push({ time: this.$dayjs().format('hh mm') });
+    },
+    submitAlarmTime(value) {
+      console.log(value);
+    },
+  },
+  computed: {
+    isActiveSaveButton() {
+      return this.alarmName.length > 0;
+    },
   },
   created() {
     /**
      * 만약, Slot 사용 여부에 따라서 핸들링시  아래의 로직을 Header컴포넌트로 이동
      */
     this.$eventBus.$emit('setWarpClass', 'pg-fp');
+    // insertService({ type: 'medicine', time: '20221102 1503', seq: 'self00001' }, QUERY_DB_CB_NM);
+    window.vm = this;
   },
   beforeDestroy() {
     this.$eventBus.$emit('setWarpClass', '');
   },
   beforeRouteLeave(to, from, next) {
     next();
-  },
-  methods: {
-    showModal() {
-      this.$eventBus.$emit('openTimePicker');
-    },
   },
 };
 </script>

@@ -31,5 +31,8 @@ export default {
       console.log(value);
     },
   },
+  mounted() {
+    console.log(this.$refs.input);
+  },
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="content-wrap">
     <div class="content">
       <div class="gray-top-box center">
-        <p class="bold fs-16">2022.01.03</p>
+        <p class="bold fs-16">2022.11.08</p>
       </div>
       <div class="cont-inner mb-space20">
         <section>

@@ -9,7 +9,7 @@ import { execute } from './';
  */
 const detailBodyDataFunction = function detailBodyData(date, type, callbackFunc) {
   var obj = {};
-  obj.schDate = '20221026'; // date;
+  obj.schDate = date; // date;
   obj.queryDataType = type; //STEP(걸음정보),SLEEP(수면정보),RATE(심박정보),BLOOD(혈압정보),TEMP(체온정보),OXYGEN(혈중산소포화도 정보)
   obj.callback = callbackFunc;
   // if (type == 'STEP') {

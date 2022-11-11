@@ -168,8 +168,7 @@
 
 <script>
 import _each from 'lodash/each';
-import moment from 'moment';
-import { detailBodyData, exMainData } from '@/services/native/health.js';
+import { exMainData } from '@/services/native/health.js';
 const DETAIL_BEALTH_FUNC_NM = '__onDetailHealthCB';
 const ON_CNANGE_TEMP_FUNC_NM = 'onChangeTemp';
 const ON_CHANGE_STEP_FUNC_NM = 'onChangeStep';
@@ -178,7 +177,7 @@ export default {
   name: 'home-contents',
   data() {
     return {
-      questionShow: false, //문진하기
+      questionShow: true, //문진하기
       questionList: [
         //문진하기 데이터
         {
@@ -187,19 +186,14 @@ export default {
           button: '작성완료',
         },
         {
-          disabled: true,
-          title: '오후 문진',
-          button: '작성불가',
-        },
-        {
           disabled: false,
-          title: '격리 해제 30일 뒤 문진',
+          title: '오후 문진',
           button: '작성하기',
         },
       ],
       diagnosisShow: false, //비대면 진료
       pillShow: false, //복약관리
-      exerciseShow: false, //운동하기
+      exerciseShow: true, //운동하기
       today: {
         bp: {
           // 혈압
@@ -250,9 +244,9 @@ export default {
         this.today.spO2 = args.todaySpO2List.at(-1) === undefined ? null : args.todaySpO2List.at(-1).spO2;
         let sumOfSleepMinutes = 0;
         _each(args.todaySleepTimeList, (element) => {
-          const startTime = moment(element.sleepStartDate + ' ' + element.sleepStartTime, 'YYYYMMDD hhmmss');
-          const endTime = moment(element.sleepEndDate + ' ' + element.sleepEndTime, 'YYYYMMDD hhmmss');
-          const duration = moment.duration(endTime.diff(startTime)).asMinutes(); // 1440
+          const startTime = this.$dayjs(element.sleepStartDate + ' ' + element.sleepStartTime);
+          const endTime = this.$dayjs(element.sleepEndDate + ' ' + element.sleepEndTime);
+          const duration = endTime.diff(startTime, 'minute'); // 1440
           sumOfSleepMinutes += duration;
         });
         const hour = parseInt(sumOfSleepMinutes / 60);

@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+import lodash from 'lodash';
+
 export default {
   install(Vue) {
     const eventBus = new Vue();
@@ -33,10 +36,11 @@ export default {
     // // 필요한 로직 ...
     // };
 
+    // 전역 으로 선언한거 여기다가 넣기
+    Vue.prototype.$dayjs = dayjs;
     Vue.prototype.$eventBus = eventBus;
 
-    Vue.prototype.$log = (...args) => {
-      console.log(...args);
-    };
+    Vue.prototype.$lodash = lodash; // 전역 선언해서 사용해도 되는지? 커스텀은 $로 시작해야함.
+    //tree shaking 문제
   },
 };

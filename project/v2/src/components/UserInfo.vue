@@ -4,8 +4,8 @@
       <div class="user">
         <strong class="name">김하나</strong>
         <span class="lb-txt green">정상</span>
-        <span class="lb-txt red">이탈</span>
-        <span class="lb-txt orange">격리중</span>
+        <!-- <span class="lb-txt red">이탈</span>
+        <span class="lb-txt orange">격리중</span> -->
       </div>
       <ul class="user-info-list">
         <li><span class="ic-ttl calendar">격리 기간</span> : 2021.07.01 ~ 2021.07.14</li>

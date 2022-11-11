@@ -145,10 +145,8 @@ export default {
         this.deviceListShow = true;
       }
       this.state.list = args.list;
-      console.log(args);
     };
     window[BAND_CONNECT_FUNC_NM] = (args) => {
-      console.log(args);
       if (args.code === '0000' && args.message === 'SUCCESS') {
         this.$toast({ text: '기기가 연결되었습니다.' });
         console.log(this.state.list);

@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 export default {
   layout: 'none',
   methods: {
@@ -25,7 +24,7 @@ export default {
       this.$router.replace({ name: 'login' });
     },
     now() {
-      return moment().format('YYYY.MM.DD HH:MM');
+      return this.$dayjs().format('YYYY.MM.DD HH:MM');
     },
   },
 };

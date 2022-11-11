@@ -12,6 +12,7 @@ module.exports = {
     _: 'readonly',
     $: 'readonly',
     M: 'readonly',
+    Chart : 'readonly',
   },
   parserOptions: {
     parser: "@babel/eslint-parser",

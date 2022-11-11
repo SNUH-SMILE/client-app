@@ -1,7 +1,7 @@
 <template>
   <div class="content-wrap">
-    <validation-observer v-slot="{ validate }">
-      <form @submit.prevent="validate().then(submit)">
+    <validation-observer ref="obs" v-slot="{ invalid }">
+      <form @submit.prevent="submit">
         <div class="content">
           <div class="blue-top-box">
             <v-step-progress :percent="state.percent" :ing="state.ing" :total="state.total" />
@@ -12,17 +12,16 @@
                 v-for="(question, index) in ConfirmedQuestion"
                 :key="question.order"
                 :question="question"
-                :index="index + 1"
+                :index="(state.ing - 1) * 10 + index + 1"
                 v-model="state.confirmedForm[index].value"
-              ></v-history-taking-item>
+              />
             </div>
           </div>
         </div>
         <div class="btn-wrap">
-          <button type="button" class="btn-line navy" @click="$router.go(-1)">이전</button>
-          <!-- TODO : user-check 어디로 갈 지 수정해야함. -->
-
-          <button type="submit" class="btn-txt navy" @click="test">제출</button>
+          <button type="button" class="btn-line navy" v-show="showBeforeButton" @click="bofore">이전</button>
+          <button type="button" class="btn-txt navy" v-show="showNextButton" :disabled="invalid" @click="next">다음</button>
+          <button type="button" :disabled="invalid" v-show="showSubmitButton" class="btn-txt navy" @click="submit">제출</button>
         </div>
       </form>
     </validation-observer>
@@ -61,12 +60,27 @@ export default {
   data() {
     return {
       state: INIT_STATE(),
+      test22: '',
     };
   },
   components: { ...HistoryModules },
   computed: {
     ConfirmedQuestion() {
-      return Confirmeddaylist;
+      const start = (this.state.ing - 1) * 10;
+      let end = this.state.ing * 10;
+      if (end > Confirmeddaylist.length) {
+        end = Confirmeddaylist.length;
+      }
+      return Confirmeddaylist.slice(start, end);
+    },
+    showBeforeButton() {
+      return this.state.ing !== 1;
+    },
+    showNextButton() {
+      return this.state.ing !== this.state.total;
+    },
+    showSubmitButton() {
+      return this.state.total === this.state.ing;
     },
   },
   methods: {
@@ -75,14 +89,18 @@ export default {
       console.log('submitted!');
     },
     //
-    test: function () {
-      console.log(this.state.confirmedForm);
+    next() {
+      this.state.ing++;
+    },
+    bofore() {
+      this.state.ing--;
     },
     submit: function () {
       console.log('submit form');
     },
   },
   created() {
+    window.vm = this;
     console.log(this.state);
   },
 };

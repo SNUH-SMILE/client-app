@@ -1,12 +1,13 @@
 <template>
   <div class="content-wrap">
     <div class="content">
-      <date-box date="22.07.05" />
+      <date-box />
+      <!-- :value="date" @change="handleValue" -->
       <div class="cont-inner mb-space20 tb-space20">
         <section class="section-box02">
           <h2 class="ttl-b">
             알림
-            <router-link custom v-slot="{ navigate }" :to="{ name: 'medicine-check' }">
+            <router-link custom v-slot="{ navigate }" :to="{ name: 'medicine-setting' }">
               <button type="button" class="btn-line-rnd small" @click="navigate">알림 추가</button>
             </router-link>
           </h2>
@@ -71,8 +72,9 @@ export default {
   data() {
     return {
       state: INIT_STATE(),
-      alarmShow: false, //알림
-      timeLineShow: false, //복약 타임라인
+      date: '',
+      // alarmShow: true, //알림
+      // timeLineShow: true, //복약 타임라인
       alarmList: [
         {
           title: '진통제',
@@ -124,6 +126,21 @@ export default {
   components: {
     DateBox,
   },
+  methods: {
+    handleValue(value) {
+      this.date = value;
+      // TODO: 데이터 가져오는 method
+    },
+  },
+  computed: {
+    alarmShow() {
+      return this.alarmList.length > 0;
+    },
+    timeLineShow() {
+      return this.historyList.length > 0;
+    },
+  },
+  created() {},
 };
 </script>
 

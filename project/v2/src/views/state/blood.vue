@@ -1,7 +1,7 @@
 <template>
   <div class="content-wrap">
     <div class="content">
-      <date-box :date="date" />
+      <date-box :value="date" @change="handleValue" />
       <div class="cont-inner mb-space20 tb-space20">
         <div class="chart-data-wrap" v-if="chartShow">
           <div class="chart-box">
@@ -11,7 +11,7 @@
             </div>
             <div class="chart-inner">
               <!-- <BarChart /> -->
-              <blood-chart :originsDatas="tableData" />
+              <blood-chart :originData="tableData" />
               <!-- <canvas id="bloodChart"></canvas>
               <span class="unit">mmHg</span> -->
             </div>
@@ -63,9 +63,7 @@
 <script>
 import { detailBodyData } from '@/services/native/health.js';
 import DateBox from '@/common/components/DateBox.vue';
-// import BarChart from '@/components/BarChart.vue';
 import BloodChart from '@/components/BloodChart.vue';
-const INIT_STATE = () => ({});
 const DETAIL_BLOOD_PRESSURE_CB_NM = '__detailBloodPresure';
 const getTableData = (item) => {
   return {
@@ -74,26 +72,17 @@ const getTableData = (item) => {
     dbp: item.dbp,
   };
 };
+
 export default {
   data() {
     return {
-      state: INIT_STATE(),
       tableData: [],
-      data: '',
+      date: this.$dayjs().format('YYYYMMDD'),
     };
   },
   components: {
     DateBox,
     BloodChart,
-  },
-  created() {
-    window[DETAIL_BLOOD_PRESSURE_CB_NM] = (args) => {
-      args.bpList.forEach((item) => {
-        this.tableData.push(getTableData(item));
-      });
-      console.log(args);
-    };
-    detailBodyData('20221026', 'BLOOD', DETAIL_BLOOD_PRESSURE_CB_NM);
   },
   computed: {
     chartShow() {
@@ -101,6 +90,25 @@ export default {
         return true;
       } else return false;
     },
+  },
+  methods: {
+    getBloodData() {
+      detailBodyData(this.date, 'BLOOD', DETAIL_BLOOD_PRESSURE_CB_NM);
+    },
+    handleValue(value) {
+      this.date = value;
+      this.getBloodData();
+    },
+  },
+  created() {
+    window[DETAIL_BLOOD_PRESSURE_CB_NM] = (args) => {
+      this.tableData.splice(0);
+      args.bpList.forEach((item) => {
+        this.tableData.push(getTableData(item));
+      });
+      console.log(args);
+    };
+    this.getBloodData();
   },
 };
 </script>

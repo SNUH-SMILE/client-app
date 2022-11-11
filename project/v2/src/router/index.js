@@ -3,9 +3,9 @@ import Router from 'vue-router';
 import routes from 'vue-auto-routing';
 import { createRouterLayout } from 'vue-router-layout';
 import PageMiddleware from '@/middlewares/page';
-
+import VueLogger from '@/common/logger';
 Vue.use(Router);
-
+const logger = new VueLogger('router');
 const RouterLayout = createRouterLayout((layout) => {
   return import('@/layouts/' + layout + '.vue');
 });
@@ -19,8 +19,8 @@ const RouterLayout = createRouterLayout((layout) => {
 //     delete route.component;
 //   }
 // });
-console.log(routes);
-
+console.clear();
+logger.log(routes);
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,

@@ -2,17 +2,17 @@
   <div>
     <div class="hbox sc">
       <p class="ipt-rdo">
-        <input type="radio" title="날짜 직접입력" :name="question.order" />
+        <input type="radio" title="날짜 직접입력" :name="question.order" value="" />
       </p>
       <div class="ipt-wrap">
-        <input type="text" title="날짜입력" />
+        <input type="text" title="날짜입력" value="" @input="handleValue" />
         <button type="button" class="btn-calendar">
           <span class="txt-blind">날짜선택</span>
         </button>
       </div>
     </div>
     <p class="ipt-rdo mt20">
-      <input type="radio" :name="question.order" />
+      <input type="radio" :name="question.order" value="없음" @change="handleValue" />
       <label :for="question.order">없음</label>
     </p>
   </div>
@@ -26,6 +26,11 @@ export default {
     value: String,
     question: Object,
   },
+  data() {
+    return {
+      date: '',
+    };
+  },
   computed: {
     getAttrs() {
       /* eslint no-unused-vars: "off" */
@@ -36,6 +41,11 @@ export default {
       /* eslint no-unused-vars: "off" */
       const { input, ...others } = this.$listeners;
       return { ...others };
+    },
+  },
+  methods: {
+    handleValue(e) {
+      this.$emit('input', e.target.value);
     },
   },
 };

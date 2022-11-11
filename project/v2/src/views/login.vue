@@ -30,15 +30,15 @@
           </p>
         </div>
         <div class="btn-wrap">
-          <router-link custom v-slot="{ navigate }" :to="{ name: 'home' }" replace>
-            <button type="button" class="btn-txt navy" @click="navigate">로그인</button>
-          </router-link>
+          <!-- <router-link custom v-slot="{ navigate }" :to="{ name: 'home' }" replace> -->
+          <button type="button" class="btn-txt navy" @click="loginAction">로그인</button>
+          <!-- </router-link> -->
         </div>
         <div class="divide-list">
           <router-link custom v-slot="{ navigate }" :to="{ name: 'find' }">
             <button type="button" class="btn-link gray" @click="navigate">아이디 / 비밀번호 찾기</button>
           </router-link>
-          <router-link custom v-slot="{ navigate }" :to="{ name: 'join' }">
+          <router-link custom v-slot="{ navigate }" :to="{ name: 'terms' }">
             <button type="button" class="btn-link blue" @click="navigate">회원가입</button>
           </router-link>
         </div>
@@ -47,6 +47,7 @@
   </div>
 </template>
 <script>
+import patientService from '@/services/server/api/patient.js';
 const INIT_STATE = () => ({
   id: '',
   pw: '',
@@ -56,12 +57,24 @@ const INIT_STATE = () => ({
 
 export default {
   layout: 'none',
+  components: {},
   data() {
     return {
       state: INIT_STATE(),
       showReset: false, //인풋 초기화 버튼
       showPassword: false, //비밀번호 보기
     };
+  },
+  methods: {
+    loginAction() {
+      // patientService.login(this.state.id, this.state.pw).then((args) => {
+      //   if (args.code === '00') {
+      this.$router.replace({ name: 'home' });
+      //   } else {
+      //     this.$alert(args.message);
+      //   }
+      // });
+    },
   },
   created() {},
 };

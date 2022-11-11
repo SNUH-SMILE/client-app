@@ -2,7 +2,7 @@
   <div class="form-item">
     <label :for="id" class="form-ttl">{{ label }}</label>
     <div class="ipt-wrap" :class="{ disabled }">
-      <textarea v-if="type === 'textarea'" ref="input" v-on="getListeners" v-bind="getInputProps" @input="handleInput" />
+      <textarea v-if="type === 'textarea'" ref="input" v-on="getListeners" v-bind="getInputProps" @input="handleInput" :maxlength="maxlength" />
       <input v-else ref="input" v-on="getListeners" v-bind="getInputProps" @input="handleInput" />
       <span v-if="unit" class="unit">{{ unit }}</span>
       <button type="button" v-if="reset" class="btn-txt-reset" @click="resetInput">
@@ -51,6 +51,10 @@ export default {
     unit: {
       type: String,
       default: '',
+    },
+    maxlength: {
+      type: Number,
+      default: 500,
     },
     inputProps: {
       type: Object,

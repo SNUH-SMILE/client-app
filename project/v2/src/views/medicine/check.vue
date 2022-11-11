@@ -32,7 +32,7 @@
         </router-link>
       </div>
     </div>
-    <toast text="복약 체크되었습니다." btmClass="is-btm" v-show="toastShow" />
+    <!-- <toast text="복약 체크되었습니다." btmClass="is-btm" v-show="toastShow" /> -->
   </fragment>
 </template>
 
@@ -44,15 +44,12 @@
 }
 </route>
 <script>
-import Toast from '@/common/components/Toast.vue';
-
 const INIT_STATE = () => ({});
 
 export default {
   data() {
     return {
       state: INIT_STATE(),
-      toastShow: false,
       medicineList: [
         {
           time: '18:30',
@@ -76,9 +73,7 @@ export default {
       ],
     };
   },
-  components: {
-    Toast,
-  },
+  components: {},
 };
 </script>
 

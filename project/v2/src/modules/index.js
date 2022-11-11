@@ -1,1 +1,2 @@
-export const modules = {};
+// 여기서 store 를 내보냄.
+//

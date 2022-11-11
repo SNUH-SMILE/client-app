@@ -1,4 +1,4 @@
-import { sendHttp } from '@/services/server/mapi.js';
+import { sendHttp } from '@/common/mapi.js';
 /**
  * @describe user 서버 통신 api
  * @param {object} payload
