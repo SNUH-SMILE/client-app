@@ -1,3 +1,6 @@
+/**
+ * 로그인
+ */
 import BaseApiService from './core';
 
 class PatientService extends BaseApiService {
@@ -26,6 +29,9 @@ class PatientService extends BaseApiService {
     return this.post('/findPassword', { loginId, patientNm, cellPhone });
   }
 
+  /**
+   * @describe 비밀번호 변경
+   */
   password(loginId, password) {
     return this.post('/password', { loginId, password });
   }
