@@ -4,7 +4,6 @@
 import { RUNTIME } from '@/common/config';
 import { APP_ENV } from '@/common/constants';
 import Logger from '@/utils/logger';
-import { resolve } from 'core-js/fn/promise';
 import { extend } from '.';
 const logger = new Logger('health');
 const DATA_TYPE = ['STEP', 'SLEEP', 'RATE', 'BLOOD', 'TEMP', 'OXYGEN'];
@@ -12,7 +11,7 @@ const DATA_TYPE = ['STEP', 'SLEEP', 'RATE', 'BLOOD', 'TEMP', 'OXYGEN'];
 /**
  * 건상 상세 정보 조회
  */
-const GET_BODY_DETAIL = 'getBodyDetail';
+export const GET_BODY_DETAIL = 'getBodyDetail';
 extend(GET_BODY_DETAIL, (schDate, queryDataType) => {
   return new Promise((resolve, reject) => {
     if (DATA_TYPE.includes(queryDataType)) {
@@ -34,7 +33,7 @@ extend(GET_BODY_DETAIL, (schDate, queryDataType) => {
 /**
  * 혈압 측정 시작
  */
-const ON_BLOOD_PRESURE = 'onBloodPresure';
+export const ON_BLOOD_PRESURE = 'onBloodPresure';
 extend(ON_BLOOD_PRESURE, () => {
   if (RUNTIME.TYPE === APP_ENV.APP) {
     M.execute('exBloodPresureTestStart');
@@ -44,7 +43,7 @@ extend(ON_BLOOD_PRESURE, () => {
 /**
  * 혈압 측정 중지
  */
-const OFF_BLOOD_PRESURE = 'offBloodPresure';
+export const OFF_BLOOD_PRESURE = 'offBloodPresure';
 extend(OFF_BLOOD_PRESURE, () => {
   if (RUNTIME.TYPE === APP_ENV.APP) {
     M.execute('exBloodPresureTestStop');
@@ -54,7 +53,7 @@ extend(OFF_BLOOD_PRESURE, () => {
 /**
  * 산소포화도 측정 시작
  */
-const ON_SPO2_PRESURE = 'onSPO2Presure';
+export const ON_SPO2_PRESURE = 'onSPO2Presure';
 extend(ON_SPO2_PRESURE, () => {
   if (RUNTIME.TYPE === APP_ENV.APP) {
     M.execute('exSpo2TestStart');
@@ -64,7 +63,7 @@ extend(ON_SPO2_PRESURE, () => {
 /**
  * 산소포화도 측정 중지
  */
-const OFF_SPO2_PRESURE = 'offSPO2Presure';
+export const OFF_SPO2_PRESURE = 'offSPO2Presure';
 extend(OFF_SPO2_PRESURE, () => {
   if (RUNTIME.TYPE === APP_ENV.APP) {
     M.execute('exSpo2TestStop');
@@ -75,8 +74,9 @@ const CB_MAIN_ALL_RESULT = 'mainAllResult';
 window[CB_MAIN_ALL_RESULT] = (...args) => {
   // TODO : 콜백 함수 작성
 };
+
 /**
  * 건강 상태 메인 조회
  */
-const GET_MAIN_BODY_DATA = 'getMainBodyData';
+export const GET_MAIN_BODY_DATA = 'getMainBodyData';
 extend(GET_MAIN_BODY_DATA, () => {});

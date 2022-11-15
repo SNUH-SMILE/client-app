@@ -1,5 +1,4 @@
 /**
- *
  * BlueTooth 관련
  * 디바이스 연결
  */
@@ -115,6 +114,7 @@ const CB_GET_LAST_DEVICE_ID = 'lastDeviceIdCallback';
 window[CB_GET_LAST_DEVICE_ID] = (...args) => {
   // TODO callback 함수 작성
 };
+
 /**
  * 마지막으로 연결된 디바이스ID
  */
@@ -122,5 +122,57 @@ export const GET_LAST_DEVICE_ID = 'getLastDeviceId';
 extend(GET_LAST_DEVICE_ID, () => {
   if (RUNTIME.TYPE === APP_ENV.APP) {
     M.execute('exLastDeviceId', CB_GET_LAST_DEVICE_ID);
+  }
+});
+
+/**
+ * 위치 서비스 시작
+ * @param {String} id
+ * @param {String} url
+ */
+export const ON_BACKGROUND_SERVICE = 'onBackgroundService';
+extend(ON_BACKGROUND_SERVICE, (id, url) => {
+  if (RUNTIME.TYPE === APP_ENV.APP) {
+    M.execute('exLocationStart', id, url);
+  }
+});
+
+/**
+ * 위치 서비스 종료
+ */
+export const OFF_BACKGROUND_SERVICE = 'offBackgroundService';
+extend(OFF_BACKGROUND_SERVICE, () => {
+  if (RUNTIME.TYPE === APP_ENV.APP) {
+    M.execute('exLocationStop');
+  }
+});
+
+/**
+ * 포그라운드 시작
+ */
+export const ON_FOREGROUND_SERVICE = 'onForegroundService';
+extend(ON_FOREGROUND_SERVICE, () => {
+  if (RUNTIME.TYPE === APP_ENV.APP) {
+    M.execute('exForeGroundStart');
+  }
+});
+
+/**
+ * 포그라운드 종료
+ */
+export const OFF_FOREGROUND_SERVICE = 'offForegroundService';
+extend(ON_FOREGROUND_SERVICE, () => {
+  if (RUNTIME.TYPE === APP_ENV.APP) {
+    M.execute('exForeGroundStop');
+  }
+});
+
+/**
+ * 내 위치 수신 시작
+ */
+export const ON_CURRENT_LOCATION = 'onCurrentLocation';
+extend(ON_CURRENT_LOCATION, () => {
+  if (RUNTIME.TYPE === APP_ENV.APP) {
+    M.execute('exWnCurrentLocationStart');
   }
 });
