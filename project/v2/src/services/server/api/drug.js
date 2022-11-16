@@ -29,4 +29,20 @@ class DrugApiService extends BaseApiService {
   setNotice(loginId, noticeStartDate, noticeEndDate, noticeDate, noticeName, drugList, noticeTimeList) {
     return this.post('/setNotice', { loginId, noticeStartDate, noticeEndDate, noticeDate, noticeName, drugList, noticeTimeList });
   }
+
+  /**
+   * 복약 결과 저장
+   */
+  setTakeResult(loginId, noticeId, resultDate, resultTime, takeResult) {
+    this.post('/setTakeResult', { loginId, noticeId, resultDate, resultTime, takeResult });
+  }
+
+  /**
+   * 알람없이 저장하기
+   */
+  setEtcResult(loginId, resultDate, resultTime, noticeName, drugCount, drugType) {
+    this.post('/setEtcResult', { loginId, resultDate, resultTime, noticeName, drugCount, drugType });
+  }
 }
+
+export default new DrugApiService();
