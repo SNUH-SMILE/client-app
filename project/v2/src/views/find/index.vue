@@ -104,9 +104,7 @@ export default {
       patientService.findPassword(this.id, this.name, this.phone).then((args) => {});
     },
   },
-  created() {
-    window.vm = this;
-  },
+  created() {},
 };
 </script>
 

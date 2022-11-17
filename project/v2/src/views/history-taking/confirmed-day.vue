@@ -100,7 +100,6 @@ export default {
     },
   },
   created() {
-    window.vm = this;
     console.log(this.state);
   },
 };

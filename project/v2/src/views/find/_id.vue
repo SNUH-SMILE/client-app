@@ -43,7 +43,6 @@ export default {
     },
   },
   created() {
-    window.vm = this;
     this.state.loginId = this.$router.history.current.params.id;
   },
 };

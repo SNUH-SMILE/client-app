@@ -16,6 +16,7 @@ export const ENUM_MODE = {
 };
 export const STORAGE_KEYS = {
   TOKEN: 'jwt',
+  LOGIN_ID: 'loginId',
 };
 
 export const RESPONSE_STATUS = { SUCCESS: '00' };

@@ -2,7 +2,7 @@
   <div class="user-info">
     <div class="user-info-data">
       <div class="user">
-        <strong class="name">김하나</strong>
+        <strong class="name" v-text="session.patientNm">김하나</strong>
         <span class="lb-txt green">정상</span>
         <!-- <span class="lb-txt red">이탈</span>
         <span class="lb-txt orange">격리중</span> -->
@@ -18,7 +18,19 @@
 </template>
 
 <script>
-export default {};
+import { SESSION } from '@/modules/patient';
+import { mapActions, mapGetters } from 'vuex';
+export default {
+  created() {
+    this.fetchSession();
+  },
+  computed: {
+    ...mapGetters({ session: SESSION }),
+  },
+  methods: {
+    ...mapActions({ fetchSession: SESSION }),
+  },
+};
 </script>
 
 <style></style>

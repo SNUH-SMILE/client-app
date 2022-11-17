@@ -138,7 +138,6 @@ export default {
      */
     this.$eventBus.$emit('setWarpClass', 'pg-fp');
     // insertService({ type: 'medicine', time: '20221102 1503', seq: 'self00001' }, QUERY_DB_CB_NM);
-    window.vm = this;
   },
   beforeDestroy() {
     this.$eventBus.$emit('setWarpClass', '');

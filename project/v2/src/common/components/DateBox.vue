@@ -34,9 +34,7 @@ export default {
       this.$emit('change', this.date);
     },
   },
-  created() {
-    window.vm = this;
-  },
+  created() {},
 };
 </script>
 

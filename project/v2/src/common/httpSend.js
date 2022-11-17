@@ -14,9 +14,9 @@ const httpSend = (path, data) => {
         token: store.getters[ACCESS_TOKEN], // TODO: store.getter를 통해 가져와야함
       },
     })
-      .then((...args) => {
-        console.log(...args);
-        resolve(...args);
+      .then(({ code, message, ...data }) => {
+        console.log(code, message, data);
+        resolve({ code, message, data });
       })
       .catch((...args) => {
         console.log(...args);
