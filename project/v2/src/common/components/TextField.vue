@@ -2,8 +2,16 @@
   <div class="form-item">
     <label :for="id" class="form-ttl">{{ label }}</label>
     <div class="ipt-wrap" :class="{ disabled }">
-      <textarea v-if="type === 'textarea'" ref="input" v-on="getListeners" v-bind="getInputProps" @input="handleInput" :maxlength="maxlength" />
-      <input v-else ref="input" v-on="getListeners" v-bind="getInputProps" @input="handleInput" />
+      <textarea
+        v-if="type === 'textarea'"
+        :value="value"
+        ref="input"
+        v-on="getListeners"
+        v-bind="getInputProps"
+        @input="handleInput"
+        :maxlength="maxlength"
+      />
+      <input v-else ref="input" :value="value" v-on="getListeners" v-bind="getInputProps" @input="handleInput" />
       <span v-if="unit" class="unit">{{ unit }}</span>
       <button type="button" v-if="reset" class="btn-txt-reset" @click="resetInput">
         <span class="txt-blind">입력 초기화</span>
