@@ -32,7 +32,7 @@ class PatientService extends BaseApiService {
   /**
    * @describe 비밀번호 변경
    */
-  password(loginId, password) {
+  chnagePassword(loginId, password) {
     return this.post('/password', { loginId, password });
   }
 

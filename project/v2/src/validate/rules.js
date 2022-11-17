@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { extend } from 'vee-validate';
 import * as rules from 'vee-validate/dist/rules';
 // 모든 룰을 사용
@@ -40,7 +41,14 @@ extend('optional_required', {
 
 extend('ko_phone', {
   validate: (value) => {
-    const reg = /(02|0[3-9]{1}[0-9]{1})([\-\.])?[1-9]{1}[0-9]{2,3}([\-\.])?[0-9]{4}$/;
+    const reg = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
+    // const reg = /(02|0[3-9]{1}[0-9]{1})([\-\.])?[1-9]{1}[0-9]{2,3}([\-\.])?[0-9]{4}$/;
     return reg.test(value);
+  },
+});
+
+extend('default_date', {
+  validate: (value) => {
+    return dayjs(value, 'YYYYMMDD', true).isValid();
   },
 });

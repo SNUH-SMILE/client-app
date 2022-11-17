@@ -18,6 +18,7 @@
       </button>
       <slot></slot>
     </div>
+    <p class="ipt-txt error" v-for="(item, index) in errorMsgs" :key="`errors-${index}`">{{ item }}</p>
     <slot name="noti"></slot>
   </div>
 </template>
@@ -70,6 +71,9 @@ export default {
         return {};
       },
     },
+    errorMsgs: {
+      type: Array,
+    },
   },
   computed: {
     getListeners() {
@@ -78,7 +82,7 @@ export default {
       return { ...others };
     },
     getInputProps() {
-      const { value, reset, unit, inputProps, ...others } = this.$props;
+      const { value, reset, unit, inputProps, errorMsgs, ...others } = this.$props;
       return { ...inputProps, ...others };
     },
   },

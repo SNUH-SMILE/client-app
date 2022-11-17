@@ -5,7 +5,7 @@
         <div class="cont-inner">
           <div class="img-info-box img-id">
             <p class="img-info-txt">
-              김하나님의 <br class="tb-none" />아이디는 <br /><em class="iht txtc-blue">{{ state.loginId }}</em
+              {{ $route.params.name }}님의 <br class="tb-none" />아이디는 <br /><em class="iht txtc-blue">{{ $route.params.loginId }}</em
               >입니다.
             </p>
             <div class="center">
@@ -26,25 +26,8 @@
 </template>
 
 <script>
-const INIT_STATE = () => ({
-  loginId: '',
-});
-
 export default {
   layout: 'none',
-  data() {
-    return {
-      state: INIT_STATE(),
-    };
-  },
-  props: {
-    id: {
-      type: String,
-    },
-  },
-  created() {
-    this.state.loginId = this.$router.history.current.params.id;
-  },
 };
 </script>
 
