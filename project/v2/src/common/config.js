@@ -1,18 +1,18 @@
-import { APP_ENV, OS_ENV } from './constants';
+import { ENUM_APP_ENV, ENUM_OS_ENV } from './constants';
 
 const { NODE_ENV, VUE_APP_API_URL, VUE_APP_API_SERVER_NAME } = process.env;
 
 const initRunTimeEnv = () => {
   let OS;
   const userAgent = window.navigator.userAgent;
-  const TYPE = /morpheus/i.test(userAgent) ? APP_ENV.APP : APP_ENV.BROWSER;
+  const TYPE = /morpheus/i.test(userAgent) ? ENUM_APP_ENV.APP : ENUM_APP_ENV.BROWSER;
   if (/android/i.test(userAgent)) {
-    OS = OS_ENV.ANDROID;
+    OS = ENUM_OS_ENV.ANDROID;
   } else if (/ipad|iphone|ipod/i.test(userAgent) && !window.MSStream) {
     // iOS detection from: http://stackoverflow.com/a/9039885/177710
-    OS = OS_ENV.IOS;
+    OS = ENUM_OS_ENV.IOS;
   } else {
-    OS = OS_ENV.UNKOWN;
+    OS = ENUM_OS_ENV.UNKOWN;
   }
   return {
     TYPE,

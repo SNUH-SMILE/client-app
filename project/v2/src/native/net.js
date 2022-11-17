@@ -1,5 +1,5 @@
 import { RUNTIME, SERVER_NAME } from '@/common/config';
-import { APP_ENV, OS_ENV } from '@/common/constants';
+import { ENUM_APP_ENV, ENUM_OS_ENV } from '@/common/constants';
 import { extend } from '.';
 
 /**
@@ -18,15 +18,15 @@ extend(HTTP_SEND, (options) => {
     indicator: { show: false },
     data: options.data,
   };
-  if (RUNTIME.TYPE === APP_ENV.BROWSER) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.BROWSER) {
     // 브라우저인 경우
     return;
   }
 
   return new Promise((resolve, reject) => {
-    if (RUNTIME.OS === OS_ENV.ANDROID) {
+    if (RUNTIME.OS === ENUM_OS_ENV.ANDROID) {
       // 안드로이드인 경우
-    } else if (RUNTIME.OS === OS_ENV.IOS) {
+    } else if (RUNTIME.OS === ENUM_OS_ENV.IOS) {
       // iOS인 경우
     }
 

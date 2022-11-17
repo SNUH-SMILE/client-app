@@ -1,22 +1,29 @@
+import Vue from 'vue';
 import { executor } from '@/native';
 import { HTTP_SEND } from '@/native/net';
+import store from '@/store';
+import { ACCESS_TOKEN } from '@/modules/patient';
 
 const httpSend = (path, data) => {
   return new Promise((resolve, reject) => {
+    const loading = Vue.$loading();
     executor(HTTP_SEND, {
       path,
       data,
       userData: {
-        token: '', // TODO: store.getter를 통해 가져와야함
+        token: store.getters[ACCESS_TOKEN], // TODO: store.getter를 통해 가져와야함
       },
     })
       .then((...args) => {
-        console.log(args);
-        resolve(args);
+        console.log(...args);
+        resolve(...args);
       })
       .catch((...args) => {
-        console.log(args);
-        reject(args);
+        console.log(...args);
+        reject(...args);
+      })
+      .finally(() => {
+        loading.$hide();
       });
   });
 };

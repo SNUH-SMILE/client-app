@@ -4,7 +4,7 @@
  */
 
 import { RUNTIME } from '@/common/config';
-import { APP_ENV } from '@/common/constants';
+import { ENUM_APP_ENV } from '@/common/constants';
 import Logger from '@/utils/logger';
 import { extend } from '.';
 const logger = new Logger('Native Bluetooth');
@@ -30,7 +30,7 @@ window[CB_BAND_SCAN] = function (result) {
 export const ON_BAND_SCAN = 'onBandScan';
 extend(ON_BAND_SCAN, (cb) => {
   _scanCallback = cb;
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exBandScan', {
       schBluetooth: 'C',
       callback: CB_BAND_SCAN,
@@ -66,7 +66,7 @@ window[CB_DEVICE_CONNECT] = (...args) => {
  */
 export const IS_DEVICE_CONNECT = 'isDeviceConnect';
 extend(IS_DEVICE_CONNECT, () => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     return M.execute('exIsBandConnect') === 'T';
   }
 });
@@ -79,7 +79,7 @@ extend(IS_DEVICE_CONNECT, () => {
  */
 export const ON_DEVICE_CONNECT = 'onDeviceConnect';
 extend(ON_DEVICE_CONNECT, (bandAddr, resetType, callback) => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     _deviceConnect = callback;
     M.execute('exBandConnect', {
       schBluetooth: 'C',
@@ -95,7 +95,7 @@ extend(ON_DEVICE_CONNECT, (bandAddr, resetType, callback) => {
  */
 export const OFF_DEVICE_CONNECT = 'offDeviceConnect';
 extend(OFF_DEVICE_CONNECT, () => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exBandDisconnect');
   }
 });
@@ -105,7 +105,7 @@ extend(OFF_DEVICE_CONNECT, () => {
  */
 export const GET_DEVICE_LANGUAGE = 'getDeviceLanguage';
 extend(GET_DEVICE_LANGUAGE, () => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exWNGetBandLang'); //한국어 3
   }
 });
@@ -120,7 +120,7 @@ window[CB_GET_LAST_DEVICE_ID] = (...args) => {
  */
 export const GET_LAST_DEVICE_ID = 'getLastDeviceId';
 extend(GET_LAST_DEVICE_ID, () => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exLastDeviceId', CB_GET_LAST_DEVICE_ID);
   }
 });
@@ -132,7 +132,7 @@ extend(GET_LAST_DEVICE_ID, () => {
  */
 export const ON_BACKGROUND_SERVICE = 'onBackgroundService';
 extend(ON_BACKGROUND_SERVICE, (id, url) => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exLocationStart', id, url);
   }
 });
@@ -142,7 +142,7 @@ extend(ON_BACKGROUND_SERVICE, (id, url) => {
  */
 export const OFF_BACKGROUND_SERVICE = 'offBackgroundService';
 extend(OFF_BACKGROUND_SERVICE, () => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exLocationStop');
   }
 });
@@ -152,7 +152,7 @@ extend(OFF_BACKGROUND_SERVICE, () => {
  */
 export const ON_FOREGROUND_SERVICE = 'onForegroundService';
 extend(ON_FOREGROUND_SERVICE, () => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exForeGroundStart');
   }
 });
@@ -162,7 +162,7 @@ extend(ON_FOREGROUND_SERVICE, () => {
  */
 export const OFF_FOREGROUND_SERVICE = 'offForegroundService';
 extend(ON_FOREGROUND_SERVICE, () => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exForeGroundStop');
   }
 });
@@ -172,7 +172,7 @@ extend(ON_FOREGROUND_SERVICE, () => {
  */
 export const ON_CURRENT_LOCATION = 'onCurrentLocation';
 extend(ON_CURRENT_LOCATION, () => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exWnCurrentLocationStart');
   }
 });

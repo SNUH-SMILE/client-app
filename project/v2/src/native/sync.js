@@ -2,7 +2,7 @@
  * 싱크 관련
  */
 import { RUNTIME } from '@/common/config';
-import { APP_ENV } from '@/common/constants';
+import { ENUM_APP_ENV } from '@/common/constants';
 import Logger from '@/utils/logger';
 import { extend } from '.';
 const logger = new Logger('Sync');
@@ -16,7 +16,7 @@ window[CB_SYNC_SERVER_DATA] = () => {
  */
 export const ON_SYNC_SERVER_DATA_SEARCH = 'onSyncServerDataSearch';
 extend(ON_SYNC_SERVER_DATA_SEARCH, () => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exServerSyncData', CB_SYNC_SERVER_DATA);
   }
 });
@@ -26,7 +26,7 @@ extend(ON_SYNC_SERVER_DATA_SEARCH, () => {
  */
 export const IS_SYNC_SERVER_DATA = 'isSyncServerData';
 extend(IS_SYNC_SERVER_DATA, () => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exServerSyncDataFinish');
   }
 });
@@ -37,7 +37,7 @@ extend(IS_SYNC_SERVER_DATA, () => {
  */
 export const ON_SYNC_DATA = 'onSyncData';
 extend(ON_SYNC_DATA, (flag) => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.execute('exBandAllDataSync', flag);
   }
 });

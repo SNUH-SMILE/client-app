@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrap">
-    <validation-observer tag="fragment">
+    <validation-observer tag="fragment" v-slot="{ invalid }">
       <div class="login-info">
         <h1 class="logo">
           <span class="txt-blind">SMILE</span>
@@ -9,29 +9,30 @@
       </div>
       <div class="login-form">
         <validation-provider name="아이디" rules="required" immediate tag="fragment">
-          <text-field id="id" label="아이디" v-model="state.id" :reset="showReset" />
+          <text-field label="아이디" v-model="state.loginId" />
         </validation-provider>
         <validation-provider name="비밀번호" rules="required" immediate tag="fragment">
-          <text-field type="password" id="pw" label="비밀번호" :reset="true" v-model="state.pw">
+          <text-field :type="showPassword ? 'text' : 'password'" label="비밀번호" v-model="state.password">
             <!-- 비밀번호 토글 class="show" 추가/삭제 -->
-            <button type="button" class="btn-pw-show" :class="{ show: showPassword }">
+            <button @click="togglePw" type="button" class="btn-pw-show" :class="{ show: showPassword }">
               <span class="txt-blind">비밀번호 보기</span>
             </button>
           </text-field>
         </validation-provider>
         <div class="form-chk">
-          <p class="ipt-chk">
+          <!-- 무조건 자동로그인 처리 -->
+          <!-- <p class="ipt-chk">
             <input type="checkbox" title="" id="chk01" v-model="state.saveId" />
             <label for="chk01">아이디 저장</label>
-          </p>
-          <p class="ipt-chk">
+          </p> -->
+          <!-- <p class="ipt-chk">
             <input type="checkbox" title="" id="chk02" v-model="state.autoLogin" />
             <label for="chk02">자동 로그인</label>
-          </p>
+          </p> -->
         </div>
         <div class="btn-wrap">
           <!-- <router-link custom v-slot="{ navigate }" :to="{ name: 'home' }" replace> -->
-          <button type="button" class="btn-txt navy" @click="loginAction">로그인</button>
+          <button type="button" class="btn-txt navy" :disabled="invalid" @click="onSubmit">로그인</button>
           <!-- </router-link> -->
         </div>
         <div class="divide-list">
@@ -47,36 +48,46 @@
   </div>
 </template>
 <script>
-import patientService from '@/services/server/api/patient.js';
+import { LOGIN } from '@/modules/patient';
+import { mapActions } from 'vuex';
+import { MODE } from '@/common/config';
+import { ENUM_MODE, RESPONSE_STATUS } from '@/common/constants';
 const INIT_STATE = () => ({
-  id: '',
-  pw: '',
-  saveId: false,
-  autoLogin: false,
+  loginId: '',
+  password: '',
+});
+
+const INIT_DEV_STATE = () => ({
+  loginId: 'admin',
+  password: '0000',
 });
 
 export default {
   layout: 'none',
   components: {},
+  created() {},
   data() {
     return {
-      state: INIT_STATE(),
-      showReset: false, //인풋 초기화 버튼
+      state: MODE === ENUM_MODE.PROD ? INIT_STATE() : INIT_DEV_STATE(),
       showPassword: false, //비밀번호 보기
     };
   },
   methods: {
-    loginAction() {
-      // patientService.login(this.state.id, this.state.pw).then((args) => {
-      //   if (args.code === '00') {
-      this.$router.replace({ name: 'home' });
-      //   } else {
-      //     this.$alert(args.message);
-      //   }
-      // });
+    ...mapActions({ login: LOGIN }),
+    async onSubmit() {
+      const { loginId, password } = this.state;
+      const { code, message } = await this.login({ loginId, password });
+      if (RESPONSE_STATUS.SUCCESS === code) {
+        this.$router.replace('home');
+      } else {
+        this.$alert(message);
+      }
+    },
+    togglePw() {
+      this.showPassword = !this.showPassword;
+      console.log(this.showPassword);
     },
   },
-  created() {},
 };
 </script>
 

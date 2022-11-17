@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import _debounce from 'lodash/debounce';
-
+import * as modules from '@/modules';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -15,7 +15,7 @@ const store = new Vuex.Store({
     },
   },
   actions: {},
-  modules: {},
+  modules,
 });
 
 const onChangeSize = _debounce(() => {

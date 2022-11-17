@@ -3,7 +3,7 @@
  */
 
 import { RUNTIME } from '@/common/config';
-import { APP_ENV } from '@/common/constants';
+import { ENUM_APP_ENV } from '@/common/constants';
 import Logger from '@/utils/logger';
 import { extend } from '.';
 const logger = new Logger('M Global Data');
@@ -15,7 +15,7 @@ const logger = new Logger('M Global Data');
  */
 export const SET_GLOBAL_DATA = 'setGlobalData';
 extend(SET_GLOBAL_DATA, (key, value) => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.data.global(key, value);
   }
 });
@@ -26,7 +26,7 @@ extend(SET_GLOBAL_DATA, (key, value) => {
  */
 export const GET_GLOBAL_DATA = 'getGlobalData';
 extend(GET_GLOBAL_DATA, (key) => {
-  if (RUNTIME.TYPE === APP_ENV.APP) {
+  if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.data.global(key);
   }
 });
@@ -38,4 +38,16 @@ extend(GET_GLOBAL_DATA, (key) => {
 export const REMOVE_GLOBAL_DATA = 'REMOVE_GLOBAL_DATA';
 extend(REMOVE_GLOBAL_DATA, (key) => {
   M.data.removeGlobal(key);
+});
+
+/**
+ * 영속데이터 핸들러
+ */
+export const STORAGE_DATA = 'storageData';
+extend(STORAGE_DATA, (key, value) => {
+  if (value === undefined) {
+    return M.data.storage(key);
+  } else {
+    return M.data.storage(key, value);
+  }
 });
