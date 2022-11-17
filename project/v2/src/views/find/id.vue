@@ -26,8 +26,14 @@
 </template>
 
 <script>
+import Vue from 'vue';
 export default {
   layout: 'none',
+  beforeRouteEnter(to, from, next) {
+    if (to.params.loginId) return next();
+    Vue.$alert('잘못된 접근입니다.');
+    next({ name: 'find' });
+  },
 };
 </script>
 

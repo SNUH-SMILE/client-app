@@ -1,5 +1,14 @@
 import dayjs from 'dayjs';
 import lodash from 'lodash';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import defaultFormat from '@/common/custom.day';
+
+/**
+ * dayjs 확장
+ */
+
+dayjs.extend(customParseFormat);
+dayjs.extend(defaultFormat);
 
 export default {
   install(Vue) {
