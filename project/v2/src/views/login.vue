@@ -31,9 +31,7 @@
           </p> -->
         </div>
         <div class="btn-wrap">
-          <!-- <router-link custom v-slot="{ navigate }" :to="{ name: 'home' }" replace> -->
           <button type="button" class="btn-txt navy" :disabled="invalid" @click="onSubmit">로그인</button>
-          <!-- </router-link> -->
         </div>
         <div class="divide-list">
           <router-link custom v-slot="{ navigate }" :to="{ name: 'find' }">

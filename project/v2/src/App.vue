@@ -11,6 +11,12 @@ export default {
   components: {
     TopButton,
   },
+  created() {
+    M.onBack(() => {
+      // TODO: 특정 화면에서의 처리 필요 또한
+      this.$router.go(-1);
+    });
+  },
   computed: {
     ...mapState({
       isMobile: 'isMobile',

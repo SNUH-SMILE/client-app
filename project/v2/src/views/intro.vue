@@ -40,7 +40,7 @@ export default {
       if (!this.havePushPermission()) {
         return this.$router.replace({ name: 'intro-push' });
       }
-      return this.$router.replace('/login');
+      return this.$router.replace({ name: 'login' });
     }, 1000);
   },
 };
