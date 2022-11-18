@@ -102,9 +102,7 @@ export default {
       findPwValidator: null,
     };
   },
-  created() {
-    window.vm = this;
-  },
+  created() {},
   mounted() {
     this.findIdValidator = this.$refs.findId;
     this.findPwValidator = this.$refs.findPw;
