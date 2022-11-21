@@ -12,6 +12,8 @@
 		07574A61BBCA482DBEB74236 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC04511B236E53DC546B520 /* UserNotifications.framework */; };
 		07A84EE292FAEF022182F087 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A84D939C4BD92AB49080C4 /* libsqlite3.tbd */; };
 		1439432A8688DA9F5E2B0DDD /* MDb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01104EFE8DE2FE16A30F8DF2 /* MDb.framework */; };
+		15098268292B32B2005B27D2 /* VonageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15098266292B32B2005B27D2 /* VonageViewController.xib */; };
+		15098269292B32B2005B27D2 /* VonageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15098267292B32B2005B27D2 /* VonageViewController.m */; };
 		15354087AC92492FE4291FB0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A64EBE9271F73B81F9C3AA /* SystemConfiguration.framework */; };
 		156D48A6BFAF08C75C659CB2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06424BA7A22A9141C795D069 /* CoreGraphics.framework */; };
 		15C24B56B86A59897CE81912 /* MZip.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8A7A4C39BC9DCD663257DEC6 /* MZip.bundle */; };
@@ -107,6 +109,9 @@
 		06424BA7A22A9141C795D069 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0AD7478E8E349953371F78CE /* MMedia.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MMedia.bundle; path = MLibrary/m_addon_media/MMedia.bundle; sourceTree = SOURCE_ROOT; };
 		12A7407BA4AB71E786406207 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		15098265292B32B2005B27D2 /* VonageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VonageViewController.h; sourceTree = "<group>"; };
+		15098266292B32B2005B27D2 /* VonageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VonageViewController.xib; sourceTree = "<group>"; };
+		15098267292B32B2005B27D2 /* VonageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VonageViewController.m; sourceTree = "<group>"; };
 		155D4D0494BD111205F92117 /* MNetExt.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MNetExt.bundle; path = MLibrary/m_addon_netExt/MNetExt.bundle; sourceTree = SOURCE_ROOT; };
 		19F64210ACA5324B6DBC4051 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		25404301B1E2E96CD3EDF177 /* MLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MLocation.framework; path = MLibrary/m_plugin_location/MLocation.framework; sourceTree = SOURCE_ROOT; };
@@ -270,6 +275,16 @@
 				5C5C4F349762F9A148DCA17D /* MDb.bundle */,
 			);
 			name = m_addon_db;
+			sourceTree = "<group>";
+		};
+		15098264292B32B2005B27D2 /* Native */ = {
+			isa = PBXGroup;
+			children = (
+				15098265292B32B2005B27D2 /* VonageViewController.h */,
+				15098266292B32B2005B27D2 /* VonageViewController.xib */,
+				15098267292B32B2005B27D2 /* VonageViewController.m */,
+			);
+			path = Native;
 			sourceTree = "<group>";
 		};
 		304146CEA207A266D79A0B1F /* m_plugin_push_r4 */ = {
@@ -436,6 +451,7 @@
 		D5E95BA91C7C22510049FF1D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				15098264292B32B2005B27D2 /* Native */,
 				4C219D12276B3A8E00AEDEF7 /* Push */,
 				D5E95BAA1C7C22510049FF1D /* AppDelegate */,
 				D5E95BAD1C7C22510049FF1D /* Hybrid */,
@@ -638,6 +654,7 @@
 				36504F22BE0A5DE77D136F2A /* MDb.bundle in Resources */,
 				4370ABA327549212004A614D /* Launch Screen.storyboard in Resources */,
 				2A754FEC90B88B5FFEF58697 /* MFileIO.bundle in Resources */,
+				15098268292B32B2005B27D2 /* VonageViewController.xib in Resources */,
 				A16E44638B3D76514FEF309C /* MMedia.bundle in Resources */,
 				2C5C47E4972558324C24EC27 /* MNet.bundle in Resources */,
 				016B446BBAB3FC56BD47026F /* MNetExt.bundle in Resources */,
@@ -714,6 +731,7 @@
 				D5E95BD31C7C22510049FF1D /* ExtendWNInterface.m in Sources */,
 				430C62372754974E004C6369 /* UTESmartBandDbManager.m in Sources */,
 				433A71C927744A4300E3F208 /* ExtendWNInterface+BackgroundLocation.m in Sources */,
+				15098269292B32B2005B27D2 /* VonageViewController.m in Sources */,
 				430C62342754972C004C6369 /* UTESmartBandManager.m in Sources */,
 				D5E95BD51C7C22510049FF1D /* ExPPDefaultNetworkIndicator.m in Sources */,
 				D5E95BD61C7C22510049FF1D /* HttpDefaultNetworkManager.m in Sources */,

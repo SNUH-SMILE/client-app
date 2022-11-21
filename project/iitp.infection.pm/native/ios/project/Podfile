@@ -12,6 +12,8 @@ target 'iitp.infection.pm' do
 	
     pod 'iOSOTARTK'
 
+    pod 'OpenTok'
+
 end
 
 
