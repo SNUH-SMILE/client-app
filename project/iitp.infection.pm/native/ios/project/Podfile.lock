@@ -2,23 +2,31 @@ PODS:
   - iOSDFULibrary (4.11.1):
     - ZIPFoundation (= 0.9.11)
   - iOSOTARTK (1.0.6)
+  - OpenTok (2.22.3):
+    - VonageWebRTC (= 84.0.21)
+  - VonageWebRTC (84.0.21)
   - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
   - iOSDFULibrary
   - iOSOTARTK
+  - OpenTok
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - iOSDFULibrary
     - iOSOTARTK
+    - OpenTok
+    - VonageWebRTC
     - ZIPFoundation
 
 SPEC CHECKSUMS:
   iOSDFULibrary: 3500ac00451aa7d8ec48a752e91099669a2c1d27
   iOSOTARTK: 248be8e3a7eb6e18ab56c5369b24082fd41bc219
+  OpenTok: 532cdb6254b7bf41c64f8ad761469d6f7a154c7b
+  VonageWebRTC: cfa7aefc3fe6e95bcbd778e8973af90fe9bfd497
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: 8fd23fafeaf3c3924a7d029ce93eddf73a78c93c
+PODFILE CHECKSUM: 99edc03004ea9cd65cb81dfc38c756d9bc87e289
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3

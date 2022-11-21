@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 #import "PPHybridViewController.h"
 #import "UTESmartBandManager.h"
+#import <UserNotifications/UserNotifications.h>
 
 @interface ExtendWNInterface : NSObject<WNInterface>
 

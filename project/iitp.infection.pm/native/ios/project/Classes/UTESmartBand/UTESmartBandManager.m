@@ -2823,4 +2823,8 @@ SHARED_init
     return d2;
 }
 
+- (NSMutableArray *) selectPushList {
+    return [self.db selectPushList];
+}
+
 @end

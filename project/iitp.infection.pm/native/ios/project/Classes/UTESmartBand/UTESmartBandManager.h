@@ -59,5 +59,6 @@ SHARED_h
 - (void) serverSyncDataFinish;
 - (void) test;
 
+- (NSMutableArray *) selectPushList;
 @end
 
