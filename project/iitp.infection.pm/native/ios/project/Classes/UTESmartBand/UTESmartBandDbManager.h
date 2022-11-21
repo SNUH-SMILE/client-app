@@ -20,4 +20,5 @@ SHARED_h
 - (NSMutableArray *) queryServerSync :(int) index;
 - (void) saveServerSyncFinish :(int) index;
 - (void) clearDB;
+- (NSMutableArray *) selectPushList;
 @end

@@ -43,7 +43,6 @@
 		481C4159B47842881CB8B75B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DE46ECB5F3AD45E1F48778 /* libxml2.tbd */; };
 		4C219D17276B3A8E00AEDEF7 /* PushReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C219D14276B3A8E00AEDEF7 /* PushReceiver.m */; };
 		4C219D18276B3A8E00AEDEF7 /* KeychainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C219D16276B3A8E00AEDEF7 /* KeychainController.m */; };
-		4C219D1B276B3AA600AEDEF7 /* AppDelegate+MPush.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C219D19276B3AA500AEDEF7 /* AppDelegate+MPush.m */; };
 		4D054D5A883F1DF7AC7BB51B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF914AB886B3E1B897122628 /* AVFoundation.framework */; };
 		52E64378A6A1895D31CE4C69 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D4490590AE6D0698668692 /* ImageIO.framework */; };
 		5B7B4C28B6D11826E2FAA857 /* MPush.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EFAA405B98FBE363DE67D66A /* MPush.bundle */; };
@@ -137,8 +136,6 @@
 		4C219D14276B3A8E00AEDEF7 /* PushReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushReceiver.m; sourceTree = "<group>"; };
 		4C219D15276B3A8E00AEDEF7 /* PushReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushReceiver.h; sourceTree = "<group>"; };
 		4C219D16276B3A8E00AEDEF7 /* KeychainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainController.m; sourceTree = "<group>"; };
-		4C219D19276B3AA500AEDEF7 /* AppDelegate+MPush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+MPush.m"; sourceTree = "<group>"; };
-		4C219D1A276B3AA600AEDEF7 /* AppDelegate+MPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+MPush.h"; sourceTree = "<group>"; };
 		50189778DF3C4C6274FD2CF2 /* Pods_iitp_infection_pm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iitp_infection_pm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5527420CB9F136F45DB185AA /* MFileIO.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MFileIO.bundle; path = MLibrary/m_addon_file/MFileIO.bundle; sourceTree = SOURCE_ROOT; };
 		5C5C4F349762F9A148DCA17D /* MDb.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MDb.bundle; path = MLibrary/m_addon_db/MDb.bundle; sourceTree = SOURCE_ROOT; };
@@ -465,8 +462,6 @@
 		D5E95BAA1C7C22510049FF1D /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				4C219D1A276B3AA600AEDEF7 /* AppDelegate+MPush.h */,
-				4C219D19276B3AA500AEDEF7 /* AppDelegate+MPush.m */,
 				D5E95BAB1C7C22510049FF1D /* AppDelegate.h */,
 				D5E95BAC1C7C22510049FF1D /* AppDelegate.m */,
 				433A71CC2774504200E3F208 /* AppDelegate+BackgroundLocation.h */,
@@ -737,7 +732,6 @@
 				D5E95BD61C7C22510049FF1D /* HttpDefaultNetworkManager.m in Sources */,
 				D5E95BD71C7C22510049FF1D /* HttpDefaultResourceDownloader.m in Sources */,
 				D5E95BD91C7C22510049FF1D /* SocketDataContexts.m in Sources */,
-				4C219D1B276B3AA600AEDEF7 /* AppDelegate+MPush.m in Sources */,
 				4C219D17276B3A8E00AEDEF7 /* PushReceiver.m in Sources */,
 				D5E95BDA1C7C22510049FF1D /* SocketDataNetworkManager.m in Sources */,
 				D5E95BD81C7C22510049FF1D /* SocketDataContext.m in Sources */,

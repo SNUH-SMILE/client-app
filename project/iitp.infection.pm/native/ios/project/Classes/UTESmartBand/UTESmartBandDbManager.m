@@ -491,4 +491,25 @@ SHARED_init
     [self.mngr executeQuery:qry error:&err];
     [self log:qry :err];
 }
+
+- (NSMutableArray *) selectPushList {
+    
+    NSString *qry = nil;
+    NSError *err = nil;
+    
+    qry = [NSString stringWithFormat: @"SELECT * FROM alarm"];
+    MRecordSet *rs = [self.mngr executeQuery:qry error:&err];
+    [self log:qry :err];
+    
+    if (err != nil) {
+        return nil;
+    }
+    
+    NSMutableArray *arr = [NSMutableArray array];
+    while ([rs moveNext]) {
+        [arr addObject: [NSMutableDictionary dictionaryWithDictionary:[rs data]]];
+    }
+    
+    return arr;
+}
 @end

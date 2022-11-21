@@ -20,10 +20,6 @@
     NSString *sessionid = [[_parameters objectForKey:@"sessionid"] stringByRemovingPercentEncoding];
     NSString *token = [[_parameters objectForKey:@"token"] stringByRemovingPercentEncoding];
     
-    NSLog(@"dantexxxx %@", apikey);
-    NSLog(@"dantexxxx %@", sessionid);
-    NSLog(@"dantexxxx %@", token);
-
     [super viewDidLoad];
 
     

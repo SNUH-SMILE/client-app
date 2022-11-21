@@ -3,6 +3,8 @@
 //
 
 #import "AppDelegate.h"
+#import "PushReceiver.h"
+#import <MPush/MPush.h>
 #import "AppDelegate+BackgroundLocation.h"
 
 
@@ -16,9 +18,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    if([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey])
+    {
+        NSDictionary *dic = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        _setGlobalValue(@"_PUSHDATA", dic);
+    }
+    
+    if([launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey])
+    {
+        UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+        _setGlobalValue(@"_PUSHDATA", notification.userInfo);
+    }
+    
+    [[PushManager defaultManager] application:application didFinishLaunchingWithOptions:launchOptions];
+    [[PushManager defaultManager] initilaizeWithDelegate:[[PushReceiver alloc] init]];
     
     window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    navigationController = [MAppDelegate initialViewControllerWithLaunchOptions:launchOptions];
+    navigationController = [MAppDelegate initialViewControllerWithLaunchOptions:launchOptions history:YES];
     
     [window setBackgroundColor:[UIColor blackColor]];
     [window setRootViewController:navigationController];
@@ -38,8 +54,31 @@
         [self startLocation];
     }
     
+    [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+    
     return YES;
 }
+
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
+{
+    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound);
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)(void))completionHandler
+{
+    NSLog( @"didReceiveNotificationResponse: %@", response.notification.request.content.userInfo);
+    NSDictionary *userInfo = response.notification.request.content.userInfo;
+    
+    PPNavigationController *navigationController = [PPNavigationController ppNavigationController];
+    if([navigationController.currentViewCtrl isKindOfClass:[PPWebViewController class]])
+    {
+        PPWebViewController *current = (PPWebViewController *)navigationController.currentViewCtrl;
+        [current callCbfunction:@"oniOSReceiveNotification" withObjects:@{@"status":@"ACTIVE", @"payload":userInfo, @"type":@"APNS", @"messageUID": @""}, nil];
+    }
+    
+    completionHandler();
+}
+
 
 @synthesize window, navigationController;
 
