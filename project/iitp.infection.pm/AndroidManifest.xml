@@ -114,6 +114,7 @@
 		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.BatchTempActivity"/>
 		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.SampleNativeListActivity"/>
 		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.SampleNativeMapActivity"/>
+		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:name=".samples.activity.VonageViewController"/>
 		<activity android:name=".samples.activity.ShowPushPopup" android:screenOrientation="portrait" android:windowSoftInputMode="adjustUnspecified|adjustPan"/>
 		<activity android:configChanges="locale|keyboardHidden|orientation|screenSize" android:imeOptions="actionSend|flagNoEnterAction" android:name="m.client.android.library.core.view.MainActivity"/>
 		<provider android:authorities="@string/app_package" android:name="m.client.android.library.core.managers.LocalFileContentProvider"/>

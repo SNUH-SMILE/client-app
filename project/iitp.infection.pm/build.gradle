@@ -58,7 +58,7 @@ android {
 	}
 	
 	defaultConfig{
-		minSdkVersion 18
+		minSdkVersion 21
 		targetSdkVersion 30
 		multiDexEnabled true
 	}
@@ -118,6 +118,8 @@ dependencies {
 	implementation 'com.firebase:firebase-jobdispatcher:0.8.6'
 	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 	implementation 'androidx.multidex:multidex:2.0.1'
+	implementation 'com.opentok.android:opentok-android-sdk:2.24.0'
+	implementation 'pub.devrel:easypermissions:3.0.0'
 }
 
 import org.apache.tools.ant.taskdefs.condition.Os
