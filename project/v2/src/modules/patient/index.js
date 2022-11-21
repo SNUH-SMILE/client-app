@@ -12,6 +12,7 @@ export const LOGOUT = 'patient/logout';
 export const IS_ANONYMOUS = 'patient/isAnonymous';
 export const ACCESS_TOKEN = 'patient/accessToken';
 export const SESSION = 'patient/session';
+export const LOGIN_ID = 'patient/loginId';
 
 const INIT_SESSION_DATA = () => ({
   patientNm: '', // 홍길동
@@ -69,6 +70,9 @@ export default {
     [SESSION]({ session }) {
       const info = _cloneDeep(session);
       return info;
+    },
+    [LOGIN_ID]({ loginId }) {
+      return loginId;
     },
   },
 };

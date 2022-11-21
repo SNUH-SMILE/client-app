@@ -42,7 +42,7 @@ function bandConnectFunc(addr, callback) {
   obj.schBluetooth = 'C';
   obj.bandAddr = addr;
   //로그인 에서 왔을 때는 디바이스, 디비를 초기화 하고, 설정 메뉴를 통해서 들어왔을 때는 초기화 없이 사용한다.
-  obj.resetType = '0'; // resetType - 0 : 디바이스/디비 초기화 , 1 : 디바이스 초기화 , 2 : 초기화 없음
+  obj.resetType = '2'; // resetType - 0 : 디바이스/디비 초기화 , 1 : 디바이스 초기화 , 2 : 초기화 없음
   obj.callback = callback;
   execute('exBandConnect', obj);
 }

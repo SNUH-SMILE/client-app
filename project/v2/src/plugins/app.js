@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import lodash from 'lodash';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import defaultFormat from '@/common/custom.day';
+import { executor } from '@/native';
 
 /**
  * dayjs 확장
@@ -49,7 +50,8 @@ export default {
     Vue.prototype.$dayjs = dayjs;
     Vue.prototype.$eventBus = eventBus;
 
-    Vue.prototype.$lodash = lodash; // 전역 선언해서 사용해도 되는지? 커스텀은 $로 시작해야함.
-    //tree shaking 문제
+    Vue.prototype.$lodash = lodash;
+
+    Vue.prototype.$nativeScript = executor;
   },
 };

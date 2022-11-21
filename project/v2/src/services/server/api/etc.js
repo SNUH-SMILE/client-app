@@ -9,7 +9,7 @@ class EtcApiService extends BaseApiService {
    * 공지사항 목록 조회
    */
   supportNoticeList(loginId) {
-    this.post('/support/noticeList', { loginId });
+    return this.post('/support/noticeList', { loginId });
   }
   /**
    * 문의 내역 조회

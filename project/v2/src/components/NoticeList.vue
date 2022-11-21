@@ -1,20 +1,21 @@
 <template>
   <ul class="noti-list">
-    <li v-for="(item, index) in notiList" :key="index">
+    <li v-for="(item, index) in list" :key="`${item.noticeTitle}-${index}`">
       <button type="button">
-        <span class="title-box" :class="{ new: item.new }">
-          <span class="ttl" :class="textClass">{{ item.title }}</span>
+        <span class="title-box" :class="{ new: true }">
+          <span class="ttl" :class="textClass">{{ item.noticeTitle }}</span>
           <em class="badge">N</em>
         </span>
         <span class="sub-box">
-          <span class="date">{{ item.date }}</span>
-          <span class="point-txt" v-show="item.answer">답변 완료</span>
+          <span class="date">{{ item.noticeDate }}</span>
         </span>
       </button>
     </li>
   </ul>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import { NOTICE_LIST } from '@/modules/etc';
 export default {
   props: {
     notiList: Array,
@@ -22,6 +23,20 @@ export default {
       type: String,
       default: '',
     },
+  },
+  created() {
+    this.fetchList();
+  },
+  computed: {
+    ...mapGetters({
+      list: NOTICE_LIST,
+    }),
+  },
+
+  methods: {
+    ...mapActions({
+      fetchList: NOTICE_LIST,
+    }),
   },
 };
 </script>
