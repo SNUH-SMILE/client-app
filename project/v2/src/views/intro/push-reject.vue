@@ -23,6 +23,8 @@ export default {
     next() {
       this.$router.replace({ name: 'login' });
     },
+  },
+  computed: {
     now() {
       return this.$dayjs().format('YYYY.MM.DD HH:MM');
     },
