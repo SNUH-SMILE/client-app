@@ -1,0 +1,65 @@
+[
+  {
+    "order": "1",
+    "question": "현재 다음과 같은 증상이 있으십니까? (기침/가래/발열/콧물/인후통/호흡 곤란/훙통/기타 통증)",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "2",
+    "question": "다음 중 가지고 계신 기저질환이 있으십니까? (심혈관계/호흡기계/간질환/신장 질환/장기 이식 관련)",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "3",
+    "question": "혈액암 (백혈병, 악성림프종 등)을 진단받았거나, 항암치로를 받고 계십니까?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "4",
+    "question": "면역을 억제하는 약물을 복용하고 계십니까?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "5",
+    "question": "후천성면역결핍증과 같은 면역력이 저하되는 질환을 진단받은 적이 있습니까?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "6",
+    "question": "(여성의 경우) 임신 중이십니까?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "7",
+    "question": "투석을 하고 계십니까?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "8",
+    "question": "현재 다음과 같은 건강 문제가 있습니까? \n -순환기 문제(심계항진,흉통,부정맥 등) \n -소화기 문제(연하곤란, 오심, 구토, 복부 불편감, 복통 등) \n -배뇨 문제(빈뇨, 다뇨, 요실금 등) \n -배변 문제(설사, 변비 등)",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니요"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "9",
+    "question": "현재 격리 상태를 선택해주세요",
+    "answerType": "RadioFactory",
+    "labels": ["격리 중", "격리 해제"],
+    "answerRequired": "required"
+  }
+]
