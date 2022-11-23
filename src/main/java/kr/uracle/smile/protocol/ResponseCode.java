@@ -1,7 +1,9 @@
 package kr.uracle.smile.protocol;
 
-import java.util.Arrays;
+import lombok.Getter;
 
+import java.util.Arrays;
+@Getter
 public enum ResponseCode {
     Ok(200),
     BadRequest(400),

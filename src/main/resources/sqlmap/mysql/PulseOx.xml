@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.uracle.smile.module.pulseox.PulseOxMapper">
+    <resultMap id="HCPulseOx" type="kr.uracle.smile.module.pulseox.PulseOx">
+        <result property="id" column="ID" />
+        <result property="startTimeOffsetInSeconds" column="START_TIME_OFFSET_IN_SECONDS" />
+        <result property="userAccessToken" column="USER_ACCESS_TOKEN" />
+        <result property="userId" column="USER_ID" />
+    </resultMap>
+    <resultMap id="HCPulseOxTimeOffsetSpo2Values" type="kr.uracle.smile.module.pulseox.PulseOxTimeOffsetSpo2Values">
+        <result property="id" column="ID" />
+        <result property="timeOffsetSpo2ValuesKey" column="TIME_OFFSET_SPO2VALUES_KEY" />
+        <result property="timeOffsetSpo2Values" column="TIME_OFFSET_SPO2VALUES" />
+    </resultMap>
+    <insert id="addPulseOx" parameterType="kr.uracle.smile.module.pulseox.PulseOxRequest" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO PULSE_OX
+            (SUMMARY_ID, CALENDAR_DATE, START_TIME_IN_SECONDS, START_TIME_OFFSET_IN_SECONDS,
+             DURATION_IN_SECONDS, ON_DEMAND, USER_ACCESS_TOKEN, USER_ID)
+        VALUES
+            (#{summaryId}, #{calendarDate}, #{startTimeInSeconds}, #{startTimeOffsetInSeconds},
+             #{durationInSeconds}, #{onDemand}, #{userAccessToken}, #{userId} );
+    </insert>
+
+    <insert id="addPulseOxTimeOffsetValue">
+        INSERT INTO PULSE_OX_TIME_OFFSET_SPO2_VALUES
+            (ID, TIME_OFFSET_SPO2VALUES, TIME_OFFSET_SPO2VALUES_KEY)
+        VALUES
+            (#{id}, #{timeOffsetSpo2Values}, #{timeOffsetSpo2ValuesKey});
+    </insert>
+
+    <update id="editPulseOxSendCodeFlag" >
+        UPDATE PULSE_OX
+        SET    HEALTHCONNET_SEND_CODE = '1'
+        WHERE  HEALTHCONNET_SEND_CODE in ('0', '3')
+    </update>
+
+    <update id="editPulseOxSendCode" parameterType="kr.uracle.smile.module.common.HCSendAPIStatusCode" >
+        UPDATE PULSE_OX
+        SET    HEALTHCONNET_SEND_CODE = #{code}
+        WHERE  ID = #{id}
+    </update>
+
+    <select id="getHCPulseOx" resultMap="HCPulseOx" >
+        SELECT
+            ID, START_TIME_IN_SECONDS, USER_ACCESS_TOKEN, USER_ID
+        FROM PULSE_OX
+        WHERE HEALTHCONNET_SEND_CODE = '1'
+    </select>
+
+    <select id="getHCPulseOxTimeOffsetSpo2Values" parameterType="int" resultMap="HCPulseOxTimeOffsetSpo2Values" >
+        SELECT
+            TIME_OFFSET_SPO2VALUES_KEY, TIME_OFFSET_SPO2VALUES
+        FROM PULSE_OX_TIME_OFFSET_SPO2_VALUES
+        WHERE ID = #{id}
+    </select>
+
+</mapper>

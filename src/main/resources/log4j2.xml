@@ -7,7 +7,7 @@
 			<!-- <PatternLayout pattern="%d{MM/dd HH:mm:ss}, %-5p (%C{3}) : %m%n" /> -->
 			<PatternLayout pattern="[%date] [%thread] [%level] [%c{0}:%L] : %msg %n" />
 		</Console>
-		<RollingFile name="file" fileName="./log/trace.log" filePattern="./log/trace.log.%d{yyyy-MM-dd}">
+		<RollingFile name="file" fileName="./log/garmin.log" filePattern="./log/garmin.log.%d{yyyy-MM-dd}">
 			<PatternLayout>
 				<!--  pattern>%d{MM/dd HH:mm:ss}, %-5p (%C{3}) : %m%n</pattern>-->
 				<pattern>[%date] [%thread] [%level] [%c{0}:%L]: %m%n</pattern>

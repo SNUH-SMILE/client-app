@@ -1,8 +1,9 @@
 smile:
   datasource:
     platform: mysql
+#    jndi-name: jdbc/msp_mysql
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${db_host}:3306/EDUCATION?useSSL=false&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    url: jdbc:mysql://${db_url}?useSSL=false&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: ${db_username}
     password: ${db_password}
   storage:
@@ -15,7 +16,3 @@ smile:
   pagination:
     list: 10
     page: 10
-
-
-
-

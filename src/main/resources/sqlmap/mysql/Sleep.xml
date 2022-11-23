@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.uracle.smile.module.sleep.SleepMapper">
+    <resultMap id="HCSleep" type="kr.uracle.smile.module.sleep.Sleep">
+        <result property="id" column="ID" />
+        <result property="startTimeOffsetInSeconds" column="START_TIME_OFFSET_IN_SECONDS" />
+        <result property="userAccessToken" column="USER_ACCESS_TOKEN" />
+        <result property="userId" column="USER_ID" />
+    </resultMap>
+    <resultMap id="HCSleepLevels" type="kr.uracle.smile.module.sleep.SleepLevels">
+        <result property="id" column="ID" />
+        <result property="sleepType" column="SLEEP_TYPE" />
+        <result property="startTimeInSeconds" column="START_TIME_IN_SECONDS" />
+        <result property="endTimeInSeconds" column="END_TIME_IN_SECONDS" />
+    </resultMap>
+    <insert id="addSleep" parameterType="kr.uracle.smile.module.sleep.SleepRequest" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO SLEEP
+            (SUMMARY_ID, CALENDAR_DATE, START_TIME_IN_SECONDS, START_TIME_OFFSET_IN_SECONDS,
+             DURATION_IN_SECONDS, UNMEASURABLE_SLEEP_IN_SECONDS, DEEP_SLEEP_DURATION_IN_SECONDS, LIGHT_SLEEP_DURATION_IN_SECONDS,
+             REM_SLEEP_DURATION_IN_SECONDS, AWAKE_SLEEP_DURATION_IN_SECONDS, VALIDATION, USER_ACCESS_TOKEN,
+             USER_ID)
+        VALUES
+            (#{summaryId}, #{calendarDate}, #{startTimeInSeconds}, #{startTimeOffsetInSeconds},
+             #{durationInSeconds}, #{unmeasurableSleepDurationInSeconds}, #{deepSleepDurationInSeconds}, #{lightSleepDurationInSeconds},
+             #{remSleepInSeconds}, #{awakeDurationInSeconds}, #{validation}, #{userAccessToken}, #{userId} )
+    </insert>
+
+    <insert id="addSleepLevelMap">
+        INSERT INTO SLEEP_LEVELS_MAP
+            (ID, SLEEP_TYPE, START_TIME_IN_SECONDS, END_TIME_IN_SECONDS)
+        VALUES
+            (#{id}, #{sleepType}, #{startTimeInSeconds}, #{endTimeInSeconds})
+    </insert>
+
+    <insert id="addTimeRespiration">
+        INSERT INTO SLEEP_TIME_OFFSET_RESPIRATION
+            (ID, TIME_OFFSET_SLEEP_RESPIRATION, TIME_OFFSET_SLEEP_RESPIRATION_KEY)
+        VALUES
+            (#{id}, #{timeOffsetSleepRespiration}, #{timeOffsetSleepRespirationKey})
+    </insert>
+
+    <insert id="addTimeSPO2">
+        INSERT INTO SLEEP_TIME_OFFSET_SPO2
+            (ID, TIME_OFFSET_SLEEP_Spo2, TIME_OFFSET_SLEEP_Spo2)
+        VALUES
+            (#{id}, #{timeOffsetSleepSPO2}, #{timeOffsetSleepSPO2Key})
+    </insert>
+
+    <update id="editSleepSendCodeFlag" >
+        UPDATE SLEEP
+        SET    HEALTHCONNET_SEND_CODE = '1'
+        WHERE  HEALTHCONNET_SEND_CODE in ('0', '3')
+    </update>
+
+    <update id="editSleepSendCode" parameterType="kr.uracle.smile.module.common.HCSendAPIStatusCode" >
+        UPDATE SLEEP
+        SET    HEALTHCONNET_SEND_CODE = #{code}
+        WHERE  ID = #{id}
+    </update>
+
+    <select id="getHCSleep" resultMap="HCSleep" >
+        SELECT
+            ID, START_TIME_IN_SECONDS, USER_ACCESS_TOKEN, USER_ID
+        FROM SLEEP
+        WHERE HEALTHCONNET_SEND_CODE = '1'
+    </select>
+
+    <select id="getHCSleepLevels" parameterType="int" resultMap="HCSleepLevels" >
+        SELECT
+            SLEEP_TYPE, START_TIME_IN_SECONDS, END_TIME_IN_SECONDS
+        FROM SLEEP_LEVELS_MAP
+        WHERE ID = #{id}
+    </select>
+
+</mapper>

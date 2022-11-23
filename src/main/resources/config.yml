@@ -1,0 +1,22 @@
+# DreamSecurity identity verification
+identity:
+  verification:
+    cpid: uracle
+    key:
+      password: uracle001
+# OAuth
+oauth10a:
+  consumer:
+    key: e16e331e-1e79-4ea1-b717-5cab35dc17e0
+    secret: pnxYKgaFR2yASetRFwN1PpaEzhl6vILWtDR
+    callback:
+      url: https://snuhsmile.morpheus.kr/oauth/callback
+  provider:
+    token:
+      credentials:
+        url: https://connectapi.garmin.com/oauth-service/oauth/access_token
+    temporary:
+      credentials:
+        url: https://connectapi.garmin.com/oauth-service/oauth/request_token
+    authorize:
+      url: https://connect.garmin.com/oauthConfirm

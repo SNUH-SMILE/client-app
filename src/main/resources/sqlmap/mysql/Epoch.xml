@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.uracle.smile.module.epoch.EpochMapper">
+    <resultMap id="HCEpoch" type="kr.uracle.smile.module.epoch.Epoch" >
+        <result property="id" column="ID" />
+        <result property="steps" column="STEPS" />
+        <result property="distanceInMeters" column="DISTANCE_IN_METERS" />
+        <result property="startTimeInSeconds" column="START_TIME_IN_SECONDS" />
+        <result property="startTimeOffsetInSeconds" column="START_TIME_OFFSET_IN_SECONDS" />
+        <result property="userAccessToken" column="USER_ACCESS_TOKEN" />
+        <result property="userId" column="USER_ID" />
+    </resultMap>
+
+    <insert id="addEpoch" >
+        INSERT INTO EPOCH
+            (MET, STEPS, ACTIVE_KILOCALORIES, ACTIVE_TIME_IN_SECONDS, ACTIVITY_TYPE,
+             DISTANCE_IN_METERS, DURATION_IN_SECONDS, INTENSITY, MAX_MOTION_INTENSITY, MEAN_MOTION_INTENSITY,
+             START_TIME_IN_SECONDS, START_TIME_OFFSET_IN_SECONDS, SUMMARY_ID, USER_ACCESS_TOKEN, USER_ID)
+        VALUES
+            ( #{met}, #{steps}, #{activeKilocalories}, #{activeTimeInSeconds}, #{activityType},
+              #{distanceInMeters}, #{durationInSeconds}, #{intensity}, #{maxMotionIntensity}, #{meanMotionIntensity},
+              #{startTimeInSeconds}, #{startTimeOffsetInSeconds}, #{summaryId}, #{userAccessToken}, #{userId} )
+    </insert>
+
+    <update id="editEpochSendCodeFlag" >
+        UPDATE EPOCH
+        SET    HEALTHCONNET_SEND_CODE = '1'
+        WHERE  ACTIVITY_TYPE in ('WALKING' ,'RUNNING')
+          AND HEALTHCONNET_SEND_CODE in ('0', '3')
+    </update>
+
+    <update id="editEpochSendCode" parameterType="kr.uracle.smile.module.common.HCSendAPIStatusCode" >
+        UPDATE EPOCH
+        SET    HEALTHCONNET_SEND_CODE = #{code}
+        WHERE  ID = #{id}
+    </update>
+
+    <select id="getHCEpoch" resultMap="HCEpoch" >
+        SELECT
+            ID, STEPS, DISTANCE_IN_METERS, START_TIME_IN_SECONDS,
+            START_TIME_OFFSET_IN_SECONDS, USER_ACCESS_TOKEN, USER_ID
+        FROM EPOCH
+        WHERE ACTIVITY_TYPE in ('WALKING' ,'RUNNING')
+            AND HEALTHCONNET_SEND_CODE = '1'
+    </select>
+</mapper>

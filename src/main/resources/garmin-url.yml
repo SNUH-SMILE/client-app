@@ -1,0 +1,18 @@
+# garmin Url Info
+healthConnect:
+  url:
+    step: http://localhost:8080/api/results/stepCount
+    pulseOx: http://localhost:8080/api/results/spO2
+    respiration: http://localhost:8080/api/results/rr
+    daily: http://localhost:8080/api/results/hr
+    sleep: http://localhost:8080/api/results/sleepTime
+health:
+  url:
+    daily: https://apis.garmin.com/wellness-api/rest/backfill/dailies
+    epoch: https://apis.garmin.com/wellness-api/rest/backfill/epochs
+    sleep: https://apis.garmin.com/wellness-api/rest/backfill/sleeps
+    pulseOx: https://apis.garmin.com/wellness-api/rest/backfill/pulseOx
+    respiration: https://apis.garmin.com/wellness-api/rest/backfill/respiration
+    snapshot: https://apis.garmin.com/wellness-api/rest/backfill/healthSnapshot
+deregistration:
+  url: https://apis.garmin.com/wellness-api/rest/user/registration

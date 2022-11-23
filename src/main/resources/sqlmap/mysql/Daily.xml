@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.uracle.smile.module.daily.DailyMapper">
+    <resultMap id="HCDaily" type="kr.uracle.smile.module.daily.Daily">
+        <result property="id" column="ID" />
+        <result property="startTimeOffsetInSeconds" column="START_TIME_OFFSET_IN_SECONDS" />
+        <result property="userAccessToken" column="USER_ACCESS_TOKEN" />
+        <result property="userId" column="USER_ID" />
+    </resultMap>
+    <resultMap id="HCDailyTimeOffsetHeartRate" type="kr.uracle.smile.module.daily.DailyHeartRate">
+        <result property="id" column="ID" />
+        <result property="timeOffsetHeartRateKey" column="TIME_OFFSET_HEART_RATE_KEY" />
+        <result property="timeOffsetHeartRateValue" column="TIME_OFFSET_HEART_RATE_VALUE" />
+    </resultMap>
+    <insert id="addDaily" parameterType="kr.uracle.smile.module.daily.DailyRequest" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO DAILY
+            (CALENDAR_DATE, START_TIME_IN_SECONDS, START_TIME_OFFSET_IN_SECONDS, ACTIVITY_TYPE, DURATION_IN_SECONDS,
+             STEPS, DISTANCE_IN_METERS, ACTIVE_TIME_IN_SECONDS, ACTIVE_KILOCALORIES, BMR_KILOCALORIES,
+             MODERATE_INTENSITY_DURATION_IN_SECONDS, VIGOROUS_INTENSITY_DURATION_IN_SECONDS, FLOORS_CLIMBED, MIN_HEART_RATE_IN_BEATS_PER_MINUTE, AVERAGE_HEART_RATE_IN_BEATS_PER_MINUTE,
+             MAX_HEART_RATE_IN_BEATS_PER_MINUTE, RESTING_HEART_RATE_IN_BEATS_PER_MINUTE, AVERAGE_STRESS_LEVEL, MAX_STRESS_LEVEL, STRESS_DURATION_IN_SECONDS,
+             REST_STRESS_DURATION_IN_SECONDS, ACTIVITY_STRESS_DURATION_IN_SECONDS, LOW_STRESS_DURATION_IN_SECONDS, MEDIUM_STRESS_DURATION_IN_SECONDS, HIGH_STRESS_DURATION_IN_SECONDS,
+             STRESS_QUALIFIER, STEPS_GOAL, INTENSITY_DURATION_GOAL_IN_SECONDS, FLOORS_CLIMBED_GOAL, USER_ACCESS_TOKEN,
+             USER_ID)
+        VALUES
+            (#{calendarDate}, #{startTimeInSeconds}, #{startTimeOffsetInSeconds}, #{activityType}, #{durationInSeconds},
+             #{steps}, #{distanceInMeters}, #{activeTimeInSeconds}, #{activeKilocalories}, #{bmrKilocalories},
+             #{moderateIntensityDurationInSeconds}, #{vigorousIntensityDurationInSeconds}, #{floorsClimbed}, #{minHeartRateInBeatsPerMinute}, #{averageHeartRateInBeatsPerMinute},
+             #{maxHeartRateInBeatsPerMinute}, #{restingHeartRateInBeatsPerMinute}, #{averageStressLevel}, #{maxStressLevel}, #{stressDurationInSeconds},
+             #{restStressDurationInSeconds}, #{activityStressDurationInSeconds}, #{lowStressDurationInSeconds}, #{mediumStressDurationInSeconds}, #{highStressDurationInSeconds},
+             #{stressQualifier}, #{stepsGoal}, #{intensityDurationGoalInSeconds}, #{floorsClimbedGoal}, #{userAccessToken},
+             #{userId})
+    </insert>
+
+    <insert id="addTimeOffsetHeartRateSamples" >
+        INSERT INTO DAILY_TIME_OFFSET_HEART_RATE_SAMPLE
+            (ID, TIME_OFFSET_HEART_RATE_KEY, TIME_OFFSET_HEART_RATE_VALUE)
+        VALUES
+            (#{id}, #{timeOffsetHeartRateKey}, #{timeOffsetHeartRateValue})
+    </insert>
+
+    <update id="editDailySendCodeFlag" >
+        UPDATE DAILY
+        SET    HEALTHCONNET_SEND_CODE = '1'
+        WHERE  HEALTHCONNET_SEND_CODE in ('0', '3')
+    </update>
+
+    <update id="editDailySendCode" parameterType="kr.uracle.smile.module.common.HCSendAPIStatusCode" >
+        UPDATE DAILY
+        SET    HEALTHCONNET_SEND_CODE = #{code}
+        WHERE  ID = #{id}
+    </update>
+
+    <select id="getHCDaily" resultMap="HCDaily" >
+        SELECT
+            ID, START_TIME_IN_SECONDS, USER_ACCESS_TOKEN, USER_ID
+        FROM DAILY
+        WHERE HEALTHCONNET_SEND_CODE = '1'
+    </select>
+
+    <select id="getHCDailyTimeOffsetHeartRate" parameterType="int" resultMap="HCDailyTimeOffsetHeartRate" >
+        SELECT
+            TIME_OFFSET_HEART_RATE_KEY, TIME_OFFSET_HEART_RATE_VALUE
+        FROM DAILY_TIME_OFFSET_HEART_RATE_SAMPLE
+        WHERE ID = #{id}
+    </select>
+
+</mapper>

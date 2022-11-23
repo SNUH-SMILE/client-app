@@ -34,6 +34,10 @@ public class LocalizedString {
     public final static String ADMIN_PASSWORD_CHECK_FAIL = "admin.password.check.fail";
     public final static String ADMIN_PASSWORD_BEFORE_CHECK_FAIL = "admin.password.before.check.fail";
     public final static String ADMIN_PASSWORD_= "admin.password.before.check.fail";
+
+    // 헬스커넥트 API 요청
+    public final static String HEALTH_CONNECT_FAIL = "health.connect.fail";
+    public final static String USER_INSERT_FAIL = "500.user.insert.fail";
     
     /**
      * 기본 생성자

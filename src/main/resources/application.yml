@@ -19,6 +19,10 @@ spring:
       max-file-size: ${smile.multipart.max-file-size}
       max-request-size: ${smile.multipart.max-request-size}
       file-size-threshold: 0B
+  config:
+    import:
+      - classpath:/garmin-url.yml
+      - classpath:/config.yml
 msp:
   security:
     security-type: all

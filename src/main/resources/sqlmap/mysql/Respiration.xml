@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.uracle.smile.module.respiration.RespirationMapper">
+    <resultMap id="HCRespiration" type="kr.uracle.smile.module.respiration.Respiration">
+        <result property="id" column="ID" />
+        <result property="startTimeOffsetInSeconds" column="START_TIME_OFFSET_IN_SECONDS" />
+        <result property="userAccessToken" column="USER_ACCESS_TOKEN" />
+        <result property="userId" column="USER_ID" />
+    </resultMap>
+    <resultMap id="HCRespirationBreaths" type="kr.uracle.smile.module.respiration.RespirationBreaths">
+        <result property="id" column="ID" />
+        <result property="timeOffsetEpochToBreathsKey" column="TIME_OFFSET_EPOCH_TO_BREATHS_KEY" />
+        <result property="timeOffsetEpochToBreathsValue" column="TIME_OFFSET_EPOCH_TO_BREATHS_VALUE" />
+    </resultMap>
+    <insert id="addRespiration" parameterType="kr.uracle.smile.module.respiration.RespirationRequest" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO RESPIRATION
+            (SUMMARY_ID, START_TIME_IN_SECONDS, DURATION_IN_SECONDS,
+             START_TIME_OFFSET_IN_SECONDS, USER_ACCESS_TOKEN, USER_ID)
+        VALUES
+            (#{summaryId}, #{startTimeInSeconds}, #{durationInSeconds},
+             #{startTimeOffsetInSeconds}, #{userAccessToken}, #{userId} )
+    </insert>
+
+    <insert id="addTimeOffsetEpochToBreaths">
+        INSERT INTO RESPIRATION_TIME_OFFSET_EPOCH_TO_BREATHS
+            (ID, TIME_OFFSET_EPOCH_TO_BREATHS_KEY, TIME_OFFSET_EPOCH_TO_BREATHS_VALUE)
+        VALUES
+            (#{id}, #{timeOffsetEpochToBreathsKey}, #{timeOffsetEpochToBreathsValue})
+    </insert>
+
+    <update id="editRespirationSendCodeFlag" >
+        UPDATE RESPIRATION
+        SET    HEALTHCONNET_SEND_CODE = '1'
+        WHERE  HEALTHCONNET_SEND_CODE in ('0', '3')
+    </update>
+
+    <update id="editRespirationSendCode" parameterType="kr.uracle.smile.module.common.HCSendAPIStatusCode" >
+        UPDATE RESPIRATION
+        SET    HEALTHCONNET_SEND_CODE = #{code}
+        WHERE  ID = #{id}
+    </update>
+
+    <select id="getHCRespiration" parameterType="int" resultMap="HCRespiration" >
+        SELECT
+            ID, START_TIME_IN_SECONDS, USER_ACCESS_TOKEN, USER_ID
+        FROM RESPIRATION
+        WHERE HEALTHCONNET_SEND_CODE = '1'
+    </select>
+
+    <select id="getHCRespirationBreaths" resultMap="HCRespirationBreaths" >
+        SELECT
+            TIME_OFFSET_EPOCH_TO_BREATHS_KEY, TIME_OFFSET_EPOCH_TO_BREATHS_VALUE
+        FROM RESPIRATION_TIME_OFFSET_EPOCH_TO_BREATHS
+        WHERE ID = #{id}
+    </select>
+
+</mapper>

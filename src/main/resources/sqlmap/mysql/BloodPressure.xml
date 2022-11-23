@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.uracle.smile.module.bloodpressure.BloodPressureMapper">
+    <insert id="addBloodPressure">
+        INSERT INTO BLOOD_PRESSURE
+            (SUMMARY_ID, MEASUREMENT_TIME_IN_SECONDS, MEASUREMENT_TIME_OFFSET_IN_SECONDS,
+             SYSTOLIC, DIASTOLIC, PULSE, SOURCE_TYPE)
+        VALUES
+            (#{summaryId}, #{measurementTimeInSeconds}, #{measurementTimeOffsetInSeconds},
+             #{systolic}, #{diastolic}, #{pulse}, #{sourceType})
+    </insert>
+</mapper>

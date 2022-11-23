@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.uracle.smile.module.authentication.UserMapper">
+    <resultMap id="user" type="kr.uracle.smile.module.authentication.User" >
+        <result property="id" column="ID" />
+        <result property="loginId" column="LOGIN_ID" />
+        <result property="deviceId" column="DEVICE_ID" />
+        <result property="userAccessToken" column="USER_ACCESS_TOKEN" />
+        <result property="userAccessTokenSecret" column="USER_ACCESS_TOKEN_SECRET" />
+        <result property="userId" column="USER_ID" />
+    </resultMap>
+    <insert id="addUser" >
+        INSERT INTO USER
+            (LOGIN_ID, DEVICE_ID, GARMIN_ID, USER_ACCESS_TOKEN, USER_ACCESS_TOKEN_SECRET,
+             USER_ID, USE_YN, REG_DATE, EXPIRE_DATE, MOD_DATE)
+        VALUES
+            (#{loginId}, #{deviceId}, #{garminId}, #{userAccessToken}, #{userAccessTokenSecret},
+             #{userId}, 'Y', NOW(), DATE_ADD(NOW(), INTERVAL 2 MONTH), NOW())
+    </insert>
+    <select id="getExpireTokenUser" resultMap="user">
+        SELECT
+            ID, USER_ACCESS_TOKEN, USER_ACCESS_TOKEN_SECRET, USER_ID
+        FROM USER
+        WHERE USE_YN = 'Y'
+            AND EXPIRE_DATE &lt; NOW()
+    </select>
+    <select id="getTokenToUser" parameterType="String" resultMap="user">
+        SELECT
+            LOGIN_ID, DEVICE_ID
+        FROM USER
+        WHERE USER_ACCESS_TOKEN = #{token}
+            AND USE_YN = 'Y'
+    </select>
+    <select id="getLoginIdToUser" parameterType="String" resultMap="user">
+        SELECT
+            ID, USER_ACCESS_TOKEN, USER_ACCESS_TOKEN_SECRET
+        FROM USER
+        WHERE LOGIN_ID = #{loginId}
+          AND USE_YN = 'Y'
+    </select>
+    <update id="editExpireUser">
+        UPDATE USER
+        SET USE_YN = #{code},
+            MOD_DATE = NOW()
+        WHERE ID = #{id}
+    </update>
+</mapper>

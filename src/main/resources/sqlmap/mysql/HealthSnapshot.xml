@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.uracle.smile.module.healthsnapshot.HealthSnapshotMapper">
+    <insert id="addHealthSnapshot" parameterType="kr.uracle.smile.module.healthsnapshot.HealthSnapshots" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO HEALTH_SNAPSHOT
+            (CALENDAR_DATE, DURATION_IN_SECONDS, START_TIME_IN_SECONDS, START_TIME_OFFSET_IN_SECONDS,
+             SUMMARY_ID, USER_ACCESS_TOKEN, USER_ID)
+        VALUES
+            (#{calendarDate}, #{durationInSeconds}, #{startTimeInSeconds}, #{startTimeOffsetInSeconds},
+             #{summaryId}, #{userAccessToken}, #{userId} )
+    </insert>
+
+    <insert id="addHealthSnapshotSummary" >
+        INSERT INTO HEALTH_SNAPSHOT_SUMMARY
+            (SNAPSHOT_ID, SUMMARY_TYPE, AVG_VALUE, MIN_VALUE, MAX_VALUE)
+        VALUES
+            (#{snapshotId}, #{summaryType}, #{avgValue}, #{minValue}, #{maxValue})
+    </insert>
+
+    <insert id="addHealthSnapshotSummaryEpoch" >
+        INSERT INTO HEALTH_SNAPSHOT_SUMMARY_EPOCH
+            (ID, EPOCH_SUMMARIES_VALUE, EPOCH_SUMMARIES_KEY)
+        VALUES
+            (#{id}, #{epochSummariesValue}, #{epochSummariesKey})
+    </insert>
+</mapper>
