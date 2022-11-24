@@ -82,40 +82,11 @@
             serviceID = [NSString nilToEmpty:[jsonUserData objectForKey:@"service_id"]];
         }
     }
-    
-    NSDictionary *head = @{
-        @"appid":               [appInfo licenseIdentifier],
-        @"app_name":            [appInfo applicationName],
-        @"app_version":         [appInfo applicationVersion],
-        @"device_id":           [appInfo deviceUUID],
-        @"device_md":           [appInfo deviceModel],
-        @"phone_no":            [appInfo phoneNumber],
-        @"system_version":      [appInfo systemVersion],
-        @"system_name":         [appInfo systemTypeName], // -- Gateway Server 2.2.2 버전 이상에서 @"iOS" 값으로 fix
-        // @"system_name":         @"iPhone OS",             // -- Gateway Server 2.2.2 이전 버전에서 오류시 변경 필요
-        @"callback_function":   callbackName,
-        @"callback_request_data_flag": @"",
-        @"screen_id":           @"",
-        @"action":              action,
-        @"service_id":          serviceID,
-        // 필요시 Custom 하게 Head 값 추가 가능
-        // @"user_id":             "sample_id",
-        // @"user_name":           "sample_name",
-    };
-    
-    // Body 값 생성
-    id jsonBody = [data objectFromJsonString];
-    
-    // Request 값 설정
-    NSDictionary *jsonRequest = @{
-        @"head": head,
-        @"body": jsonBody
-    };
-    
+        
     // Debug Log
-    PPDebug( @"requestData: %@", jsonRequest );
+    PPDebug( @"requestData: %@", data );
     
-    NSData *requestData = [[jsonRequest jsonString] dataUsingEncoding:_encoding];
+    NSData *requestData = [data dataUsingEncoding:_encoding];
     
     // 암호화 설정
     if ( networkOption.encrypt ) {
@@ -135,7 +106,7 @@
     {
         NSDictionary *userData = [networkOption.jsonUserData objectFromJsonString];
         NSString *token = [userData objectForKey:@"token"];
-        if(token)
+        if(token && [token length] > 0)
         {
             [requestHeaders setObject:[NSString stringWithFormat:@"Bearer %@", token]  forKey:@"Authorization" ];
         }
@@ -221,72 +192,13 @@
     PPDebug(@"http response body : %@", [responseBody smartPrintMaxLength:3000]);
     
     // 데이타 변환
-    NSInteger resultCode = 0;
-    NSString *resultMessage = nil;
-    NSString *callbackFunction = nil;
-    id bodyObject = nil;
-    
-    @try {
-        id headObject = [responseData objectForKey:@"head"];
-        resultCode = [[headObject objectForKey:@"result_code"] integerValue];
-        resultMessage = [headObject objectForKey:@"result_msg"];
-        callbackFunction = [headObject objectForKey:@"callback_function"];
+    NSString *callbackFunction = networkOption.cbfunc;
         
-        if ([NSString isEmpty:callbackFunction]) {
-            callbackFunction = networkOption.cbfunc;
-        }
-    
-        bodyObject = [responseData objectForKey:@"body"];
-        
-    }
-    @catch (NSException *e) {
-        // 데이타 변환 오류시 익셉션 처리
-        NSString *errorMessage = @"데이터를 처리하는 중 에러가 발생하였습니다.";
-        [delegate didFailNetWorkManager:self
-                               targetserver:networkOption.targetServer
-                                     trcode:trcode 
-                                      tagId:networkOption.uitag
-                               jsonUserData:networkOption.jsonUserData
-                                  errorcode:@"-1" 
-                                   errormsg:errorMessage
-                                   userdata:userInfo];
-        
-    #if ! __has_feature(objc_arc)
-        PP_RELEASE(responseBody);
-        PP_RELEASE(viewController);
-        PP_RELEASE(delegate);
-        PP_RELEASE(provider);
-    #endif
-
-        return;
-    }
-    
-    // Result Code 값이 0 이 아니거나 200 이 아니면 오류
-    if (resultCode != 00 && resultCode != 200 ) {
-        [delegate didFailNetWorkManager:self 
-                           targetserver:networkOption.targetServer
-                                 trcode:trcode 
-                                  tagId:networkOption.uitag
-                           jsonUserData:networkOption.jsonUserData
-                              errorcode:[NSString stringWithFormat:@"%@", @(resultCode)]
-                               errormsg:resultMessage
-                               userdata:userInfo];
-        
-    #if ! __has_feature(objc_arc)
-        PP_RELEASE(responseBody);
-        PP_RELEASE(viewController);
-        PP_RELEASE(delegate);
-        PP_RELEASE(provider);
-    #endif
-    
-        return;
-    }
-    
     // 응답 완료
     [delegate didFinishNetworkManager:self
                          targetserver:networkOption.targetServer
                                trcode:trcode 
-                             response:[bodyObject jsonString]
+                             response:responseBody
                            cbfunction:callbackFunction
                                 tagId:networkOption.uitag
                          jsonUserData:networkOption.jsonUserData
