@@ -14,6 +14,7 @@
 		1439432A8688DA9F5E2B0DDD /* MDb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01104EFE8DE2FE16A30F8DF2 /* MDb.framework */; };
 		15098268292B32B2005B27D2 /* VonageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15098266292B32B2005B27D2 /* VonageViewController.xib */; };
 		15098269292B32B2005B27D2 /* VonageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15098267292B32B2005B27D2 /* VonageViewController.m */; };
+		15098280292F2E11005B27D2 /* HttpHealthNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1509827E292F2E11005B27D2 /* HttpHealthNetworkManager.m */; };
 		15354087AC92492FE4291FB0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A64EBE9271F73B81F9C3AA /* SystemConfiguration.framework */; };
 		156D48A6BFAF08C75C659CB2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06424BA7A22A9141C795D069 /* CoreGraphics.framework */; };
 		15C24B56B86A59897CE81912 /* MZip.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8A7A4C39BC9DCD663257DEC6 /* MZip.bundle */; };
@@ -111,6 +112,8 @@
 		15098265292B32B2005B27D2 /* VonageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VonageViewController.h; sourceTree = "<group>"; };
 		15098266292B32B2005B27D2 /* VonageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VonageViewController.xib; sourceTree = "<group>"; };
 		15098267292B32B2005B27D2 /* VonageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VonageViewController.m; sourceTree = "<group>"; };
+		1509827E292F2E11005B27D2 /* HttpHealthNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHealthNetworkManager.m; sourceTree = "<group>"; };
+		1509827F292F2E11005B27D2 /* HttpHealthNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHealthNetworkManager.h; sourceTree = "<group>"; };
 		155D4D0494BD111205F92117 /* MNetExt.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MNetExt.bundle; path = MLibrary/m_addon_netExt/MNetExt.bundle; sourceTree = SOURCE_ROOT; };
 		19F64210ACA5324B6DBC4051 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		25404301B1E2E96CD3EDF177 /* MLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MLocation.framework; path = MLibrary/m_plugin_location/MLocation.framework; sourceTree = SOURCE_ROOT; };
@@ -495,6 +498,8 @@
 		D5E95BB31C7C22510049FF1D /* Http */ = {
 			isa = PBXGroup;
 			children = (
+				1509827F292F2E11005B27D2 /* HttpHealthNetworkManager.h */,
+				1509827E292F2E11005B27D2 /* HttpHealthNetworkManager.m */,
 				D5E95BB41C7C22510049FF1D /* ExPPDefaultNetworkIndicator.h */,
 				D5E95BB51C7C22510049FF1D /* ExPPDefaultNetworkIndicator.m */,
 				D5E95BB61C7C22510049FF1D /* HttpDefaultNetworkManager.h */,
@@ -720,6 +725,7 @@
 				D5E95BE01C7C22510049FF1D /* main.m in Sources */,
 				D5E95BD21C7C22510049FF1D /* AppDelegate.m in Sources */,
 				D5E95BD41C7C22510049FF1D /* PPHybridViewController.m in Sources */,
+				15098280292F2E11005B27D2 /* HttpHealthNetworkManager.m in Sources */,
 				432267C32770B3F900CF5D80 /* UIView+Toast.m in Sources */,
 				430C623A2754AFB2004C6369 /* ExtendWNInterface+UTE.m in Sources */,
 				D5E95BDB1C7C22510049FF1D /* PPIndicatorUtil.m in Sources */,
