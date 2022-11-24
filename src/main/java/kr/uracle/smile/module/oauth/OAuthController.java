@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,9 +56,6 @@ public class OAuthController extends Module {
 
     @GetMapping("/login")
     public String getGarminLoginURL(@ModelAttribute @Valid OAuthLoginRequest loginRequest, HttpServletRequest request) {
-        // 유효한 loginId가 요청올 경우 기존 token 삭제
-        userService.dupLoginIdCheck(loginRequest.getLoginId());
-
         final AbstractOAuth10aRequestHeader tcHeader =
                 new OAuth10aTemporaryCredentialRequestHeader(this.temporaryCredentialsUrl, this.consumerKey, this.consumerSecret, this.callbackUrl);
 
@@ -75,11 +73,14 @@ public class OAuthController extends Module {
     }
 
     @GetMapping("/callback")
+    @Transactional
     public String oAuthCallback(HttpServletRequest request, VerifierResponse verifierResponse, Model model) {
         logger.info("OauthController requestTokenCredentials start");
 
         HttpSession session = request.getSession();
         final String requestTokenSecret = (String) session.getAttribute("RTS");
+        final String loginId = (String) session.getAttribute("loginId");
+        final String deviceId = (String) session.getAttribute("deviceId");
         final AbstractOAuth10aRequestHeader tcHeader =
                 new OAuth10aTokenCredentialsRequestHeader(
                         this.tokenCredentialsUrl,
@@ -97,7 +98,10 @@ public class OAuthController extends Module {
         String message = getLocalizedString(LocalizedString.USER_INSERT_FAIL);
 
         if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-            int result = userService.addUser((String) session.getAttribute("loginId"), (String) session.getAttribute("deviceId"),
+            // 유효한 loginId가 요청올 경우 기존 token 삭제
+            userService.dupLoginIdCheck(loginId);
+
+            int result = userService.addUser(loginId, deviceId,
                     responseEntity.getBody().getOauth_token(), responseEntity.getBody().getOauth_token_secret());
             if (0 < result) {
                 code = ResponseCode.Ok.getCode();
