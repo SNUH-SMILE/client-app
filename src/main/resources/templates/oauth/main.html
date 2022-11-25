@@ -1,2 +1,32 @@
-[[${code}]]
-[[${message}]]
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Garmin Auth Result</title>
+  </head>
+  <body>
+    <!-- 운영시에는 화면 주석처리 -->
+    <h3>Code : [[${code}]]</h3>
+    <h4>Message: [[${message}]]</h4>
+    <!------------------------------>
+  </body>
+  <script th:src="@{/js/mcore.min.js}"></script>
+  <script>
+    if (/morpheus/i.test(navigator.userAgent)) {
+      M.page.back({
+        params: {
+          params: {
+            garminAuthResult: {
+              code: "[[${code}]]",
+              message: "[[${message}]]",
+            },
+          },
+        },
+      });
+    } else {
+      console.warn("Not Morpheus App Runtiem..");
+    }
+  </script>
+</html>

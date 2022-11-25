@@ -6,6 +6,7 @@ import kr.uracle.smile.module.Module;
 import kr.uracle.smile.protocol.Response;
 import kr.uracle.smile.protocol.ResponseCode;
 import kr.uracle.smile.support.LocalizedString;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 @Api(description = "휴대폰 본인 인증", tags = "Identity Verification")
 @RequestMapping("/idverif")
 @RestController
+@Slf4j
 public class IdVerifController extends Module {
 
     @Value("${identity.verification.cpid}")
@@ -40,6 +42,7 @@ public class IdVerifController extends Module {
         Response<IdVerif> response = new Response<>(ResponseCode.Ok, getLocalizedString(LocalizedString.OK));
         response.setResult(body);
 
+        logger.info("본인인증 init : {} ", body.toString());
         return ResponseEntity.ok(response);
     }
 
@@ -55,6 +58,7 @@ public class IdVerifController extends Module {
         Response<IdVerifResult> response = new Response<>(ResponseCode.Ok, getLocalizedString(LocalizedString.OK));
         response.setResult(body);
 
+        logger.info("본인인증 decrypt : {} {}", body.getCode(), param.getPriinfo());
         return ResponseEntity.ok(response);
     }
 }

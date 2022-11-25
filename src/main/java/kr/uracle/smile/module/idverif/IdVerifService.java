@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class IdVerifService implements ServletContextAware {
 
     @Value("${identity.verification.key.password}")
@@ -32,7 +33,7 @@ public class IdVerifService implements ServletContextAware {
 
     public String getEncryptedRequestInfo() throws UnsupportedEncodingException {
         MsgCrypto mscr = new MsgCrypto();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyyMMddHHmmss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String urlCode = "01005";
         String reqNum = UUID.randomUUID().toString().replace("-", "").substring(0, 30);
         String reqDate = sdf.format(new Date());
@@ -46,10 +47,10 @@ public class IdVerifService implements ServletContextAware {
         MsgCrypto mscr = new MsgCrypto();
         String rstInfo = mscr.msgDecrypt(URLDecoder.decode(priInfo, "UTF-8"),
                 certPath + "/uraclePri.key", keyPassword, "EUC-KR");
-        String[] rstInfoArray = rstInfo.split("/");
+        String[] rstInfoArray = rstInfo.split("\\$");
 
         IdVerifResult body = new IdVerifResult();
-
+        logger.info("rstInfo : {} ", rstInfo);
         if(rstInfoArray.length > 3) {
             body.setCode(rstInfoArray[0]);
             body.setCi(rstInfoArray[1]);

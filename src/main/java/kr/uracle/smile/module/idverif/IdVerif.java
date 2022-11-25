@@ -3,9 +3,11 @@ package kr.uracle.smile.module.idverif;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
+import lombok.ToString;
 
 @ApiModel(value = "본인인증 요청 인자값")
 @Getter
+@ToString
 public class IdVerif {
     @ApiModelProperty(value = "회원사ID (cpid)", position = 0, readOnly = true)
     private String cpid;
