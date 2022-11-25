@@ -116,13 +116,13 @@ public class SleepService {
                 List<Object> sleepTimeList = new ArrayList<Object>();
                 for (SleepLevels sl : SLList) {
                     HashMap<String,Object> sleepMap = new HashMap<String,Object>();
-                    int startTimestamp = sleep.getStartTimeInSeconds() + sl.getStartTimeInSeconds();
-                    int endTimestamp = sleep.getStartTimeInSeconds() + sl.getEndTimeInSeconds();
+                    int startTimestamp = sl.getStartTimeInSeconds();
+                    int endTimestamp = sl.getEndTimeInSeconds();
 
                     sleepMap.put("resultStartDate", TimestampUtil.timestampToDate(startTimestamp, "yyyyMMdd"));
-                    sleepMap.put("resultStartTime", TimestampUtil.timestampToDate(startTimestamp, "HHmmss"));
+                    sleepMap.put("resultStartTime", TimestampUtil.timestampToDate(startTimestamp, "HHmm"));
                     sleepMap.put("resultEndDate", TimestampUtil.timestampToDate(endTimestamp, "yyyyMMdd"));
-                    sleepMap.put("resultEndTime", TimestampUtil.timestampToDate(endTimestamp, "HHmmss"));
+                    sleepMap.put("resultEndTime", TimestampUtil.timestampToDate(endTimestamp, "HHmm"));
                     sleepMap.put("sleepType", SleepType.getTypeToCode(sl.getSleepType()));
                     sleepMap.put("deviceId", deviceId);
 
