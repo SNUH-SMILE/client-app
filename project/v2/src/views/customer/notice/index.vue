@@ -3,15 +3,20 @@
     <div class="content tb-h100p">
       <!-- mobile -->
       <div class="cont-inner pt0 tb-none" v-show="isMobile">
-        <notice-list :notiList="notiList" textClass="ellipsis" />
+        <app-support-notice-list @selectedItem="openDetail" />
       </div>
       <!-- tablet -->
       <div class="half-cont-inner mb-none" v-show="!isMobile">
         <div class="left-area scroll-y">
-          <notice-list :notiList="notiList" textClass="ellipsis" />
+          <app-support-notice-list @selectedItem="onClickItem" />
         </div>
         <div class="right-area scroll-y">
-          <notice-detail />
+          <app-notice-detail
+            v-if="selectedItem"
+            :title="selectedItem.noticeTitle"
+            :content="selectedItem.noticeBody"
+            :date="selectedItem.noticeDateLabel"
+          />
         </div>
       </div>
     </div>
@@ -25,38 +30,37 @@
 }
 </route>
 <script>
+import AppSupportNoticeList from '@/modules/etc/AppSupportNoticeList.vue';
 import { mapState } from 'vuex';
-import NoticeList from '@/components/NoticeList.vue';
-import NoticeDetail from '@/components/NoticeDetail.vue';
-
-const INIT_STATE = () => ({});
+import AppNoticeDetail from '@/components/AppNoticeDetail.vue';
+// import NoticeList from '@/modules/etc/NoticeList.vue';
 
 export default {
   data() {
     return {
-      state: INIT_STATE(),
-      notiList: [
-        {
-          title: '[생활치료센터]자가 격리 물품 배부 안내',
-          date: '2022.04.25',
-          new: true,
-        },
-        {
-          title: '[건강상식]어지러움이 심해질 때 대처방법에 대해서 알려드립니다.',
-          date: '2022.04.23',
-          new: false,
-        },
-      ],
+      selectedItem: null,
     };
   },
   components: {
-    NoticeList,
-    NoticeDetail,
+    AppSupportNoticeList,
+    AppNoticeDetail,
   },
   computed: {
     ...mapState({
       isMobile: 'isMobile',
     }),
+  },
+  methods: {
+    onClickItem(item) {
+      this.selectedItem = item;
+    },
+    openDetail(item) {
+      console.log(item);
+      this.$router.push({
+        name: 'customer-notice-id',
+        params: { detail: item },
+      });
+    },
   },
 };
 </script>

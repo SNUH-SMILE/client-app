@@ -1,11 +1,11 @@
 <template>
-  <div style="display: contents">
+  <fragment style="display: contents">
     <default-header />
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive" :key="$route.fullpath"></router-view>
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive" :key="$route.fullpath"></router-view>
-  </div>
+  </fragment>
 </template>
 <script>
 import DefaultHeader from '@/components/DefaultHeader.vue';

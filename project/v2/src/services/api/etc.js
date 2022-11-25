@@ -15,21 +15,21 @@ class EtcApiService extends BaseApiService {
    * 문의 내역 조회
    */
   supportQuestionList(loginId) {
-    this.post('/support/questionList', { loginId });
+    return this.post('/support/questionList', { loginId });
   }
 
   /**
    * 문의 등록
    */
-  supportSetQuestion(loginId) {
-    this.post('/support/setQuestion', { loginId });
+  supportSetQuestion(loginId, questionTitle, questionBody) {
+    return this.post('/support/setQuestion', { loginId, questionTitle, questionBody });
   }
 
   /**
    * 알림 목록 조회
    */
   noticeNoticeList(loginId) {
-    this.post('/notice/noticeList', { loginId });
+    return this.post('/notice/noticeList', { loginId });
   }
 
   /**

@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <fragment>
     <!-- mobile -->
     <div class="content-wrap tb-none" v-show="isMobile">
       <div class="content">
         <div class="cont-inner pt0">
-          <notice-list :notiList="inquiryList" textClass="ellipsis" />
+          <app-support-question-list @selectedItem="openQuestionDetail" />
         </div>
       </div>
       <div class="btn-wrap">
@@ -19,21 +19,28 @@
       <div class="content tb-h100p">
         <div class="half-cont-inner">
           <div class="left-area">
-            <notice-list :notiList="inquiryList" class="scroll-y" textClass="ellipsis" />
+            <app-support-question-list @selectedItem="onSelectedItem" />
             <div class="gray-info-box">
               <p class="txt">격리 생활 중 어려움이 있으시다면 <br />도움말을 제공해드립니다.</p>
-              <router-link custom v-slot="{ navigate }" :to="{ name: 'customer-inquiry-write' }">
+              <router-link custom v-slot="{ navigate }" :to="{ name: 'pop-inquiry-write' }">
                 <button type="button" class="btn-txt navy" @click="navigate">문의 등록하기</button>
               </router-link>
             </div>
           </div>
           <div class="right-area scroll-y bg-lgray">
-            <inquiry-detail />
+            <app-support-question-detail
+              v-if="detail"
+              :title="detail.questionTitle"
+              :content="detail.questionBody"
+              :date="detail.questionDateLabel"
+              :answerContent="detail.anawerBody"
+              :answerDate="detail.answerDateLabel"
+            />
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </fragment>
 </template>
 <route>
 {
@@ -44,37 +51,37 @@
 </route>
 <script>
 import { mapState } from 'vuex';
-import NoticeList from '@/components/NoticeList.vue';
-import InquiryDetail from '@/components/InquiryDetail.vue';
-
-const INIT_STATE = () => ({});
+import AppSupportQuestionList from '@/modules/etc/AppSupportQuestionList.vue';
+import AppSupportQuestionDetail from '@/modules/etc/AppSupportQuestionDetail.vue';
 
 export default {
   data() {
     return {
-      state: INIT_STATE(),
-      inquiryList: [
-        {
-          title: '자가 격리 물품은 어떻게 받을 수 있나요',
-          date: '2021.11.01',
-          answer: true,
-        },
-        {
-          title: '생활 규칙 관련 문의 드립니다',
-          date: '2021.10.30',
-          answer: false,
-        },
-      ],
+      detail: null,
     };
   },
   components: {
-    NoticeList,
-    InquiryDetail,
+    AppSupportQuestionList,
+    AppSupportQuestionDetail,
   },
   computed: {
     ...mapState({
       isMobile: 'isMobile',
     }),
+  },
+  methods: {
+    onSelectedItem(item) {
+      this.detail = item;
+    },
+    openQuestionDetail(item) {
+      console.log(item);
+      this.$router.push({
+        name: 'customer-inquiry-id',
+        params: {
+          detail: item,
+        },
+      });
+    },
   },
 };
 </script>
