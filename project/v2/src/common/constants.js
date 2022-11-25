@@ -14,6 +14,30 @@ export const ENUM_MODE = {
   PROD: 'production',
   DEV: 'development',
 };
+
+export const ENUM_DATE_FORMAT = {
+  YMD: 'YYYYMMDD',
+  MD: 'MMDD',
+  Hm: 'HHmm',
+  Hms: 'HHmmss',
+  HH: 'HH',
+  mm: 'mm',
+  HyphenYmd: 'YYYY-MM-DD',
+  HyphenMd: 'MM-DD',
+  HyphenHm: 'HH-mm',
+  HyphenHms: 'HH-mm-ss',
+  PeriodYmd: 'YYYY.MM.DD',
+  PeriodMd: 'MM.DD',
+  PeriodHm: 'HH.mm',
+  PeriodHms: 'HH.mm.ss',
+  SemiHm: 'HH:mm',
+};
+
+export const ENUM_QUARANTINE = {
+  YES: '0', // 정상
+  NO: '1', // 이탈
+};
+
 export const STORAGE_KEYS = {
   TOKEN: 'jwt',
   LOGIN_ID: 'loginId',
