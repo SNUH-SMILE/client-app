@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { patientService } from '@/services/server/api';
+import { patientService } from '@/services/api';
 import { ENUM_MODE, RESPONSE_STATUS } from '@/common/constants';
 import { MODE } from '@/common/config';
 const INIT_STATE = () => ({

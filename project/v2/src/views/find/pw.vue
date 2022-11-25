@@ -34,7 +34,7 @@
 </route>
 <script>
 import Vue from 'vue';
-import { patientService } from '@/services/server/api';
+import { patientService } from '@/services/api';
 const INIT_STATE = () => ({
   pw: '',
   pw2: '',

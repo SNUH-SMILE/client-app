@@ -4,7 +4,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 import { RESPONSE_STATUS, STORAGE_KEYS } from '@/common/constants';
 import { executor } from '@/native';
 import { STORAGE_DATA } from '@/native/data';
-import { patientService } from '@/services/server/api';
+import { patientService } from '@/services/api';
 
 export const SET_AUTH = 'patient/setAuth';
 export const LOGIN = 'patient/login';

@@ -121,7 +121,7 @@
 </route>
 <script>
 import Vue from 'vue';
-import { patientService } from '@/services/server/api';
+import { patientService } from '@/services/api';
 import SearchAddress from '@/components/SearchAddress.vue';
 import { MODE } from '@/common/config';
 import { ENUM_MODE } from '@/common/constants';

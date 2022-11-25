@@ -4,7 +4,7 @@ import _merge from 'lodash/merge';
 import _maxBy from 'lodash/maxBy';
 import _sumBy from 'lodash/sumBy';
 import { ENUM_DATE_FORMAT, ENUM_QUARANTINE } from '@/common/constants';
-import { mainService } from '@/services/server/api';
+import { mainService } from '@/services/api';
 import { LOGIN_ID } from '../patient';
 const { YMD, HyphenYmd, Hm, SemiHm, HH, mm } = ENUM_DATE_FORMAT;
 const INIT_MAIN_CONTENT_DATA = () => ({

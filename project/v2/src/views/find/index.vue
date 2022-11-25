@@ -75,9 +75,8 @@
 }
 </route>
 <script>
-import patientService from '@/services/server/api/patient.js';
 import { RESPONSE_STATUS } from '@/common/constants';
-
+import { patientService } from '@/services/api';
 const INIT_FIND_ID_FORM = () => ({
   name: '',
   phone: '',
