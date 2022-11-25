@@ -16,7 +16,7 @@ public class HCHttpClient {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("loginId", loginId);
         params.put(listName, list);
-        logger.info("SendAPI params : {} ", params);
+        logger.debug("SendAPI params : {} ", params);
 
         try {
             String httpResult = HttpClient.executePost(URL, true, params);
