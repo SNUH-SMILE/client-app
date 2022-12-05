@@ -1,6 +1,6 @@
 import { ENUM_APP_ENV, ENUM_OS_ENV } from './constants';
 
-const { NODE_ENV, VUE_APP_API_URL, VUE_APP_API_SERVER_NAME } = process.env;
+const { NODE_ENV, VUE_APP_API_URL, VUE_APP_API_SERVER_NAME, VUE_APP_OAUTH_API_URL, VUE_APP_OAUTH_SERVER_NAME } = process.env;
 
 const initRunTimeEnv = () => {
   let OS;
@@ -24,3 +24,5 @@ export const MODE = NODE_ENV;
 export const API_URL = VUE_APP_API_URL;
 export const RUNTIME = initRunTimeEnv();
 export const SERVER_NAME = VUE_APP_API_SERVER_NAME;
+export const OAUTH_API_URL = VUE_APP_OAUTH_API_URL;
+export const OAUTH_SERVER_NAME = VUE_APP_OAUTH_SERVER_NAME;

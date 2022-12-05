@@ -8,13 +8,14 @@ import { RESPONSE_STATUS } from './constants';
 
 const logger = new Logger('HttpSend');
 
-const httpSend = (path, data = {}) => {
+const httpSend = (path, data = {}, server) => {
   return new Promise((resolve, reject) => {
     const loading = Vue.$loading();
     const token = store.getters[ACCESS_TOKEN];
     logger.info(`PATH :: ${path}`);
     logger.info(`BODY :: \n ${JSON.stringify(data, null, 4)}`);
     executor(HTTP_SEND, {
+      server,
       path,
       data,
       userData: {
@@ -41,6 +42,3 @@ const httpSend = (path, data = {}) => {
 };
 
 export default httpSend;
-
-// TODO : 디버깅용 데이터 확인 후 삭제 필요
-window.httpSend = httpSend;

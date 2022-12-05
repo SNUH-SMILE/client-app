@@ -2,7 +2,7 @@
  * 밴드 관련
  */
 import Vue from 'vue';
-import { RUNTIME } from '@/common/config';
+import { OAUTH_API_URL, RUNTIME } from '@/common/config';
 import { ENUM_APP_ENV } from '@/common/constants';
 import { bindGlobalCb, extend, unBindGlobalCb } from '.';
 
@@ -118,5 +118,16 @@ extend(GET_LAST_DEVICE_ID, () => {
       });
       M.execute('exLastDeviceId', CB_GET_LAST_DEVICE_ID);
     }
+  });
+});
+
+/***
+ * 가민 인증 페이지 이동
+ */
+export const OPEN_GARMIN_OAUTH = 'openGraminConnect';
+extend(OPEN_GARMIN_OAUTH, (deviceId, loginId) => {
+  M.page.html({
+    url: `${OAUTH_API_URL}/garmin/oauth/login?deviceId=${deviceId}&loginId=${loginId}`,
+    action: 'NO_HISTORY',
   });
 });
