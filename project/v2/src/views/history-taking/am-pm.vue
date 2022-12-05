@@ -12,7 +12,8 @@
                 v-for="(question, index) in amPmQuestion"
                 :key="question.order"
                 :question="question"
-                :index="index + 1"
+                :index="(state.ing - 1) * 10 + index + 1"
+                v-model="state.confirmedForm[index].value"
               ></v-history-taking-item>
             </div>
           </div>
@@ -37,7 +38,7 @@
 <script>
 import HistoryModules from '@/modules/history/components';
 import amList from '@/modules/history/json/amlist.json';
-
+import initForm from '@/modules/history';
 const INIT_STATE = () => ({
   ing: 1,
   total: parseInt(amList.length / 10) + 1,

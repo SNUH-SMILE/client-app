@@ -1,6 +1,14 @@
 <template>
   <div class="cr-list" :class="{ half: isEvenLabels }">
-    <v-radio v-for="label in question.labels" :key="label" :name="question.order" :label="label" :value="label" @input="handleInput"></v-radio>
+    <v-radio
+      v-for="label in question.labels"
+      :key="label"
+      :name="question.order"
+      :label="label"
+      :value="value"
+      :checked="value === label"
+      @input="handleInput"
+    ></v-radio>
   </div>
 </template>
 <script>

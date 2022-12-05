@@ -1,6 +1,6 @@
 <template>
   <p class="ipt-rdo">
-    <input type="radio" v-on="getListeners" v-bind="getInputProps" :value="label" @input="handleInput" ref="input" />
+    <input type="radio" v-on="getListeners" v-bind="getInputProps" :value="setValue" :checked="checked" @input="handleInput" ref="input" />
     <label :for="id">{{ label }}</label>
   </p>
 </template>
@@ -40,6 +40,13 @@ export default {
       type: String,
       default: '',
     },
+    checked: {
+      type: Boolean,
+    },
+    point: {
+      type: String,
+      default: undefined,
+    },
   },
   computed: {
     getListeners() {
@@ -50,6 +57,9 @@ export default {
     getInputProps() {
       const { value, label, inputProps, ...others } = this.$props;
       return { ...inputProps, ...others };
+    },
+    setValue() {
+      return this.point ? this.point : this.label;
     },
   },
   methods: {

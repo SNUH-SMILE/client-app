@@ -1,11 +1,13 @@
 <template>
   <div class="cr-list" :class="{ half: isEvenLabels }">
     <v-radio
-      v-for="label in question.labels"
+      v-for="(label, index) in question.labels"
       :key="question.order + label"
       :id="question.order"
+      :value="value"
       :name="question.order"
       :label="label"
+      :point="getPoints[index]"
       @input="handleInput"
     ></v-radio>
   </div>
@@ -13,9 +15,7 @@
 <script>
 import VRadio from '@/components/common/VRadio.vue';
 export default {
-  // TODO value == 포인트로 처리할 것
-  // points 가 있으면 points 로 없으면 0,1,2,3,4.. 길이 만큼.
-  name: 'radio-factory',
+  name: 'point-factory',
   components: {
     VRadio,
   },
@@ -27,10 +27,13 @@ export default {
     isEvenLabels: function () {
       return this.question.labels.length % 2 == 0;
     },
+    getPoints() {
+      return this.question.points ? this.question.points : ['0', '1', '2', '3', '4'];
+    },
   },
   methods: {
-    handleInput: function (e) {
-      this.$emit('input', e.target.value);
+    handleInput: function (value) {
+      this.$emit('input', value);
     },
   },
 };

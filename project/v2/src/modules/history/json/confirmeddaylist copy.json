@@ -25,7 +25,7 @@
     "question": "최근 2주 이내 발열이 있었다면, '마지막 발열'날짜는 언제입니까?",
     "answerType": "RadioCalendar",
     "labels": ["캘린더", "없음"],
-    "answerRequired": ""
+    "answerRequired": "required"
   },
   {
     "order": "5",
@@ -236,63 +236,63 @@
   {
     "order": "33-1",
     "question": "기분이 가라앉거나, 우울하거나, 희망이 없다고 느꼈다.",
-    "answerType": "RadioFactory",
+    "answerType": "PointFactory",
     "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
     "answerRequired": "required"
   },
   {
     "order": "33-2",
     "question": "평소 하던 일에 대한 흥미가 없어지거나 즐거움을 느끼지 못했다.",
-    "answerType": "RadioFactory",
+    "answerType": "PointFactory",
     "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
     "answerRequired": "required"
   },
   {
     "order": "33-3",
     "question": "잠들기가 어렵거나 자주 깼다 / 혹은 너무 많이 잤다.",
-    "answerType": "RadioFactory",
+    "answerType": "PointFactory",
     "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
     "answerRequired": "required"
   },
   {
     "order": "33-4",
     "question": "평소보다 식욕이 줄었다 / 혹은 평소보다 많이 먹었다.",
-    "answerType": "RadioFactory",
+    "answerType": "PointFactory",
     "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
     "answerRequired": "required"
   },
   {
     "order": "33-5",
     "question": "다른 사람들이 눈치 챌 정도로 평소보다 말과 행동이 느려졌다. 혹은 너무 안절부절 못해서 가만히 앉아있을 수 없었다.",
-    "answerType": "RadioFactory",
+    "answerType": "PointFactory",
     "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
     "answerRequired": "required"
   },
   {
     "order": "33-6",
     "question": "피곤하고 기운이 없었다.",
-    "answerType": "RadioFactory",
+    "answerType": "PointFactory",
     "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
     "answerRequired": "required"
   },
   {
     "order": "33-7",
     "question": "내가 잘못 했거나, 실패했다는 생각이 들었다. 혹은 자신과 가족을 실망시켰다고 생각했다.",
-    "answerType": "RadioFactory",
+    "answerType": "PointFactory",
     "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
     "answerRequired": "required"
   },
   {
     "order": "33-8",
     "question": "내가 잘못 했거나, 실패했다는 생각이 들었다. 혹은 자신과 가족을 실망시켰다고 생각했다.",
-    "answerType": "RadioFactory",
+    "answerType": "PointFactory",
     "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
     "answerRequired": "required"
   },
   {
     "order": "33-9",
     "question": "차라리 죽는 것이 더 낫겠다고 생각했다/ 혹은 자해할 생각을 했다.",
-    "answerType": "RadioFactory",
+    "answerType": "PointFactory",
     "labels": ["0-1일", "2-6일", "7일 이상", "거의 매일"],
     "answerRequired": "required"
   },
@@ -315,7 +315,7 @@
     "question": "기분이 가라앉거나, 우울하거나, 희망이 없다고 느꼈다.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
-    "points": [1, 2, 3, 4, 5],
+    "points": ["1", "2", "3", "4", "5"],
     "answerRequired": "required"
   },
   {
@@ -323,7 +323,7 @@
     "question": "다른 사람으로부터 비난받거나 심판받는다고 느껴진다.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
-    "points": [1, 2, 3, 4, 5],
+    "points": ["1", "2", "3", "4", "5"],
     "answerRequired": "required"
   },
   {
@@ -331,7 +331,7 @@
     "question": "정신적으로 지친다.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
-    "points": [1, 2, 3, 4, 5],
+    "points": ["1", "2", "3", "4", "5"],
     "answerRequired": "required"
   },
   {
@@ -339,7 +339,7 @@
     "question": "긴장을 풀기 어렵다.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
-    "points": [1, 2, 3, 4, 5],
+    "points": ["1", "2", "3", "4", "5"],
     "answerRequired": "required"
   },
   {
@@ -347,7 +347,7 @@
     "question": "화가 난다",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
-    "points": [1, 2, 3, 4, 5],
+    "points": ["1", "2", "3", "4", "5"],
     "answerRequired": "required"
   },
   {
@@ -355,7 +355,7 @@
     "question": "의욕이 떨어진다.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
-    "points": [1, 2, 3, 4, 5],
+    "points": ["1", "2", "3", "4", "5"],
     "answerRequired": "required"
   },
   {
@@ -363,7 +363,7 @@
     "question": "신경이 날카로워졌다",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
-    "points": [1, 2, 3, 4, 5],
+    "points": ["1", "2", "3", "4", "5"],
     "answerRequired": "required"
   },
   {
@@ -371,7 +371,7 @@
     "question": "무언가를 부수고 싶다.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
-    "points": [1, 2, 3, 4, 5],
+    "points": ["1", "2", "3", "4", "5"],
     "answerRequired": "required"
   },
   {
@@ -379,7 +379,7 @@
     "question": "아무런 생각을 하고 싶지 않다.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "약간 그렇다", "웬만큼 그렇다", "상당히 그렇다", "아주 그렇다"],
-    "points": [1, 2, 3, 4, 5],
+    "points": ["1", "2", "3", "4", "5"],
     "answerRequired": "required"
   },
   {

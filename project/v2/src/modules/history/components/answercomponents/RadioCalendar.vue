@@ -2,26 +2,25 @@
   <div>
     <div class="hbox sc">
       <p class="ipt-rdo">
-        <input type="radio" title="날짜 직접입력" :name="question.order" value="" />
+        <!-- TODO : checked 조건 수정하기 -->
+        <input type="radio" :checked="value !== '없음'" title="날짜 직접입력" :name="question.order" value="" />
       </p>
-      <div class="ipt-wrap">
-        <input type="text" title="날짜입력" value="" @input="handleValue" />
-        <button type="button" class="btn-calendar">
-          <span class="txt-blind">날짜선택</span>
-        </button>
-      </div>
+      <DatePicker :onlyCalendar="false" :value="value" @input="handleData" />
     </div>
     <p class="ipt-rdo mt20">
-      <input type="radio" :name="question.order" value="없음" @change="handleValue" />
+      <input type="radio" :checked="value === '없음'" :name="question.order" value="없음" @change="handleValue" />
       <label :for="question.order">없음</label>
     </p>
   </div>
 </template>
 
 <script>
+import DatePicker from '@/common/components/DatePicker.vue';
 export default {
   name: 'radio-calendar',
-  components: {},
+  components: {
+    DatePicker,
+  },
   props: {
     value: String,
     question: Object,
@@ -46,6 +45,9 @@ export default {
   methods: {
     handleValue(e) {
       this.$emit('input', e.target.value);
+    },
+    handleData(data) {
+      this.$emit('input', data);
     },
   },
 };

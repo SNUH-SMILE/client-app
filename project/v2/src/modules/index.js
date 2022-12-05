@@ -2,3 +2,4 @@
 export { default as patient } from './patient';
 export { default as etc } from './etc';
 export { default as main } from './main';
+export { default as interview } from './history';

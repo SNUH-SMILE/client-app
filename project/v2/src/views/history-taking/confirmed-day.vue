@@ -13,13 +13,13 @@
                 :key="question.order"
                 :question="question"
                 :index="(state.ing - 1) * 10 + index + 1"
-                v-model="state.confirmedForm[index].value"
+                v-model="state.confirmedForm[(state.ing - 1) * 10 + index].value"
               />
             </div>
           </div>
         </div>
         <div class="btn-wrap">
-          <button type="button" class="btn-line navy" v-show="showBeforeButton" @click="bofore">이전</button>
+          <button type="button" class="btn-line navy" v-show="showBeforeButton" @click="before">이전</button>
           <button type="button" class="btn-txt navy" v-show="showNextButton" :disabled="invalid" @click="next">다음</button>
           <button type="button" :disabled="invalid" v-show="showSubmitButton" class="btn-txt navy" @click="submit">제출</button>
         </div>
@@ -35,32 +35,22 @@
 }
 </route>
 <script>
-import _merge from 'lodash/merge';
+import { mapActions } from 'vuex';
 import HistoryModules from '@/modules/history/components';
 import Confirmeddaylist from '@/modules/history/json/confirmeddaylist.json';
-
-const INIT_FORM = () => {
-  const list = [];
-  Confirmeddaylist.forEach((element) => {
-    if (element.answerType === 'CheckboxFactory') {
-      list.push(_merge(element, { value: [] }));
-    } else list.push(_merge(element, { value: '' }));
-  });
-  return list;
-};
+import { initForm, submitForm, INTERVIEW, TYPE_CONFIRMED_DAY, GET_INTERVIEW_LIST } from '@/modules/history';
 
 const INIT_STATE = () => ({
   ing: 1,
   total: parseInt(Confirmeddaylist.length / 10) + 1,
   percent: 0,
-  confirmedForm: INIT_FORM(),
+  confirmedForm: initForm(Confirmeddaylist),
 });
 
 export default {
   data() {
     return {
       state: INIT_STATE(),
-      test22: '',
     };
   },
   components: { ...HistoryModules },
@@ -85,22 +75,35 @@ export default {
   },
   methods: {
     // 메서드 구현
+    ...mapActions({ interviewList: GET_INTERVIEW_LIST }),
     onSubmit: function () {
-      console.log('submitted!');
+      const result = submitForm(this.state.confirmedForm);
     },
     //
     next() {
       this.state.ing++;
     },
-    bofore() {
+    before() {
       this.state.ing--;
     },
     submit: function () {
-      console.log('submit form');
+      const result = submitForm(this.state.confirmedForm);
+      console.log(result);
+      // TODO : result submit 및 page 이동
     },
+    async getList() {
+      const result = await this.interviewList('20221125');
+      return result;
+    },
+    // async submitForm(){
+    //   const result = await this.
+    // }
   },
   created() {
-    console.log(this.state);
+    window.vm = this;
+    this.getList().then((args) => {
+      console.log(args);
+    });
   },
 };
 </script>

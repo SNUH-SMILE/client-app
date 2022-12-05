@@ -7,7 +7,7 @@
       :unit="answer.unit ? answer.unit : ''"
       :name="question.order"
       :onlyInput="classSelector === 'ipt-wrap'"
-      :value="value"
+      :value="value[index]"
       @input="handleInput"
     ></v-text-field>
     <span v-if="classSelector === 'ipt-wrap' && question.answers[0].unit ? true : false" class="unit">{{ question.answers[0].unit }}</span>

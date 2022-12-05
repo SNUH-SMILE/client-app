@@ -1,15 +1,19 @@
 <template>
-  <div class="ipt-wrap">
-    <input type="text" title="날짜입력" :value="value" @input="handleInput" />
-    <date-picker type="date"></date-picker>
-    <button type="button" class="btn-calendar">
-      <span class="txt-blind">날짜선택</span>
-    </button>
+  <div :class="onlyCalendar ? 'cr-list' : ''">
+    <date-picker :value="getValue" @input="handleDataPicker" format="YYYY-MM-DD" :type="type" :range="range">
+      <!-- -->
+      <i slot="icon-calendar">
+        <button type="button" class="btn-calendar">
+          <span class="txt-blind">날짜선택</span>
+        </button>
+      </i>
+    </date-picker>
   </div>
 </template>
 <script>
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
+
 const INIT_STATE = () => ({
   date: '',
 });
@@ -26,16 +30,36 @@ export default {
       type: String,
       default: '날짜입력',
     },
+    onlyCalendar: {
+      type: Boolean,
+      default: true,
+    },
+    type: {
+      type: String,
+      default: 'date',
+    },
+    range: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       state: INIT_STATE(),
     };
   },
-  computed: {},
+  computed: {
+    getValue() {
+      return new Date(this.value);
+    },
+  },
   methods: {
     handleInput: function (e) {
       this.$emit('input', e.target.value);
+    },
+    handleDataPicker: function (value) {
+      const stringValue = this.$dayjs(value).format('YYYY-MM-DD');
+      this.$emit('input', stringValue);
     },
   },
 };

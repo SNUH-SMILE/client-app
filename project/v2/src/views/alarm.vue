@@ -15,7 +15,7 @@
 }
 </route>
 <script>
-import NoticeList from '@/components/NoticeList.vue';
+import NoticeList from '@/components/AppNoticeList.vue';
 
 const INIT_STATE = () => ({});
 
