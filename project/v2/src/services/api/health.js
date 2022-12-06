@@ -6,7 +6,7 @@ import BaseApiService from './core';
 
 class HealthApiService extends BaseApiService {
   constructor() {
-    super('/api/result');
+    super('/api/results');
   }
 
   /**

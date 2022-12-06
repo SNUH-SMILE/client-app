@@ -1,15 +1,15 @@
 <template>
   <div class="content-wrap">
     <div class="content">
-      <date-box :value="date" @change="handleValue" />
+      <date-box :value="date" @change="onChangeDate" />
       <div class="cont-inner mb-space20 tb-space20">
-        <div class="chart-data-wrap" v-if="chartShow">
+        <div class="chart-data-wrap" v-if="detail.length > 0">
           <div class="chart-box">
             <div class="chart-mark">
               <span class="chart-mark-circle">산소포화도</span>
             </div>
             <div class="chart-inner">
-              <line-chart :originData="tableData" :options="options" />
+              <app-line-chart :labels="labels" :datas="datas" />
               <!-- <span class="unit ml10">%</span> -->
             </div>
           </div>
@@ -30,9 +30,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in tableData" :key="item.index">
-                  <td>{{ item.time.substring(0, 2) }}:{{ item.time.substring(2, 4) }}</td>
-                  <td>{{ item.value }}</td>
+                <tr v-for="item in detail" :key="item.index">
+                  <td>{{ item.timeLabel }}</td>
+                  <td>{{ item.spO2 }}</td>
                 </tr>
               </tbody>
             </table>
@@ -40,7 +40,7 @@
         </div>
 
         <!-- nodata -->
-        <div class="nochart-box" v-if="!chartShow">
+        <div class="nochart-box" v-else>
           <p>측정된 정보가 없습니다.</p>
         </div>
       </div>
@@ -56,53 +56,41 @@
 </route>
 
 <script>
-import { detailBodyData } from '@/services/native/health.js';
+import { mapActions, mapGetters } from 'vuex';
 import DateBox from '@/common/components/DateBox.vue';
-import LineChart from '@/components/LineChart.vue';
+import AppLineChart from '@/modules/chart/AppLineChart.vue';
+import { OXYGEN_DETAIL } from '@/modules/health';
 
-const DETIAL_OXYGEN_CB_NM = '__detailOxygen';
-const getTableData = (item) => {
-  return {
-    time: item.resultTime,
-    value: item.bt,
-  };
-};
 export default {
+  components: {
+    DateBox,
+    AppLineChart,
+  },
   data() {
     return {
-      tableData: [],
       date: this.$dayjs().format('YYYYMMDD'),
     };
   },
-  components: {
-    DateBox,
-    LineChart,
+  created() {
+    this.fetchDetail({ date: this.date });
   },
   computed: {
-    chartShow() {
-      if (this.tableData.length > 0) {
-        return true;
-      } else return false;
+    ...mapGetters({ detail: OXYGEN_DETAIL }),
+    labels() {
+      return this.detail.map(({ timeLabel }) => timeLabel);
+    },
+    datas() {
+      return this.detail.map(({ spO2 }) => {
+        return Number(spO2);
+      });
     },
   },
   methods: {
-    getOxygenValue() {
-      detailBodyData(this.date, 'OXYGEN', DETIAL_OXYGEN_CB_NM);
+    ...mapActions({ fetchDetail: OXYGEN_DETAIL }),
+    onChangeDate(newDate) {
+      this.date = newDate;
+      this.fetchDetail({ date: this.date });
     },
-    handleValue(value) {
-      this.date = value;
-      this.getOxygenValue();
-    },
-  },
-  created() {
-    window[DETIAL_OXYGEN_CB_NM] = (args) => {
-      this.tableData.splice(0);
-      args.spO2List.forEach((item) => {
-        this.tableData.push(getTableData(item));
-      });
-      console.log(args);
-    };
-    this.getOxygenValue();
   },
 };
 </script>

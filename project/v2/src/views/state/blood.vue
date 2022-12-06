@@ -1,19 +1,17 @@
 <template>
   <div class="content-wrap">
     <div class="content">
-      <date-box :value="date" @change="handleValue" />
+      <date-box :value="date" @change="onChangeDate" />
       <div class="cont-inner mb-space20 tb-space20">
-        <div class="chart-data-wrap" v-if="chartShow">
+        <div class="chart-data-wrap" v-if="detail.length > 0">
           <div class="chart-box">
             <div class="chart-mark">
               <span class="chart-mark-dcircle">수축기 혈압</span>
               <span class="chart-mark-circle">이완기 혈압</span>
             </div>
             <div class="chart-inner">
-              <!-- <BarChart /> -->
-              <blood-chart :originData="tableData" />
-              <!-- <canvas id="bloodChart"></canvas>
-              <span class="unit">mmHg</span> -->
+              <app-blood-chart :labels="labels" :datas="datas" />
+              <span class="unit">mmHg</span>
             </div>
           </div>
 
@@ -35,8 +33,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in tableData" :key="item.index">
-                  <td>{{ item.time.substring(0, 2) }}:{{ item.time.substring(2, 4) }}</td>
+                <tr v-for="item in detail" :key="item.index">
+                  <td>{{ item.timeLabel }}</td>
                   <td>{{ item.sbp }}</td>
                   <td>{{ item.dbp }}</td>
                 </tr>
@@ -44,9 +42,8 @@
             </table>
           </div>
         </div>
-
         <!-- nodata -->
-        <div class="nochart-box" v-if="!chartShow">
+        <div class="nochart-box" v-else>
           <p>측정된 정보가 없습니다.</p>
         </div>
       </div>
@@ -61,54 +58,41 @@
 }
 </route>
 <script>
-import { detailBodyData } from '@/services/native/health.js';
+import { mapActions, mapGetters } from 'vuex';
 import DateBox from '@/common/components/DateBox.vue';
-import BloodChart from '@/components/BloodChart.vue';
-const DETAIL_BLOOD_PRESSURE_CB_NM = '__detailBloodPresure';
-const getTableData = (item) => {
-  return {
-    time: item.resultTime,
-    sbp: item.sbp,
-    dbp: item.dbp,
-  };
-};
+import AppBloodChart from '@/modules/chart/AppBloodChart.vue';
+import { BLOOD_DETAIL } from '@/modules/health';
 
 export default {
+  components: {
+    DateBox,
+    AppBloodChart,
+  },
   data() {
     return {
-      tableData: [],
       date: this.$dayjs().format('YYYYMMDD'),
     };
   },
-  components: {
-    DateBox,
-    BloodChart,
+  created() {
+    this.fetchDetail({ date: this.date });
   },
   computed: {
-    chartShow() {
-      if (this.tableData.length > 0) {
-        return true;
-      } else return false;
+    ...mapGetters({ detail: BLOOD_DETAIL }),
+    labels() {
+      return this.detail.map(({ timeLabel }) => timeLabel);
+    },
+    datas() {
+      return this.detail.map(({ dbp, sbp }) => {
+        return [Number(dbp), Number(sbp)];
+      });
     },
   },
   methods: {
-    getBloodData() {
-      detailBodyData(this.date, 'BLOOD', DETAIL_BLOOD_PRESSURE_CB_NM);
+    ...mapActions({ fetchDetail: BLOOD_DETAIL }),
+    onChangeDate(newDate) {
+      this.date = newDate;
+      this.fetchDetail({ date: this.date });
     },
-    handleValue(value) {
-      this.date = value;
-      this.getBloodData();
-    },
-  },
-  created() {
-    window[DETAIL_BLOOD_PRESSURE_CB_NM] = (args) => {
-      this.tableData.splice(0);
-      args.bpList.forEach((item) => {
-        this.tableData.push(getTableData(item));
-      });
-      console.log(args);
-    };
-    this.getBloodData();
   },
 };
 </script>
