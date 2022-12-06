@@ -18,8 +18,11 @@ export default {
     symptomLists: [],
   },
   mutations: {
-    [GET_INTERVIEW_LIST](state, interviewList, symptomLists) {
+    [GET_INTERVIEW_LIST](state, interviewList = []) {
       state.interviewList = interviewList;
+      // state.symptomLists = symptomLists;
+    },
+    [GET_SYMPTOMLIST](state, symptomLists = []) {
       state.symptomLists = symptomLists;
     },
   },
@@ -27,13 +30,16 @@ export default {
     async [GET_INTERVIEW_LIST]({ commit, getters }, requestDate) {
       const loginId = getters[LOGIN_ID];
       const { code, message, data } = await interviewService.interviewList(loginId, requestDate);
-      if (code === RESPONSE_STATUS.SUCCESS) commit([GET_INTERVIEW_LIST], data.result.interviewList, data.result.symptomLists);
+      if (code === RESPONSE_STATUS.SUCCESS) {
+        commit(GET_INTERVIEW_LIST, data.result.interviewList);
+        commit(GET_SYMPTOMLIST, data.result.symptomLists);
+      }
       return data;
     },
-    async [SET_INTERVIEW_LIST]({ commit, getters }, interviewType, interviewDate, answerList) {
+    async [SET_INTERVIEW_LIST]({ commit, getters }, { interviewType, interviewDate, answerList }) {
       const loginId = getters[LOGIN_ID];
-      const { code, message, data } = await interviewService.setInterview(loginId, interviewType, interviewDate, answerList);
-      return data;
+      const result = await interviewService.setInterview(loginId, interviewType, interviewDate, answerList);
+      return result;
     },
   },
   getters: {
@@ -66,10 +72,17 @@ export function initForm(historyTakingList) {
 }
 
 export function submitForm(form) {
-  const getSubmitForm = (cur) => ({
-    answerNumber: cur.order,
-    answerValue: cur.value,
-  });
+  const getSubmitForm = (cur) => {
+    let value = cur.value;
+    // TODO : list > string 으로 바꿈 api 수정 요청 후 다시 바꾸기
+    if (typeof cur.value === 'object') {
+      value = cur.value.toString();
+    }
+    return {
+      answerNumber: cur.order,
+      answerValue: value,
+    };
+  };
   const result = [];
   form.forEach((formItem) => {
     result.push(getSubmitForm(formItem));

@@ -4,7 +4,8 @@
       <form @submit.prevent="submit">
         <div class="content">
           <div class="blue-top-box">
-            <v-step-progress :percent="state.percent" :ing="state.ing" :total="state.total" />
+            <v-step-progress :percent="percent" :ing="state.ing" :total="state.total" />
+            <!-- TODO : 변화 적용 안됨 -->
           </div>
           <div class="cont-inner mb-space30">
             <div class="form-box">
@@ -19,9 +20,9 @@
           </div>
         </div>
         <div class="btn-wrap">
-          <button type="button" class="btn-line navy" v-show="showBeforeButton" @click="before">이전</button>
-          <button type="button" class="btn-txt navy" v-show="showNextButton" :disabled="invalid" @click="next">다음</button>
-          <button type="button" :disabled="invalid" v-show="showSubmitButton" class="btn-txt navy" @click="submit">제출</button>
+          <button type="button" class="btn-line navy" v-show="state.ing !== 1" @click="state.ing--">이전</button>
+          <button type="button" class="btn-txt navy" v-show="state.ing !== state.total" :disabled="invalid" @click="state.ing++">다음</button>
+          <button type="button" :disabled="invalid" v-show="state.total === state.ing" class="btn-txt navy" @click="submit">제출</button>
         </div>
       </form>
     </validation-observer>
@@ -38,7 +39,8 @@
 import { mapActions } from 'vuex';
 import HistoryModules from '@/modules/history/components';
 import Confirmeddaylist from '@/modules/history/json/confirmeddaylist.json';
-import { initForm, submitForm, INTERVIEW, TYPE_CONFIRMED_DAY, GET_INTERVIEW_LIST } from '@/modules/history';
+import { initForm, submitForm, TYPE_CONFIRMED_DAY, SET_INTERVIEW_LIST } from '@/modules/history';
+import { RESPONSE_STATUS } from '@/common/constants';
 
 const INIT_STATE = () => ({
   ing: 1,
@@ -55,6 +57,10 @@ export default {
   },
   components: { ...HistoryModules },
   computed: {
+    percent() {
+      console.log(parseInt((this.state.ing / this.state.total) * 100));
+      return parseInt((this.state.ing / this.state.total) * 100);
+    },
     ConfirmedQuestion() {
       const start = (this.state.ing - 1) * 10;
       let end = this.state.ing * 10;
@@ -63,47 +69,27 @@ export default {
       }
       return Confirmeddaylist.slice(start, end);
     },
-    showBeforeButton() {
-      return this.state.ing !== 1;
-    },
-    showNextButton() {
-      return this.state.ing !== this.state.total;
-    },
-    showSubmitButton() {
-      return this.state.total === this.state.ing;
-    },
   },
   methods: {
     // 메서드 구현
-    ...mapActions({ interviewList: GET_INTERVIEW_LIST }),
-    onSubmit: function () {
-      const result = submitForm(this.state.confirmedForm);
+    ...mapActions({ setInterview: SET_INTERVIEW_LIST }),
+    async submit() {
+      const formData = submitForm(this.state.confirmedForm);
+      const submitData = {
+        interviewType: TYPE_CONFIRMED_DAY,
+        interviewDate: this.getInterviewDate(),
+        answerList: formData,
+      };
+      const { code, message, data } = await this.setInterview(submitData);
+      if (code === RESPONSE_STATUS.SUCCESS) {
+        this.$toast('제출되었습니다.');
+        this.$router.replace({ name: 'history-taking' });
+      }
     },
-    //
-    next() {
-      this.state.ing++;
+    getInterviewDate() {
+      const date = this.$dayjs().format('YYYYMMDDhhmm');
+      return date;
     },
-    before() {
-      this.state.ing--;
-    },
-    submit: function () {
-      const result = submitForm(this.state.confirmedForm);
-      console.log(result);
-      // TODO : result submit 및 page 이동
-    },
-    async getList() {
-      const result = await this.interviewList('20221125');
-      return result;
-    },
-    // async submitForm(){
-    //   const result = await this.
-    // }
-  },
-  created() {
-    window.vm = this;
-    this.getList().then((args) => {
-      console.log(args);
-    });
   },
 };
 </script>

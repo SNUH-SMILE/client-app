@@ -1,6 +1,6 @@
 <template>
   <div class="content-wrap">
-    <validation-observer tag="form" v-slot="{ handleSubmit }">
+    <validation-observer tag="form" v-slot="{ invalid }">
       <form @submit.prevent="handleSubmit(onSubmit)">
         <div class="content">
           <div class="blue-top-box">
@@ -13,16 +13,15 @@
                 :key="question.order"
                 :question="question"
                 :index="(state.ing - 1) * 10 + index + 1"
-                v-model="state.confirmedForm[index].value"
+                v-model="state.amForm[(state.ing - 1) * 10 + index].value"
               ></v-history-taking-item>
             </div>
           </div>
         </div>
         <div class="btn-wrap">
-          <button type="button" class="btn-line navy" @click="$router.go(-1)">이전</button>
-          <!-- TODO : user-check 어디로 갈 지 수정해야함. -->
-
-          <button type="submit" class="btn-txt navy">제출</button>
+          <button type="button" class="btn-line navy" v-show="state.ing !== 1" @click="state.ing--">이전</button>
+          <button type="button" class="btn-txt navy" v-show="state.ing !== state.total" :disabled="invalid" @click="state.ing++">다음</button>
+          <button type="button" :disabled="invalid" v-show="state.total === state.ing" class="btn-txt navy" @click="submit">제출</button>
         </div>
       </form>
     </validation-observer>
@@ -36,13 +35,17 @@
 }
 </route>
 <script>
+import { mapActions } from 'vuex';
 import HistoryModules from '@/modules/history/components';
 import amList from '@/modules/history/json/amlist.json';
-import initForm from '@/modules/history';
+import { initForm, submitForm, TYPE_AM, TYPE_PM, SET_INTERVIEW_LIST } from '@/modules/history';
+import { RESPONSE_STATUS } from '@/common/constants';
+
 const INIT_STATE = () => ({
   ing: 1,
   total: parseInt(amList.length / 10) + 1,
   percent: 0,
+  amForm: initForm(amList),
 });
 
 export default {
@@ -53,14 +56,42 @@ export default {
   },
   components: { ...HistoryModules },
   computed: {
+    percent() {
+      console.log(parseInt((this.state.ing / this.state.total) * 100));
+      return parseInt((this.state.ing / this.state.total) * 100);
+    },
     amPmQuestion() {
-      return amList;
+      const start = (this.state.ing - 1) * 10;
+      let end = this.state.ing * 10;
+      if (end > amList.length) {
+        end = amList.length;
+      }
+      return amList.slice(start, end);
     },
   },
   methods: {
     // 메서드 구현
-    onSubmit: function () {
-      console.log('submitted!');
+    ...mapActions({ setInterview: SET_INTERVIEW_LIST }),
+    async submit() {
+      const formData = submitForm(this.state.amForm);
+      const submitData = {
+        interviewType: this.getInterviewType(),
+        interviewDate: this.getInterviewDate(),
+        answerList: formData,
+      };
+      const { code, message, data } = await this.setInterview(submitData);
+      if (code === RESPONSE_STATUS.SUCCESS) {
+        this.$toast('제출되었습니다.');
+        this.$router.replace({ name: 'history-taking' });
+      }
+    },
+    getInterviewType() {
+      const hour = this.$dayjs().get('h');
+      return hour < 12 ? TYPE_AM : TYPE_PM;
+    },
+    getInterviewDate() {
+      const date = this.$dayjs().format('YYYYMMDDhhmm');
+      return date;
     },
   },
 };
