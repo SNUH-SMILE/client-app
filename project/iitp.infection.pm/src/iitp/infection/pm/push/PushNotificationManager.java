@@ -148,11 +148,6 @@ public class PushNotificationManager {
 	public static void createGcmNotification(final Context context, final Intent intent) throws Exception {
 		String jsonData = intent.getExtras().getString("JSON");
         String encryptData = intent.getExtras().getString(PushConstants.KEY_ORIGINAL_PAYLOAD_STRING);//intent.getExtras().getString("message_encrypt");
-        if (jsonData != null) {
-        	jsonData = jsonData.replaceAll("https", "http");
-        	jsonData = jsonData.replaceAll("\\\\", "/");
-        	jsonData = jsonData.replaceAll("//", "/");
-        }
 
         try {
         	Log.d("PushNotificationManager", "[PushNotificationManager] createGcmNotification: " + jsonData);
