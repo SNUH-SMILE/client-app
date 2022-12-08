@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import iitp.infection.pm.PushMessageManager;
 import iitp.infection.pm.R;
 
 import android.app.Notification;
@@ -213,7 +215,7 @@ public class UpnsNotifyHelper {
     	//intent.putExtra("PUSH_STATUS", (isRunningApp)? PushConstants.APP_STATUS_ACTIVE : PushConstants.APP_STATUS_BACKGROUND);
     	//intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 	    
-		PendingIntent pIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT|PendingIntent.FLAG_MUTABLE);
 		NotificationManager mManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 		Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context.getApplicationContext())
@@ -302,7 +304,7 @@ public class UpnsNotifyHelper {
 
 		alertMessage = (TextUtils.isEmpty(alertMessage))? "" : alertMessage;
 		//boolean isRunningApp = PushUtils.isRunningPushApps(context);
-		Intent intent = new Intent(context, PushStatusCheckReceiver.class);
+		Intent intent = new Intent(context, PushMessageManager.class);
 		intent.setAction(context.getPackageName() + ".ACTION_NOTIFICATION_HANDLE");
 		intent.putExtra("JSON", jsonMsg.toString());
 		intent.putExtra("PS_ID", psid);
@@ -325,7 +327,7 @@ public class UpnsNotifyHelper {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT|PendingIntent.FLAG_MUTABLE);
 
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
 				.setSmallIcon(icon)

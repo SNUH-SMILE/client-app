@@ -136,12 +136,12 @@ public class PushMessageManager extends Activity {
 //	    												"MODAL_UP",
 //	    												pubParams);
 //	    	finish();
-			
+			CommonLibUtil.setVariable("_PUSHDATA", notification);
+			Logger.e(CommonLibUtil.getVariable("_PUSHDATA"));
 		}
 		else { // 푸시 웹 화면을 호출한다.
 			Log.d("PushMessageManager", "PushMessageManager Action Move Push Activity!!" + notification);
-			boolean isRunningApp = PushUtils.isRunningPushApps(this);
-			//boolean isRunningApp = ("Y".equals(CommonLibUtil.getVariable("NEEDLOCKSCREEN")))? false : true;
+
 			final MainActivity activity = (MainActivity) ActivityHistoryManager.getInstance().getTopActivity();
 			final String status = (pushStatus == null)? PushConstants.APP_STATUS_START  : pushStatus;    
 			final String payloadVal = notification;
@@ -158,6 +158,8 @@ public class PushMessageManager extends Activity {
 						
 						Log.e("PushMessageManager", "Push message!!" + tempJSON.toString());
 						activity.getWebView().loadUrl("javascript:onReceiveNotification("+tempJSON.toString()+")");
+
+					//	CommonLibUtil.setVariable("_PUSHDATA", payloadVal);
 					} 
 					catch (Exception e) {
 						e.printStackTrace();

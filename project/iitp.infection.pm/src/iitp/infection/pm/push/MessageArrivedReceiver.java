@@ -65,12 +65,7 @@ public class MessageArrivedReceiver extends BroadcastReceiver {
 						}
 					});
 				}
-				if (PushNotificationManager.isRestrictedScreen(context)) {
-					PushNotificationManager.showNotificationPopupDialog(context, intent, PushConstants.STR_UPNS_PUSH_TYPE);
-				}
-				else {
-					PushNotificationManager.createNotification(context, intent, PushConstants.STR_UPNS_PUSH_TYPE);
-				}
+				PushNotificationManager.createNotification(context, intent, PushConstants.STR_UPNS_PUSH_TYPE);
 			}
 			else if (intent.getAction().equals(context.getPackageName() + PushConstants.ACTION_GCM_MESSAGE_ARRIVED)) { 
 				// 디바이스 Badge 값 변경 
@@ -89,7 +84,7 @@ public class MessageArrivedReceiver extends BroadcastReceiver {
 					// 존재하지 않거나 0보다 작다면 무시..
 				}
 				final Activity activity = ActivityHistoryManager.getInstance().getTopActivity();
-				if(activity != null && activity instanceof MainActivity){
+			/*	if(activity != null && activity instanceof MainActivity){
 					activity.runOnUiThread(new Runnable() {
 						
 						@Override
@@ -108,13 +103,8 @@ public class MessageArrivedReceiver extends BroadcastReceiver {
 						}
 						}
 					});
-				}
-				if (PushNotificationManager.isRestrictedScreen(context)) {
-					PushNotificationManager.showNotificationPopupDialog(context, intent, PushConstants.STR_GCM_PUSH_TYPE);
-				}
-				else {
-					PushNotificationManager.createNotification(context, intent, PushConstants.STR_GCM_PUSH_TYPE);
-				}
+				}*/
+				PushNotificationManager.createNotification(context, intent, PushConstants.STR_GCM_PUSH_TYPE);
 				
 			}
 			//}
