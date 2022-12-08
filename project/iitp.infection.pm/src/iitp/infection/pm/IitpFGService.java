@@ -9,14 +9,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 
 
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
 import com.yc.pedometer.utils.GlobalVariable;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import iitp.infection.pm.band.BandCont;
 import m.client.android.library.core.managers.ActivityHistoryManager;
@@ -36,8 +44,10 @@ public class IitpFGService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+
         FGServiceNotiInit();
         bandConnectInit();
+        alarmCheck();
         return START_STICKY;//super.onStartCommand(intent, flags, startId);
     }
     private void FGServiceNotiInit(){
@@ -83,6 +93,47 @@ public class IitpFGService extends Service {
         Log.d(CLASS_TAG,"bandConnectInit() lastConnectAddr0 :"+lastConnectAddr0);
         if(!mBandCont.isBandConnected() && lastConnectAddr0 != "00:00:00:00:00:00"){
             mBandCont.BandConnect(lastConnectAddr0);
+        }
+    }
+
+
+    private void alarmCheck(){
+        new Timer().start();
+    }
+
+    public class Timer extends Thread{
+        long oldMin = 0;
+        @Override
+        public void run() {
+            super.run();
+            while(true){
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+                //Date inputDate = simpleDateFormat..parse(System.currentTimeMillis());
+
+                Date date = new Date(System.currentTimeMillis());
+                String currDateStr = simpleDateFormat.format(date);
+                Date currDate = null;
+                try {
+                    currDate = simpleDateFormat.parse(currDateStr);
+                    long min = currDate.getTime() / (60 * 1000);
+                    Thread.sleep(4000);
+                    if(min != oldMin) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(IitpFGService.this, "current time : " + min, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    oldMin = min;
+
+                } catch (ParseException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
         }
     }
 }

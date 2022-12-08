@@ -9,5 +9,9 @@
 		<domain includeSubdomains="true">receiver.morpheus.kr</domain>
 		<domain includeSubdomains="true">210.116.119.130</domain>
 		<domain includeSubdomains="true">192.168.10.113</domain>
+		<domain includeSubdomains="true">192.168.10.10</domain>
+		<domain includeSubdomains="true">211.117.91.158</domain>
+
+
 	</domain-config>
 </network-security-config>

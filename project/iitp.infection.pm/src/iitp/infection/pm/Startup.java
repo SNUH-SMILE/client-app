@@ -1,18 +1,20 @@
 package iitp.infection.pm;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import android.Manifest;
+import android.app.Activity;
+import android.os.Build;
+import android.os.Bundle;
+import android.webkit.WebView;
+import android.widget.Toast;
+
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.normal.TedPermission;
+
+import java.util.List;
 
 import iitp.infection.pm.database.DBConfig;
 import iitp.infection.pm.database.DBHelper;
 import m.client.android.library.core.common.CommonLibHandler;
-import m.client.android.library.core.utils.Logger;
-import android.app.Activity;
-import android.content.res.AssetManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.webkit.WebView;
 
 
 /**
@@ -42,7 +44,8 @@ public class Startup extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-  	
+
+
 
     	super.onCreate(savedInstanceState);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
@@ -54,8 +57,33 @@ public class Startup extends Activity {
         //1. 앱 구동전 밴드 데이터를 관리할 공통 DB 파일 및 Table를 생성 한다.
         DBHelper dbHelper = new DBHelper(getApplicationContext(), DBConfig.COM_DB_NAME,DBConfig.COM_DB_VER);
         dbHelper.getWritableDatabase();
-        commLibHandle.processAppInit(this);
+
         ////////////////////////////////////////////////////////////////////////////////    
+
+	    PermissionListener permissionlistener = new PermissionListener() {
+		    @Override
+		    public void onPermissionGranted() {
+			    //Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+
+			    commLibHandle.processAppInit(Startup.this);
+		    }
+
+		    @Override
+		    public void onPermissionDenied(List<String> deniedPermissions) {
+			    Toast.makeText(Startup.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+		    }
+
+
+	    };
+
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+			TedPermission.create()
+					.setPermissionListener(permissionlistener)
+					.setDeniedMessage("만약 권한을 승인하지 않으면, 앱이 동작하지 않습니다. 다음 메뉴에서 활성화 할 수 있습니다. [설정] > [권한]")
+					.setPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_CONNECT)
+					.check();
+
+		}
 
     }
 }
