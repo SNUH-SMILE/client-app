@@ -105,7 +105,7 @@ export default {
   },
   data() {
     return {
-      date: this.$dayjs('20221125').format('YYYYMMDD'),
+      date: this.$dayjs().format('YYYYMMDD'),
     };
   },
   created() {
