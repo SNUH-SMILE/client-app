@@ -28,8 +28,8 @@ class EtcApiService extends BaseApiService {
   /**
    * 알림 목록 조회
    */
-  noticeNoticeList(loginId) {
-    return this.post('/notice/noticeList', { loginId });
+  patientNoticeList(loginId) {
+    return this.post('/patientDashboard/detail/noticeAppList', { loginId });
   }
 
   /**
