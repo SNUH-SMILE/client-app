@@ -76,13 +76,20 @@ public class Startup extends Activity {
 
 	    };
 
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.R){
 			TedPermission.create()
 					.setPermissionListener(permissionlistener)
 					.setDeniedMessage("만약 권한을 승인하지 않으면, 앱이 동작하지 않습니다. 다음 메뉴에서 활성화 할 수 있습니다. [설정] > [권한]")
 					.setPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_CONNECT)
 					.check();
 
+		} else {
+			// TODO: 임시 퍼미션 체크 하지 않도록 처리..
+			TedPermission.create()
+					.setPermissionListener(permissionlistener)
+					.setDeniedMessage("만약 권한을 승인하지 않으면, 앱이 동작하지 않습니다. 다음 메뉴에서 활성화 할 수 있습니다. [설정] > [권한]")
+					.setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+					.check();
 		}
 
     }
