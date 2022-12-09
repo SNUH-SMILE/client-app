@@ -1,9 +1,7 @@
 <template>
   <div class="form-item" :hidden="isHidden">
     <validation-provider :name="index + '번'" immediate :rules="question.answerRequired" tag="fragment">
-      <label class="form-ttl">
-        <pre>{{ index }}. {{ question.question }}</pre>
-      </label>
+      <label class="form-ttl"> {{ index }}. {{ question.question }} </label>
       <component :is="question.answerType" :question="question" :value="value" @input="handleInput" />
     </validation-provider>
   </div>
