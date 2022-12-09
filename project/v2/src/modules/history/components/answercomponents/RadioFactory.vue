@@ -6,6 +6,7 @@
       :name="question.order"
       :label="label"
       :value="value"
+      :id="`${question.order}-${getPoints[index]}`"
       :checked="value === getPoints[index]"
       :point="getPoints[index]"
       @input="handleInput"

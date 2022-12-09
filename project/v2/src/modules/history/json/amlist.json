@@ -4,7 +4,7 @@
     "question": "기침이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -19,7 +19,7 @@
     "question": "가래가 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -34,7 +34,7 @@
     "question": "발열이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -49,7 +49,7 @@
     "question": "콧물이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -64,7 +64,7 @@
     "question": "인후통이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -79,7 +79,7 @@
     "question": "호흡곤란 증상이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -94,7 +94,7 @@
     "question": "흉통이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -127,7 +127,7 @@
     "question": "오심(속이 메슥거리고 토할 것 같은 느낌) 증상이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -135,7 +135,7 @@
     "question": "구토가 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -143,7 +143,7 @@
     "question": "복부 불편감이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -151,7 +151,7 @@
     "question": "변비가 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -159,7 +159,7 @@
     "question": "설사가 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -167,7 +167,7 @@
     "question": "복통이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -175,7 +175,7 @@
     "question": "현재 통증이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required",
     "child": ["61-1", "61-2", "61-3"]
   },
@@ -212,7 +212,7 @@
     "question": "현재 수면장애(잠들기가 어려움, 수면 중 자주 깸 등 수면과 관련된 불편한 증상)가 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -220,7 +220,7 @@
     "question": "앞서 제시된 증상 외 기타 증상이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required",
     "child": ["64"]
   },

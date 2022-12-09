@@ -237,7 +237,7 @@
     "order": "65",
     "question": "이상 후각(냄새가 맡아지지 않거나 이상한 냄새가 나는 경우)이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
     "points": ["1", "0"],
     "answerRequired": "required",
     "child": ["66", "67"]
@@ -265,7 +265,7 @@
     "order": "68",
     "question": "이상 미각(맛을 정상적으로 느끼지 못하여 불편한 상태) 이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
     "points": ["1", "0"],
     "answerRequired": "required",
     "child": ["69", "70"]

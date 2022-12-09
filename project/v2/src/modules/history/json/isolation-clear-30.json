@@ -109,7 +109,7 @@
     "question": "앞서 제시된 증상 외 기타 증상이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required",
     "child": ["86"]
   },
@@ -184,7 +184,7 @@
     "question": "현재 통증이 있으신가요?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required",
     "child": ["95-1", "95-2", "95-3"]
   },

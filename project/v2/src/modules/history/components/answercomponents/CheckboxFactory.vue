@@ -3,10 +3,10 @@
     <v-checkbox
       v-for="(label, index) in question.labels"
       :key="label"
-      :id="label"
       :name="label"
       :label="label"
       :point="getPoints[index]"
+      :id="`${question.order}-${getPoints[index]}`"
       :checked="value.includes(getPoints[index])"
       :value="value"
       @input="handleInput"

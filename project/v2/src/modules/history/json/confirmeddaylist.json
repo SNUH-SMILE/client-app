@@ -28,7 +28,7 @@
     "order": "5",
     "question": "최근 2주 이내 코로나-19 확진자와 접촉하신 이력이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요", "알수 없음"],
+    "labels": ["예", "아니오", "알수 없음"],
     "answerRequired": "required"
   },
   {
@@ -114,7 +114,7 @@
     "question": "혈액암 (백혈병, 악성림프종 등)을 진단받았거나, 항암치료를 받고 계십니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "values": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -122,7 +122,7 @@
     "question": "면역을 억제하는 약물을 복용하고 계십니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "values": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -130,7 +130,7 @@
     "question": "후천성면역결핍증과 같은 면역력이 저하되는 질환을 진단받은 적이 있습니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "values": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -138,7 +138,7 @@
     "question": "(여성의 경우) 임신 중이십니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "values": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -146,7 +146,7 @@
     "question": "투석을 하고 계십니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "values": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -233,7 +233,7 @@
     "question": "최근에도 정신건강의학과에서 처방 받은 약을 복용하고 계십니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "values": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "",
     "parent": "27",
     "requiredValues": ["1"]
@@ -243,7 +243,7 @@
     "question": "현재 걱정이 되거나 스트레스를 받는 일이 있습니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "values": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
@@ -251,7 +251,7 @@
     "question": "현재 귀하에게 격려와 지지를 제공해주는 사람이 있습니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "values": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
