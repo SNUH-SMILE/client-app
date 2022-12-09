@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="btn-wrap ratio-1-1">
-      <router-link custom v-slot="{ navigate }" :to="{ name: 'exercise-setting' }">
+      <router-link custom v-slot="{ navigate }" :to="{ name: 'exercise-setting', params: { id: detail.videoId } }">
         <button type="button" class="btn-line navy" @click="navigate">운동 알림 설정</button>
       </router-link>
       <button type="button" class="btn-txt navy" @click="startVideo">지금시작</button>

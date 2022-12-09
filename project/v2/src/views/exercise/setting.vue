@@ -5,14 +5,14 @@
         <ul class="md-set-list">
           <li>
             <div class="hbox jc">
-              <p class="ttl">거북목 탈출 일자목 운동</p>
+              <p class="ttl">{{ detail.title }}</p>
             </div>
           </li>
           <li>
             <div class="hbox jc">
               <p class="ttl">알람 시간</p>
               <div class="right-area">
-                <button type="button" class="btn-txt-detail" @click="showModal">09:00</button>
+                <button type="button" class="btn-txt-detail" @click="popup = 'time'">{{ time }}</button>
               </div>
             </div>
           </li>
@@ -20,10 +20,9 @@
       </div>
     </div>
     <div class="btn-wrap">
-      <router-link custom v-slot="{ navigate }" :to="{ name: 'exercise-detail' }">
-        <button type="button" class="btn-txt navy" @click="navigate">저장</button>
-      </router-link>
+      <button type="button" class="btn-txt navy" @click="onSubmit">저장</button>
     </div>
+    <app-time-picker v-if="popup === 'time'" v-model="time" @onClose="popup = ''" />
   </div>
 </template>
 <route>
@@ -34,23 +33,40 @@
 }
 </route>
 <script>
+import AppTimePicker from '@/components/AppTimePicker.vue';
+import { mapGetters, mapMutations } from 'vuex';
+import { EXERCISE_DETAIL } from '@/modules/exercise';
+import Vue from 'vue';
 const INIT_STATE = () => ({});
 
 export default {
-  components: {},
+  components: { AppTimePicker },
   data() {
     return {
       state: INIT_STATE(),
-      toastShow: false,
-      toastMessage: '알림 설정 내용이 저장되었습니다.',
+      time: '12:30',
+      popup: '',
     };
   },
+  beforeRouteEnter(to, from, next) {
+    if (!to.params.id) {
+      Vue.$alert('잘못된 접근입니다.');
+      next({ name: 'exercise' });
+    } else {
+      next();
+    }
+  },
+  created() {
+    this.fetchDetail(this.$route.params.id);
+  },
+  computed: {
+    ...mapGetters({ detail: EXERCISE_DETAIL }),
+  },
   methods: {
-    showModal() {
-      this.$eventBus.$emit('openTimePicker');
-    },
-    showToast() {
-      this.$toast({ text: this.toastMessage });
+    ...mapMutations({ fetchDetail: EXERCISE_DETAIL }),
+    onSubmit() {
+      this.$toast('알림 설정 내용이 저장되었습니다.');
+      // this.$router.back();
     },
   },
 };

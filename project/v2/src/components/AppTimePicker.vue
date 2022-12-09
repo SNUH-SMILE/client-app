@@ -28,28 +28,27 @@ export default {
     ModalLayout,
   },
   props: {
-    value: String,
+    value: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
-      hour: this.value.substring(0, 2),
-      minute: this.value.substring(3, 5),
+      hour: '00',
+      minute: '00',
     };
   },
-  created() {
-    console.log(this.hour);
-    console.log(this.minute);
-  },
   mounted() {
+    this.hour = this.value.substring(0, 2);
+    this.minute = this.value.substring(3, 5);
     $(this.$refs.listSelectTime)
       .mobiscroll()
       .scroller({
-        //        theme: $.mobiscroll.defaults.theme     // Specify theme like: theme: 'ios' or omit setting to use default
         mode: 'scroller', // Specify scroller mode like: mode: 'mixed' or omit setting to use default
         display: 'inline',
         lang: 'ko',
         height: 52,
-        // ,minWidth:59
         wheels: [
           [
             {
@@ -111,7 +110,7 @@ export default {
             },
           ],
         ],
-        parseValue: function () {
+        parseValue: () => {
           return [`${this.hour}`, `${this.minute}`];
         },
         rows: 3,
@@ -121,11 +120,9 @@ export default {
     // component가 파괴될떄, window에 걸은 이벤트는 해제한다.
   },
   methods: {
-    next() {
-      this.$router.replace({ name: '' });
-    },
     onSubmit() {
-      this.$emit('onSubmit', $(this.$refs.listSelectTime).mobiscroll('getVal'));
+      const newValue = $(this.$refs.listSelectTime).mobiscroll('getVal') || this.value;
+      this.$emit('input', newValue.replace(' ', ':'));
       this.$emit('onClose');
     },
   },
