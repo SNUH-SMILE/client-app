@@ -9,14 +9,12 @@
     <template slot="foot">
       <div class="btn-wrap">
         <button type="button" class="btn-txt white" @click="$emit('onClose')">재생취소</button>
-        <router-link custom v-slot="{ navigate }" :to="{ name: 'exercise-video' }">
-          <button type="button" class="btn-txt blue" @click="navigate">재생하기</button>
-        </router-link>
+        <button type="button" class="btn-txt blue" @click="$emit('onStart', noShowAgain)">재생하기</button>
       </div>
     </template>
     <template slot="noti">
       <p class="ipt-chk-noti">
-        <input type="checkbox" id="chk01" />
+        <input type="checkbox" id="chk01" v-model="noShowAgain" />
         <label for="chk01">다시 표시 안함</label>
       </p>
     </template>
@@ -24,7 +22,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      noShowAgain: false,
+    };
+  },
+};
 </script>
 
 <style></style>

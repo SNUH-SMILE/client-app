@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="btn-wrap">
-      <router-link custom v-slot="{ navigate }" :to="{ name: 'main' }" replace>
+      <router-link custom v-slot="{ navigate }" :to="{ name: 'home' }" replace>
         <button type="button" class="btn-txt navy" @click="navigate">돌아가기</button>
       </router-link>
     </div>
