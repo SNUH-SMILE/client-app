@@ -1,86 +1,86 @@
 <template>
-  <div class="content-wrap">
-    <validation-observer tag="fragment">
-      <div class="content">
-        <div class="cont-inner mb-space30 tb-full">
-          <div class="form-box tb-half">
-            <div class="form-item block">
-              <validation-provider name="아이디" rules="required" immediate tag="fragment">
-                <text-field id="id" label="아이디" v-model="state.id" disabled="disabled" />
-              </validation-provider>
-            </div>
-            <div class="form-item tb-inblock">
-              <validation-provider name="성명" rules="required" immediate tag="fragment">
-                <text-field id="name" label="성명" disabled="disabled" v-model="state.name" />
-              </validation-provider>
-            </div>
-            <div class="form-item tb-inblock">
-              <validation-provider name="생년월일" rules="required" immediate v-model="state.birth" tag="fragment">
-                <text-field id="birth" type="number" label="생년월일" placeholder="6자리 입력 (920812)" disabled="disabled">
-                  <template>
-                    <p class="ipt-rdo-switch disabled">
-                      <input type="radio" name="gender" id="gender01" v-model="state.gender" value="M" disabled />
-                      <label for="gender01">남</label>
-                      <input type="radio" name="gender" id="gender02" v-model="state.gender" value="F" disabled />
-                      <label for="gender02">여</label>
-                    </p>
-                  </template>
-                </text-field>
-              </validation-provider>
-            </div>
-            <div class="form-item tb-inblock">
-              <validation-provider name="비밀번호 수정" rules="required" immediate tag="fragment">
-                <text-field id="pw" type="password" label="비밀번호 수정" v-model="state.pw"></text-field>
-              </validation-provider>
-            </div>
-            <div class="form-item tb-inblock">
-              <validation-provider name="비밀번호 수정 확인" immediate tag="fragment">
-                <text-field id="pwChk" type="password" label="비밀번호 수정 확인" v-model="state.pw2">
-                  <template slot="noti">
-                    <p class="ipt-txt error">비밀번호가 일치하지 않습니다.</p>
-                  </template>
-                </text-field>
-              </validation-provider>
-            </div>
-            <div class="form-item tb-inblock">
-              <validation-provider name="휴대폰 번호" rules="required" immediate tag="fragment">
-                <text-field id="phone" type="tel" label="휴대폰 번호" placeholder="(-)구분 없이 입력" v-model="state.phone">
-                  <template>
-                    <button type="button" class="btn-line-rnd">본인 인증 후 변경</button>
-                  </template>
-                </text-field>
-              </validation-provider>
-            </div>
-            <div class="form-item tb-inblock">
-              <validation-provider name="보호자 연락처" rules="required" immediate tag="fragment">
-                <text-field id="phone02" type="tel" label="보호자 연락처" placeholder="(-)구분 없이 입력" v-model="state.phone2"></text-field>
-              </validation-provider>
-            </div>
-            <div class="form-item full">
-              <label for="address" class="form-ttl">주소</label>
-              <div class="ipt-address-wrap">
-                <div class="ipt-wrap">
-                  <input type="text" id="address" v-model="state.address" placeholder="도로명 주소 입력" />
-                  <button type="button" cclass="btn-txt-reset" v-if="showReset">
-                    <span class="txt-blind">입력 초기화</span>
-                  </button>
-                  <button type="button" class="btn-line-rnd">주소 검색</button>
+  <div>
+    <search-address v-if="showAddressSearch" @onSearch="searchAddress"></search-address>
+    <div class="content-wrap" v-show="!showAddressSearch">
+      <validation-observer slim v-slot="{ invalid, handleSubmit }">
+        <form @submit.prevent="handleSubmit(onSubmit)">
+          <div class="content">
+            <div class="cont-inner mb-space30 tb-full">
+              <div class="form-box tb-half">
+                <div class="form-item block">
+                  <text-field id="id" label="아이디" :value="loginId" disabled />
                 </div>
-                <div class="ipt-wrap">
-                  <input type="text" title="상세주소" v-model="state.address2" placeholder="상세주소 입력" />
-                  <button type="button" class="btn-txt-reset" v-if="showReset">
-                    <span class="txt-blind">입력 초기화</span>
-                  </button>
+                <div class="form-item tb-inblock">
+                  <text-field id="name" label="성명" disabled :value="userInfo.patientNm" />
+                </div>
+                <div class="form-item tb-inblock">
+                  <text-field
+                    id="birth"
+                    class="tb-inblock"
+                    type="number"
+                    :value="userInfo.birthDate"
+                    label="생년월일"
+                    placeholder="6자리 입력 (920812)"
+                    disabled
+                  >
+                    <template>
+                      <p class="ipt-rdo-switch disabled">
+                        <input type="radio" name="gender" id="gender01" v-model="userInfo.sex" value="M" disabled />
+                        <label for="gender01">남</label>
+                        <input type="radio" name="gender" id="gender02" v-model="userInfo.sex" value="F" disabled />
+                        <label for="gender02">여</label>
+                      </p>
+                    </template>
+                  </text-field>
+                </div>
+                <validation-provider name="휴대폰 번호" rules="required" slim>
+                  <text-field
+                    id="phone"
+                    class="tb-inblock"
+                    type="tel"
+                    label="휴대폰 번호"
+                    placeholder="(-)구분 없이 입력"
+                    v-model="state.cellPhone"
+                    disabled
+                    ><template>
+                      <button type="button" class="btn-line-rnd" @click="openMobileCheck">본인 인증 후 변경</button>
+                    </template></text-field
+                  >
+                </validation-provider>
+                <validation-provider name="보호자 연락처" rules="required|ko_phone" v-slot="{ errors }" slim>
+                  <text-field
+                    id="phone02"
+                    class="tb-inblock"
+                    type="tel"
+                    label="보호자 연락처"
+                    placeholder="(-)구분 없이 입력"
+                    v-model="state.guardianCellPhone"
+                    :errorMsgs="[errors[0]]"
+                  ></text-field>
+                </validation-provider>
+                <div class="form-item full">
+                  <label for="address" class="form-ttl">주소</label>
+                  <div class="ipt-address-wrap">
+                    <div class="ipt-wrap">
+                      <validation-provider name="주소" rules="required" slim>
+                        <input type="text" id="address" readonly v-model="state.address1" placeholder="도로명 주소 입력" />
+                      </validation-provider>
+                      <button type="button" class="btn-line-rnd" @click="showAddressSearch = true">주소 검색</button>
+                    </div>
+                    <div class="ipt-wrap">
+                      <input type="text" title="상세주소" v-model="state.address2" placeholder="상세주소 입력" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="btn-wrap">
-        <button type="button" class="btn-txt navy" disabled>수정</button>
-      </div>
-    </validation-observer>
+          <div class="btn-wrap">
+            <button type="submit" class="btn-txt navy" :disabled="invalid">수정</button>
+          </div>
+        </form>
+      </validation-observer>
+    </div>
   </div>
 </template>
 <route>
@@ -91,26 +91,87 @@
 }
 </route>
 <script>
+import SearchAddress from '@/components/SearchAddress.vue';
+import { BIND_RESTORE_EVENT, UNBIND_RESTORE_EVENT } from '@/native/cycle';
+import { PARAM_DATA } from '@/native/data';
+import { decryptMobileAuth, mobileAuthOpen } from '@/common/helpers';
+import { mapActions, mapGetters } from 'vuex';
+import { LOGIN_ID, SESSION } from '@/modules/patient';
+import { patientService } from '@/services/api';
 const INIT_STATE = () => ({
-  id: '',
-  pw: '',
-  pw2: '',
-  name: '',
-  birth: '',
-  gender: 'M',
-  phone: '',
-  phone2: '',
-  address: '',
+  cellPhone: '',
+  guardianCellPhone: '',
+  zipCode: '',
+  address1: '',
   address2: '',
 });
 
 export default {
-  components: {},
+  components: { SearchAddress },
   data() {
     return {
       state: INIT_STATE(),
-      showReset: false, //인풋 초기화 버튼
+      showAddressSearch: false,
     };
+  },
+  async created() {
+    this.$nativeScript(BIND_RESTORE_EVENT, this.mobileCheckResult);
+    await this.fetchUserInfo();
+    this.state.cellPhone = this.userInfo.cellPhone;
+    this.state.guardianCellPhone = this.userInfo.guardianCellPhone;
+    this.state.zipCode = this.userInfo.zipCode;
+    this.state.address1 = this.userInfo.address1;
+    this.state.address2 = this.userInfo.address2;
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.showAddressSearch) {
+      this.showAddressSearch = !this.showAddressSearch;
+      next(false);
+    } else next();
+  },
+  beforeDestroy() {
+    this.$nativeScript(UNBIND_RESTORE_EVENT, this.mobileCheckResult);
+  },
+  computed: {
+    ...mapGetters({ userInfo: SESSION, loginId: LOGIN_ID }),
+  },
+  methods: {
+    ...mapActions({
+      fetchUserInfo: SESSION,
+    }),
+    async openMobileCheck() {
+      await mobileAuthOpen();
+    },
+    mobileCheckResult() {
+      const result = this.$nativeScript(PARAM_DATA, 'phoneAuthResult');
+      this.$nativeScript(PARAM_DATA, 'phoneAuthResult', '');
+      if (result && result.priinfo) {
+        decryptMobileAuth(result.priinfo).then(({ birth, name, phone }) => {
+          if (birth !== this.state.birthDate || name !== this.state.patientNm || phone !== this.state.cellPhone) {
+            this.$alert('본인인증을 실패하였습니다.<br/> 인증 정보가 일치하지 않습니다.');
+          } else {
+            this.state.cellPhone = phone;
+          }
+        });
+      }
+    },
+    searchAddress({ address, zipCode, lat, lng }) {
+      this.state.address1 = address;
+      this.state.zipCode = zipCode;
+      this.showAddressSearch = false;
+    },
+    async onSubmit() {
+      await patientService.setPatient(
+        this.loginId,
+        this.state.cellPhone,
+        this.state.guardianCellPhone,
+        this.state.zipCode,
+        this.state.address1,
+        this.state.address2
+      );
+      await this.$alert('회원 정보가 수정 되었습니다.');
+      this.$router.back();
+    },
   },
 };
 </script>
