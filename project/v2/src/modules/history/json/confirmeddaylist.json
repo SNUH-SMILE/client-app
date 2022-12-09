@@ -7,25 +7,22 @@
     "answerRequired": "required"
   },
   {
-    "order": "2",
-    "question": "코로나-19 검사방법이 어떻게 되십니까? (중복 선택 가능)",
-    "answerType": "CheckboxFactory",
-    "labels": ["자가검사키트", "전문가용 신속 항원검사(의료기관)", "PCR검사"],
-    "answerRequired": "required"
-  },
-  {
     "order": "3",
     "question": "최근 2주 이내 발열이 있으셨습니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "answerRequired": "required"
+    "points": ["1", "0"],
+    "answerRequired": "required",
+    "child": ["4"]
   },
   {
     "order": "4",
     "question": "최근 2주 이내 발열이 있었다면, '마지막 발열'날짜는 언제입니까?",
-    "answerType": "RadioCalendar",
-    "labels": ["캘린더", "없음"],
-    "answerRequired": "required"
+    "answerType": "DatePicker",
+    "labels": "날짜선택",
+    "answerRequired": "",
+    "parent": "3",
+    "requiredValues": ["1"]
   },
   {
     "order": "5",
@@ -38,98 +35,118 @@
     "order": "6",
     "question": "함께 거주 중인 가족이 코로나-19에 감염된 사실이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": ["1", "0"],
     "answerRequired": "required"
   },
   {
     "order": "7",
     "question": "알레르기가 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
-    "answerRequired": "required"
+    "labels": ["예", "아니오"],
+    "points": ["1", "0"],
+    "answerRequired": "required",
+    "child": ["8", "9"]
   },
   {
     "order": "8",
-    "question": "알레르기가 있다면 어떤 종류의 알레르기를 가지고 계십니까?",
+    "question": " 알레르기가 있다면 어떤 종류의 알레르기를 가지고 계십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요", "알수 없음"],
-    "answerRequired": "required"
+    "labels": ["식품", "약물", "기타"],
+    "answerRequired": "",
+    "parent": "7",
+    "requiredValues": ["1"]
   },
   {
     "order": "9",
     "question": "알레르기가 있는 식품/약물의 종류를 구체적으로 적어주시기 바랍니다.",
-    "answerType": "RadioFactory",
-    "labels": ["예", "아니요", "알수 없음"],
-    "answerRequired": "required"
+    "answerType": "InputFactory",
+    "answers": [{ "type": "text" }],
+    "answerRequired": "",
+    "parent": "7",
+    "requiredValues": ["1"]
   },
   {
     "order": "10",
-    "question": "현재 있는 증상을 모두 표시하여 주시기 바랍니다. 아래 중 증상이 한가지라도 있으신 경우에만 아래 문항에 답변 부탁드립니다. 증상이 없으신 경우 아래 항목에 표시하지 않으셔도 됩니다. (중복 선택 가능)",
+    "question": "현재 있는 증상을 모두 표시하여 주시기 바랍니다. 나열된 증상 중 한 가지라도 해당되신 경우에는 아래 문항에 답변 부탁드립니다. (중복 선택 가능)",
     "answerType": "CheckboxFactory",
-    "labels": ["기침", "가래", "발열", "콧물", "인후통", "호흡곤란", "흉통", "기타", "해당 없음"],
-    "answerRequired": ""
+    "labels": ["기침", "가래", "발열", "콧물", "인후통", "호흡곤란", "흉통", "기타", "증상 없음"],
+    "answerRequired": "required",
+    "child": ["11"]
   },
   {
     "order": "11",
-    "question": "`위 문항에 체크된 증상에 대해서 증상이 시작된 시기와 증상의 빈도가 구체적으로 어떠한가요? 현재 있는 증상이 여러 가지이신 경우 각각에 대하여 증상 시작 시기 및 양상을 작성하여 주시기 바랍니다. (작성 예: 기침: 3월20일, 간헐적 / 가래3월 2일, 아침에만 2번 정도 등)`",
+    "question": "위 문항에 체크된 증상에 대해서 증상이 시작된 시기와 증상의 빈도가 구체적으로 어떠한가요? 현재 있는 증상이 여러 가지이신 경우 각각에 대하여 증상 시작 시기 및 양상을 작성하여 주시기 바랍니다. \n (작성 예: 기침: 3월20일, 간헐적 / 가래3월 2일, 아침에만 2번 정도 등)",
     "answerType": "InputFactory",
     "answers": [{ "type": "text" }],
-    "answerRequired": "required"
+    "answerRequired": "",
+    "parent": "10",
+    "requiredValues": ["0", "1", "2", "3", "4", "5", "6", "7"]
   },
   {
     "order": "12",
-    "question": "다음 중 가지고 계신 기저질환이 있으십니까? 기저질환이 없으신 경우 아래 항목에 체크하지 않으셔도 됩니다. (중복 선택 가능)",
+    "question": "다음 중 가지고 계신 기저질환이 있으십니까? (중복 선택 가능)",
     "answerType": "CheckboxFactory",
-    "labels": ["당뇨", "고혈압", "심혈관계", "호흡기계", "간 질환", "신장 질환", "장기 이식 관련", "해당 없음"],
-    "answerRequired": ""
+    "labels": ["당뇨", "고혈압", "심혈관계", "호흡기계", "간 질환", "신장 질환", "장기 이식 관련", "기타", "기저질환 없음"],
+    "answerRequired": "",
+    "child": ["13", "14"]
   },
   {
     "order": "13",
-    "question": "위에 응답하신 기저질환의 구체적인 '진단명'을 알고 있으시다면 적어주시기 바랍니다. 진단명이 여러 가지 거나, 위에 제시된 질환 외에 가지고 계신 기저질환이 있으신 경우 모두 적어주시기 바랍니다. (작성 예: 당뇨, B형간염, 간이식 등)",
+    "question": "위에 응답하신 기저질환의 구체적인 '진단명'을 알고 있으시다면 적어주시기 바랍니다. \n 진단명이 여러 가지 거나, 위에 제시된 질환 외에 가지고 계신 기저질환이 있으신 경우 모두 적어주시기 바랍니다.\n (작성 예: 당뇨, B형간염, 간이식 등)",
     "answerType": "InputFactory",
     "answers": [{ "type": "text" }],
-    "answerRequired": "required"
+    "answerRequired": "required",
+    "parent": "12",
+    "requiredValues": ["0", "1", "2", "3", "4", "5", "6", "7"]
   },
   {
     "order": "14",
-    "question": "위에 작성하신 기저질환과 관련하여 최근 투약하고 계신 약물이 있으신 경우 모두 적어주시기 바랍니다. 진단명-구체적인 약명-투약 방법-하루 복용 용량, 빈도, 시기 등을 정확하게 적어주시기를 바랍니다. (작성 예: 당뇨-노조 혼합 70-주사약-7unit, 하루 한 번, 아침 식사 직후 / 혈압- 노바스크 - 먹는 약 - 5mg 한 알, 하루 한 번, 아침 식후)",
+    "question": "위에 작성하신 기저질환과 관련하여 최근 투약하고 계신 약물이 있으신 경우 모두 적어주시기 바랍니다. 진단명-구체적인 약명-투약 방법-하루 복용 용량, 빈도, 시기 등을 정확하게 적어주시기를 바랍니다. \n (작성 예: 당뇨-노조 혼합 70-주사약-7unit, 하루 한 번, 아침 식사 직후 / 혈압- 노바스크 - 먹는 약 - 5mg 한 알, 하루 한 번, 아침 식후)",
     "answerType": "InputFactory",
     "answers": [{ "type": "text" }],
-    "answerRequired": "required"
+    "answerRequired": "required",
+    "parent": "12",
+    "requiredValues": ["0", "1", "2", "3", "4", "5", "6", "7"]
   },
   {
     "order": "15",
     "question": "혈액암 (백혈병, 악성림프종 등)을 진단받았거나, 항암치료를 받고 계십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "16",
     "question": "면역을 억제하는 약물을 복용하고 계십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "17",
     "question": "후천성면역결핍증과 같은 면역력이 저하되는 질환을 진단받은 적이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "18",
     "question": "(여성의 경우) 임신 중이십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "19",
     "question": "투석을 하고 계십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
@@ -165,24 +182,26 @@
     "question": "흡연을 해본 경험이 있거나 현재 하고 있습니까?",
     "answerType": "RadioFactory",
     "labels": ["현재 흡연중", "과거에 흡연한 경험이 있음", "전혀 흡연 해 본적 없음"],
-    "answerRequired": "required"
+    "answerRequired": "required",
+    "child": ["24", "25"]
   },
   {
     "order": "24",
     "question": "현재 흡연자인 경우 흡연 시작시기는 언제이며, 하루 몇 개비를 피우십니까?",
     "answerType": "InputFactory",
     "answers": [{ "type": "text" }],
-    "answerRequired": ""
+    "answerRequired": "",
+    "parent": "23",
+    "requiredValues": ["0"]
   },
   {
     "order": "25",
     "question": "과거 흡연 경험이 있는 경우 흡연 기간은 얼마이며, 하루에 몇 개비를 피우셨습니까? (예: 0년, 0개비/하루)",
     "answerType": "InputFactory",
-    "answers": [
-      { "type": "number", "unit": "년" },
-      { "type": "number", "unit": "개비" }
-    ],
-    "answerRequired": "required"
+    "answers": [{ "type": "number", "unit": "년" }],
+    "answerRequired": "required",
+    "parent": "23",
+    "requiredValues": ["1"]
   },
   {
     "order": "26",
@@ -193,44 +212,46 @@
   },
   {
     "order": "27",
-    "question": "지금까지 정신과를 방문하거나 심리치료를 받으신 적이 있습니까?",
+    "question": "지금까지 정신건강의학과를 방문하거나 심리치료를 받으신 적이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
-    "answerRequired": "required"
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
+    "answerRequired": "required",
+    "child": ["28", "29"]
   },
   {
     "order": "28",
-    "question": "정신과에서 진단받은 병명이나 증상은 무엇이었습니까? (해당 없을 시, '해당 없음 기입')",
+    "question": "정신건강의학과에서 진단받은 병명이나 증상은 무엇이었습니까? (해당 없을 시, '해당 없음 기입')",
     "answerType": "InputFactory",
     "answers": [{ "type": "text" }],
-    "answerRequired": ""
+    "answerRequired": "",
+    "parent": "27",
+    "requiredValues": ["1"]
   },
   {
     "order": "29",
-    "question": "최근에도 정신과에서 처방 받은 약을 복용하고 계십니까?",
+    "question": "최근에도 정신건강의학과에서 처방 받은 약을 복용하고 계십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
-    "answerRequired": "required"
-  },
-  {
-    "order": "30",
-    "question": "약을 복용하고 계시다면, 처방 받은 약이 떨어지신 상태입니까?",
-    "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
-    "answerRequired": "required"
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
+    "answerRequired": "",
+    "parent": "27",
+    "requiredValues": ["1"]
   },
   {
     "order": "31",
     "question": "현재 걱정이 되거나 스트레스를 받는 일이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "32",
     "question": "현재 귀하에게 격려와 지지를 제공해주는 사람이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
@@ -435,54 +456,61 @@
     "order": "36-1",
     "question": "잠들기가 어렵다.",
     "answerType": "PointFactory",
-    "labels": ["전혀 없다", "약간 있다", "중간", "심하다", "매우 심하다"],
+    "labels": ["전혀 없다", "약간 있음", "중간", "심함", "매우 심함"],
     "answerRequired": "required"
   },
   {
     "order": "36-2",
     "question": "잠을 유지하기가 어렵다. ",
     "answerType": "PointFactory",
-    "labels": ["전혀 없다", "약간 있다", "중간", "심하다", "매우 심하다"],
+    "labels": ["전혀 없다", "약간 있음", "중간", "심함", "매우 심함"],
     "answerRequired": "required"
   },
   {
     "order": "36-3",
     "question": "새벽에 너무 일찍 잠에서 깬다.",
     "answerType": "PointFactory",
-    "labels": ["전혀 없다", "약간 있다", "중간", "심하다", "매우 심하다"],
+    "labels": ["전혀 없다", "약간 있음", "중간", "심함", "매우 심함"],
     "answerRequired": "required"
   },
   {
     "order": "36-4",
     "question": "나는 현재 나의 수면 패턴에 대해 만족한다.",
     "answerType": "PointFactory",
-    "labels": ["매우 불만족", "조금 불만족", "중간", "조금 만족", "매우 만족"],
+    "labels": ["매우 만족함", "만족", "중간", "불만족", "매우 불만족"],
     "answerRequired": "required"
   },
   {
     "order": "36-5",
     "question": "불면증으로 인한 삶의 질 손상의 정도가 다른 사람들에게 어떻게 보인다고 생각합니까?",
     "answerType": "PointFactory",
-    "labels": ["전혀 보이지 않는다", "조금 보인다", "중간", "많이 보인다", "매우 잘 보인다"],
+    "labels": ["전혀 현저하지 않음", "조금 현저함", "다소 현저함", "많이 현저함", "매우 많이 현저함"],
     "answerRequired": "required"
   },
   {
     "order": "36-6",
-    "question": "나의 수면 문제가 일상 생활을 어느 정도 방해한다고 생각합니까?",
+    "question": "현재 불면증에 관하여 얼마나 걱정하고 있습니까?",
     "answerType": "PointFactory",
-    "labels": ["전혀 방해하지 않는다", "약간 방해된다", "중간", "많이 방해된다", "매우 많이 방해된다"],
+    "labels": ["전혀 걱정하지 않음", "조금 걱정함", "다소 걱장함", "많이 걱정함", "매우 많이 걱정함"],
+    "answerRequired": "required"
+  },
+  {
+    "order": "36-7",
+    "question": "나의 수면 문제가 일상 생활을 어느 정도 방해한다고 생각하십니까?",
+    "answerType": "PointFactory",
+    "labels": ["전혀 방해되지 않음", "조금 방해함", "다소 방해함", "많이 방해함", "매우 많이 방해됨"],
     "answerRequired": "required"
   },
   {
     "order": "37-1",
-    "question": "변화가 일어날 때 적응할 수 있다.",
+    "question": "변화가 일어날 때 적응할 수 있음.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "거의 그렇지 않다", "때때로 그렇다", "흔히 그렇다", "거의 언제나 그렇다"],
     "answerRequired": "required"
   },
   {
     "order": "37-2",
-    "question": "나는 무슨 일이 일어나도 처리할 수 있다.",
+    "question": "나는 무슨 일이 일어나도 처리할 수 있음.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "거의 그렇지 않다", "때때로 그렇다", "흔히 그렇다", "거의 언제나 그렇다"],
     "answerRequired": "required"
@@ -496,7 +524,7 @@
   },
   {
     "order": "37-4",
-    "question": "스트레스 극복을 통해서 내가 더 강해질 수 있다.",
+    "question": "스트레스 극복을 통해서 내가 더 강해질 수 있음.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "거의 그렇지 않다", "때때로 그렇다", "흔히 그렇다", "거의 언제나 그렇다"],
     "answerRequired": "required"
@@ -538,7 +566,7 @@
   },
   {
     "order": "37-10",
-    "question": "슬픔, 공포 그리고 분노와 같은 불쾌하거나 고통스러운 감정들을 잘 처리할 수 있다.",
+    "question": "슬픔, 공포 그리고 분노와 같은 불쾌하거나 고통스러운 감정들을 잘 처리할 수 있음.",
     "answerType": "PointFactory",
     "labels": ["전혀 그렇지 않다", "거의 그렇지 않다", "때때로 그렇다", "흔히 그렇다", "거의 언제나 그렇다"],
     "answerRequired": "required"

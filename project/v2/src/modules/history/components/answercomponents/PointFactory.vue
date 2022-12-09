@@ -8,6 +8,7 @@
       :name="question.order"
       :label="label"
       :point="getPoints[index]"
+      :checked="value === getPoints[index]"
       @input="handleInput"
     ></v-radio>
   </div>

@@ -7,26 +7,23 @@
     "answerRequired": "required"
   },
   {
-    "order": "2",
-    "question": "코로나-19 검사방법이 어떻게 되십니까? (중복 선택 가능)",
-    "answerType": "CheckboxFactory",
-    "labels": ["자가검사키트", "전문가용 신속 항원검사(의료기관)", "PCR검사"],
-    "answerRequired": "required"
-  },
-  {
     "order": "3",
     "question": "최근 2주 이내 발열이 있으셨습니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "answerRequired": "required"
+    "values": [1, 0],
+    "answerRequired": "required",
+    "children": [
+      {
+        "order": "4",
+        "question": "최근 2주 이내 발열이 있었다면, '마지막 발열'날짜는 언제입니까?",
+        "answerType": "DatePicker",
+        "labels": "날짜선택",
+        "answerRequired": "required"
+      }
+    ]
   },
-  {
-    "order": "4",
-    "question": "최근 2주 이내 발열이 있었다면, '마지막 발열'날짜는 언제입니까?",
-    "answerType": "RadioCalendar",
-    "labels": ["캘린더", "없음"],
-    "answerRequired": "required"
-  },
+
   {
     "order": "5",
     "question": "최근 2주 이내 코로나-19 확진자와 접촉하신 이력이 있습니까?",
@@ -38,23 +35,20 @@
     "order": "6",
     "question": "함께 거주 중인 가족이 코로나-19에 감염된 사실이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "7",
     "question": "알레르기가 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
-    "answerRequired": "required"
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
+    "answerRequired": "required",
+    "children": [{}]
   },
-  {
-    "order": "8",
-    "question": "알레르기가 있다면 어떤 종류의 알레르기를 가지고 계십니까?",
-    "answerType": "RadioFactory",
-    "labels": ["예", "아니요", "알수 없음"],
-    "answerRequired": "required"
-  },
+
   {
     "order": "9",
     "question": "알레르기가 있는 식품/약물의 종류를 구체적으로 적어주시기 바랍니다.",
@@ -101,35 +95,40 @@
     "order": "15",
     "question": "혈액암 (백혈병, 악성림프종 등)을 진단받았거나, 항암치료를 받고 계십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "16",
     "question": "면역을 억제하는 약물을 복용하고 계십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "17",
     "question": "후천성면역결핍증과 같은 면역력이 저하되는 질환을 진단받은 적이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "18",
     "question": "(여성의 경우) 임신 중이십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "19",
     "question": "투석을 하고 계십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
@@ -193,44 +192,49 @@
   },
   {
     "order": "27",
-    "question": "지금까지 정신과를 방문하거나 심리치료를 받으신 적이 있습니까?",
+    "question": "지금까지 정신건강의학과를 방문하거나 심리치료를 받으신 적이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "28",
-    "question": "정신과에서 진단받은 병명이나 증상은 무엇이었습니까? (해당 없을 시, '해당 없음 기입')",
+    "question": "정신건강의학과에서 진단받은 병명이나 증상은 무엇이었습니까? (해당 없을 시, '해당 없음 기입')",
     "answerType": "InputFactory",
     "answers": [{ "type": "text" }],
     "answerRequired": ""
   },
   {
     "order": "29",
-    "question": "최근에도 정신과에서 처방 받은 약을 복용하고 계십니까?",
+    "question": "최근에도 정신건강의학과에서 처방 받은 약을 복용하고 계십니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "30",
     "question": "약을 복용하고 계시다면, 처방 받은 약이 떨어지신 상태입니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "31",
     "question": "현재 걱정이 되거나 스트레스를 받는 일이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "32",
     "question": "현재 귀하에게 격려와 지지를 제공해주는 사람이 있습니까?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "values": [1, 0],
     "answerRequired": "required"
   },
   {

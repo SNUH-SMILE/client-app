@@ -1,15 +1,6 @@
 <template>
   <p class="ipt-chk">
-    <input
-      type="checkbox"
-      v-on="getListeners"
-      v-bind="getInputProps"
-      :value="label"
-      :checked="value.includes(label)"
-      @change="onChange"
-      @input="handleChange"
-      ref="input"
-    />
+    <input type="checkbox" v-on="getListeners" v-bind="getInputProps" :value="point" :checked="checked" @change="onChange" ref="input" />
     <label :for="id">{{ label }}</label>
     <slot></slot>
     <slot name="noti"></slot>
@@ -51,6 +42,13 @@ export default {
       type: String,
       default: '',
     },
+    point: {
+      type: null,
+      default: undefined,
+    },
+    checked: {
+      type: null,
+    },
   },
   computed: {
     getListeners() {
@@ -77,12 +75,6 @@ export default {
       }
       this.$emit('input', currentValue);
     },
-    handleChange(e) {
-      console.log(e.target.value);
-    },
-  },
-  created() {
-    // console.log(this.$refs.input);
   },
 };
 </script>

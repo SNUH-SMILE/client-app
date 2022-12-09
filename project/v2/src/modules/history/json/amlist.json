@@ -3,175 +3,234 @@
     "order": "38",
     "question": "기침이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "39",
     "question": "기침이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
-    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "labels": ["감소", "유지", "증가"],
     "answerRequired": "required"
   },
   {
     "order": "40",
     "question": "가래가 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "41",
     "question": "가래가 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
-    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "labels": ["감소", "유지", "증가"],
     "answerRequired": "required"
   },
   {
     "order": "42",
     "question": "발열이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "43",
     "question": "발열이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
-    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "labels": ["감소", "유지", "증가"],
     "answerRequired": "required"
   },
   {
     "order": "44",
     "question": "콧물이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "45",
     "question": "콧물이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
-    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "labels": ["감소", "유지", "증가"],
     "answerRequired": "required"
   },
   {
     "order": "46",
     "question": "인후통이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "47",
     "question": "인후통이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
-    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "labels": ["감소", "유지", "증가"],
     "answerRequired": "required"
   },
   {
     "order": "48",
     "question": "호흡곤란 증상이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "49",
     "question": "호흡곤란 증상이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
-    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "labels": ["감소", "유지", "증가"],
     "answerRequired": "required"
   },
   {
     "order": "50",
     "question": "흉통이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "51",
     "question": "흉통이 있는 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
-    "labels": ["감소", "유지", "증가", "해당 없음"],
+    "labels": ["감소", "유지", "증가"],
     "answerRequired": "required"
   },
   {
     "order": "52",
-    "question": "오심(속이 메슥거리고 토할 것 같은 느낌) 증상이 있으신가요?",
+    "question": "기타 증상",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
-    "answerRequired": "required"
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
+    "answerRequired": "required",
+    "child": ["53"]
   },
   {
     "order": "53",
-    "question": "구토가 있으신가요?",
-    "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
-    "answerRequired": "required"
+    "question": "기타 증상의 내용을 구체적으로 적어주시길 바랍니다.",
+    "answerType": "InputFactory",
+    "answers": [{ "type": "text" }],
+    "answerRequired": "",
+    "parent": "52",
+    "requiredValues": ["1"]
   },
   {
     "order": "54",
-    "question": "복부 불편감이 있으신가요?",
+    "question": "오심(속이 메슥거리고 토할 것 같은 느낌) 증상이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "55",
-    "question": "변비가 있으신가요?",
+    "question": "구토가 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "56",
-    "question": "설사가 있으신가요?",
+    "question": "복부 불편감이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "57",
-    "question": "복통이 있으신가요?",
+    "question": "변비가 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "58",
-    "question": "현재 통증이 있으신가요?",
+    "question": "설사가 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "59",
-    "question": "통증의 부위, 강도, 양상을 구체적으로 기술하여 주시기 바랍니다.통증의 정도는 10점 척도 (0점이 통증 없음, 10점 극심한 통증)로 작성하여 주시면 이해하기 쉽습니다. (예: 인후통/5점/침 삼킬 때만 칼칼하게 아픔)",
-    "answerType": "InputFactory",
-    "answers": [{ "type": "text" }, { "type": "number", "unit": "점" }, { "type": "text" }],
+    "question": "복통이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
     "answerRequired": "required"
   },
   {
     "order": "60",
-    "question": "현재 수면장애(잠들기가 어려움, 수면 중 자주 깸 등 수면과 관련된 불편한 증상)가 있으신가요?",
+    "question": "현재 통증이 있으신가요?",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
-    "answerRequired": "required"
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
+    "answerRequired": "required",
+    "child": ["61-1", "61-2", "61-3"]
   },
   {
-    "order": "61",
-    "question": "앞서 제시된 증상 외 기타 증상이 있으신가요?",
+    "order": "61-1",
+    "question": "통증 부위를 구체적으로 기술하여 주시기를 바랍니다.",
+    "answerType": "InputFactory",
+    "answers": [{ "type": "text" }],
+    "answerRequired": "",
+    "parent": "60",
+    "requiredValues": ["1"]
+  },
+  {
+    "order": "61-2",
+    "question": "통증 강도는 몇점이십니까? ( 0점이 통증 없음, 10점 극심한 통증)",
     "answerType": "RadioFactory",
-    "labels": ["예", "아니요"],
-    "answerRequired": "required"
+    "labels": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    "values": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    "answerRequired": "",
+    "parent": "60",
+    "requiredValues": ["1"]
+  },
+  {
+    "order": "61-3",
+    "question": "통증 양상을 구체적으로 기술하여 주시기를 바랍니다. (욱신욱신 쑤시는, 날카로운 등)",
+    "answerType": "InputFactory",
+    "answers": [{ "type": "text" }],
+    "answerRequired": "",
+    "parent": "60",
+    "requiredValues": ["1"]
   },
   {
     "order": "62",
-    "question": "기타 증상의 내용을 구체적으로 적어주시길 바랍니다. (해당 없을 시, '해당 없음' 기입)",
+    "question": "현재 수면장애(잠들기가 어려움, 수면 중 자주 깸 등 수면과 관련된 불편한 증상)가 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
+    "answerRequired": "required"
+  },
+  {
+    "order": "63",
+    "question": "앞서 제시된 증상 외 기타 증상이 있으신가요?",
+    "answerType": "RadioFactory",
+    "labels": ["예", "아니오"],
+    "points": [1, 0],
+    "answerRequired": "required",
+    "child": ["64"]
+  },
+  {
+    "order": "64",
+    "question": "기타 증상의 내용을 구체적으로 적어주시길 바랍니다.",
     "answerType": "InputFactory",
     "answers": [{ "type": "text" }],
-    "answerRequired": "required"
+    "answerRequired": "",
+    "parent": "63",
+    "requiredValues": ["1"]
   }
 ]

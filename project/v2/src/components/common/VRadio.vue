@@ -44,7 +44,7 @@ export default {
       type: Boolean,
     },
     point: {
-      type: String,
+      type: null,
       default: undefined,
     },
   },
@@ -59,7 +59,7 @@ export default {
       return { ...inputProps, ...others };
     },
     setValue() {
-      return this.point ? this.point : this.label;
+      return this.point;
     },
   },
   methods: {

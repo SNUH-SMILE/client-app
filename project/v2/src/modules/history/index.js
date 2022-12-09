@@ -85,7 +85,9 @@ export function submitForm(form) {
   };
   const result = [];
   form.forEach((formItem) => {
-    result.push(getSubmitForm(formItem));
+    if (formItem.value !== '') {
+      result.push(getSubmitForm(formItem));
+    }
   });
   return result;
 }

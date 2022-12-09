@@ -1,5 +1,5 @@
 <template>
-  <div class="form-item">
+  <div class="form-item" :hidden="isHidden">
     <validation-provider :name="index + '번'" immediate :rules="question.answerRequired" tag="fragment">
       <label class="form-ttl">
         <pre>{{ index }}. {{ question.question }}</pre>
@@ -23,6 +23,18 @@ export default {
   methods: {
     handleInput(value) {
       this.$emit('input', value);
+      if (this.question?.child) {
+        this.$eventBus.$emit('changeRequired', this.question.order);
+      }
+    },
+  },
+  computed: {
+    isHidden() {
+      if (Object.prototype.hasOwnProperty.call(this.question, 'parent')) {
+        return this.question.answerRequired !== 'required';
+      } else {
+        return false;
+      }
     },
   },
 };
