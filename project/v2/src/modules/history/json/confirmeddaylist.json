@@ -198,7 +198,7 @@
     "order": "25",
     "question": "과거 흡연 경험이 있는 경우 흡연 기간은 얼마이며, 하루에 몇 개비를 피우셨습니까? (예: 0년, 0개비/하루)",
     "answerType": "InputFactory",
-    "answers": [{ "type": "number", "unit": "년" }],
+    "answers": [{ "type": "text" }],
     "answerRequired": "required",
     "parent": "23",
     "requiredValues": ["1"]
@@ -215,7 +215,7 @@
     "question": "지금까지 정신건강의학과를 방문하거나 심리치료를 받으신 적이 있습니까?",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "values": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required",
     "child": ["28", "29"]
   },

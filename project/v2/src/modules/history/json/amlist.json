@@ -109,7 +109,7 @@
     "question": "기타 증상",
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
-    "points": [1, 0],
+    "points": ["1", "0"],
     "answerRequired": "required",
     "child": ["53"]
   },
