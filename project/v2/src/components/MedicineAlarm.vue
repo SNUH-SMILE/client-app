@@ -4,15 +4,15 @@
     <div class="right-area">
       <button type="button" class="btn-txt-detail" @click="showTimePicker = true">{{ time.substring(0, 2) }}:{{ time.substring(3, 5) }}</button>
     </div>
-    <time-picker v-if="showTimePicker" v-model="time" @onClose="showTimePicker = false" @onSubmit="handleValue" />
+    <app-time-picker v-if="showTimePicker" v-model="time" @onClose="showTimePicker = false" @onSubmit="handleValue" />
   </li>
 </template>
 <script>
-import TimePicker from '@/components/TimePicker.vue';
+import AppTimePicker from '@/components/AppTimePicker.vue';
 export default {
   name: 'medicine-alarm',
   components: {
-    TimePicker,
+    AppTimePicker,
   },
   props: {
     value: {
