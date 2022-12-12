@@ -1,19 +1,28 @@
 package iitp.infection.pm;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 
 
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,14 +30,27 @@ import androidx.core.app.NotificationCompat;
 
 import com.yc.pedometer.utils.GlobalVariable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import iitp.infection.pm.band.BandCont;
+import iitp.infection.pm.band.DataQuery;
+import iitp.infection.pm.database.AlarmDBConfig;
+import iitp.infection.pm.database.AlarmDBHelper;
+import iitp.infection.pm.database.DBConfig;
+import iitp.infection.pm.database.DBHelper;
+import iitp.infection.pm.samples.utils.CommUtils;
+import m.client.android.library.core.common.CommonLibHandler;
 import m.client.android.library.core.managers.ActivityHistoryManager;
+import m.client.android.library.core.utils.CommonLibUtil;
 import m.client.android.library.core.view.MainActivity;
+import m.client.push.library.common.Logger;
 
 public class IitpFGService extends Service {
     private String CLASS_TAG = IitpFGService.class.getSimpleName();
@@ -111,20 +133,19 @@ public class IitpFGService extends Service {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
                 //Date inputDate = simpleDateFormat..parse(System.currentTimeMillis());
 
+
                 Date date = new Date(System.currentTimeMillis());
+
                 String currDateStr = simpleDateFormat.format(date);
+
                 Date currDate = null;
                 try {
                     currDate = simpleDateFormat.parse(currDateStr);
                     long min = currDate.getTime() / (60 * 1000);
-                    Thread.sleep(4000);
+                    Thread.sleep(1000);
                     if(min != oldMin) {
-                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(IitpFGService.this, "current time : " + min, Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        alarmQueryAllAndNotificaiton(getApplicationContext(), currDateStr);
+
                     }
                     oldMin = min;
 
@@ -135,5 +156,125 @@ public class IitpFGService extends Service {
             }
 
         }
+    }
+
+    /**
+     * 서버 전송을 위한 스텝 정보 테이블 직접 쿼리(공통 테이블에서 조회)
+     **/
+    @SuppressLint("Range")
+    public void alarmQueryAllAndNotificaiton(Context context, String time){
+        Logger.e(time);
+        String sql;
+        Cursor cursor;
+        String path = CommonLibHandler.getInstance().getInternalFilesDir() + "/"+ AlarmDBConfig.COM_DB_NAME;
+        Logger.e(path);
+        AlarmDBHelper comDB = new AlarmDBHelper(context, path,1);
+        sql ="SELECT * FROM alarm";//알람 데이터 가져오기
+        cursor = comDB.queryData(sql);
+        while (cursor.moveToNext()){
+            Log.d(CLASS_TAG,"queryCommDbStep() rowid: "+cursor.getInt(cursor.getColumnIndex("id")));
+           // ContentValues cv = new ContentValues();
+           // cv.put("sSyncServer",2);
+          // comDB.updateData("sbSyncStep",cv,"ROWID",cursor.getString(cursor.getColumnIndex("rowid")));
+            JSONObject jsonDt = new JSONObject();
+            try {
+                jsonDt.put("title",cursor.getString(cursor.getColumnIndex("title")));//날짜
+                jsonDt.put("body",cursor.getString(cursor.getColumnIndex("body")));//시간
+                jsonDt.put("type",cursor.getString(cursor.getColumnIndex("type")));//거리
+                jsonDt.put("time",cursor.getString(cursor.getColumnIndex("time")));//걸음수
+                jsonDt.put("ext",cursor.getString(cursor.getColumnIndex("ext")));//디바이스 ID
+                Logger.e(jsonDt.toString(2));
+                String notiTime = cursor.getString(cursor.getColumnIndex("time"));
+                if(time.equals(notiTime)){
+                    Logger.e("notification");
+                    new Handler(getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            alarmNotification(jsonDt);
+                        }
+                    });
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        cursor.close();
+       // return new CommUtils().setJSONData("stepCountList",StepTimeList);
+    }
+
+    private void alarmNotification(JSONObject alarmObject){
+
+        int icon = R.drawable.icon;
+        Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.icon);
+        String title = alarmObject.optString(AlarmDBConfig.DB_C_TITLE);
+        String body = alarmObject.optString(AlarmDBConfig.DB_C_BODY);
+        int seqno = alarmObject.optInt(AlarmDBConfig.DB_C_ID);
+        String ext = alarmObject.optString(AlarmDBConfig.DB_C_EXT);
+        Intent intent = new Intent(getApplicationContext(), PushMessageManager.class);
+
+        JSONObject notification = new JSONObject();
+        try {
+
+            JSONObject aps = new JSONObject();
+            JSONObject alertObject = new JSONObject();
+            alertObject.put("title", title);
+            alertObject.put("body", body);
+            aps.put("alert", alertObject);
+
+
+            JSONObject mps = new JSONObject();
+            mps.put("appid", getApplicationContext().getPackageName());
+            mps.put("seqno", seqno);
+            mps.put("ext", ext);
+
+            notification.put("aps", aps);
+            notification.put("mps", mps);
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        intent.putExtra("JSON", notification.toString());
+        intent.putExtra("PS_ID", getApplicationContext().getPackageName());
+        intent.putExtra("TITLE", title);
+        intent.putExtra("EXT", ext);
+        intent.putExtra("PUSH_TYPE", "GCM");
+
+        PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT|PendingIntent.FLAG_MUTABLE);
+        final NotificationManager mManager = (NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext().getApplicationContext())
+                .setAutoCancel(true)
+                .setContentIntent(pIntent)
+                .setSmallIcon(icon)
+                .setLargeIcon(largeIcon)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setTicker(title)
+                .setSound(soundUri)
+                .setPriority(Notification.PRIORITY_MAX);
+
+        //mBuilder.setFullScreenIntent(pIntent, false);
+        //mBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
+
+        String NOTIFICATION_CHANNEL_ID = getApplicationContext().getPackageName();
+        String name = getApplicationContext().getString(R.string.app_name);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);
+            notificationChannel.setDescription("자가격리 알람");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100});
+            assert mManager != null;
+            mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
+            mManager.createNotificationChannel(notificationChannel);
+        }
+
+        final Notification notify = mBuilder.build();
+        mManager.notify("alarm", seqno, notify);
     }
 }

@@ -487,15 +487,4 @@ public class ExtendWNInterface extends InterfaceJavascript {
 		return new CommUtils().isServiceRunning(callerObject,IitpFGService.class.getName());
 	}
 
-
-	// 위치이탈 관련 notification 처리
-	public void exWNLocalPush(String data){
-
-	}
-
-
-	// 로컬 푸시 동기화 처리 (iOS 용으로 안드로이드에서는 method 만 처리 )
-	public void exWNSyncPush(){
-
-	}
 }
