@@ -1,4 +1,9 @@
+import { ENUM_ALARM_TYPE, ENUM_DATE_FORMAT } from '@/common/constants';
+import { executor } from '@/native';
+import { SELECT_LOCAL_ALARM } from '@/native/alarm';
+import dayjs from 'dayjs';
 import _cloneDeep from 'lodash/cloneDeep';
+import _sortBy from 'lodash/sortBy';
 import exerciseDataJson from './data.json';
 
 const { exercises, videos } = exerciseDataJson;
@@ -36,5 +41,22 @@ export default {
       ...targetVideo,
       ...targetExercise,
     };
+  },
+  async getExerciseAlarams() {
+    const { rows } = await executor(SELECT_LOCAL_ALARM);
+    const today = dayjs();
+
+    return _sortBy(
+      rows.filter((o) => {
+        const date = dayjs(o.time, ENUM_DATE_FORMAT.alarm);
+        o.unix = date.unix();
+        o.timeLabel = date.format(ENUM_DATE_FORMAT.SemiHm);
+        if (o.type !== ENUM_ALARM_TYPE.EXERCISE) return false;
+        else if (date.format(ENUM_DATE_FORMAT.YMD) !== today.format(ENUM_DATE_FORMAT.YMD)) return false;
+        else if (date.unix() < today.unix()) return false;
+        return true;
+      }),
+      'unix'
+    );
   },
 };

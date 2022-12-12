@@ -31,6 +31,11 @@ export const ENUM_DATE_FORMAT = {
   PeriodHm: 'HH.mm',
   PeriodHms: 'HH.mm.ss',
   SemiHm: 'HH:mm',
+  alarm: 'YYYY-MM-DD HH:mm:ss',
+};
+
+export const ENUM_ALARM_TYPE = {
+  EXERCISE: 'exercise',
 };
 
 export const ENUM_QUARANTINE = {

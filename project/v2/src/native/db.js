@@ -21,7 +21,8 @@ import { STATUS } from './constants';
 const createDb = (path) => {
   return new Promise((resolve, reject) => {
     M.db.create(path, function (status, error) {
-      if (status === STATUS.FAIL && !error.includes('already')) {
+      const err = error && typeof error === 'string' ? error : error.message || '';
+      if (status === STATUS.FAIL && !err.includes('already')) {
         reject(error);
       } else {
         resolve();
@@ -35,7 +36,8 @@ const openDb = (path) => {
     M.db.open({
       path,
       callback: function (status, error) {
-        if (status === STATUS.FAIL && !error.includes('already')) {
+        const err = error && typeof error === 'string' ? error : error.message || '';
+        if (status === STATUS.FAIL && !err.includes('already')) {
           reject(error);
         } else {
           resolve();
@@ -49,15 +51,18 @@ export const DB_CONNECT = 'dbConnect';
 
 extend(DB_CONNECT, (path) => {
   return new Promise((resolve, reject) => {
-    createDb(path)
-      .then(() => openDb(path))
+    // createDb(path)
+    //   .then(() => openDb(path))
+    //   .then(() => resolve())
+    //   .catch((err) => reject(err));
+    openDb(path)
       .then(() => resolve())
       .catch((err) => reject(err));
   });
 });
 
 export const DB_QUERY = 'dbQuery';
-extend(DB_CONNECT, (path, query) => {
+extend(DB_QUERY, (path, query) => {
   return new Promise((resolve, reject) => {
     M.db.execute({
       path,
