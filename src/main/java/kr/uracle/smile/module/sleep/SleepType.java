@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum SleepType {
     DEEP("deep", 0),
     LIGHT("light", 1),
-    AWAKE("awake", 2);
+    AWAKE("awake", 2),
+    REM("rem", 3);
 
     private int code;
     private String type;
