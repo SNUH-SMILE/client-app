@@ -1,15 +1,15 @@
 <template>
   <div class="ipt-wrap" :class="{ disabled }" v-if="!onlyInput">
-    <textarea v-if="type === 'textarea'" ref="input" v-on="getListeners" v-bind="getInputProps" @input="handleInput" />
-    <input v-else ref="input" v-on="getListeners" v-bind="getInputProps" @input="handleInput" />
+    <textarea v-if="type === 'textarea'" ref="input" v-on="getListeners" :value="value" v-bind="getInputProps" @input="handleInput" />
+    <input v-else ref="input" v-on="getListeners" v-bind="getInputProps" :value="value" @input="handleInput" />
     <span v-if="unit" class="unit">{{ unit }}</span>
     <button type="button" v-if="reset" class="btn-txt-reset" @click="resetInput">
       <span class="txt-blind">입력 초기화</span>
     </button>
     <slot></slot>
   </div>
-  <textarea v-else-if="type === 'textarea'" ref="input" v-on="getListeners" v-bind="getInputProps" @input="handleInput" />
-  <input v-else ref="input" v-on="getListeners" v-bind="getInputProps" @input="handleInput" />
+  <textarea v-else-if="type === 'textarea'" ref="input" v-on="getListeners" :value="value" v-bind="getInputProps" @input="handleInput" />
+  <input v-else ref="input" v-on="getListeners" v-bind="getInputProps" :value="value" @input="handleInput" />
 </template>
 <script>
 export default {

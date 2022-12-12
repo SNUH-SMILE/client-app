@@ -1,5 +1,5 @@
 <template>
-  <div class="form-item" :hidden="isHidden">
+  <div class="form-item" v-if="!isHidden">
     <validation-provider :name="index + '번'" immediate :rules="question.answerRequired" tag="fragment">
       <!-- <label class="form-ttl"> {{ index }}. {{ question.question }} </label> -->
       <label class="form-ttl" v-html="`${index}. ${question.question}`"></label>
