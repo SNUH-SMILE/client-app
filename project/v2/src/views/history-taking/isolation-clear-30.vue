@@ -41,7 +41,6 @@ import HistoryModules from '@/modules/history/components';
 import { initForm, submitForm, TYPE_ISOLATION_DAY_AFTER_30, SET_INTERVIEW_LIST } from '@/modules/history';
 import { RESPONSE_STATUS } from '@/common/constants';
 import _cloneDeep from 'lodash/cloneDeep';
-import { timeStamp } from 'console';
 const INIT_STATE = () => ({
   ing: 1,
   total: parseInt(isolationClearList.length / 10) + 1,
