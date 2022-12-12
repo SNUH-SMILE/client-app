@@ -10,6 +10,11 @@
               </router-link>
             </li>
             <li>
+              <router-link custom v-slot="{ navigate }" :to="{ name: 'customer-password-change' }">
+                <button type="button" class="btn-full-detail" @click="navigate">비밀번호 변경</button>
+              </router-link>
+            </li>
+            <li>
               <router-link custom v-slot="{ navigate }" :to="{ name: 'customer-notice' }">
                 <button type="button" class="btn-full-detail" @click="navigate">공지사항</button>
               </router-link>

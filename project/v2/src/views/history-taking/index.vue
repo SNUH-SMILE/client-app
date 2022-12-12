@@ -8,12 +8,18 @@
         <section class="section-box02">
           <h2 class="ttl-b">문진 작성 내역</h2>
           <ul class="history-list line-box">
-            <li v-for="item in historyList" :key="item.index">
+            <li v-for="item in interviewList" :key="item.index">
               <span class="time">{{ item.time }}</span>
               <div class="vbox">
                 <p class="item" v-for="subData in item.subData" :key="subData.index">
                   <span class="ttl">{{ subData.title }}</span>
-                  <button type="button" class="btn-rnd blue" :class="subData.buttonClass" :disabled="subData.disabled">
+                  <button
+                    type="button"
+                    class="btn-rnd blue"
+                    :class="subData.buttonClass"
+                    :disabled="subData.disabled"
+                    @click="movePage(subData.pathName)"
+                  >
                     {{ subData.button }}
                   </button>
                 </p>
@@ -60,26 +66,34 @@
 </route>
 <script>
 const INIT_STATE = () => ({});
-
+const GET_INTERVIEW_NAME = {
+  '01': { title: '확진 당일 문진', pathName: 'history-taking-confirmed-day' },
+  '02': { title: '오전 문진', pathName: 'history-taking-am-pm' },
+  '03': { title: '오후 문진', pathName: 'history-taking-am-pm' },
+  '04': { title: '격리 해제일 문진', pathName: 'history-taking-isolation-clear' },
+  '05': { title: '격리 해제 30일 뒤 문진', pathName: 'history-taking-isolation-clear-30' },
+};
 export default {
   data() {
     return {
       state: INIT_STATE(),
-      historyList: [
+      interviewList: [
         {
           time: '09 : 56',
           subData: [
             {
-              title: '오전 문진',
-              button: '작성완료',
+              title: GET_INTERVIEW_NAME['01'].title,
+              pathName: GET_INTERVIEW_NAME['01'].pathName,
+              button: '작성하기',
               buttonClass: '',
-              disabled: true,
+              disabled: false,
             },
             {
-              title: '오후 문진',
-              button: '작성불가',
+              title: GET_INTERVIEW_NAME['02'].title,
+              pathName: GET_INTERVIEW_NAME['02'].pathName,
+              button: '작성하기',
               buttonClass: 'dis-gray',
-              disabled: true,
+              disabled: false,
             },
           ],
         },
@@ -87,7 +101,8 @@ export default {
           time: '14 : 00',
           subData: [
             {
-              title: '격리 해제 일 문진',
+              title: GET_INTERVIEW_NAME['04'].title,
+              pathName: GET_INTERVIEW_NAME['04'].pathName,
               button: '작성하기',
               buttonClass: '',
               disabled: false,
@@ -98,10 +113,11 @@ export default {
           time: '16 : 30',
           subData: [
             {
-              title: '격리 해제 30일 후 문진',
+              title: GET_INTERVIEW_NAME['05'].title,
+              pathName: GET_INTERVIEW_NAME['05'].pathName,
               button: '작성하기',
               buttonClass: 'dis-blue',
-              disabled: true,
+              disabled: false,
             },
           ],
         },
@@ -121,6 +137,11 @@ export default {
     };
   },
   components: {},
+  methods: {
+    movePage(pathName) {
+      this.$router.push({ name: pathName });
+    },
+  },
 };
 </script>
 

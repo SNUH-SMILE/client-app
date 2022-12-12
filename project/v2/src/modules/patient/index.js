@@ -5,6 +5,7 @@ import { RESPONSE_STATUS, STORAGE_KEYS } from '@/common/constants';
 import { executor } from '@/native';
 import { STORAGE_DATA } from '@/native/data';
 import { patientService } from '@/services/api';
+import { REGIST_PUSH_SERVICE } from '@/native/push';
 
 export const SET_AUTH = 'patient/setAuth';
 export const LOGIN = 'patient/login';
@@ -51,7 +52,11 @@ export default {
     async [LOGIN]({ commit }, { loginId, password }) {
       const rs = await patientService.login(loginId, password);
       const { token } = rs.data;
-      if (rs.code === RESPONSE_STATUS.SUCCESS) commit(SET_AUTH, { token, loginId });
+      if (rs.code === RESPONSE_STATUS.SUCCESS) {
+        commit(SET_AUTH, { token, loginId });
+        executor(REGIST_PUSH_SERVICE, loginId);
+      }
+
       return rs;
     },
     async [SESSION]({ commit, state: { loginId } }) {

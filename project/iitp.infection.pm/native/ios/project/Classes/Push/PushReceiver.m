@@ -19,7 +19,7 @@ typedef void(^PushReceiverExtLoadHandler)(BOOL success, NSString *richData, NSEr
         [[PushManager defaultManager].info changeMode:@"DEV"];
 #endif
         
-        [PushManager defaultManager].enabled = NO;
+        [PushManager defaultManager].enabled = YES;
     }
     return self;
 }

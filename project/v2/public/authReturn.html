@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth Return Page</title>
+  </head>
+  <body></body>
+  <script type="text/javascript" src="./js/libs/mcore.min.js"></script>
+  <script>
+    function getUrlParams() {
+      var params = {};
+      window.location.search.replace(
+        /[?&]+([^=&]+)=([^&]*)/gi,
+        function (str, key, value) {
+          params[key] = value;
+        }
+      );
+      return params;
+    }
+    window.onload = function () {
+      var query = getUrlParams();
+      // alert(JSON.stringify(query));
+      M.page.back({
+        param: {
+          phoneAuthResult: query,
+        },
+      });
+      // opener.phoneAuth.priinfo = query.priinfo;
+      // opener.phoneAuth.resultCd = query.resultCd;
+      // opener.phoneAuth.reqNum = query.reqNum;
+      // opener.phoneAuth.result = query.result;
+    };
+  </script>
+</html>

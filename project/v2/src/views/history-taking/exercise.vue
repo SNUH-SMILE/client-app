@@ -32,7 +32,7 @@
 <script>
 import { initForm } from '@/modules/history';
 import HistoryModules from '@/modules/history/components';
-import exerciseList from '@/modules/history/json/exerciseList.json';
+import exerciseList from '@/modules/history/json/exerciselist.json';
 const INIT_STATE = () => ({
   exerciseForm: initForm(exerciseList),
 });

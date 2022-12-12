@@ -4,6 +4,7 @@ import iitp.infection.pm.band.BandCont;
 import iitp.infection.pm.samples.utils.ComListener;
 
 import iitp.infection.pm.samples.utils.CommUtils;
+import m.client.android.library.core.utils.CommonLibUtil;
 import m.client.android.library.core.view.MainActivity;
 
 import android.app.Activity;
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -70,6 +72,19 @@ public class BaseActivity extends MainActivity {
 				startService(intent);
 			}
 		}
+
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		String push = CommonLibUtil.getVariable("_PUSHDATA");
+		if(!TextUtils.isEmpty(push)){
+			CommonLibUtil.setVariable("_PUSHDATA", "");
+			getWebView().loadUrl("javascript:onReceiveNotification("+ push + ")");
+		}
+
 
 	}
 

@@ -60,6 +60,7 @@ const config = defineConfig({
   devServer: {
     server: process.env.HTTPS === 'true' ? 'https' : 'http',
     proxy: proxyServer,
+    historyApiFallback: false,
     client: {
       overlay: {
         warnings: false, // lint warning가 뜨면 화면에 오버레이할 지 여부

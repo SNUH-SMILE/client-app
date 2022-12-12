@@ -2,8 +2,42 @@
  * Native Push 관련
  */
 import { RUNTIME } from '@/common/config';
-import { ENUM_APP_ENV, ENUM_OS_ENV } from '@/common/constants';
-import { extend } from '.';
+import { ENUM_ALARM_TYPE, ENUM_APP_ENV, ENUM_OS_ENV } from '@/common/constants';
+import router from '@/router';
+import Vue from 'vue';
+import { bindGlobalCb, extend } from '.';
+import { STATUS } from './constants';
+
+const IOS_NOTIFICATION_CB_NAME = 'oniOSReceiveNotification';
+const ANDROID_NOTIFICATION_CB_NAME = 'onReceiveNotification';
+
+export const notificaitonCommonEvent = (payload) => {
+  Vue.$alert(`PUSH PAYLOD JSON <br/> ${JSON.stringify(payload)}`);
+  let ext;
+  try {
+    ext = JSON.parse(payload.payload.mps.ext);
+  } catch (error) {
+    ext = JSON.parse(payload.mps.ext);
+  }
+
+  // TODO: 푸시(알람) 케이스 별 처리 필요
+  if (ext.action === ENUM_ALARM_TYPE.EXERCISE) {
+    router.push({ name: 'exercise-id', params: { id: ext.videoId } });
+  }
+};
+
+bindGlobalCb(IOS_NOTIFICATION_CB_NAME, (payload) => {
+  notificaitonCommonEvent(payload);
+});
+
+bindGlobalCb(ANDROID_NOTIFICATION_CB_NAME, (notificaiton) => {
+  try {
+    notificaitonCommonEvent(JSON.parse(notificaiton.payload));
+  } catch (e) {
+    console.error(e);
+    Vue.$alert(`올바르지 않은 푸시 규격입니다. <br/> ${JSON.stringify(notificaiton)}`);
+  }
+});
 
 export const ON_LOCAL_PUSH = 'onLocalPush';
 extend(ON_LOCAL_PUSH, () => {
@@ -11,4 +45,52 @@ extend(ON_LOCAL_PUSH, () => {
     // TODO : push message API 작성
     M.execute('');
   }
+});
+
+export const REGIST_PUSH_SERVICE = 'registPushService';
+extend(REGIST_PUSH_SERVICE, (cuid) => {
+  if (RUNTIME.TYPE !== ENUM_APP_ENV.APP) {
+    return Promise.reject();
+  }
+
+  return new Promise((resolve, reject) => {
+    M.plugin('push').remote.registerServiceAndUser({
+      cuid,
+      name: cuid,
+      callback: function ({ status }) {
+        if (status === STATUS.SUCC) {
+          resolve();
+        } else {
+          reject();
+        }
+      },
+    });
+  });
+});
+
+export const UNREGIST_PUSH_SERVICE = 'unRegistPushService';
+extend(UNREGIST_PUSH_SERVICE, () => {
+  if (RUNTIME.TYPE !== ENUM_APP_ENV.APP) {
+    return Promise.reject();
+  }
+
+  return new Promise((resolve, reject) => {
+    M.plugin('push').remote.unregisterService({
+      callback: function ({ status }) {
+        if (status === STATUS.SUCC) {
+          resolve();
+        } else {
+          reject();
+        }
+      },
+    });
+  });
+});
+
+export const STARTED_PUSH_CHECK = 'startedPushCheck';
+extend(STARTED_PUSH_CHECK, () => {
+  const data = M.data.global();
+  const pushData = data['_PUSHDATA'];
+  M.data.removeGlobal('_PUSHDATA');
+  return pushData;
 });

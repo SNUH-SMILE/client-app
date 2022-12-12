@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="btn-wrap">
-      <router-link custom v-slot="{ navigate }" :to="{ name: 'history-taking' }">
+      <router-link custom v-slot="{ navigate }" :to="{ name: 'exercise-history-taking' }" replace>
         <button type="button" class="btn-txt navy" @click="navigate">문진하기</button>
       </router-link>
     </div>

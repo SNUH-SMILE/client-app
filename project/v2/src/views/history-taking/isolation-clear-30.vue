@@ -9,7 +9,7 @@
           <div class="cont-inner mb-space30">
             <div class="form-box">
               <v-history-taking-item
-                v-for="(question, index) in isolationClearQuestion"
+                v-for="(question, index) in isolationQuestion"
                 :key="question.order"
                 :question="question"
                 :index="(state.ing - 1) * 10 + index + 1"
@@ -55,7 +55,6 @@ export default {
   components: { ...HistoryModules },
   computed: {
     percent() {
-      console.log(parseInt((this.state.ing / this.state.total) * 100));
       return parseInt((this.state.ing / this.state.total) * 100);
     },
     isolationQuestion() {
@@ -70,7 +69,7 @@ export default {
   methods: {
     ...mapActions({ setInterview: SET_INTERVIEW_LIST }),
     async submit() {
-      const formData = submitForm(this.state.confirmedForm);
+      const formData = submitForm(this.state.isolationForm);
       const submitData = {
         interviewType: TYPE_ISOLATION_DAY_AFTER_30,
         interviewDate: this.getInterviewDate(),
@@ -86,6 +85,36 @@ export default {
       const date = this.$dayjs().format('YYYYMMDDhhmm');
       return date;
     },
+    changeRequired(nowOrder) {
+      const nowQuestion = this.state.isolationForm.find((element) => {
+        return element.order === nowOrder;
+      });
+      const childQuestion = this.state.isolationForm.filter((element) => {
+        return nowQuestion.child.includes(element.order);
+      });
+      childQuestion.forEach((child) => {
+        if (typeof nowQuestion.value === 'object') {
+          nowQuestion.value.forEach((element) => {
+            if (child.requiredValues.includes(element + '')) {
+              child.answerRequired = 'required';
+            } else {
+              child.answerRequired = '';
+              child.value = '';
+            }
+          });
+        } else {
+          if (child.requiredValues.includes(nowQuestion.value)) {
+            child.answerRequired = 'required';
+          } else {
+            child.answerRequired = '';
+            child.value = '';
+          }
+        }
+      });
+    },
+  },
+  created() {
+    this.$eventBus.$on('changeRequired', this.changeRequired);
   },
 };
 </script>

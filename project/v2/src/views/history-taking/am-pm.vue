@@ -57,7 +57,6 @@ export default {
   components: { ...HistoryModules },
   computed: {
     percent() {
-      console.log(parseInt((this.state.ing / this.state.total) * 100));
       return parseInt((this.state.ing / this.state.total) * 100);
     },
     amPmQuestion() {
@@ -79,6 +78,7 @@ export default {
         interviewDate: this.getInterviewDate(),
         answerList: formData,
       };
+
       const { code, message, data } = await this.setInterview(submitData);
       if (code === RESPONSE_STATUS.SUCCESS) {
         this.$toast('제출되었습니다.');
@@ -93,6 +93,36 @@ export default {
       const date = this.$dayjs().format('YYYYMMDDhhmm');
       return date;
     },
+    changeRequired(nowOrder) {
+      const nowQuestion = this.state.amForm.find((element) => {
+        return element.order === nowOrder;
+      });
+      const childQuestion = this.state.amForm.filter((element) => {
+        return nowQuestion.child.includes(element.order);
+      });
+      childQuestion.forEach((child) => {
+        if (typeof nowQuestion.value === 'object') {
+          nowQuestion.value.forEach((element) => {
+            if (child.requiredValues.includes(element + '')) {
+              child.answerRequired = 'required';
+            } else {
+              child.answerRequired = '';
+              child.value = '';
+            }
+          });
+        } else {
+          if (child.requiredValues.includes(nowQuestion.value)) {
+            child.answerRequired = 'required';
+          } else {
+            child.answerRequired = '';
+            child.value = '';
+          }
+        }
+      });
+    },
+  },
+  created() {
+    this.$eventBus.$on('changeRequired', this.changeRequired);
   },
 };
 </script>

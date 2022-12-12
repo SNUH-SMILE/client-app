@@ -22,7 +22,7 @@ const RouterLayout = createRouterLayout((layout) => {
 console.clear();
 logger.log(routes);
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   scrollBehavior(to, from, savePosition) {
     // scroll 관련 함수

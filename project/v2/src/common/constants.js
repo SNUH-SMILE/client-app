@@ -31,6 +31,11 @@ export const ENUM_DATE_FORMAT = {
   PeriodHm: 'HH.mm',
   PeriodHms: 'HH.mm.ss',
   SemiHm: 'HH:mm',
+  alarm: 'YYYY-MM-DD HH:mm:ss',
+};
+
+export const ENUM_ALARM_TYPE = {
+  EXERCISE: 'exercise',
 };
 
 export const ENUM_QUARANTINE = {
@@ -38,9 +43,18 @@ export const ENUM_QUARANTINE = {
   NO: '1', // 이탈
 };
 
+export const ENUM_BODY_STATUS = {
+  NONE: 'none',
+  BAD: 'bad',
+  STAGE1: 'stage1',
+  STAGE2: 'stage2',
+};
+
 export const STORAGE_KEYS = {
   TOKEN: 'jwt',
   LOGIN_ID: 'loginId',
+  BODY_CHECK: 'bodyCheck', // 몸 상태 체크 상태에 대한 키
+  MOBILE_DATA_ALERT_YN: 'mobildDataAlert',
 };
 
 export const RESPONSE_STATUS = { SUCCESS: '00' };
