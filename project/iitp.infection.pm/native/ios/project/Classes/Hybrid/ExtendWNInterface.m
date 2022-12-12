@@ -127,11 +127,11 @@
             NSString *time = [dic objectForKey:@"time"];
             NSString *pushid = [dic objectForKey:@"id"];
             NSString *key = [NSString stringWithFormat:@"%@%@", pushid, time];
-            
+
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
             NSDate *date = [formatter dateFromString:time];
-            
+
             UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
             if(title && [title length] > 0)
             {
@@ -139,13 +139,13 @@
             }
             content.body = body;
             content.sound = UNNotificationSound.defaultSound;
-            
+            NSDictionary *infoDict = [self getUserInfo:dic];
+            content.userInfo = infoDict;
+
             NSDateComponents *dateComponent = [[NSCalendar currentCalendar] components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date];
-            
-            dateComponent.day = dateComponent.day + 1;
-            
+
             UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:dateComponent repeats:NO];
-            
+
             UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
             UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:key content:content trigger:trigger];
             [center addNotificationRequest:request withCompletionHandler:^(NSError *error) {
