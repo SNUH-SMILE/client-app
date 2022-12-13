@@ -55,7 +55,6 @@ export default {
       this.selectedItem = item;
     },
     openDetail(item) {
-      console.log(item);
       this.$router.push({
         name: 'customer-notice-id',
         params: { detail: item },

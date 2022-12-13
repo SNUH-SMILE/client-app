@@ -74,7 +74,6 @@ export default {
       this.detail = item;
     },
     openQuestionDetail(item) {
-      console.log(item);
       this.$router.push({
         name: 'customer-inquiry-id',
         params: {

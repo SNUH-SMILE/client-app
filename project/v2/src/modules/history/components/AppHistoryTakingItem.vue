@@ -41,7 +41,6 @@ export default {
     question: {
       deep: true,
       handler(newValue) {
-        console.log('fire');
         if (Object.prototype.hasOwnProperty.call(newValue, 'parent')) {
           this.isHidden = newValue.answerRequired !== 'required';
         } else {

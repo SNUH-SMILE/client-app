@@ -44,7 +44,6 @@ export default {
   created() {
     try {
       this.fetchDetail(this.videoId);
-      console.log(this.detail);
     } catch (e) {
       this.$alert('동영상 정보를 찾을 수 없습니다.');
       console.error(e);

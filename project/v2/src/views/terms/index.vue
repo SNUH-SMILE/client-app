@@ -83,7 +83,6 @@ export default {
     openDetail(term) {
       // TODO: detail 정의되면 처리
       this.$alert('개발 대기중입니다.');
-      console.log(term);
     },
   },
 };

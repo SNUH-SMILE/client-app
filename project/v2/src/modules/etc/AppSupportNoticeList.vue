@@ -31,7 +31,6 @@ export default {
       fetchList: NOTICE_LIST,
     }),
     onClickItem(item) {
-      console.log(item);
       this.$emit('selectedItem', item);
     },
   },
