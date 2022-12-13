@@ -6,6 +6,7 @@ import _sumBy from 'lodash/sumBy';
 import { ENUM_DATE_FORMAT, ENUM_ISOLATION_TYPE, ENUM_QUARANTINE } from '@/common/constants';
 import { mainService } from '@/services/api';
 import { LOGIN_ID } from '../patient';
+import { STATUS } from '@/native/constants';
 const { YMD, HyphenYmd, Hm, SemiHm, HH, mm } = ENUM_DATE_FORMAT;
 const INIT_MAIN_CONTENT_DATA = () => ({
   patientNm: '' /*P000000054*/, // 성명 / 확인필요 환자 번호가 넘어오는중
@@ -96,11 +97,16 @@ export default {
   actions: {
     async [MAIN_CONTENT]({ commit, getters }) {
       const loginId = getters[LOGIN_ID];
+      const { data: contentData } = await mainService.mainInfo(loginId);
       const {
+        code,
         data: { quarantineStatusDiv },
       } = await mainService.getQuarantineStatus(loginId);
-      commit(QUARANTINE_STATUS, quarantineStatusDiv);
-      const { data: contentData } = await mainService.mainInfo(loginId);
+
+      if (code === STATUS.SUCC) {
+        commit(QUARANTINE_STATUS, quarantineStatusDiv);
+      }
+
       commit(MAIN_CONTENT, contentData);
     },
   },

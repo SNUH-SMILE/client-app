@@ -7,7 +7,7 @@ import Logger from '@/utils/logger';
 import { RESPONSE_STATUS } from './constants';
 
 const logger = new Logger('HttpSend');
-
+const PASS_STATUS = [RESPONSE_STATUS.NONE_ISOLATION, RESPONSE_STATUS.NONE_QUARANTINE, RESPONSE_STATUS.DUPLICATE_ISOLATION];
 const httpSend = (path, data = {}, server) => {
   return new Promise((resolve, reject) => {
     const loading = Vue.$loading();
@@ -24,7 +24,8 @@ const httpSend = (path, data = {}, server) => {
     })
       .then(({ code, message, ...data }) => {
         logger.info(` RESPONSE :: path : ${path} `, code, message, data);
-        if (code === RESPONSE_STATUS.SUCCESS) {
+
+        if (code === RESPONSE_STATUS.SUCCESS || PASS_STATUS.includes(code)) {
           resolve({ code, message, data });
         } else {
           Vue.$alert(`${message}(<span style="color:red;display: inline;">${code}</span>)`);

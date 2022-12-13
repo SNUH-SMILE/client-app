@@ -11,7 +11,6 @@ import Logger from '@/utils/logger';
 const logger = new Logger('OAuth Http Send');
 const oauthHttp = (path, data) => {
   return new Promise((resolve, reject) => {
-    debugger;
     const loading = Vue.$loading();
     logger.info(`PATH :: ${path}`);
     logger.info(`BODY :: \n ${JSON.stringify(data, null, 4)}`);

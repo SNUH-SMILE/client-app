@@ -22,7 +22,7 @@ const createDb = (path) => {
   return new Promise((resolve, reject) => {
     M.db.create(path, function (status, error) {
       const err = error && typeof error === 'string' ? error : error.message || '';
-      if (status === STATUS.FAIL && !err.includes('already')) {
+      if (status === STATUS.FAIL && !err.includes('ALREADY')) {
         reject(error);
       } else {
         resolve();
@@ -37,7 +37,7 @@ const openDb = (path) => {
       path,
       callback: function (status, error) {
         const err = error && typeof error === 'string' ? error : error.message || '';
-        if (status === STATUS.FAIL && !err.includes('already')) {
+        if (status === STATUS.FAIL && !err.includes('ALREADY')) {
           reject(error);
         } else {
           resolve();

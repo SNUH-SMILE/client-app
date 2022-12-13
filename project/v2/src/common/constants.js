@@ -64,7 +64,12 @@ export const STORAGE_KEYS = {
   MOBILE_DATA_ALERT_YN: 'mobildDataAlert',
 };
 
-export const RESPONSE_STATUS = { SUCCESS: '00' };
+export const RESPONSE_STATUS = {
+  SUCCESS: '00',
+  NONE_QUARANTINE: '14',
+  NONE_ISOLATION: '21',
+  DUPLICATE_ISOLATION: '22',
+};
 
 export const FORM_DRUG_TYPE = [
   { label: '알', value: '0' },

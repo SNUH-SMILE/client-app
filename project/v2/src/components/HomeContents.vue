@@ -50,7 +50,7 @@ export default {
     };
   },
 
-  created() {
+  activated() {
     this.fetchContents();
   },
   computed: {

@@ -70,9 +70,7 @@ export const SELECT_LOCAL_ALARM = `selectLocalAlarm`;
 extend(
   SELECT_LOCAL_ALARM,
   catchAsync(async () => {
-    const query = `
-  SELECT * FROM alarm
-  `;
+    const query = `SELECT * FROM alarm`;
     return await executor(DB_QUERY, DB_PATH, query);
   })
 );
