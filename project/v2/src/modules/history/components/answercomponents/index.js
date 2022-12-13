@@ -1,14 +1,5 @@
-import CheckboxFactory from '@/modules/history/components/answercomponents/CheckboxFactory.vue';
-import RadioFactory from '@/modules/history/components/answercomponents/RadioFactory.vue';
-import DatePicker from '@/common/components/DatePicker.vue';
-import InputFactory from '@/modules/history/components/answercomponents/InputFactory.vue';
-import RadioCalendar from '@/modules/history/components/answercomponents/RadioCalendar.vue';
-import PointFactory from '@/modules/history/components/answercomponents/PointFactory.vue';
-export default {
-  CheckboxFactory,
-  RadioFactory,
-  DatePicker,
-  InputFactory,
-  RadioCalendar,
-  PointFactory,
-};
+export { default as CheckboxFactory } from './CheckboxFactory.vue';
+export { default as RadioFactory } from './RadioFactory.vue';
+export { default as InputFactory } from './InputFactory.vue';
+export { default as RadioCalendar } from './RadioCalendar.vue';
+export { default as PointFactory } from './PointFactory.vue';

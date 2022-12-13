@@ -4,12 +4,12 @@
       <form @submit.prevent="submit">
         <div class="content" ref="content">
           <div class="blue-top-box">
-            <v-step-progress :ing="state.ing" :total="state.total" />
+            <app-step-progress :ing="state.ing" :total="state.total" />
             <!-- TODO : 변화 적용 안됨 -->
           </div>
           <div class="cont-inner mb-space30">
             <div class="form-box">
-              <v-history-taking-item
+              <app-history-taking-item
                 v-for="(question, index) in ConfirmedQuestion"
                 :key="question.order"
                 :question="question"
@@ -37,7 +37,7 @@
 </route>
 <script>
 import { mapActions } from 'vuex';
-import HistoryModules from '@/modules/history/components';
+import { AppHistoryTakingItem, AppStepProgress } from '@/modules/history/components';
 import Confirmeddaylist from '@/modules/history/json/confirmeddaylist.json';
 import { initForm, submitForm, TYPE_CONFIRMED_DAY, SET_INTERVIEW_LIST } from '@/modules/history';
 import { RESPONSE_STATUS } from '@/common/constants';
@@ -55,7 +55,7 @@ export default {
       state: INIT_STATE(),
     };
   },
-  components: { ...HistoryModules },
+  components: { AppHistoryTakingItem, AppStepProgress },
   computed: {
     ConfirmedQuestion() {
       const start = (this.state.ing - 1) * 10;

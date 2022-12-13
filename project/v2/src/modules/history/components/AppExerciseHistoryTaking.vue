@@ -4,13 +4,13 @@
       <div class="content">
         <div class="cont-inner mb-space30">
           <div class="form-box">
-            <v-history-taking-item
+            <app-history-taking-item
               v-for="(question, index) in exerciseList"
               :key="question.order"
               :question="question"
               :index="index + 1"
               v-model="state.exerciseForm[index].value"
-            ></v-history-taking-item>
+            />
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
 <script>
 import { mapMutations } from 'vuex';
 import { initForm } from '@/modules/history';
-import HistoryModules from '@/modules/history/components';
+import { AppHistoryTakingItem } from '@/modules/history/components';
 import exerciseList from '@/modules/history/json/exerciselist.json';
 import { EXERCISE_BODY_STATUS } from '@/modules/exercise';
 import { ENUM_BODY_STATUS } from '@/common/constants';
@@ -38,7 +38,7 @@ export default {
       exerciseList,
     };
   },
-  components: { ...HistoryModules },
+  components: { AppHistoryTakingItem },
   methods: {
     ...mapMutations({ setBodyStatus: EXERCISE_BODY_STATUS }),
     // 메서드 구현

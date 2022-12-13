@@ -4,17 +4,17 @@
       <form @submit.prevent="submit">
         <div class="content" ref="content">
           <div class="blue-top-box">
-            <v-step-progress :percent="percent" :ing="state.ing" :total="state.total" />
+            <app-step-progress :percent="percent" :ing="state.ing" :total="state.total" />
           </div>
           <div class="cont-inner mb-space30">
             <div class="form-box">
-              <v-history-taking-item
+              <app-history-taking-item
                 v-for="(question, index) in isolationQuestion"
                 :key="question.order"
                 :question="question"
                 :index="(state.ing - 1) * 10 + index + 1"
                 v-model="state.isolationForm[(state.ing - 1) * 10 + index].value"
-              ></v-history-taking-item>
+              />
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@
 <script>
 import { mapActions } from 'vuex';
 import isolationClearList from '@/modules/history/json/isolation-clear-30.json';
-import HistoryModules from '@/modules/history/components';
+import { AppHistoryTakingItem, AppStepProgress } from '@/modules/history/components';
 import { initForm, submitForm, TYPE_ISOLATION_DAY_AFTER_30, SET_INTERVIEW_LIST } from '@/modules/history';
 import { RESPONSE_STATUS } from '@/common/constants';
 import _cloneDeep from 'lodash/cloneDeep';
@@ -53,7 +53,7 @@ export default {
       state: INIT_STATE(),
     };
   },
-  components: { ...HistoryModules },
+  components: { AppHistoryTakingItem, AppStepProgress },
   computed: {
     percent() {
       return parseInt((this.state.ing / this.state.total) * 100);

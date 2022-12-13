@@ -7,7 +7,8 @@
   </div>
 </template>
 <script>
-import AnswerComponents from '@/modules/history/components/answercomponents';
+import { CheckboxFactory, RadioFactory, InputFactory, RadioCalendar, PointFactory } from '@/modules/history/components/answercomponents';
+import DatePicker from '@/common/components/DatePicker.vue';
 export default {
   props: {
     value: null,
@@ -26,7 +27,7 @@ export default {
       this.isHidden = false;
     }
   },
-  components: { ...AnswerComponents },
+  components: { CheckboxFactory, RadioFactory, InputFactory, RadioCalendar, PointFactory, DatePicker },
   methods: {
     handleInput(value) {
       this.$emit('input', value);
