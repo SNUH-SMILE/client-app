@@ -47,7 +47,7 @@ export default {
           name = 'exercise';
           break;
         case ENUM_BODY_STATUS.BAD:
-          name = 'exercist-none';
+          name = 'exercise-none';
           break;
         default:
           name = 'exercise-before';
