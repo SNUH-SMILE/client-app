@@ -2,26 +2,21 @@
   <div class="content-wrap">
     <div class="content">
       <div class="gray-top-box center">
-        <p class="bold fs-16">2022.01.03</p>
+        <p class="bold fs-16">{{ today }}</p>
       </div>
       <div class="cont-inner mb-space20 tb-space20">
         <section class="section-box02">
           <h2 class="ttl-b">문진 작성 내역</h2>
           <ul class="history-list line-box">
-            <li v-for="item in interviewList" :key="item.index">
-              <span class="time">{{ item.time }}</span>
+            <li v-for="(item, index) in interviewList" :key="`interview-${index}`">
+              <span class="time" v-if="item.interviewTime">{{ item.interviewTimeLabel }}</span>
               <div class="vbox">
-                <p class="item" v-for="subData in item.subData" :key="subData.index">
-                  <span class="ttl">{{ subData.title }}</span>
-                  <button
-                    type="button"
-                    class="btn-rnd blue"
-                    :class="subData.buttonClass"
-                    :disabled="subData.disabled"
-                    @click="movePage(subData.pathName)"
-                  >
-                    {{ subData.button }}
-                  </button>
+                <p class="item">
+                  <span class="ttl">{{ item.interviewTitle }}</span>
+                  <button v-if="item.interviewStatus === '0'" type="button" class="btn-rnd blue" @click="historyWrite(item)">작성하기</button>
+                  <button v-if="item.interviewStatus === '1'" type="button" class="btn-rnd blue dis-blue" disabled>작성예정</button>
+                  <button v-if="item.interviewStatus === '2'" type="button" class="btn-rnd blue dis-gray" disabled>작성불가</button>
+                  <button v-if="item.interviewStatus === '3'" type="button" class="btn-rnd blue" disabled>작성완료</button>
                 </p>
               </div>
             </li>
@@ -45,9 +40,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in symptomList" :key="item.index">
-                  <th scope="row">{{ item.title }}</th>
-                  <td :class="item.textClass">{{ item.content }}</td>
+                <tr v-for="(item, index) in symptomList" :key="`symptom-${index}`">
+                  <th scope="row">{{ item.interviewTitle }}</th>
+                  <td :class="{ 'txtc-blue': item.symptomTitleLabel }">{{ item.symptomTitleLabel || '이상 증상 없음' }}</td>
                 </tr>
               </tbody>
             </table>
@@ -65,101 +60,58 @@
 }
 </route>
 <script>
-import { mapActions } from 'vuex';
-import { GET_INTERVIEW_LIST } from '@/modules/history';
+import { mapActions, mapGetters } from 'vuex';
+import {
+  GET_INTERVIEW_LIST,
+  GET_SYMPTOMLIST,
+  TYPE_AM,
+  TYPE_CONFIRMED_DAY,
+  TYPE_ISOLATION_DAY,
+  TYPE_ISOLATION_DAY_AFTER_30,
+  TYPE_PM,
+} from '@/modules/history';
+import { ENUM_DATE_FORMAT } from '@/common/constants';
 const INIT_STATE = () => ({});
-const GET_INTERVIEW_NAME = {
-  '01': { title: '확진 당일 문진', pathName: 'history-taking-confirmed-day' },
-  '02': { title: '오전 문진', pathName: 'history-taking-am-pm' },
-  '03': { title: '오후 문진', pathName: 'history-taking-am-pm' },
-  '04': { title: '격리 해제일 문진', pathName: 'history-taking-isolation-clear' },
-  '05': { title: '격리 해제 30일 뒤 문진', pathName: 'history-taking-isolation-clear-30' },
-};
-const GET_INTERVIEW_STATUS = {
-  0: { button: '작성 하기', buttonClass: '', disabled: false },
-  1: { button: '작성 하기', buttonClass: 'dis-blue', disabled: true },
-  2: { button: '작성 불가', buttonClass: 'dis-gray', disabled: true },
-  3: { button: '작성 완료', buttonClass: '', disabled: true },
-};
 
 export default {
   data() {
     return {
+      today: this.$dayjs().format(ENUM_DATE_FORMAT.PeriodYmd),
       state: INIT_STATE(),
-      interviewList: [
-        {
-          time: '09 : 56',
-          subData: [
-            {
-              title: GET_INTERVIEW_NAME['01'].title,
-              pathName: GET_INTERVIEW_NAME['01'].pathName,
-              button: '작성하기',
-              buttonClass: '',
-              disabled: false,
-            },
-            {
-              title: GET_INTERVIEW_NAME['02'].title,
-              pathName: GET_INTERVIEW_NAME['02'].pathName,
-              button: '작성하기',
-              buttonClass: 'dis-gray',
-              disabled: false,
-            },
-          ],
-        },
-        {
-          time: '14 : 00',
-          subData: [
-            {
-              title: GET_INTERVIEW_NAME['04'].title,
-              pathName: GET_INTERVIEW_NAME['04'].pathName,
-              button: '작성하기',
-              buttonClass: '',
-              disabled: false,
-            },
-          ],
-        },
-        {
-          time: '16 : 30',
-          subData: [
-            {
-              title: GET_INTERVIEW_NAME['05'].title,
-              pathName: GET_INTERVIEW_NAME['05'].pathName,
-              button: '작성하기',
-              buttonClass: 'dis-blue',
-              disabled: false,
-            },
-          ],
-        },
-      ],
-      symptomList: [
-        {
-          title: '오전 문진',
-          content: '이상 증상 없음',
-          textClass: '',
-        },
-        {
-          title: '오후 문진',
-          content: '기침, 발열, 콧물, 인후통',
-          textClass: 'txtc-blue',
-        },
-      ],
     };
   },
-  components: {},
+  computed: {
+    ...mapGetters({ interviewList: GET_INTERVIEW_LIST, symptomList: GET_SYMPTOMLIST }),
+  },
   methods: {
-    ...mapActions({ getInterviewList: GET_INTERVIEW_LIST }),
-    movePage(pathName) {
-      this.$router.push({ name: pathName });
-    },
+    ...mapActions({ fetchList: GET_INTERVIEW_LIST }),
     async getLists() {
       const today = this.$dayjs().format('YYYY.MM.DD');
-      const result = await this.getInterviewList(today);
-      console.log(result);
+      const result = await this.fetchList(today);
+    },
+    historyWrite({ interviewType }) {
+      let name;
+      switch (interviewType) {
+        case TYPE_CONFIRMED_DAY:
+          name = 'history-taking-confirmed-day';
+          break;
+        case TYPE_ISOLATION_DAY:
+          name = 'history-taking-isolation-clear';
+          break;
+        case TYPE_ISOLATION_DAY_AFTER_30:
+          name = 'history-taking-isolation-clear-30';
+          break;
+        case TYPE_AM:
+        case TYPE_PM:
+        default:
+          name = 'history-taking-am-pm';
+          break;
+      }
+      this.$router.push({ name });
     },
   },
-  created() {
-    this.getLists();
-    window.vm = this;
+  async created() {
+    await this.getLists();
   },
 };
 </script>

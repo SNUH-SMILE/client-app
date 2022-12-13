@@ -1,7 +1,9 @@
 import _merge from 'lodash/merge';
+import _cloneDeep from 'lodash/cloneDeep';
 import { interviewService } from '@/services/api';
-import { RESPONSE_STATUS } from '@/common/constants';
+import { ENUM_DATE_FORMAT, RESPONSE_STATUS } from '@/common/constants';
 import { LOGIN_ID } from '../patient';
+import dayjs from 'dayjs';
 
 export const SET_INTERVIEW_LIST = 'interview/setInterview';
 export const GET_INTERVIEW_LIST = 'interview/interviewList';
@@ -44,10 +46,26 @@ export default {
   },
   getters: {
     [GET_INTERVIEW_LIST]({ interviewList }) {
-      return interviewList;
+      const list = _cloneDeep(interviewList);
+      return list.map((item) => {
+        if (item.interviewTime) {
+          const interviewTime = dayjs(item.interviewTime, ENUM_DATE_FORMAT.Hm);
+          item.interviewTimeLabel = interviewTime.format(ENUM_DATE_FORMAT.SemiHm);
+        }
+        if (item.interviewType === '00') item.interviewType = '01';
+        return item;
+      });
     },
     [GET_SYMPTOMLIST]({ symptomLists }) {
-      return symptomLists;
+      const list = _cloneDeep(symptomLists);
+      return list.map((item) => {
+        if (item.symptomTitle.length > 0) {
+          item.symptomTitleLabel = item.symptomTitle.split(', ');
+        } else {
+          item.symptomTitleLabel = '';
+        }
+        return item;
+      });
     },
   },
 };

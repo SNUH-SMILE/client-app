@@ -1,13 +1,15 @@
 <template>
   <div class="content-wrap">
     <home-contents />
-    <history-taking-alarm v-if="popup === 'alarm'" @onAction="onHtAlarmAction" />
+    <history-taking-alarm v-if="popup === 'interview'" @onAction="onHtAlarmAction" />
   </div>
 </template>
 <script>
 import HistoryTakingAlarm from '@/components/HistoryTakingAlarm.vue';
 import HomeContents from '@/components/HomeContents.vue';
 import { notificaitonCommonEvent, STARTED_PUSH_CHECK } from '@/native/push';
+import { mapGetters } from 'vuex';
+import { GET_INTERVIEW_LIST } from '@/modules/history';
 export default {
   name: 'home',
   components: {
@@ -24,9 +26,25 @@ export default {
       popup: '',
     };
   },
+  computed: {
+    ...mapGetters({ interviewList: GET_INTERVIEW_LIST }),
+  },
   methods: {
     onHtAlarmAction(action) {
+      if (action === 'submit') {
+        this.$router.push({ name: 'history-taking' });
+      }
       this.popup = '';
+    },
+  },
+  watch: {
+    interviewList() {
+      const exist = this.interviewList.find(({ interviewStatus }) => interviewStatus === '0');
+      if (exist) {
+        this.popup = 'interview';
+      } else {
+        this.popup = '';
+      }
     },
   },
 };

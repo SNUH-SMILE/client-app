@@ -19,7 +19,6 @@ const RouterLayout = createRouterLayout((layout) => {
 //     delete route.component;
 //   }
 // });
-console.clear();
 logger.log(routes);
 const router = new Router({
   mode: 'hash',
