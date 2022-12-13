@@ -21,14 +21,14 @@
   </modal-layout>
 </template>
 <script>
-import { getPushPermissionService } from '@/services/native/push.js';
+// import { getPushPermissionService } from '@/services/native/push.js';
 export default {
   layout: 'none',
   methods: {},
   created() {},
   beforeRouteLeave(to, from, next) {
     if (to.name === 'intro-push-agree') {
-      getPushPermissionService();
+      // getPushPermissionService();
     }
     next();
   },

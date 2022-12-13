@@ -55,7 +55,6 @@ import AppHomeHealths from '@/modules/main/AppHomeHealths.vue';
 import AppHomeExercise from '@/modules/main/AppHomeExercise.vue';
 import AppHomeMedicine from '@/modules/main/AppHomeMedicine.vue';
 // import _each from 'lodash/each';
-// import { exMainData } from '@/services/native/health.js';
 // const DETAIL_BEALTH_FUNC_NM = '__onDetailHealthCB';
 // const ON_CNANGE_TEMP_FUNC_NM = 'onChangeTemp';
 // const ON_CHANGE_STEP_FUNC_NM = 'onChangeStep';

@@ -11,20 +11,20 @@
   </modal-layout>
 </template>
 <script>
-import { getCurrendLocation, getMikePermission, getBluetoothPermission } from '@/services/native/permission.js';
+// import { getCurrendLocation, getMikePermission, getBluetoothPermission } from '@/services/native/permission.js';
 export default {
   layout: 'none',
   methods: {
     next() {
-      const locationPermission = getCurrendLocation();
-      const mikePermission = getMikePermission();
-      const bluetoothPermission = getBluetoothPermission();
-      if (locationPermission && mikePermission && bluetoothPermission === true) {
-        console.log('true');
-        this.$router.replace('/intro/push');
-      } else {
-        // 권한을 허용하지 않으면 어떻게 처리할지.
-      }
+      // const locationPermission = getCurrendLocation();
+      // const mikePermission = getMikePermission();
+      // const bluetoothPermission = getBluetoothPermission();
+      // if (locationPermission && mikePermission && bluetoothPermission === true) {
+      //   console.log('true');
+      //   this.$router.replace('/intro/push');
+      // } else {
+      // 권한을 허용하지 않으면 어떻게 처리할지.
+      // }
     },
   },
   created() {},

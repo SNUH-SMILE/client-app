@@ -46,7 +46,7 @@
                 <button type="button" class="btn-line-rnd" @click="addDrugForm">추가</button>
               </div>
             </div>
-            <medicine-item v-for="(item, index) in state.drugList" :key="index" v-model="state.drugList[index]" />
+            <app-medicine-item v-for="(item, index) in state.drugList" :key="index" v-model="state.drugList[index]" />
           </li>
           <li>
             <div class="hbox jc">
@@ -56,9 +56,9 @@
               </div>
             </div>
             <ul class="sub-info-box">
-              <medicine-alarm v-for="(item, index) in state.noticeTimeList" :key="index" v-model="state.noticeTimeList[index].noticeTime">
+              <app-medicine-alarm v-for="(item, index) in state.noticeTimeList" :key="index" v-model="state.noticeTimeList[index].noticeTime">
                 알람 {{ index + 1 }}
-              </medicine-alarm>
+              </app-medicine-alarm>
             </ul>
           </li>
         </ul>
@@ -77,8 +77,8 @@
 }
 </route>
 <script>
-import MedicineItem from '@/components/MedicineItem.vue';
-import MedicineAlarm from '@/components/MedicineAlarm.vue';
+import AppMedicineItem from '@/modules/medicine/AppMedicineItem.vue';
+import AppMedicineAlarm from '@/modules/medicine/AppMedicineAlarm.vue';
 import { ENUM_ALARM_TYPE, ENUM_DATE_FORMAT } from '@/common/constants';
 import dayjs from 'dayjs';
 import { mapGetters } from 'vuex';
@@ -118,8 +118,8 @@ const INIT_TIME_ITEM = () => ({
 
 export default {
   components: {
-    MedicineItem,
-    MedicineAlarm,
+    AppMedicineItem,
+    AppMedicineAlarm,
   },
   data() {
     return {
