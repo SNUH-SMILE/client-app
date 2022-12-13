@@ -62,10 +62,10 @@ export default {
     amPmQuestion() {
       const start = (this.state.ing - 1) * 10;
       let end = this.state.ing * 10;
-      if (end > amList.length) {
-        end = amList.length;
+      if (end > this.state.amForm.length) {
+        end = this.state.amForm.length;
       }
-      return amList.slice(start, end);
+      return this.state.amForm.slice(start, end);
     },
   },
   methods: {
@@ -78,7 +78,6 @@ export default {
         interviewDate: this.getInterviewDate(),
         answerList: formData,
       };
-
       const { code, message, data } = await this.setInterview(submitData);
       if (code === RESPONSE_STATUS.SUCCESS) {
         this.$toast('제출되었습니다.');
@@ -124,17 +123,16 @@ export default {
       this.$refs.content.scrollIntoView();
     },
     before() {
-      this.state--;
+      this.state.ing--;
       this.toTop();
     },
     next() {
-      this.state++;
+      this.state.ing++;
       this.toTop();
     },
   },
   created() {
     this.$eventBus.$on('changeRequired', this.changeRequired);
-    window.vm = this;
   },
   beforeDestroy() {
     this.$eventBus.$off('changeRequired');

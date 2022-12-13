@@ -3,7 +3,7 @@
     <v-radio
       v-for="(label, index) in question.labels"
       :key="question.order + label"
-      :id="question.order"
+      :id="`${question.order}-${getPoints[index]}`"
       :value="value"
       :name="question.order"
       :label="label"

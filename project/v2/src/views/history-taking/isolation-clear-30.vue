@@ -61,10 +61,10 @@ export default {
     isolationQuestion() {
       const start = (this.state.ing - 1) * 10;
       let end = this.state.ing * 10;
-      if (end > isolationClearList.length) {
-        end = isolationClearList.length;
+      if (end > this.state.isolationForm.length) {
+        end = this.state.isolationForm.length;
       }
-      return isolationClearList.slice(start, end);
+      return this.state.isolationForm.slice(start, end);
     },
   },
   methods: {

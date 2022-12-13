@@ -4,7 +4,7 @@
       <form @submit.prevent="submit">
         <div class="content" ref="content">
           <div class="blue-top-box">
-            <v-step-progress :percent="percent" :ing="state.ing" :total="state.total" />
+            <v-step-progress :ing="state.ing" :total="state.total" />
             <!-- TODO : 변화 적용 안됨 -->
           </div>
           <div class="cont-inner mb-space30">
@@ -57,20 +57,16 @@ export default {
   },
   components: { ...HistoryModules },
   computed: {
-    percent() {
-      return parseInt((this.state.ing / this.state.total) * 100);
-    },
     ConfirmedQuestion() {
       const start = (this.state.ing - 1) * 10;
       let end = this.state.ing * 10;
-      if (end > Confirmeddaylist.length) {
-        end = Confirmeddaylist.length;
+      if (end > this.state.confirmedForm.length) {
+        end = this.state.confirmedForm.length;
       }
-      return Confirmeddaylist.slice(start, end);
+      return this.state.confirmedForm.slice(start, end);
     },
   },
   methods: {
-    // 메서드 구현
     ...mapActions({ setInterview: SET_INTERVIEW_LIST }),
     async submit() {
       const formData = submitForm(this.state.confirmedForm);
@@ -79,7 +75,6 @@ export default {
         interviewDate: this.getInterviewDate(),
         answerList: formData,
       };
-
       const { code, message, data } = await this.setInterview(submitData);
       if (code === RESPONSE_STATUS.SUCCESS) {
         this.$toast('제출되었습니다.');
@@ -94,25 +89,24 @@ export default {
       const nowQuestion = this.state.confirmedForm.find((element) => {
         return element.order === nowOrder;
       });
-      const childQuestion = this.state.confirmedForm.filter((element) => {
-        return nowQuestion.child.includes(element.order);
-      });
-      childQuestion.forEach((child) => {
-        if (typeof nowQuestion.value === 'object') {
-          nowQuestion.value.forEach((element) => {
-            if (child.requiredValues.includes(element + '')) {
+      this.state.confirmedForm.forEach((child) => {
+        if (nowQuestion.child.includes(child.order)) {
+          if (typeof nowQuestion.value === 'object') {
+            nowQuestion.value.forEach((element) => {
+              if (child.requiredValues.includes(element + '')) {
+                child.answerRequired = 'required';
+              } else {
+                child.answerRequired = '';
+                child.value = '';
+              }
+            });
+          } else {
+            if (child.requiredValues.includes(nowQuestion.value)) {
               child.answerRequired = 'required';
             } else {
               child.answerRequired = '';
               child.value = '';
             }
-          });
-        } else {
-          if (child.requiredValues.includes(nowQuestion.value)) {
-            child.answerRequired = 'required';
-          } else {
-            child.answerRequired = '';
-            child.value = '';
           }
         }
       });

@@ -45,7 +45,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in tableData" :key="item.index">
+                <tr v-for="item in symptomList" :key="item.index">
                   <th scope="row">{{ item.title }}</th>
                   <td :class="item.textClass">{{ item.content }}</td>
                 </tr>
@@ -65,6 +65,8 @@
 }
 </route>
 <script>
+import { mapActions } from 'vuex';
+import { GET_INTERVIEW_LIST } from '@/modules/history';
 const INIT_STATE = () => ({});
 const GET_INTERVIEW_NAME = {
   '01': { title: '확진 당일 문진', pathName: 'history-taking-confirmed-day' },
@@ -73,6 +75,13 @@ const GET_INTERVIEW_NAME = {
   '04': { title: '격리 해제일 문진', pathName: 'history-taking-isolation-clear' },
   '05': { title: '격리 해제 30일 뒤 문진', pathName: 'history-taking-isolation-clear-30' },
 };
+const GET_INTERVIEW_STATUS = {
+  0: { button: '작성 하기', buttonClass: '', disabled: false },
+  1: { button: '작성 하기', buttonClass: 'dis-blue', disabled: true },
+  2: { button: '작성 불가', buttonClass: 'dis-gray', disabled: true },
+  3: { button: '작성 완료', buttonClass: '', disabled: true },
+};
+
 export default {
   data() {
     return {
@@ -122,7 +131,7 @@ export default {
           ],
         },
       ],
-      tableData: [
+      symptomList: [
         {
           title: '오전 문진',
           content: '이상 증상 없음',
@@ -138,9 +147,19 @@ export default {
   },
   components: {},
   methods: {
+    ...mapActions({ getInterviewList: GET_INTERVIEW_LIST }),
     movePage(pathName) {
       this.$router.push({ name: pathName });
     },
+    async getLists() {
+      const today = this.$dayjs().format('YYYY.MM.DD');
+      const result = await this.getInterviewList(today);
+      console.log(result);
+    },
+  },
+  created() {
+    this.getLists();
+    window.vm = this;
   },
 };
 </script>

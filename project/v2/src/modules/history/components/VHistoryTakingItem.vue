@@ -1,7 +1,6 @@
 <template>
-  <div class="form-item" v-if="!isHidden">
+  <div class="form-item" :hidden="isHidden">
     <validation-provider :name="index + '번'" immediate :rules="question.answerRequired" tag="fragment">
-      <!-- <label class="form-ttl"> {{ index }}. {{ question.question }} </label> -->
       <label class="form-ttl" v-html="`${index}. ${question.question}`"></label>
       <component :is="question.answerType" :question="question" :value="value" @input="handleInput" />
     </validation-provider>
@@ -16,7 +15,16 @@ export default {
     question: Object,
   },
   data() {
-    return {};
+    return {
+      isHidden: true,
+    };
+  },
+  created() {
+    if (Object.prototype.hasOwnProperty.call(this.question, 'parent')) {
+      this.isHidden = this.question.answerRequired !== 'required';
+    } else {
+      this.isHidden = false;
+    }
   },
   components: { ...AnswerComponents },
   methods: {
@@ -27,13 +35,18 @@ export default {
       }
     },
   },
-  computed: {
-    isHidden() {
-      if (Object.prototype.hasOwnProperty.call(this.question, 'parent')) {
-        return this.question.answerRequired !== 'required';
-      } else {
-        return false;
-      }
+  computed: {},
+  watch: {
+    question: {
+      deep: true,
+      handler(newValue) {
+        console.log('fire');
+        if (Object.prototype.hasOwnProperty.call(newValue, 'parent')) {
+          this.isHidden = newValue.answerRequired !== 'required';
+        } else {
+          this.isHidden = false;
+        }
+      },
     },
   },
 };
