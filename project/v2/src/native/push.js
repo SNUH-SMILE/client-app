@@ -6,8 +6,9 @@ import { ENUM_ALARM_TYPE, ENUM_APP_ENV, ENUM_DATE_FORMAT, ENUM_OS_ENV } from '@/
 import router from '@/router';
 import dayjs from 'dayjs';
 import Vue from 'vue';
-import { bindGlobalCb, extend } from '.';
+import { bindGlobalCb, executor, extend } from '.';
 import { STATUS } from './constants';
+import { OPEN_VONAGE_DOCTOR } from './vonage';
 
 const IOS_NOTIFICATION_CB_NAME = 'oniOSReceiveNotification';
 const ANDROID_NOTIFICATION_CB_NAME = 'onReceiveNotification';
@@ -29,6 +30,9 @@ export const notificaitonCommonEvent = (payload) => {
       name: 'medicine-check',
       query: { requestDate: dayjs().format(ENUM_DATE_FORMAT.YMD) },
     });
+  } else if (ext.action === ENUM_ALARM_TYPE.DOCTOR) {
+    const { apiKey, sessionId, token } = ext.infomation;
+    executor(OPEN_VONAGE_DOCTOR, apiKey, sessionId, token);
   }
 };
 

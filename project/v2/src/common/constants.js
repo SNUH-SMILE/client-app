@@ -37,6 +37,7 @@ export const ENUM_DATE_FORMAT = {
 export const ENUM_ALARM_TYPE = {
   EXERCISE: 'exercise',
   MEDICINE: 'medicine',
+  DOCTOR: 'doctor',
 };
 
 export const ENUM_QUARANTINE = {
