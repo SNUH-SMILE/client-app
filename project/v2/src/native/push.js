@@ -2,8 +2,9 @@
  * Native Push 관련
  */
 import { RUNTIME } from '@/common/config';
-import { ENUM_ALARM_TYPE, ENUM_APP_ENV, ENUM_OS_ENV } from '@/common/constants';
+import { ENUM_ALARM_TYPE, ENUM_APP_ENV, ENUM_DATE_FORMAT, ENUM_OS_ENV } from '@/common/constants';
 import router from '@/router';
+import dayjs from 'dayjs';
 import Vue from 'vue';
 import { bindGlobalCb, extend } from '.';
 import { STATUS } from './constants';
@@ -23,6 +24,11 @@ export const notificaitonCommonEvent = (payload) => {
   // TODO: 푸시(알람) 케이스 별 처리 필요
   if (ext.action === ENUM_ALARM_TYPE.EXERCISE) {
     router.push({ name: 'exercise-id', params: { id: ext.videoId } });
+  } else if (ext.action === ENUM_ALARM_TYPE.MEDICINE) {
+    router.push({
+      name: 'medicine-check',
+      query: { requestDate: dayjs().format(ENUM_DATE_FORMAT.YMD) },
+    });
   }
 };
 

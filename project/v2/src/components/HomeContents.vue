@@ -42,23 +42,7 @@
 
       <app-home-healths />
 
-      <section class="section-box">
-        <div class="section-ttl-box">
-          <h2 class="section-ttl">복약관리</h2>
-          <router-link custom v-slot="{ navigate }" :to="{ name: 'medicine' }">
-            <button type="button" class="btn-ic-txt arrow" @click="navigate">바로가기</button>
-          </router-link>
-        </div>
-        <!-- nodata -->
-        <div class="nodata-box" v-if="!pillShow">
-          <p class="ic-txt pill">설정된 복약 알림이 없습니다.</p>
-        </div>
-        <!-- yesdata -->
-        <div class="info-center-box" v-if="pillShow">
-          <p class="txt-info"><strong class="ic-txt pill">12:30</strong>에 드실 약이 있습니다.</p>
-          <strong class="sub-txt">&ldquo; 점심 혈압 약 &rdquo;</strong>
-        </div>
-      </section>
+      <app-home-medicine />
       <app-home-exercise />
     </div>
   </div>
@@ -69,6 +53,7 @@ import { mapActions, mapGetters } from 'vuex';
 import { MAIN_CONTENT } from '@/modules/main';
 import AppHomeHealths from '@/modules/main/AppHomeHealths.vue';
 import AppHomeExercise from '@/modules/main/AppHomeExercise.vue';
+import AppHomeMedicine from '@/modules/main/AppHomeMedicine.vue';
 // import _each from 'lodash/each';
 // import { exMainData } from '@/services/native/health.js';
 // const DETAIL_BEALTH_FUNC_NM = '__onDetailHealthCB';
@@ -76,7 +61,7 @@ import AppHomeExercise from '@/modules/main/AppHomeExercise.vue';
 // const ON_CHANGE_STEP_FUNC_NM = 'onChangeStep';
 // const ON_CHANGE_RATE_FUNC_NM = 'onChangeRate';
 export default {
-  components: { AppHomeHealths, AppHomeExercise },
+  components: { AppHomeHealths, AppHomeExercise, AppHomeMedicine },
   name: 'home-contents',
   data() {
     return {

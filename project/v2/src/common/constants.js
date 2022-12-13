@@ -36,6 +36,7 @@ export const ENUM_DATE_FORMAT = {
 
 export const ENUM_ALARM_TYPE = {
   EXERCISE: 'exercise',
+  MEDICINE: 'medicine',
 };
 
 export const ENUM_QUARANTINE = {
@@ -58,3 +59,13 @@ export const STORAGE_KEYS = {
 };
 
 export const RESPONSE_STATUS = { SUCCESS: '00' };
+
+export const FORM_DRUG_TYPE = [
+  { label: '알', value: '0' },
+  { label: 'cc', value: '1' },
+  { label: 'ml', value: '2' },
+  { label: 'mg', value: '3' },
+  { label: 'g', value: '4' },
+  { label: '스푼', value: '5' },
+  { label: '포', value: '6' },
+];

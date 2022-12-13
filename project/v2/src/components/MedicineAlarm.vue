@@ -1,10 +1,10 @@
 <template>
   <li>
-    <p class="sub-ttl">알림 1</p>
+    <p class="sub-ttl"><slot></slot></p>
     <div class="right-area">
-      <button type="button" class="btn-txt-detail" @click="showTimePicker = true">{{ time.substring(0, 2) }}:{{ time.substring(3, 5) }}</button>
+      <button type="button" class="btn-txt-detail" @click="showTimePicker = true">{{ value }}</button>
     </div>
-    <app-time-picker v-if="showTimePicker" v-model="time" @onClose="showTimePicker = false" @onSubmit="handleValue" />
+    <app-time-picker v-if="showTimePicker" :value="value" @input="handleInput" @onClose="showTimePicker = false" />
   </li>
 </template>
 <script>
@@ -23,17 +23,12 @@ export default {
   data() {
     return {
       showTimePicker: false,
-      time: '',
     };
   },
   methods: {
-    handleValue(value) {
-      this.time = value;
-      this.$emit('input', value);
+    handleInput(newValue) {
+      this.$emit('input', newValue);
     },
-  },
-  created() {
-    this.time = this.value;
   },
 };
 </script>

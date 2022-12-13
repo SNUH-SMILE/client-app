@@ -23,6 +23,7 @@ const httpSend = (path, data = {}, server) => {
       },
     })
       .then(({ code, message, ...data }) => {
+        logger.info(` RESPONSE :: path : ${path} `, code, message, data);
         if (code === RESPONSE_STATUS.SUCCESS) {
           resolve({ code, message, data });
         } else {
@@ -31,11 +32,10 @@ const httpSend = (path, data = {}, server) => {
         }
       })
       .catch((code) => {
-        Vue.$alert(`ERROR CODE : ${code}`);
+        Vue.$alert(`ERROR CODE :  path : ${path} ${code}`);
         reject(code);
       })
-      .finally((...args) => {
-        logger.info(` RESPONSE ::  `, args);
+      .finally(() => {
         loading.$hide();
       });
   });

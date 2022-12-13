@@ -51,11 +51,8 @@ export const DB_CONNECT = 'dbConnect';
 
 extend(DB_CONNECT, (path) => {
   return new Promise((resolve, reject) => {
-    // createDb(path)
-    //   .then(() => openDb(path))
-    //   .then(() => resolve())
-    //   .catch((err) => reject(err));
-    openDb(path)
+    createDb(path)
+      .then(() => openDb(path))
       .then(() => resolve())
       .catch((err) => reject(err));
   });

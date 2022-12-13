@@ -1,74 +1,72 @@
 <template>
   <div class="content-wrap">
-    <validation-observer tag="fragment">
-      <div class="content">
-        <div class="cont-inner pt0 tb-w100p">
-          <ul class="md-set-list">
-            <li>
-              <div class="hbox jc">
-                <p class="ttl">복용 시작일</p>
-                <div class="right-area">
-                  <strong class="txt txtc-blue">{{ date }}</strong>
+    <div class="content">
+      <div class="cont-inner pt0 tb-w100p">
+        <ul class="md-set-list">
+          <li>
+            <div class="hbox jc">
+              <p class="ttl">복용 시작일</p>
+              <div class="right-area">
+                <strong class="txt txtc-blue">{{ today }}</strong>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="hbox jc">
+              <p class="ttl">복용 일수</p>
+              <div class="right-area">
+                <p class="ipt-select">
+                  <select title="복용 일수" v-model="state.noticeDate" name="noticeDate">
+                    <option value="1">1일</option>
+                    <option value="2">2일</option>
+                    <option value="3">3일</option>
+                    <option value="4">4일</option>
+                    <option value="5">5일</option>
+                    <option value="6">6일</option>
+                    <option value="7">7일</option>
+                  </select>
+                </p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="hbox jc">
+              <p class="ttl">약봉투 이름</p>
+              <div class="right-area">
+                <div class="ipt-wrap">
+                  <text-field class="full" type="text" title="약물 이름" placeholder="입력해 주세요." v-model="state.noticeName" />
                 </div>
               </div>
-            </li>
-            <li>
-              <div class="hbox jc">
-                <p class="ttl">복용 일수</p>
-                <div class="right-area">
-                  <p class="ipt-select">
-                    <select title="복용 일수" name="noticeDate">
-                      <option value="1">1일</option>
-                      <option value="2">2일</option>
-                      <option value="3">3일</option>
-                      <option value="4">4일</option>
-                      <option value="5">5일</option>
-                      <option value="6">6일</option>
-                      <option value="7">7일</option>
-                    </select>
-                  </p>
-                </div>
+            </div>
+          </li>
+          <li>
+            <div class="hbox jc">
+              <p class="ttl">약물 정보</p>
+              <div class="right-area">
+                <button type="button" class="btn-line-rnd" @click="addDrugForm">추가</button>
               </div>
-            </li>
-            <li>
-              <div class="hbox jc">
-                <p class="ttl">알림 이름 <br /><span class="fs-nm">(필수 입력)</span></p>
-                <div class="right-area">
-                  <div class="ipt-wrap">
-                    <text-field type="text" title="약물 이름" placeholder="입력해 주세요." v-model="alarmName" />
-                  </div>
-                </div>
+            </div>
+            <medicine-item v-for="(item, index) in state.drugList" :key="index" v-model="state.drugList[index]" />
+          </li>
+          <li>
+            <div class="hbox jc">
+              <p class="ttl">알림 시간</p>
+              <div class="right-area">
+                <button type="button" class="btn-line-rnd" @click="addAlarm">추가</button>
               </div>
-            </li>
-            <li>
-              <div class="hbox jc">
-                <p class="ttl">약물 정보 <br /><span class="fs-nm">(선택 입력)</span></p>
-                <div class="right-area">
-                  <button type="button" class="btn-line-rnd" @click="addMedicine">추가</button>
-                </div>
-              </div>
-              <medicine-item v-for="(item, index) in medicineList" :key="index" v-model="medicineList[index]" />
-            </li>
-            <li>
-              <div class="hbox jc">
-                <p class="ttl">알림 시간</p>
-                <div class="right-area">
-                  <button type="button" class="btn-line-rnd" @click="addAlarm">추가</button>
-                </div>
-              </div>
-              <ul class="sub-info-box">
-                <medicine-alarm v-for="(item, index) in alarmList" :key="index" v-model="alarmList[index].time" />
-              </ul>
-            </li>
-          </ul>
-        </div>
+            </div>
+            <ul class="sub-info-box">
+              <medicine-alarm v-for="(item, index) in state.noticeTimeList" :key="index" v-model="state.noticeTimeList[index].noticeTime">
+                알람 {{ index + 1 }}
+              </medicine-alarm>
+            </ul>
+          </li>
+        </ul>
       </div>
-      <div class="btn-wrap">
-        <router-link custom v-slot="{ navigate }" :to="{ name: 'medicine' }">
-          <button type="button" class="btn-txt navy" @click="navigate" :disabled="!isActiveSaveButton">저장</button>
-        </router-link>
-      </div>
-    </validation-observer>
+    </div>
+    <div class="btn-wrap">
+      <button type="button" class="btn-txt navy" @click="submit" :disabled="!isActiveSaveButton">저장</button>
+    </div>
   </div>
 </template>
 <route>
@@ -79,18 +77,43 @@
 }
 </route>
 <script>
-import insertService from '@/services/native/db.js';
 import MedicineItem from '@/components/MedicineItem.vue';
 import MedicineAlarm from '@/components/MedicineAlarm.vue';
+import { ENUM_ALARM_TYPE, ENUM_DATE_FORMAT } from '@/common/constants';
+import dayjs from 'dayjs';
+import { mapGetters } from 'vuex';
+import { LOGIN_ID } from '@/modules/patient';
+import { drugService } from '@/services/api';
+import { MULTI_REGIST_LOCAL_ALARM, SYNC_LOCAL_ALARM } from '@/native/alarm';
 
-const QUERY_DB_CB_NM = '__queryDBcb';
-window[QUERY_DB_CB_NM] = (...args) => {
-  console.log(...args);
+const INIT_STATE = () => ({
+  noticeName: '',
+  drugList: [],
+  noticeTimeList: [],
+  noticeDate: '1',
+});
+
+const INIT_DRUG_ITEM = () => ({
+  drugName: '',
+  drugCount: '',
+  drugType: '0',
+});
+
+const getCloseTime = () => {
+  let today = dayjs();
+  const minute = today.minute();
+  let min = 0;
+  if (minute < 50) {
+    min = (Math.floor(minute / 10) + 1) * 10;
+  } else {
+    today = today.add(1, 'hour');
+  }
+  today = today.minute(min);
+  return today.format('HH:mm');
 };
-const medicineItemForm = () => ({
-  medicineName: '',
-  capacity: '',
-  unit: '',
+
+const INIT_TIME_ITEM = () => ({
+  noticeTime: getCloseTime(),
 });
 
 export default {
@@ -100,50 +123,80 @@ export default {
   },
   data() {
     return {
-      alarmName: '',
-      date: this.$dayjs().format('YYYY.MM.DD'),
-      medicineList: [],
-      alarmList: [],
-      toastShow: false,
+      state: INIT_STATE(),
+      today: this.$dayjs().format(ENUM_DATE_FORMAT.PeriodYmd),
     };
   },
   methods: {
-    showModal() {
-      this.$eventBus.$emit('openTimePicker');
+    async submit() {
+      const err = this.validation();
+      if (err) return this.$alert(err);
+      const { noticeDate, noticeName, drugList, noticeTimeList: alarmList } = this.state;
+      const noticeTimeList = alarmList.map((o) => {
+        o.noticeTime = o.noticeTime.replace(':', '');
+        return o;
+      });
+
+      const noticeStartDate = this.$dayjs().format(ENUM_DATE_FORMAT.YMD);
+      const noticeEndDate = this.$dayjs().add(noticeDate, 'day').format(ENUM_DATE_FORMAT.YMD);
+      const loginId = this.loginId;
+      await drugService.setNotice(loginId, noticeStartDate, noticeEndDate, noticeDate, noticeName, drugList, noticeTimeList);
+
+      const createPushContents = () => {
+        let count = Number(noticeDate);
+        let date = this.$dayjs().subtract(1, 'day');
+        let uniqueId = this.$dayjs().unix();
+        const result = [];
+        while (count > 0) {
+          date = date.add(1, 'day');
+          uniqueId += 1;
+          noticeTimeList.forEach(({ noticeTime }) => {
+            const alarmDate = this.$dayjs(date.format(ENUM_DATE_FORMAT.YMD) + noticeTime, ENUM_DATE_FORMAT.YMD + ENUM_DATE_FORMAT.Hm).format(
+              `${ENUM_DATE_FORMAT.HyphenYmd} ${ENUM_DATE_FORMAT.SemiHm}:00`
+            );
+            result.push({
+              id: `${uniqueId}`, // id 컬럼..?
+              title: '복약 시간 알림',
+              body: `등록하신 "${noticeName}"을 복용하실 시간입니다.`,
+              type: ENUM_ALARM_TYPE.MEDICINE,
+              date: alarmDate,
+              ext: {
+                action: ENUM_ALARM_TYPE.MEDICINE,
+              },
+            });
+          });
+          count -= 1;
+        }
+        return result;
+      };
+      await this.$nativeScript(MULTI_REGIST_LOCAL_ALARM, createPushContents());
+      this.$nativeScript(SYNC_LOCAL_ALARM);
+
+      this.$toast('알림 설정 내용이 저장되었습니다.');
+      this.$router.back();
     },
-    showToast() {
-      this.$toast({ text: '알림 설정 내용이 저장되었습니다.' });
-    },
-    submit() {
-      this.showToast();
-    },
-    addMedicine() {
-      this.medicineList.push(medicineItemForm());
+    addDrugForm() {
+      this.state.drugList.push(INIT_DRUG_ITEM());
     },
     addAlarm() {
-      this.alarmList.push({ time: this.$dayjs().format('hh mm') });
+      this.state.noticeTimeList.push(INIT_TIME_ITEM());
     },
-    submitAlarmTime(value) {
-      console.log(value);
+    validation() {
+      let err = '';
+      this.state.drugList.forEach(({ drugName, drugCount, drugType }) => {
+        if (drugName.length === 0) {
+          err = '약물 이름을 입력해 주세요.';
+          return false;
+        }
+      });
+      return err;
     },
   },
   computed: {
+    ...mapGetters({ loginId: LOGIN_ID }),
     isActiveSaveButton() {
-      return this.alarmName.length > 0;
+      return this.state.noticeName.length > 0 && this.state.drugList.length > 0 && this.state.noticeTimeList.length > 0;
     },
-  },
-  created() {
-    /**
-     * 만약, Slot 사용 여부에 따라서 핸들링시  아래의 로직을 Header컴포넌트로 이동
-     */
-    this.$eventBus.$emit('setWarpClass', 'pg-fp');
-    // insertService({ type: 'medicine', time: '20221102 1503', seq: 'self00001' }, QUERY_DB_CB_NM);
-  },
-  beforeDestroy() {
-    this.$eventBus.$emit('setWarpClass', '');
-  },
-  beforeRouteLeave(to, from, next) {
-    next();
   },
 };
 </script>
