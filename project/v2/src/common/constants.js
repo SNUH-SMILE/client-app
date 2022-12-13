@@ -44,6 +44,12 @@ export const ENUM_QUARANTINE = {
   NO: '1', // 이탈
 };
 
+export const ENUM_ISOLATION_TYPE = {
+  UNKOWN: 'unknown',
+  ISOLATION: 'isolation',
+  DISCHARGE: 'discharge',
+};
+
 export const ENUM_BODY_STATUS = {
   NONE: 'none',
   BAD: 'bad',

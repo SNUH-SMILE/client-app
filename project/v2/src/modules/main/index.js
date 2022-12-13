@@ -3,7 +3,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 import _merge from 'lodash/merge';
 import _maxBy from 'lodash/maxBy';
 import _sumBy from 'lodash/sumBy';
-import { ENUM_DATE_FORMAT, ENUM_QUARANTINE } from '@/common/constants';
+import { ENUM_DATE_FORMAT, ENUM_ISOLATION_TYPE, ENUM_QUARANTINE } from '@/common/constants';
 import { mainService } from '@/services/api';
 import { LOGIN_ID } from '../patient';
 const { YMD, HyphenYmd, Hm, SemiHm, HH, mm } = ENUM_DATE_FORMAT;
@@ -107,24 +107,42 @@ export default {
   getters: {
     [MAIN_USER_INFO]({ contents }) {
       const data = _cloneDeep(contents);
-      const dischargeDateLabel = data.dischargeDate ? dayjs(data.dischargeDate, YMD).format(HyphenYmd) : '';
-      let discargeCount = -1;
-      const admissionDate = dayjs(data.admissionDate, YMD);
-      const dischargeScheduledDate = dayjs(data.dischargeScheduledDate, YMD);
-      if (data.dischargeDate) {
-        // TODO: 종료일이 있는 경우 데이터 확인 및 처리
-        discargeCount = 0;
-      } else {
-        discargeCount = dischargeScheduledDate.diff(admissionDate, 'day', false);
+
+      // 1. 격리 기간 모르는 경우 기본 세팅
+      let isolationCount = -1;
+      let isolationType = ENUM_ISOLATION_TYPE.UNKOWN;
+      let admissionDateLabel = '';
+      let dischargeScheduledDateLabel = '';
+      let dischargeDateLabel = '';
+
+      if (data.admissionDate && data.dischargeScheduledDate) {
+        // 2. 격리 입소일, 격리 해제 예정일을 아는 경우
+        const admissionDate = dayjs(data.admissionDate, YMD);
+        const dischargeScheduledDate = dayjs(data.dischargeScheduledDate, YMD);
+        admissionDateLabel = admissionDate.format(HyphenYmd);
+        dischargeScheduledDateLabel = dischargeScheduledDate.format(HyphenYmd);
+
+        if (data.dischargeDate) {
+          // 4. 격리 해제 일이 있는 경우
+          const dischargeDate = dayjs(data.dischargeDate, YMD);
+          dischargeDateLabel = dischargeDate.format(HyphenYmd);
+          isolationType = ENUM_ISOLATION_TYPE.DISCHARGE;
+          isolationCount = dayjs().diff(dischargeDate, 'day', false);
+        } else {
+          // 3. 격리 해제일이 없는 경우
+          isolationType = ENUM_ISOLATION_TYPE.ISOLATION;
+          isolationCount = dischargeScheduledDate.diff(dayjs(), 'day', false);
+        }
       }
 
-      const result = {
-        admissionDateLabel: admissionDate.format(HyphenYmd),
-        dischargeScheduledDateLabel: dischargeScheduledDate.format(HyphenYmd),
+      return {
+        isolationType,
+        isolationCount,
+        admissionDateLabel,
+        dischargeScheduledDateLabel,
         dischargeDateLabel,
-        discargeCount,
+        centerNm: data.centerNm,
       };
-      return result;
     },
     [MAIN_HEALTHS]({ contents }) {
       const { todayBtList, todayBpList, todayHrList, todayTotalSleepTime, todaySpO2List, todayStepCountList } = contents;
