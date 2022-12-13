@@ -2,7 +2,7 @@
   <fragment>
     <div class="content-wrap">
       <div class="content">
-        <app-medicine-check-list />
+        <app-medicine-check-list @refetch="refetch" />
       </div>
       <div class="btn-wrap">
         <router-link custom v-slot="{ navigate }" :to="{ name: 'medicine-no-alarm-check' }">
@@ -31,17 +31,33 @@ export default {
   beforeRouteEnter(to, from, next) {
     if (!to.query.requestDate) {
       Vue.$alert('잘못된 접근입니다.');
-      next({ to: 'medicine' });
+      next({ name: 'medicine' });
     } else {
       next();
     }
   },
+  beforeRouteLeave(to, from, next) {
+    if (to.name === 'medicine' && this.once) {
+      to.query.requestDate = this.$route.query.requestDate;
+      this.once = false;
+      return next({ name: 'medicine', query: { requestDate: this.$route.query.requestDate } });
+    }
+    next();
+  },
   components: { AppMedicineCheckList },
+  data() {
+    return {
+      once: true,
+    };
+  },
   created() {
     this.fetchList(this.$route.query.requestDate);
   },
   methods: {
     ...mapActions({ fetchList: MEDICINE_NOTICE_LIST }),
+    refetch() {
+      this.fetchList(this.$route.query.requestDate);
+    },
   },
 };
 </script>

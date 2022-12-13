@@ -43,6 +43,9 @@ export default {
     };
   },
   created() {
+    if (this.$route.query.requestDate) {
+      this.date = this.$route.query.requestDate;
+    }
     this.fetchNoticeList(this.date);
     this.fetchTimeLineList(this.date);
   },

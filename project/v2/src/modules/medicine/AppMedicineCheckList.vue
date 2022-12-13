@@ -11,24 +11,14 @@
           <span class="ttl">{{ alarm.noticeName }}</span>
           <div class="right-area">
             <p class="ipt-rdo-txt">
-              <input
-                type="radio"
-                :id="`eat-no-${alarm.drugAlarmSeq}`"
-                value="2"
-                v-model="alarm.takeResult"
-                :name="`eat-yn-${alarm.drugAlarmSeq}`"
-                @change="changeTakeResult(alarm)"
-              />
-              <label :for="`eat-no-${alarm.drugAlarmSeq}`">복욕안함</label>
-              <input
-                type="radio"
-                :id="`eat-yes-${alarm.drugAlarmSeq}`"
-                value="1"
-                v-model="alarm.takeResult"
-                :name="`eat-yn-${alarm.drugAlarmSeq}`"
-                @change="changeTakeResult(alarm)"
-              />
-              <label :for="`eat-yes-${alarm.drugAlarmSeq}`">복욕함</label>
+              <template v-if="alarm.takeResult === '2'">
+                <input type="radio" :id="`eat-no-${alarm.drugAlarmSeq}`" checked @click="changeTakeResult(alarm)" />
+                <label :for="`eat-no-${alarm.drugAlarmSeq}`">복약체크</label>
+              </template>
+              <template v-else>
+                <input type="radio" :id="`eat-yes-${alarm.drugAlarmSeq}`" disabled />
+                <label :for="`eat-yes-${alarm.drugAlarmSeq}`">복약함</label>
+              </template>
             </p>
           </div>
         </li>
@@ -52,11 +42,12 @@ export default {
     ...mapActions({ fetchList: MEDICINE_NOTICE_LIST }),
     async changeTakeResult(alarm) {
       const loginId = this.loginId;
-      const { drugAlarmSeq, takeResult } = alarm;
+      const { drugAlarmSeq } = alarm;
       const today = this.$dayjs();
       const resultDate = today.format(ENUM_DATE_FORMAT.YMD);
       const resultTime = today.format(ENUM_DATE_FORMAT.Hm);
-      await drugService.setTakeResult(loginId, drugAlarmSeq, resultDate, resultTime, takeResult);
+      await drugService.setTakeResult(loginId, drugAlarmSeq, resultDate, resultTime, '1');
+      this.$emit('refetch');
       this.$toast('복약 체크되었습니다.');
     },
   },

@@ -11,7 +11,7 @@
           <span class="txt">{{ item.drugList[0].drugCount }} {{ item.drugList[0].drugTypeLabel }}</span>
         </div>
         <div class="medicine-info" v-else>
-          <storong class="ttl" v-if="item.noticeName">{{ item.noticeName }}</storong>
+          <strong class="ttl" v-if="item.noticeName">{{ item.noticeName }}</strong>
           <p class="sub" v-for="(drug, index) in item.drugList" :key="`drug-item-${item.drugDoseSeq}-${index}`">
             <span class="ttl">{{ drug.drugName }}</span>
             <span class="txt">{{ drug.drugCount }} {{ drug.drugTypeLabel }}</span>
