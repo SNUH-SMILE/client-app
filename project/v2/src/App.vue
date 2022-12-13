@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper" :class="warpCls">
     <router-view />
-    <top-button v-if="showTopBtn" :class="{ 'tb-left-btm': !isMobile, 'is-btm': isMobile }" />
+    <top-button v-if="showTopBtn" :class="{ 'tb-left-btm': leftTopBtn, 'is-btm': isMobile }" />
   </div>
 </template>
 <script>
@@ -26,6 +26,9 @@ export default {
     },
     showTopBtn() {
       return this.$route.meta.showTopBtn;
+    },
+    leftTopBtn() {
+      return !this.isMobile && ['customer-inquiry', 'customer-notice'].includes(this.$route.name);
     },
   },
 };
