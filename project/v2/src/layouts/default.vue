@@ -1,5 +1,5 @@
 <template>
-  <fragment style="display: contents">
+  <fragment>
     <default-header />
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive" :key="$route.fullpath"></router-view>
