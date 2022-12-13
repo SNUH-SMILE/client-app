@@ -1,8 +1,3 @@
-import VHistoryTaking from './VHistoryTaking.vue';
-import VHistoryTakingItem from './VHistoryTakingItem.vue';
-import VStepProgress from './VStepProgress.vue';
-export default {
-  VHistoryTaking,
-  VHistoryTakingItem,
-  VStepProgress,
-};
+export { default as AppHistoryTaking } from './AppHistoryTaking.vue';
+export { default as AppHistoryTakingItem } from './AppHistoryTakingItem.vue';
+export { default as AppStepProgress } from './AppStepProgress.vue';

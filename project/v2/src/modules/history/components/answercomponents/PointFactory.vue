@@ -1,6 +1,6 @@
 <template>
   <div class="cr-list" :class="{ half: isEvenLabels }">
-    <v-radio
+    <app-history-radio
       v-for="(label, index) in question.labels"
       :key="question.order + label"
       :id="`${question.order}-${getPoints[index]}`"
@@ -10,15 +10,15 @@
       :point="getPoints[index]"
       :checked="value === getPoints[index]"
       @input="handleInput"
-    ></v-radio>
+    />
   </div>
 </template>
 <script>
-import VRadio from '@/components/common/VRadio.vue';
+import AppHistoryRadio from '@/modules/history/components/AppHistoryRadio.vue';
 export default {
   name: 'point-factory',
   components: {
-    VRadio,
+    AppHistoryRadio,
   },
   props: {
     value: String,
