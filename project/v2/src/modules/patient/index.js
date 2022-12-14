@@ -43,6 +43,7 @@ export default {
       state.token = '';
       executor(STORAGE_DATA, STORAGE_KEYS.TOKEN, '');
       executor(STORAGE_DATA, STORAGE_KEYS.LOGIN_ID, '');
+      executor(STORAGE_DATA, STORAGE_KEYS.SAVE_LOGIN_INPUT, '');
     },
     [SESSION](state, payload) {
       state.session = payload;
@@ -55,6 +56,7 @@ export default {
       if (rs.code === RESPONSE_STATUS.SUCCESS) {
         commit(SET_AUTH, { token, loginId });
         executor(REGIST_PUSH_SERVICE, loginId);
+        executor(STORAGE_DATA, STORAGE_KEYS.SAVE_LOGIN_INPUT, { loginId, password });
       }
 
       return rs;

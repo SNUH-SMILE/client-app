@@ -16,9 +16,14 @@
   </div>
 </template>
 <script>
+import { STORAGE_DATA } from '@/native/data';
+import { RESPONSE_STATUS, STORAGE_KEYS } from '@/common/constants';
+import { mapActions } from 'vuex';
+import { LOGIN } from '@/modules/patient';
 export default {
   layout: 'none',
   methods: {
+    ...mapActions({ login: LOGIN }),
     haveAllPermission() {
       //TODO: 위치, 마이크, 블루투스 권한
       // TODO 여기 있을것이 아니라 계속 요청해야함
@@ -33,14 +38,23 @@ export default {
     },
   },
   mounted() {
-    setTimeout(() => {
-      if (!this.haveAllPermission()) {
-        return this.$router.replace({ name: 'intro-permission' });
+    setTimeout(async () => {
+      // if (!this.haveAllPermission()) {
+      //   return this.$router.replace({ name: 'intro-permission' });
+      // }
+      // if (!this.havePushPermission()) {
+      //   return this.$router.replace({ name: 'intro-push' });
+      // }
+      const saveInput = this.$nativeScript(STORAGE_DATA, STORAGE_KEYS.SAVE_LOGIN_INPUT);
+      if (saveInput) {
+        const { loginId, password } = saveInput;
+        const { code, message } = await this.login({ loginId, password });
+        if (RESPONSE_STATUS.SUCCESS === code) {
+          this.$router.replace({ name: 'home' });
+        }
+      } else {
+        return this.$router.replace({ name: 'login' });
       }
-      if (!this.havePushPermission()) {
-        return this.$router.replace({ name: 'intro-push' });
-      }
-      return this.$router.replace({ name: 'login' });
     }, 1000);
   },
 };

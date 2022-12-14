@@ -61,9 +61,7 @@
         </div>
       </div>
       <div class="btn-wrap">
-        <router-link custom v-slot="{ navigate }" :to="{ name: 'login' }">
-          <button type="button" class="btn-txt navy" @click="navigate">로그아웃</button>
-        </router-link>
+        <button type="button" class="btn-txt navy" @click="logout">로그아웃</button>
       </div>
     </validation-observer>
   </div>
@@ -76,6 +74,8 @@
 }
 </route>
 <script>
+import { LOGOUT } from '@/modules/patient';
+import { mapMutations } from 'vuex';
 const INIT_STATE = () => ({});
 
 export default {
@@ -83,6 +83,13 @@ export default {
     return {
       state: INIT_STATE(),
     };
+  },
+  methods: {
+    ...mapMutations({ logoutAction: LOGOUT }),
+    logout() {
+      this.logoutAction();
+      this.$router.push({ name: 'login' });
+    },
   },
 };
 </script>

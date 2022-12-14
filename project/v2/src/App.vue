@@ -11,10 +11,27 @@ export default {
   components: {
     TopButton,
   },
+  data() {
+    return {
+      exitFlag: true,
+    };
+  },
   created() {
     M.onBack(() => {
       // TODO: 특정 화면에서의 처리 필요 또한
-      this.$router.go(-1);
+      if (['home', 'login'].includes(this.$route.name)) {
+        if (this.exitFlag) {
+          this.$toast('한번 더 누르시면 앱이 종료됩니다.');
+          this.exitFlag = false;
+          setTimeout(() => {
+            this.exitFlag = true;
+          }, 1000);
+        } else {
+          M.sys.exit();
+        }
+      } else {
+        this.$router.go(-1);
+      }
     });
   },
   computed: {

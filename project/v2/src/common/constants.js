@@ -63,6 +63,7 @@ export const STORAGE_KEYS = {
   LOGIN_ID: 'loginId',
   BODY_CHECK: 'bodyCheck', // 몸 상태 체크 상태에 대한 키
   MOBILE_DATA_ALERT_YN: 'mobildDataAlert',
+  SAVE_LOGIN_INPUT: 'saveLoginInput',
 };
 
 export const RESPONSE_STATUS = {

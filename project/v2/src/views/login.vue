@@ -49,21 +49,22 @@
 import { LOGIN } from '@/modules/patient';
 import { mapActions } from 'vuex';
 import { MODE } from '@/common/config';
-import { ENUM_MODE, RESPONSE_STATUS } from '@/common/constants';
+import { ENUM_MODE, RESPONSE_STATUS, STORAGE_KEYS } from '@/common/constants';
+import { STORAGE_DATA } from '@/native/data';
 const INIT_STATE = () => ({
   loginId: '',
   password: '',
 });
 
 const INIT_DEV_STATE = () => ({
-  loginId: 'admin',
+  loginId: 'test',
   password: '0000',
 });
 
 export default {
   layout: 'none',
   components: {},
-  created() {},
+
   data() {
     return {
       state: MODE === ENUM_MODE.PROD ? INIT_STATE() : INIT_DEV_STATE(),
@@ -76,14 +77,13 @@ export default {
       const { loginId, password } = this.state;
       const { code, message } = await this.login({ loginId, password });
       if (RESPONSE_STATUS.SUCCESS === code) {
-        this.$router.replace('home');
+        this.$router.replace({ name: 'home' });
       } else {
         this.$alert(message);
       }
     },
     togglePw() {
       this.showPassword = !this.showPassword;
-      console.log(this.showPassword);
     },
   },
 };
