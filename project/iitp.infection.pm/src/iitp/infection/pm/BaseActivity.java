@@ -97,7 +97,9 @@ public class BaseActivity extends MainActivity {
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		ComListener.mPermissionsResultListener.onPermissionsResultListener(requestCode,permissions,grantResults);
+		if(ComListener.mPermissionsResultListener != null) {
+			ComListener.mPermissionsResultListener.onPermissionsResultListener(requestCode, permissions, grantResults);
+		}
 	}
 
 	@Override

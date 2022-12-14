@@ -83,6 +83,8 @@ public class Startup extends Activity {
 					.setPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_CONNECT)
 					.check();
 
+		}else{
+			commLibHandle.processAppInit(this);
 		}
 
     }
