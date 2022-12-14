@@ -29,7 +29,8 @@
                 <button type="button" class="btn-full-detail" @click="navigate">앱 이용 Q&amp;A</button>
               </router-link>
             </li>
-            <li>
+            <!-- 2022.12.14 앱 내 설정 없도록 수정..(기능 관련되어서 문제가 발생될 요지가 있음.) -->
+            <!-- <li>
               <div class="hbox jc">
                 <p class="ttl">전체 PUSH 알림</p>
                 <div class="right-area">
@@ -56,7 +57,7 @@
                   </div>
                 </li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
