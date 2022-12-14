@@ -13,6 +13,7 @@ export const OXYGEN_DETAIL = 'health/oxygen';
 export const STEP_DETAIL = 'health/step';
 export const TEMPER_DETAIL = 'health/temper';
 export const SLEEP_DETAIL = 'health/sleep';
+export const RESPIRATION_DETAIL = 'health/respiration';
 
 export default {
   state: {
@@ -21,6 +22,7 @@ export default {
     oxygen: [],
     step: [],
     temper: [],
+    respiration: [],
     sleep: {
       totalSleepTime: '', // HHmm
       resultStartDateTime: '', //'YYYYMMDDHH'
@@ -46,6 +48,9 @@ export default {
     },
     [SLEEP_DETAIL](state, payload) {
       state.sleep = payload;
+    },
+    [RESPIRATION_DETAIL](state, payload = []) {
+      state.respiration = payload;
     },
   },
   actions: {
@@ -77,6 +82,12 @@ export default {
       const loginId = getters[LOGIN_ID];
       const { code, message, data } = await healthService.getBodyTemp(loginId, date);
       commit(TEMPER_DETAIL, data.btList);
+      return { code, message, data };
+    },
+    async [RESPIRATION_DETAIL]({ commit, getters }, { date }) {
+      const loginId = getters[LOGIN_ID];
+      const { code, message, data } = await healthService.getRespiration(loginId, date);
+      commit(RESPIRATION_DETAIL, data.rrList);
       return { code, message, data };
     },
     async [SLEEP_DETAIL]({ commit, getters }, { date }) {
@@ -118,6 +129,13 @@ export default {
     },
     [TEMPER_DETAIL]({ temper }) {
       const result = _cloneDeep(temper);
+      return result.map((item) => {
+        item.timeLabel = dayjs(item.resultTime, Hms).format(SemiHm);
+        return item;
+      });
+    },
+    [RESPIRATION_DETAIL]({ respiration }) {
+      const result = _cloneDeep(respiration);
       return result.map((item) => {
         item.timeLabel = dayjs(item.resultTime, Hms).format(SemiHm);
         return item;

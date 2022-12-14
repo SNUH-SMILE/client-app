@@ -151,7 +151,7 @@ export default {
       };
     },
     [MAIN_HEALTHS]({ contents }) {
-      const { todayBtList, todayBpList, todayHrList, todayTotalSleepTime, todaySpO2List, todayStepCountList } = contents;
+      const { todayBtList, todayBpList, todayHrList, todayTotalSleepTime, todaySpO2List, todayStepCountList, todayRrList } = contents;
       const toggles = {};
       const datas = {};
       const adapter = (arr, name, key = 'resultTime') => {
@@ -166,6 +166,7 @@ export default {
       adapter(todayBpList, 'bp');
       adapter(todayHrList, 'hr');
       adapter(todaySpO2List, 'o2');
+      adapter(todayRrList, 'rr');
       // adapter(todayStepCountList, 'step');
       if (todayStepCountList.length === 0) {
         toggles['step'] = false;
