@@ -7,7 +7,7 @@
           <router-link custom v-slot="{ navigate }" :to="{ name: 'exercise-id', params: { id: video.videoId } }">
             <button type="button" @click="navigate">
               <span class="thumbnail-box">
-                <img src="https://src.hidoc.co.kr/image/lib/2021/1/26/1611634006093_0.jpg" alt="" />
+                <img :src="video.thumnail" alt="" />
                 <span class="time">{{ video.runningMin }}분</span>
               </span>
               <span class="ttl">

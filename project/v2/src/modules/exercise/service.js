@@ -5,11 +5,16 @@ import dayjs from 'dayjs';
 import _cloneDeep from 'lodash/cloneDeep';
 import _sortBy from 'lodash/sortBy';
 import exerciseDataJson from './data.json';
-
+import { PUBLIC_PATH } from '@/common/config';
 const { exercises, videos } = exerciseDataJson;
 
 const GET_EXERCISES_DATA = () => _cloneDeep(exercises);
-const GET_VIDEOS_DATA = () => _cloneDeep(videos);
+const GET_VIDEOS_DATA = () => {
+  return _cloneDeep(videos).map((video) => {
+    video.thumnail = PUBLIC_PATH + video.thumnail;
+    return video;
+  });
+};
 
 export default {
   /**
@@ -19,7 +24,6 @@ export default {
   getExerciseVideoList(role) {
     const exercises = GET_EXERCISES_DATA();
     const videos = GET_VIDEOS_DATA();
-
     return exercises
       .filter(({ roles }) => roles.includes(role))
       .map((exercise) => {
