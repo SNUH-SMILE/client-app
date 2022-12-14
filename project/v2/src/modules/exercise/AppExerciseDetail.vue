@@ -3,7 +3,7 @@
     <div class="content">
       <div class="cont-inner mb-pt0 tb-full tb-divide">
         <div class="img-box">
-          <img src="https://cphoto.asiae.co.kr/listimglink/6/2019080807215588068_1565216515.jpg" alt="" />
+          <img :src="detail.thumnail" alt="" />
         </div>
         <div class="ex-info-wrap">
           <div class="info-box">
