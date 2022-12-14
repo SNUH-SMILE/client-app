@@ -59,6 +59,7 @@
 }
 </route>
 <script>
+import { OPEN_GARMIN_OAUTH } from '@/native/band';
 const INIT_STATE = () => ({});
 
 export default {
@@ -68,8 +69,9 @@ export default {
     };
   },
   methods: {
-    showModal() {
-      this.$eventBus.$emit('openGarminConnect');
+    async showModal() {
+      await this.$alert('가민 연동을 시작합니다.');
+      this.$nativeScript(OPEN_GARMIN_OAUTH, this.loginId, this.loginId);
     },
   },
 };

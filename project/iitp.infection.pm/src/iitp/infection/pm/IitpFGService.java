@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.FileUtils;
 import android.os.Handler;
 import android.os.IBinder;
 
@@ -49,6 +50,8 @@ import iitp.infection.pm.samples.utils.CommUtils;
 import m.client.android.library.core.common.CommonLibHandler;
 import m.client.android.library.core.managers.ActivityHistoryManager;
 import m.client.android.library.core.utils.CommonLibUtil;
+import m.client.android.library.core.utils.FileIoUtil;
+import m.client.android.library.core.utils.FileUtil;
 import m.client.android.library.core.view.MainActivity;
 import m.client.push.library.common.Logger;
 
@@ -168,6 +171,11 @@ public class IitpFGService extends Service {
         Cursor cursor;
         String path = CommonLibHandler.getInstance().getInternalFilesDir() + "/"+ AlarmDBConfig.COM_DB_NAME;
         Logger.e(path);
+
+        if(!FileUtil.isExistFile(path)){
+            Logger.e("isExistFile : false" );
+            return;
+        }
         AlarmDBHelper comDB = new AlarmDBHelper(context, path,1);
         sql ="SELECT * FROM alarm";//알람 데이터 가져오기
         cursor = comDB.queryData(sql);
