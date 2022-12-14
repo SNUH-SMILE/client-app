@@ -61,7 +61,12 @@ export default {
     startVideo() {
       const noShowAgain = this.$nativeScript(STORAGE_DATA, STORAGE_KEYS.MOBILE_DATA_ALERT_YN);
       if (noShowAgain === 'Y') {
-        this.$alert('처리를 기다리고 있습니다..');
+        this.$router.push({
+          name: 'exercise-video',
+          params: {
+            video: this.detail,
+          },
+        });
       } else {
         this.popup = 'data-alert';
       }
@@ -69,7 +74,12 @@ export default {
     onStart(noShowAgain) {
       if (noShowAgain) this.$nativeScript(STORAGE_DATA, STORAGE_KEYS.MOBILE_DATA_ALERT_YN, 'Y');
       this.popup = '';
-      this.$alert('처리를 기다리고 있습니다..');
+      this.$router.push({
+        name: 'exercise-video',
+        params: {
+          video: this.detail,
+        },
+      });
     },
   },
 };
