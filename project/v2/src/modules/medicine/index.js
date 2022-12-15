@@ -26,22 +26,24 @@ export default {
     async [MEDICINE_NOTICE_LIST]({ commit, getters }, requestDate) {
       // commit(MEDICINE_NOTICE_LIST);
       const loginId = getters[LOGIN_ID];
+      const result = await drugService.noticeList(loginId, requestDate);
       const {
-        data: { result },
-      } = await drugService.noticeList(loginId, requestDate);
-      const { noticeList } = result;
+        code,
+        message,
+        data: { noticeList },
+      } = result;
       commit(MEDICINE_NOTICE_LIST, noticeList);
-      return noticeList;
+      return result;
     },
     async [MEDICINE_TIMELINE_LIST]({ commit, getters }, requestDate) {
       // commit(MEDICINE_TIMELINE_LIST);
       const loginId = getters[LOGIN_ID];
+      const res = await drugService.timeList(loginId, requestDate);
       const {
-        data: { result },
-      } = await drugService.timeList(loginId, requestDate);
-      const { drugTimeList } = result;
-      commit(MEDICINE_TIMELINE_LIST, drugTimeList);
-      return drugTimeList;
+        data: { timeList },
+      } = res;
+      commit(MEDICINE_TIMELINE_LIST, timeList);
+      return res;
     },
   },
   getters: {
@@ -51,6 +53,7 @@ export default {
       });
       return result.map((item) => {
         item.noticeTimeLabel = dayjs(item.noticeTime.replace(':', ''), ENUM_DATE_FORMAT.Hm).format(ENUM_DATE_FORMAT.SemiHm);
+        item.drugList = item.drugList || [];
         item.drugList = item.drugList.map((drug) => {
           const data = FORM_DRUG_TYPE.find((type) => type.value === drug.drugType);
           drug.drugTypeLabel = data ? data.label : drug.drugType;
@@ -62,6 +65,7 @@ export default {
     [MEDICINE_TIMELINE_LIST]({ timeLineList }) {
       return timeLineList.map((item) => {
         item.timeLabel = dayjs(item.takeTime, ENUM_DATE_FORMAT.Hm).format(ENUM_DATE_FORMAT.SemiHm);
+        item.drugList = item.drugList || [];
         item.drugList = item.drugList.map((drug) => {
           const data = FORM_DRUG_TYPE.find((type) => type.value === drug.drugType);
           drug.drugTypeLabel = data ? data.label : drug.drugType;
@@ -87,6 +91,7 @@ export default {
           result.push(exist);
         }
         item.noticeTimeLabel = dayjs(noticeTime, ENUM_DATE_FORMAT.Hm).format(ENUM_DATE_FORMAT.SemiHm);
+        item.drugList = item.drugList || [];
         item.drugList = item.drugList.map((drug) => {
           const data = FORM_DRUG_TYPE.find((type) => type.value === drug.drugType);
           drug.drugTypeLabel = data ? data.label : drug.drugType;
