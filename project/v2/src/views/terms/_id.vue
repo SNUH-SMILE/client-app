@@ -3,7 +3,7 @@
     <validation-observer tag="fragment">
       <div class="content">
         <div class="cont-inner mb-space30">
-          <div class="terms-wrap">약관 내용이 들어갑니다.</div>
+          <div class="terms-wrap" v-html="getTerms()"></div>
         </div>
       </div>
       <div class="btn-wrap">
@@ -22,13 +22,25 @@
 }
 </route>
 <script>
-const INIT_STATE = () => ({});
-
+import { APP_DATA, INFO_DATA } from '@/modules/etc/terms.js';
+const INIT_STATE = () => ({
+  APP_DATA,
+  INFO_DATA,
+});
+const termsData = {
+  app: APP_DATA,
+  info: INFO_DATA,
+};
 export default {
   data() {
     return {
       state: INIT_STATE(),
     };
+  },
+  methods: {
+    getTerms() {
+      return termsData[this.$route.params.id];
+    },
   },
 };
 </script>

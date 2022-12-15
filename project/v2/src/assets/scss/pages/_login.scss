@@ -299,3 +299,48 @@
     }
   }
 }
+
+/*===  이용약관 상세 ===*/
+.terms-wrap {
+  h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  .txt {
+    line-height: 1.33;
+    margin-bottom: 2rem;
+    color: $color-gray-txt02;
+    + h1 {
+      margin-top: 3rem;
+    }
+  }
+  ul {
+    margin-top: 0.5rem;
+    li {
+      line-height: 1.33;
+
+      > ul {
+        padding-left: 1.5rem;
+        margin-top: 0;
+      }
+    }
+  }
+  .tbl-wrap {
+    margin-bottom: 2rem;
+    border-top: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
+
+    th {
+      font-size: 1.2rem;
+    }
+    td {
+      font-size: 1.2rem;
+    }
+  }
+}

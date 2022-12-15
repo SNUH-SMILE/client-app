@@ -15,7 +15,7 @@
             <li v-for="(item, index) in terms" :key="`${item.value}-${index}`">
               <p class="ipt-chk">
                 <input type="checkbox" :id="`${item.value}-chk-${index}`" v-model="selected" :value="item.value" />
-                <label :for="`${item.value}-chk-${index}`" v-text="item.title">IITP 자가 격리 앱 서비스 이용약관</label>
+                <label :for="`${item.value}-chk-${index}`" v-text="item.title" />
               </p>
               <button type="button" class="btn-ic-detail" @click="openDetail(item.value)">
                 <span class="txt-blind">상세보기</span>
@@ -47,17 +47,17 @@ export default {
     return {
       terms: [
         {
-          title: 'IITP 자가 격리 앱 서비스 이용약관',
+          title: '감염병 자가격리 및 생활치료센터 환자를 위한 앱 이용약관',
           value: 'app',
         },
         {
-          title: '개인정보 수집 및 이용 동의',
+          title: '개인정보처리방침 및 수집이용',
           value: 'info',
         },
-        {
-          title: '개인정보 제3자 제공 동의',
-          value: 'data',
-        },
+        // {
+        //   title: '개인정보 제3자 제공 동의',
+        //   value: 'data',
+        // },
       ],
       selected: [],
     };
@@ -81,8 +81,7 @@ export default {
   },
   methods: {
     openDetail(term) {
-      // TODO: detail 정의되면 처리
-      this.$alert('개발 대기중입니다.');
+      this.$router.push({ name: 'terms-id', params: { id: term } });
     },
   },
 };
