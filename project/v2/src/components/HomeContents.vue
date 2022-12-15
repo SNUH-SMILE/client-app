@@ -12,7 +12,7 @@
         </div>
         <div class="nodata-box">
           <!-- <p class="ic-txt diagnosis">오늘 예약된 비대면 진료가 없습니다.</p> -->
-          <p class="ic-txt diagnosis">진료시 알림이 울립니다.</p>
+          <p class="ic-txt diagnosis">비대면 진료가 시작되면 푸시로 알려드립니다.</p>
         </div>
 
         <!-- <div class="info-center-box" v-if="diagnosisShow">

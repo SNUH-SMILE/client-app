@@ -8,13 +8,13 @@ import Vue from 'vue';
 import { extend } from '.';
 
 export const OPEN_VONAGE_DOCTOR = 'openVonageDoctor';
-extend(OPEN_VONAGE_DOCTOR, (apiKey, sessionId, token) => {
+extend(OPEN_VONAGE_DOCTOR, (apikey, sessionid, token) => {
   if (RUNTIME.TYPE === ENUM_APP_ENV.APP) {
     M.page.activity({
       className: 'VonageViewController',
       param: {
-        apiKey,
-        sessionId,
+        apikey,
+        sessionid,
         token,
       },
     });

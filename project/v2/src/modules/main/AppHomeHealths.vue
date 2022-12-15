@@ -6,19 +6,6 @@
     </div>
     <ul class="health-list">
       <li>
-        <router-link custom v-slot="{ navigate }" :to="{ name: 'state-blood' }">
-          <button type="button" @click="navigate">
-            <span class="health-list-ttl ic-blood">혈압</span>
-            <!-- yesdata -->
-            <span class="data" v-if="toggles.bp"
-              ><strong class="num">{{ datas.bp.sbp }}/{{ datas.bp.dbp }}</strong> mmHg</span
-            >
-            <!-- nodata -->
-            <span class="txtc-gray" v-else>오늘은 측정된 정보가 없습니다.</span>
-          </button>
-        </router-link>
-      </li>
-      <li>
         <router-link custom v-slot="{ navigate }" :to="{ name: 'state-heart' }">
           <button type="button" @click="navigate">
             <span class="health-list-ttl ic-heart">심박수</span>
@@ -46,14 +33,25 @@
         </router-link>
       </li>
       <li>
-        <router-link custom v-slot="{ navigate }" :to="{ name: 'state-sleep' }">
+        <router-link custom v-slot="{ navigate }" :to="{ name: 'state-respiration' }">
           <button type="button" @click="navigate">
-            <span class="health-list-ttl ic-sleep">수면</span>
+            <span class="health-list-ttl ic-respiration">호흡수</span>
             <!-- yesdata -->
-            <span class="data" v-if="toggles.sleep"
-              ><strong class="num">{{ datas.sleep.hh }}</strong
-              >시간 <strong class="num">{{ datas.sleep.mm }}</strong
-              >분</span
+            <span class="data" v-if="toggles.rr"
+              ><strong class="num">{{ datas.rr.rr }}</strong> 회/분</span
+            >
+            <!-- nodata -->
+            <span class="txtc-gray" v-else>오늘은 측정된 정보가 없습니다.</span>
+          </button>
+        </router-link>
+      </li>
+      <li>
+        <router-link custom v-slot="{ navigate }" :to="{ name: 'state-oxygen' }">
+          <button type="button" @click="navigate">
+            <span class="health-list-ttl ic-oxygen">산소포화도</span>
+            <!-- yesdata -->
+            <span class="data" v-if="toggles.o2"
+              ><strong class="num">{{ datas.o2.spO2 }}</strong> %</span
             >
             <!-- nodata -->
             <span class="txtc-gray" v-else>오늘은 측정된 정보가 없습니다.</span>
@@ -74,12 +72,14 @@
         </router-link>
       </li>
       <li>
-        <router-link custom v-slot="{ navigate }" :to="{ name: 'state-respiration' }">
+        <router-link custom v-slot="{ navigate }" :to="{ name: 'state-sleep' }">
           <button type="button" @click="navigate">
-            <span class="health-list-ttl ic-oxygen">호흡수</span>
+            <span class="health-list-ttl ic-sleep">수면</span>
             <!-- yesdata -->
-            <span class="data" v-if="toggles.rr"
-              ><strong class="num">{{ datas.rr.rr }}</strong> 회/분</span
+            <span class="data" v-if="toggles.sleep"
+              ><strong class="num">{{ datas.sleep.hh }}</strong
+              >시간 <strong class="num">{{ datas.sleep.mm }}</strong
+              >분</span
             >
             <!-- nodata -->
             <span class="txtc-gray" v-else>오늘은 측정된 정보가 없습니다.</span>
@@ -87,12 +87,12 @@
         </router-link>
       </li>
       <li>
-        <router-link custom v-slot="{ navigate }" :to="{ name: 'state-oxygen' }">
+        <router-link custom v-slot="{ navigate }" :to="{ name: 'state-blood' }">
           <button type="button" @click="navigate">
-            <span class="health-list-ttl ic-oxygen">산소포화도</span>
+            <span class="health-list-ttl ic-blood">혈압</span>
             <!-- yesdata -->
-            <span class="data" v-if="toggles.o2"
-              ><strong class="num">{{ datas.o2.spO2 }}</strong> %</span
+            <span class="data" v-if="toggles.bp"
+              ><strong class="num">{{ datas.bp.sbp }}/{{ datas.bp.dbp }}</strong> mmHg</span
             >
             <!-- nodata -->
             <span class="txtc-gray" v-else>오늘은 측정된 정보가 없습니다.</span>

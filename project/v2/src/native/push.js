@@ -31,8 +31,8 @@ export const notificaitonCommonEvent = (payload) => {
       query: { requestDate: dayjs().format(ENUM_DATE_FORMAT.YMD) },
     });
   } else if (ext.action === ENUM_ALARM_TYPE.DOCTOR) {
-    const { apiKey, sessionId, token } = ext.infomation;
-    executor(OPEN_VONAGE_DOCTOR, apiKey, sessionId, token);
+    const { apikey, sessionId, token } = ext.infomation;
+    executor(OPEN_VONAGE_DOCTOR, apikey, sessionId, token);
   }
 };
 
