@@ -75,6 +75,9 @@
         @include bg(icon-#{$imageName});
       }
     }
+    &.ic-respiration::before {
+      background: url(../img/icon-respiration.png);
+    }
   }
   .data {
     margin-top: 0.4rem;
