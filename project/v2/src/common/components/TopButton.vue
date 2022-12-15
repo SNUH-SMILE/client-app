@@ -7,7 +7,10 @@
 export default {
   methods: {
     moveTopScroll() {
-      document.querySelector('.content').scrollTop = 0;
+      const elContent = document.querySelector('.content');
+      const elContentWrap = document.querySelector('.content-wrap');
+      if (elContent) elContent.scrollTop = 0;
+      if (elContentWrap) elContentWrap.scrollTop = 0;
     },
   },
 };

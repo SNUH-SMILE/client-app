@@ -10,6 +10,7 @@
 
 <script>
 import Logger from '@/utils/logger';
+import { getCoordinate } from '@/common/helpers';
 
 const logger = new Logger('Search-Address');
 
@@ -29,28 +30,9 @@ export default {
         extra = ` (${extra})`;
       }
       const address = `${roadAddress}${extra}`;
-      const { lat, lng } = await this.getCoordinate(address);
+      const { lat, lng } = await getCoordinate(address);
       logger.info(`주소 검색 결과 :: `, address, zipCode, lat, lng);
       this.$emit('onSearch', { address, zipCode, lat, lng });
-    },
-    getCoordinate(address) {
-      const google = window.google;
-      return new Promise((resolve, reject) => {
-        let lat = null,
-          lng = null;
-
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ address }, (result, status) => {
-          if (status === google.maps.GeocoderStatus.OK) {
-            lat = result[0]['geometry']['location']['lat']();
-            lng = result[0]['geometry']['location']['lng']();
-          } else {
-            this.$alert('Geocode was not successful for the followingreason: ' + status);
-          }
-          resolve({ lat, lng });
-        });
-      });
-      // return {lat, lng}
     },
   },
 };

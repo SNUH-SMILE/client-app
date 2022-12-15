@@ -8,18 +8,34 @@
 import HistoryTakingAlarm from '@/components/HistoryTakingAlarm.vue';
 import HomeContents from '@/components/HomeContents.vue';
 import { notificaitonCommonEvent, STARTED_PUSH_CHECK } from '@/native/push';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { GET_INTERVIEW_LIST } from '@/modules/history';
+import { ACCESS_TOKEN, LOGIN_ID, SESSION } from '@/modules/patient';
+import { RESPONSE_STATUS } from '@/common/constants';
+import { getCoordinate } from '@/common/helpers';
+import { SET_LOCATION_SERVICE_CONFIG, START_LOCATION_SERVICE } from '@/native/fgService';
+import { SET_QUARANTINE_API_URL } from '@/common/config';
 export default {
   name: 'home',
   components: {
     HistoryTakingAlarm,
     HomeContents,
   },
-  created() {
-    // TODO: 푸시 클릭을 통해 진입하는 경우에 대한 콜백 처리, 상세 액션을 정의해야함.
+  async created() {
     const pushData = this.$nativeScript(STARTED_PUSH_CHECK);
-    if (pushData) notificaitonCommonEvent(pushData);
+    if (pushData) notificaitonCommonEvent(pushData); // 푸시 이벤트
+    try {
+      const { code, data } = await this.fetchSession();
+      if (code === RESPONSE_STATUS.SUCCESS) {
+        const { address1 } = data;
+        const { lat, lng } = await getCoordinate(address1);
+        this.$nativeScript(SET_LOCATION_SERVICE_CONFIG, lat, lng, this.token, this.loginId, SET_QUARANTINE_API_URL);
+        this.$nativeScript(START_LOCATION_SERVICE);
+      }
+    } catch (err) {
+      console.error(err);
+      this.$toast('위치정보서비스를 시작하지 못했습니다.');
+    }
   },
   data() {
     return {
@@ -27,9 +43,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ interviewList: GET_INTERVIEW_LIST }),
+    ...mapGetters({ interviewList: GET_INTERVIEW_LIST, loginId: LOGIN_ID, token: ACCESS_TOKEN }),
   },
   methods: {
+    ...mapActions({ fetchSession: SESSION }),
     onHtAlarmAction(action) {
       if (action === 'submit') {
         this.$router.push({ name: 'history-taking' });

@@ -59,3 +59,27 @@ export const decryptMobileAuth = async (priinfo) => {
   const { code, message, result } = await oauthHttp('/garmin/idverif/decrypt', { priinfo });
   return result;
 };
+
+/**
+ * 주소를 사용한 위도 경도 조회 API
+ * with. Google Map
+ */
+
+export const getCoordinate = (address) => {
+  const google = window.google;
+  return new Promise((resolve, reject) => {
+    let lat = null,
+      lng = null;
+
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address }, (result, status) => {
+      if (status === google.maps.GeocoderStatus.OK) {
+        lat = result[0]['geometry']['location']['lat']();
+        lng = result[0]['geometry']['location']['lng']();
+      } else {
+        this.$alert('Geocode was not successful for the followingreason: ' + status);
+      }
+      resolve({ lat, lng });
+    });
+  });
+};

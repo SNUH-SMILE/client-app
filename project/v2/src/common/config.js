@@ -27,3 +27,4 @@ export const SERVER_NAME = VUE_APP_API_SERVER_NAME;
 export const OAUTH_API_URL = VUE_APP_OAUTH_API_URL;
 export const OAUTH_SERVER_NAME = VUE_APP_OAUTH_SERVER_NAME;
 export const PUBLIC_PATH = BASE_URL;
+export const SET_QUARANTINE_API_URL = '/api/quarantineStatus';

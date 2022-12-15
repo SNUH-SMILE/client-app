@@ -6,6 +6,7 @@ import { executor } from '@/native';
 import { STORAGE_DATA } from '@/native/data';
 import { patientService } from '@/services/api';
 import { REGIST_PUSH_SERVICE } from '@/native/push';
+import { CLEAR_LOCATION_SERVICE_CONFIG } from '@/native/fgService';
 
 export const SET_AUTH = 'patient/setAuth';
 export const LOGIN = 'patient/login';
@@ -44,6 +45,7 @@ export default {
       executor(STORAGE_DATA, STORAGE_KEYS.TOKEN, '');
       executor(STORAGE_DATA, STORAGE_KEYS.LOGIN_ID, '');
       executor(STORAGE_DATA, STORAGE_KEYS.SAVE_LOGIN_INPUT, '');
+      executor(CLEAR_LOCATION_SERVICE_CONFIG);
     },
     [SESSION](state, payload) {
       state.session = payload;
@@ -63,7 +65,9 @@ export default {
     },
     async [SESSION]({ commit, state: { loginId } }) {
       const { code, message, data } = await patientService.patient(loginId);
-      commit(SESSION, data);
+      if (code === RESPONSE_STATUS.SUCCESS) {
+        commit(SESSION, data);
+      }
       return { code, message, data };
     },
   },
