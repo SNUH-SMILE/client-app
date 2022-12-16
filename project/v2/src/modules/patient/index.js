@@ -15,6 +15,8 @@ export const IS_ANONYMOUS = 'patient/isAnonymous';
 export const ACCESS_TOKEN = 'patient/accessToken';
 export const SESSION = 'patient/session';
 export const LOGIN_ID = 'patient/loginId';
+export const DEVICE_INFO = 'patient/device';
+export const IS_GARMIN_DEVICE = 'patient/isGarmin';
 
 const INIT_SESSION_DATA = () => ({
   patientNm: '', // 홍길동
@@ -27,10 +29,16 @@ const INIT_SESSION_DATA = () => ({
   address2: '', // 유라클
 });
 
+const INIT_DEVICE_DATA = () => ({
+  deviceId: '',
+  deviceName: '',
+});
+
 export default {
   state: {
     token: executor(STORAGE_DATA, STORAGE_KEYS.TOKEN),
     loginId: executor(STORAGE_DATA, STORAGE_KEYS.LOGIN_ID),
+    device: INIT_DEVICE_DATA(),
     session: INIT_SESSION_DATA(),
   },
   mutations: {
@@ -49,6 +57,9 @@ export default {
     },
     [SESSION](state, payload) {
       state.session = payload;
+    },
+    [DEVICE_INFO](state, payload) {
+      state.device = payload;
     },
   },
   actions: {
@@ -70,6 +81,13 @@ export default {
       }
       return { code, message, data };
     },
+    async [DEVICE_INFO]({ commit, state: { loginId } }) {
+      const { code, message, data } = await patientService.getDevice(loginId);
+      if (code === RESPONSE_STATUS.SUCCESS && data.result[0]) {
+        commit(DEVICE_INFO, data.result[0]);
+      }
+      return { code, message, data };
+    },
   },
   getters: {
     [IS_ANONYMOUS]({ token }) {
@@ -84,6 +102,12 @@ export default {
     },
     [LOGIN_ID]({ loginId }) {
       return loginId;
+    },
+    [DEVICE_INFO]({ device }) {
+      return device;
+    },
+    [IS_GARMIN_DEVICE]({ device, loginId }) {
+      return device.deviceId === loginId;
     },
   },
 };

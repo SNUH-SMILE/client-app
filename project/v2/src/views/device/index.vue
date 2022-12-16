@@ -42,6 +42,7 @@ import { LOGIN_ID } from '@/modules/patient';
 import { OPEN_GARMIN_OAUTH } from '@/native/band';
 import { BIND_RESTORE_EVENT, UNBIND_RESTORE_EVENT } from '@/native/cycle';
 import { PARAM_DATA } from '@/native/data';
+import { patientService } from '@/services/api';
 const INIT_STATE = () => ({});
 
 export default {
@@ -64,6 +65,7 @@ export default {
       const { code, message } = this.$nativeScript(PARAM_DATA, 'params.garminAuthResult');
       if (code === '200') {
         this.$alert('가민 연동을 완료하였습니다.');
+        patientService.device(this.loginId, [{ deviceId: this.loginId, deviceNm: 'garmin' }]);
       } else {
         this.$alert(`${message || '가민 연동을 실패하였습니다.'}(${code})`);
       }

@@ -60,6 +60,16 @@ export const decryptMobileAuth = async (priinfo) => {
   return result;
 };
 
+export const addSeersAccount = async (loginId, seersAccount) => {
+  const { code, message, result } = await oauthHttp('/garmin/user/seers/add', { loginId, deviceId: loginId, additionUserCode: seersAccount });
+  return { code, message, result };
+};
+
+export const garminWorkerDelete = async (loginId) => {
+  const { code, message, result } = await oauthHttp('/garmin/user/delete', { loginId });
+  return { code, message, result };
+};
+
 /**
  * 주소를 사용한 위도 경도 조회 API
  * with. Google Map

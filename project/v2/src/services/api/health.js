@@ -148,7 +148,7 @@ class HealthApiService extends BaseApiService {
   /**
    * 측정 결과 전체 저장
    */
-  setTotalResult(loginId, btList, bpList, hrList, spO2List, stepCountList, rrList, sleppTimeList) {
+  setTotalResult(loginId, { btList = [], bpList = [], hrList = [], spO2List = [], stepCountList = [], rrList = [], sleppTimeList = [] }) {
     return this.post('/total', { loginId, btList, bpList, hrList, spO2List, stepCountList, rrList, sleppTimeList });
   }
 }

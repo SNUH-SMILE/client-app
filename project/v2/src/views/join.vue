@@ -234,6 +234,7 @@ export default {
       this.$router.replace({ name: 'login' });
     },
     searchAddress({ address, zipCode, lat, lng }) {
+      // TODO: 격리 여부 체크를 위한 위도경도값 세팅 필요
       this.state.address1 = address;
       this.state.zipCode = zipCode;
       this.showAddressSearch = false;

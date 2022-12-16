@@ -61,6 +61,9 @@ class PatientService extends BaseApiService {
   device(loginId, devices) {
     return this.post('/device', { loginId, devices });
   }
+  getDevice(loginId) {
+    return this.post('/getDevice', { loginId });
+  }
 }
 
 export default new PatientService();

@@ -2,7 +2,7 @@
   <section class="section-box">
     <div class="section-ttl-box">
       <h2 class="section-ttl">건강상태</h2>
-      <button type="button" class="btn-ic-txt refresh" @click="refetch">새로고침</button>
+      <button type="button" class="btn-ic-txt refresh" @click="$emit('refresh')">새로고침</button>
     </div>
     <ul class="health-list">
       <li>
@@ -116,9 +116,6 @@ export default {
     datas: function () {
       return this.healths.datas;
     },
-  },
-  methods: {
-    ...mapActions({ refetch: MAIN_CONTENT }),
   },
 };
 </script>

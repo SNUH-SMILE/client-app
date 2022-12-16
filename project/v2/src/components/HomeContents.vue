@@ -20,7 +20,7 @@
         </div> -->
       </section>
 
-      <app-home-healths />
+      <app-home-healths @refresh="fetchAndSync" />
       <app-home-medicine />
       <app-home-exercise />
     </div>
@@ -34,6 +34,10 @@ import AppHomeHealths from '@/modules/main/AppHomeHealths.vue';
 import AppHomeExercise from '@/modules/main/AppHomeExercise.vue';
 import AppHomeMedicine from '@/modules/main/AppHomeMedicine.vue';
 import AppHomeInterview from '@/modules/main/AppHomeInterview.vue';
+import { GET_BAND_ALL_DATA, IS_BAND_CONNECT, SUCC_SYNC_BAND_DATA } from '@/native/band';
+import { DEVICE_INFO, IS_GARMIN_DEVICE, LOGIN_ID, SESSION } from '@/modules/patient';
+import { healthService } from '@/services/api';
+import { RESPONSE_STATUS } from '@/common/constants';
 // import _each from 'lodash/each';
 // const DETAIL_BEALTH_FUNC_NM = '__onDetailHealthCB';
 // const ON_CNANGE_TEMP_FUNC_NM = 'onChangeTemp';
@@ -50,14 +54,36 @@ export default {
     };
   },
 
-  activated() {
-    this.fetchContents();
+  async activated() {
+    await this.fetchSession();
+    const { searsAccount } = this.session;
+    if (searsAccount) {
+      this.addSeersAccount(this.loginId, searsAccount);
+    }
+    this.fetchAndSync();
   },
   computed: {
-    ...mapGetters({}),
+    ...mapGetters({ isGarminDevice: IS_GARMIN_DEVICE, session: SESSION, loginId: LOGIN_ID }),
   },
   methods: {
-    ...mapActions({ fetchContents: MAIN_CONTENT }),
+    ...mapActions({ fetchContents: MAIN_CONTENT, fetchDeviceInfo: DEVICE_INFO, fetchSession: SESSION }),
+    async fetchAndSync() {
+      if (this.$nativeScript(IS_BAND_CONNECT)) {
+        await this.fetchDeviceInfo();
+        if (!this.isGarminDevice) {
+          const { code, message, data } = await this.$nativeScript(GET_BAND_ALL_DATA);
+          const res = await healthService.setTotalResult(this.loginId, data);
+          if (res.code === RESPONSE_STATUS.SUCCESS) {
+            this.$nativeScript(SUCC_SYNC_BAND_DATA);
+          } else {
+            this.$toast('서버 동기화를 실패하였습니다.');
+          }
+        }
+      } else {
+        this.$toast('디바이스가 연결되어있지 않습니다.');
+      }
+      this.fetchContents();
+    },
   },
 };
 </script>

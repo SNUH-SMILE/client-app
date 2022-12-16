@@ -39,9 +39,6 @@ import { mapActions, mapGetters } from 'vuex';
 import { MAIN_USER_INFO, QUARANTINE_STATUS } from '@/modules/main';
 import { ENUM_ISOLATION_TYPE } from '@/common/constants';
 export default {
-  created() {
-    this.fetchSession();
-  },
   computed: {
     ...mapGetters({ session: SESSION, info: MAIN_USER_INFO, quarantine: QUARANTINE_STATUS }),
     isolationTypes() {
@@ -50,9 +47,6 @@ export default {
     quarantineStatus() {
       return QUARANTINE_STATUS;
     },
-  },
-  methods: {
-    ...mapActions({ fetchSession: SESSION }),
   },
 };
 </script>

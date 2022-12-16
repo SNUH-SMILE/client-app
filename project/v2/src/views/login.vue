@@ -46,8 +46,8 @@
   </div>
 </template>
 <script>
-import { LOGIN } from '@/modules/patient';
-import { mapActions } from 'vuex';
+import { DEVICE_INFO, LOGIN } from '@/modules/patient';
+import { mapActions, mapGetters } from 'vuex';
 import { MODE } from '@/common/config';
 import { ENUM_MODE, RESPONSE_STATUS, STORAGE_KEYS } from '@/common/constants';
 import { STORAGE_DATA } from '@/native/data';
@@ -57,7 +57,7 @@ const INIT_STATE = () => ({
 });
 
 const INIT_DEV_STATE = () => ({
-  loginId: 'test',
+  loginId: 'testdy',
   password: '0000',
 });
 
@@ -71,13 +71,23 @@ export default {
       showPassword: false, //비밀번호 보기
     };
   },
+  computed: {
+    ...mapGetters({ deviceInfo: DEVICE_INFO }),
+  },
   methods: {
-    ...mapActions({ login: LOGIN }),
+    ...mapActions({ login: LOGIN, fetchDevice: DEVICE_INFO }),
     async onSubmit() {
       const { loginId, password } = this.state;
       const { code, message } = await this.login({ loginId, password });
       if (RESPONSE_STATUS.SUCCESS === code) {
-        this.$router.replace({ name: 'home' });
+        await this.fetchDevice();
+        if (this.deviceInfo.deviceId) {
+          // 기등록한 밴드(디바이스)가 존재하는 경우
+          this.$router.replace({ name: 'home' });
+        } else {
+          // 존재하지 않는 경우
+          this.$router.replace({ name: 'device' });
+        }
       } else {
         this.$alert(message);
       }
