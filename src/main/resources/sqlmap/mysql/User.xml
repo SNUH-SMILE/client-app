@@ -9,6 +9,7 @@
         <result property="userAccessToken" column="USER_ACCESS_TOKEN" />
         <result property="userAccessTokenSecret" column="USER_ACCESS_TOKEN_SECRET" />
         <result property="userId" column="USER_ID" />
+        <result property="additionUserCode" column="ADDITION_USER_CODE" />
     </resultMap>
     <insert id="addUser" >
         INSERT INTO USER
@@ -32,6 +33,13 @@
         WHERE USER_ACCESS_TOKEN = #{token}
             AND USE_YN = 'Y'
     </select>
+    <select id="getAdditionUserCodeToUser" parameterType="String" resultMap="user">
+        SELECT
+            LOGIN_ID, DEVICE_ID
+        FROM USER
+        WHERE ADDITION_USER_CODE = #{additionUserCode}
+          AND USE_YN = 'Y'
+    </select>
     <select id="getLoginIdToUser" parameterType="String" resultMap="user">
         SELECT
             ID, USER_ACCESS_TOKEN, USER_ACCESS_TOKEN_SECRET
@@ -42,6 +50,37 @@
     <update id="editExpireUser">
         UPDATE USER
         SET USE_YN = #{code},
+            MOD_DATE = NOW()
+        WHERE ID = #{id}
+    </update>
+    <select id="getAdditionUserCode" resultMap="user">
+        SELECT
+            LOGIN_ID, ADDITION_USER_CODE
+        FROM USER
+        WHERE USE_YN = 'Y'
+            AND ADDITION_USER_CODE IS NOT NULL
+    </select>
+    <insert id="addSeers" >
+        INSERT INTO USER
+            (LOGIN_ID, DEVICE_ID, ADDITION_USER_CODE,
+             USE_YN, REG_DATE, EXPIRE_DATE, MOD_DATE)
+        VALUES
+            (#{loginId}, #{deviceId}, #{additionUserCode},
+            'Y', NOW(), DATE_ADD(NOW(), INTERVAL 2 MONTH), NOW())
+    </insert>
+    <update id="editSeers" >
+        UPDATE USER
+        SET
+            DEVICE_ID = #{deviceId},
+            ADDITION_USER_CODE = #{additionUserCode},
+            MOD_DATE = NOW()
+        WHERE LOGIN_ID = #{loginId}
+            AND USE_YN = 'Y'
+    </update>
+    <update id="editUseYn" >
+        UPDATE USER
+        SET
+            USE_YN = 'N',
             MOD_DATE = NOW()
         WHERE ID = #{id}
     </update>

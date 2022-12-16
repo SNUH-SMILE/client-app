@@ -25,7 +25,7 @@ import java.util.Map;
 @Slf4j
 public class HttpClient {
 
-    public static String executePost(String url, boolean bjson, HashMap<String, Object> params) throws Exception {
+    public static String executePost(String url, boolean bjson, HashMap<String, Object> params, String token) throws Exception {
         RequestConfig requestConfig = RequestConfig.custom()
                 .setSocketTimeout(30*1000)
                 .setConnectTimeout(30*1000)
@@ -35,6 +35,9 @@ public class HttpClient {
         HttpPost httpPost = new HttpPost(url);
         httpPost.setConfig(requestConfig);
 
+        if (token != null) {
+            httpPost.addHeader("SX-Auth-Token", token);
+        }
 
         if (bjson) {
             httpPost.addHeader("content-type", "application/json");

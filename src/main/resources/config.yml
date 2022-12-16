@@ -20,3 +20,8 @@ oauth10a:
         url: https://connectapi.garmin.com/oauth-service/oauth/request_token
     authorize:
       url: https://connect.garmin.com/oauthConfirm
+seers:
+  login:
+    url: https://www.apirelease.seers-temp.com/mobiCARETemp/API/Account/Login
+  temperature:
+    url: https://www.apirelease.seers-temp.com/mobiCARETemp/API/Manager/SelectUserTempTrendPersonalList

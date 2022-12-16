@@ -30,7 +30,7 @@
 		<Logger name="org.mybatis.spring.SqlSessionFactoryBean" level="info" />
 		
 		<Root level="info">
-			<AppenderRef ref="console" />
+			<AppenderRef ref="console" level="info"/>
 			<AppenderRef ref="file" />
 		</Root>
 	</Loggers>

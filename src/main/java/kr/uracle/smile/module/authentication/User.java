@@ -16,6 +16,7 @@ public class User {
     private String garminId;
     private String userAccessToken;
     private String userAccessTokenSecret;
+    private String additionUserCode;
     private String userId;
     private String useYn;
     private LocalDateTime regDate;

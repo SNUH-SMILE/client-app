@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.uracle.smile.module.temperature.TemperatureMapper">
+    <resultMap id="trend" type="kr.uracle.smile.module.temperature.Temperature" >
+        <result property="id" column="ID" />
+        <result property="loginId" column="LOGIN_ID" />
+        <result property="measurementDate" column="MEASUREMENT_DATE" />
+        <result property="temperature" column="TEMPERATURE" />
+        <result property="trend" column="TREND" />
+        <result property="emergency" column="EMERGENCY" />
+    </resultMap>
+
+    <insert id="addTemperature" parameterType="kr.uracle.smile.module.temperature.Temperature">
+        INSERT INTO TEMPERATURE
+            (LOGIN_ID, ADDITION_USER_CODE, MEASUREMENT_DATE, TEMPERATURE,
+             TREND, EMERGENCY, REG_DATE, HEALTHCONNET_SEND_CODE)
+        VALUES
+            (#{loginId}, #{additionUserCode}, #{measurementDate}, #{temperature},
+             #{trend}, #{emergency}, CURRENT_TIMESTAMP, '0');
+    </insert>
+
+    <update id="editTempSendCodeFlag" >
+        UPDATE TEMPERATURE
+        SET    HEALTHCONNET_SEND_CODE = '1'
+        WHERE  HEALTHCONNET_SEND_CODE in ('0', '3')
+    </update>
+
+    <update id="editTempSendCode" parameterType="kr.uracle.smile.module.common.HCSendAPIStatusCode" >
+        UPDATE TEMPERATURE
+        SET    HEALTHCONNET_SEND_CODE = #{code}
+        WHERE  ID = #{id}
+    </update>
+
+    <select id="getHCTemp" resultMap="trend" >
+        SELECT
+            ID, LOGIN_ID, ADDITION_USER_CODE, MEASUREMENT_DATE, TEMPERATURE
+        FROM TEMPERATURE
+        WHERE HEALTHCONNET_SEND_CODE = '1'
+    </select>
+
+</mapper>

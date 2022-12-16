@@ -10,12 +10,22 @@ public interface UserMapper {
 
     int addUser(User params);
 
+    int addSeers(UserRequest.addSeers params);
+
+    int editSeers(UserRequest.addSeers params);
+
+    int editUseYn(@Param("id") int id);
+
     User getTokenToUser(String token);
+
+    User getAdditionUserCodeToUser(String additionUserCode);
 
     User getLoginIdToUser(String loginId);
 
     List<User> getExpireTokenUser();
 
     int editExpireUser(@Param("id") int id, @Param("code") String code);
+
+    List<User> getAdditionUserCode();
 
 }

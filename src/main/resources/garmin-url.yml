@@ -1,6 +1,7 @@
 # garmin Url Info
 healthConnect:
   url:
+    bt: http://localhost:8080/api/results/bt
     step: http://localhost:8080/api/results/stepCount
     pulseOx: http://localhost:8080/api/results/spO2
     respiration: http://localhost:8080/api/results/rr

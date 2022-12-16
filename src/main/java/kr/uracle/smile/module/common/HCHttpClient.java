@@ -19,7 +19,7 @@ public class HCHttpClient {
         logger.debug("SendAPI params : {} ", params);
 
         try {
-            String httpResult = HttpClient.executePost(URL, true, params);
+            String httpResult = HttpClient.executePost(URL, true, params, null);
 
             JsonObject obj = new Gson().fromJson(httpResult, JsonObject.class);
             String code = obj.get("code").getAsString();
