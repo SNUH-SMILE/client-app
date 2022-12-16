@@ -102,7 +102,7 @@ public class ScheduledTasks {
     /**
      * 체온 정보 요청
      */
-    @Scheduled(cron = "0 */10 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void batchTemperature() {
         logger.info("Temperature Start");
         LocalDateTime now = LocalDateTime.now();
@@ -119,7 +119,7 @@ public class ScheduledTasks {
         // 헬스커넥스 요청
         hcTempSendAPI();
 
-        logger.info("Temperature End AddCnt : {} 건", userList.size() );
+        logger.info("Temperature End");
     }
 
     public void getTemperatures(List<User> userList, String startDateTime, String endDateTime) {
@@ -175,18 +175,20 @@ public class ScheduledTasks {
                 try {
                     String searchResult = HttpClient.executePost(temperatureURL, true, temperatureMap, accessToken);
                     JsonObject obj = new Gson().fromJson(searchResult, JsonObject.class);
-                    logger.info("obj : {}", obj.toString());
-                    JsonArray trendArray = obj.get("userTempLocationTrendList").getAsJsonArray();
-                    for (int i=0; i < trendArray.size(); i++) {
-                        JsonObject trendObj = trendArray.get(i).getAsJsonObject();
-                        Temperature temp = new Temperature();
-                        temp.setLoginId(user.getLoginId());
-                        temp.setAdditionUserCode(user.getAdditionUserCode());
-                        temp.setMeasurementDate(LocalDateTime.parse(trendObj.get("dateTime").getAsString(), formatter));
-                        temp.setTemperature(trendObj.get("temperature").getAsFloat());
-                        temp.setTrend(trendObj.get("trend").getAsInt());
-                        temp.setEmergency(trendObj.get("emergency").getAsInt());
-                        tempMapper.addTemperature(temp);
+                    if (0 < obj.get("totalCount").getAsInt()){
+                        logger.info("obj : {}", obj.toString());
+                        JsonArray trendArray = obj.get("userTempLocationTrendList").getAsJsonArray();
+                        for (int i=0; i < trendArray.size(); i++) {
+                            JsonObject trendObj = trendArray.get(i).getAsJsonObject();
+                            Temperature temp = new Temperature();
+                            temp.setLoginId(user.getLoginId());
+                            temp.setAdditionUserCode(user.getAdditionUserCode());
+                            temp.setMeasurementDate(LocalDateTime.parse(trendObj.get("dateTime").getAsString(), formatter));
+                            temp.setTemperature(trendObj.get("temperature").getAsFloat());
+                            temp.setTrend(trendObj.get("trend").getAsInt());
+                            temp.setEmergency(trendObj.get("emergency").getAsInt());
+                            tempMapper.addTemperature(temp);
+                        }
                     }
                 } catch (Exception e) {
                     logger.info("temperature db insert fail : {} ", e.getMessage());
@@ -209,7 +211,7 @@ public class ScheduledTasks {
                     statusCode.setId(temperature.getId());
                     statusCode.setCode("4");
                     tempMapper.editTempSendCode(statusCode);
-                    logger.info("temperature user loginId error loginId : " + temperature.getLoginId());
+                    logger.info("hcTempSendAPI loginId error : " + temperature.getLoginId());
                     continue;
                 }
 
