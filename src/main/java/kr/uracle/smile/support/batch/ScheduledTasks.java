@@ -48,7 +48,7 @@ public class ScheduledTasks {
 
     @Value("${healthConnect.url.bt}")
     private String hcBtURL;
-    
+
     @Autowired
     private OAuthService oAuthService;
 
@@ -153,7 +153,7 @@ public class ScheduledTasks {
                 accessToken = obj.get("accessToken").getAsString();
             }
         } catch (Exception e) {
-            logger.info("error : {}", e.getMessage());
+            logger.info("seers login error : {}", e.getMessage());
         }
 
         // 조회 요청
