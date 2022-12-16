@@ -102,7 +102,7 @@ public class ScheduledTasks {
     /**
      * 체온 정보 요청
      */
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 */10 * * * *")
     public void batchTemperature() {
         logger.info("Temperature Start");
         LocalDateTime now = LocalDateTime.now();
