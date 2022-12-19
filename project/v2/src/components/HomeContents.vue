@@ -38,6 +38,7 @@ import { GET_BAND_ALL_DATA, IS_BAND_CONNECT, SUCC_SYNC_BAND_DATA } from '@/nativ
 import { DEVICE_INFO, IS_GARMIN_DEVICE, LOGIN_ID, SESSION } from '@/modules/patient';
 import { healthService } from '@/services/api';
 import { RESPONSE_STATUS } from '@/common/constants';
+import { addSeersAccount } from '@/common/helpers';
 // import _each from 'lodash/each';
 // const DETAIL_BEALTH_FUNC_NM = '__onDetailHealthCB';
 // const ON_CNANGE_TEMP_FUNC_NM = 'onChangeTemp';
@@ -58,7 +59,7 @@ export default {
     await this.fetchSession();
     const { searsAccount } = this.session;
     if (searsAccount) {
-      this.addSeersAccount(this.loginId, searsAccount);
+      addSeersAccount(this.loginId, searsAccount);
     }
     this.fetchAndSync();
   },
