@@ -69,9 +69,9 @@ export default {
   methods: {
     ...mapActions({ fetchContents: MAIN_CONTENT, fetchDeviceInfo: DEVICE_INFO, fetchSession: SESSION }),
     async fetchAndSync() {
-      if (this.$nativeScript(IS_BAND_CONNECT)) {
-        await this.fetchDeviceInfo();
-        if (!this.isGarminDevice) {
+      await this.fetchDeviceInfo();
+      if (!this.isGarminDevice) {
+        if (this.$nativeScript(IS_BAND_CONNECT)) {
           const { code, message, data } = await this.$nativeScript(GET_BAND_ALL_DATA);
           const res = await healthService.setTotalResult(this.loginId, data);
           if (res.code === RESPONSE_STATUS.SUCCESS) {
@@ -79,10 +79,11 @@ export default {
           } else {
             this.$toast('서버 동기화를 실패하였습니다.');
           }
+        } else {
+          this.$toast('디바이스가 연결되어있지 않습니다.');
         }
-      } else {
-        this.$toast('디바이스가 연결되어있지 않습니다.');
       }
+
       this.fetchContents();
     },
   },
