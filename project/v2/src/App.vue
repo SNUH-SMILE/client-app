@@ -33,6 +33,7 @@ export default {
         this.$router.go(-1);
       }
     });
+    this.$store.commit('syncAppInfo');
   },
   computed: {
     ...mapState({

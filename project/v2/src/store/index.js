@@ -2,16 +2,21 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import _debounce from 'lodash/debounce';
 import * as modules from '@/modules';
+import { APP_INFO, executor } from '@/native';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
     isMobile: document.documentElement.clientWidth < 768,
+    appInfo: null,
   },
   getters: {},
   mutations: {
     setIsMobile(state, payload) {
       state.isMobile = payload;
+    },
+    syncAppInfo(state) {
+      state.appInfo = executor(APP_INFO);
     },
   },
   actions: {},
