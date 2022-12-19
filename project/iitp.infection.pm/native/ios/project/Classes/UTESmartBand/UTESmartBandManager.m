@@ -404,11 +404,13 @@ SHARED_init
             //}else {
             //    NSLog(@"***Device disconnected normally connectedDevicesModel=%@",self.smartBandMgr.connectedDevicesModel);
             //}
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                PPHybridViewController *webview = WEBVIEW;
-                [webview connectResult :self.connectCbk :@"0104" :@"DEVICE DISCONNECTED"];
-            });
+            if(self.resetDeviceInConnect == NO)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    PPHybridViewController *webview = WEBVIEW;
+                    [webview connectResult :self.connectCbk :@"0104" :@"DEVICE DISCONNECTED"];
+                });
+            }
             
             if (self.autoConnectWhenDisconnected) {
                 // 스캔시작
@@ -1191,6 +1193,8 @@ SHARED_init
     if (self.resetDeviceInConnect == NO) {
         if ([self.connectTyp isEqualToString:@"0"] || [self.connectTyp isEqualToString:@"1"]) {
             self.resetDeviceInConnect = YES;
+            UTEModelDevices *connectDevices = self.smartBandMgr.connectedDevicesModel;
+            [_db saveSbDevice:connectDevices.identifier :connectDevices.name :nil :nil];
             [self onClickUTEOption:UTEOptionDeleteDevicesAllData];
             return;
         }
