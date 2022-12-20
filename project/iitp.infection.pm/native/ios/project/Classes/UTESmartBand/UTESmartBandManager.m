@@ -268,7 +268,7 @@ SHARED_init
             [todayStepCountList addObject:[self dtdWithId1: d1]];
         }
         
-        res[@"todayStepCountList"] = todayStepCountList;
+        res[@"stepCountList"] = todayStepCountList;
     
     }
    
@@ -279,7 +279,7 @@ SHARED_init
             [todaySleepTimeList addObject:[self dtdWithId2: d1]];
         }
         
-        res[@"todaySleepTimeList"] = todaySleepTimeList;
+        res[@"sleppTimeList"] = todaySleepTimeList;
     }
     
     {
@@ -289,7 +289,7 @@ SHARED_init
             [todayHrList addObject:[self dtdWithId3: d1]];
         }
         
-        res[@"todayHrList"] = todayHrList;
+        res[@"hrList"] = todayHrList;
     
     }
     
@@ -300,7 +300,7 @@ SHARED_init
             [todayBpList addObject:[self dtdWithId4: d1]];
         }
         
-        res[@"todayBpList"] = todayBpList;
+        res[@"bpList"] = todayBpList;
     
     }
     
@@ -311,7 +311,7 @@ SHARED_init
             [todayBtList addObject:[self dtdWithId5:d1]];
         }
         
-        res[@"todayBtList"] = todayBtList;
+        res[@"btList"] = todayBtList;
     
     }
     
@@ -322,7 +322,7 @@ SHARED_init
             [todaySpO2List addObject:[self dtdWithId6:d1]];
         }
         
-        res[@"todaySpO2List"] = todaySpO2List;
+        res[@"spO2List"] = todaySpO2List;
     
     }
     
