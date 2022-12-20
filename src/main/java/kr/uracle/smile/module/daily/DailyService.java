@@ -48,7 +48,6 @@ public class DailyService {
             map.setId(id);
             map.setTimeOffsetHeartRateKey(key);
             map.setTimeOffsetHeartRateValue(timeOffsetHeartRateSample.get(key));
-            logger.info("timeOffsetHeartRateSample : {} ", timeOffsetHeartRateSample);
             dailyMapper.addTimeOffsetHeartRateSamples(map);
         }
     }

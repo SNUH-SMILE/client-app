@@ -43,15 +43,15 @@ public class SleepService {
                 addSleepLevelMap(sleepId, sleep.getSleepLevelsMap());
             }
 
-            // SLEEP_TIME_OFFSET_RESPIRATION 테이블 INSERT
-            if (sleep.getTimeOffsetSleepRespiration() != null) {
-                addTimeRespiration(sleepId, sleep.getTimeOffsetSleepRespiration());
-            }
+            // 미사용 주석 처리 SLEEP_TIME_OFFSET_RESPIRATION 테이블 INSERT
+//            if (sleep.getTimeOffsetSleepRespiration() != null) {
+//                addTimeRespiration(sleepId, sleep.getTimeOffsetSleepRespiration());
+//            }
 
-            // SLEEP_TIME_OFFSET_SPO2 테이블 INSERT
-            if (sleep.getTimeOffsetSleepSpo2() != null) {
-                addTimeSPO2(sleepId, sleep.getTimeOffsetSleepSpo2());
-            }
+            // 미사용 주석 처리 SLEEP_TIME_OFFSET_SPO2 테이블 INSERT
+//            if (sleep.getTimeOffsetSleepSpo2() != null) {
+//                addTimeSPO2(sleepId, sleep.getTimeOffsetSleepSpo2());
+//            }
         }
     }
 

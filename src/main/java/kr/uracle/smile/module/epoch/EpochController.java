@@ -24,7 +24,7 @@ public class EpochController extends Module {
     @PostMapping(value = "/")
     @ResponseBody
     public ResponseEntity<Response<?>> addEpoch(@RequestBody EpochRequest epochRequest) {
-        logger.info("epochs : {}", epochRequest.toString());
+//        logger.info("epochs : {}", epochRequest.toString());
         epochService.addEpoch(epochRequest);
 
         // 헬스커넥트에 걸음수 데이터 전달(async)

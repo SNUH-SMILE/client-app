@@ -27,7 +27,7 @@ public class RespirationController extends Module {
     @PostMapping(value = "/")
     @ResponseBody
     public ResponseEntity<Response<?>> addRespiration(@RequestBody RespirationRequest respirationRequest) {
-        logger.info("Respiration : {} ", respirationRequest);
+//        logger.info("Respiration : {} ", respirationRequest);
         respirationService.addRespiration(respirationRequest);
 
         // 헬스커넥트에 호흡수 데이터 전달(async)

@@ -42,7 +42,7 @@
 
     <insert id="addTimeSPO2">
         INSERT INTO SLEEP_TIME_OFFSET_SPO2
-            (ID, TIME_OFFSET_SLEEP_Spo2, TIME_OFFSET_SLEEP_Spo2)
+            (ID, TIME_OFFSET_SLEEP_SPO2, TIME_OFFSET_SLEEP_SPO2_KEY)
         VALUES
             (#{id}, #{timeOffsetSleepSPO2}, #{timeOffsetSleepSPO2Key})
     </insert>

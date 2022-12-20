@@ -24,7 +24,7 @@ public class SleepController extends Module {
     @PostMapping(value = "/")
     @ResponseBody
     public ResponseEntity<Response<?>> addSleep(@RequestBody SleepRequest sleepRequest) {
-        logger.info("Sleep : {}", sleepRequest.toString());
+//        logger.info("Sleep : {}", sleepRequest.toString());
         sleepService.addSleep(sleepRequest);
 
         // 헬스커넥트에 수면 데이터 전달(async)

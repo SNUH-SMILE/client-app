@@ -24,7 +24,7 @@ public class PulseOxController extends Module {
     @PostMapping(value = "/")
     @ResponseBody
     public ResponseEntity<Response<?>> addPulseOx(@RequestBody PulseOxRequest pulseOxRequest) {
-        logger.info("pulseOxs : {}", pulseOxRequest.toString());
+//        logger.info("pulseOxs : {}", pulseOxRequest.toString());
         pulseOxService.addPulseOx(pulseOxRequest);
 
         // 헬스커넥트에 산소포화도 데이터 전달(async)
