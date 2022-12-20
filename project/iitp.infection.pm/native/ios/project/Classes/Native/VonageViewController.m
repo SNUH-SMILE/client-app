@@ -9,6 +9,10 @@
 #import <OpenTok/OpenTok.h>
 
 @interface VonageViewController ()<OTSessionDelegate, OTSubscriberDelegate, OTPublisherDelegate>
+{
+    CGRect lframe;
+    CGRect sframe;
+}
 @property (nonatomic) OTSession *session;
 @property (nonatomic) OTPublisher *publisher;
 @property (nonatomic) OTSubscriber *subscriber;
@@ -35,6 +39,53 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    lframe = self.pubContainer.frame;
+    sframe = self.subContainer.frame;
+    
+    UIPinchGestureRecognizer *pubPinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pubPinchAction:)];
+    [self.pubContainer addGestureRecognizer:pubPinch];
+    
+    UIPanGestureRecognizer *pubPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pubPanAction:)];
+    [self.pubContainer addGestureRecognizer:pubPan];
+
+    UIPinchGestureRecognizer *subPinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(subPinchAction:)];
+    [self.subContainer addGestureRecognizer:subPinch];
+    
+    UIPanGestureRecognizer *subPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(subPanAction:)];
+    [self.subContainer addGestureRecognizer:subPan];
+}
+
+- (void)pubPinchAction:(UIPinchGestureRecognizer *)sender
+{
+    self.pubContainer.transform = CGAffineTransformScale(self.pubContainer.transform, sender.scale, sender.scale);
+    sender.scale = 1.0;
+}
+
+- (void)pubPanAction:(UIPanGestureRecognizer *)sender
+{
+    CGPoint translation = [sender translationInView:self.pubContainer];
+    self.pubContainer.center = CGPointMake(sender.view.center.x + translation.x, sender.view.center.y + translation.y);
+    [sender setTranslation:CGPointZero inView:self.pubContainer];
+}
+
+- (void)subPinchAction:(UIPinchGestureRecognizer *)sender
+{
+    self.subContainer.transform = CGAffineTransformScale(self.subContainer.transform, sender.scale, sender.scale);
+    sender.scale = 1.0;
+}
+
+- (void)subPanAction:(UIPanGestureRecognizer *)sender
+{
+    CGPoint translation = [sender translationInView:self.subContainer];
+    self.subContainer.center = CGPointMake(sender.view.center.x + translation.x, sender.view.center.y + translation.y);
+    [sender setTranslation:CGPointZero inView:self.subContainer];
+}
+
+
 /*
 #pragma mark - Navigation
 
@@ -44,15 +95,6 @@
     // Pass the selected object to the new view controller.
 }
 */
-
--(IBAction)backPage:(id)sender
-{
-    OTError *error = nil;
-    [_session disconnect:&error];
-    
-    PPParameters* param = [[PPParameters alloc] init];
-    [self historyBackWithParamObject:param animation:PPAnimationDefault];
-}
 
 - (void)doConnect:(NSString *)token
 {
@@ -85,6 +127,7 @@
     
     [self.pubContainer insertSubview:_publisher.view atIndex:0];
     [_publisher.view setFrame:CGRectMake(0, 0, self.pubContainer.frame.size.width, self.pubContainer.frame.size.height)];
+    [_publisher.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 }
 
 /**
@@ -201,6 +244,7 @@ didFailWithError:(OTError*)error
     [_subscriber.view setFrame:CGRectMake(0, 0, self.subContainer.frame.size.width,
                                           self.subContainer.frame.size.height)];
     [self.subContainer insertSubview:_subscriber.view atIndex:0];
+    [_subscriber.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 }
 
 - (void)subscriber:(OTSubscriberKit*)subscriber
@@ -246,6 +290,33 @@ didFailWithError:(OTError*)error
                                                                   preferredStyle:UIAlertControllerStyleAlert];
         [self presentViewController:alertVC animated:YES completion:nil];
     });
+}
+
+-(IBAction)backPage:(id)sender
+{
+    OTError *error = nil;
+    [_session disconnect:&error];
+    
+    PPParameters* param = [[PPParameters alloc] init];
+    [self historyBackWithParamObject:param animation:PPAnimationDefault];
+}
+
+-(IBAction)on1Click:(id)sender
+{
+    self.pubContainer.frame = lframe;
+    self.subContainer.frame = sframe;
+    [self.sContainer bringSubviewToFront:self.subContainer];
+}
+-(IBAction)on2Click:(id)sender
+{
+    self.subContainer.frame = lframe;
+    self.pubContainer.frame = sframe;
+    [self.sContainer bringSubviewToFront:self.pubContainer];
+}
+-(IBAction)on3Click:(id)sender
+{
+    self.subContainer.frame = CGRectMake(0, 0, lframe.size.width, lframe.size.height/2);
+    self.pubContainer.frame = CGRectMake(0, lframe.size.height/2, lframe.size.width, lframe.size.height/2);
 }
 
 

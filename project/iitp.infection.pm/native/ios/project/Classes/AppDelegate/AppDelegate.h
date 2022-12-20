@@ -23,6 +23,6 @@
 @property (strong, nonatomic) CLLocationManager * _Nullable locationManager;
 @property (assign, nonatomic) BOOL locationStarted; // 위치서비스 중복시작 방지 위함
 @property (assign, nonatomic) BOOL locationPermission; //
-@property (retain, nonatomic) NSString * _Nullable locationUpdateToServerDate; // 위치 정보 서버 요청 타임
+@property (retain, nonatomic) NSDate * _Nullable locationUpdateToServerDate; // 위치 정보 서버 요청 타임
 
 @end

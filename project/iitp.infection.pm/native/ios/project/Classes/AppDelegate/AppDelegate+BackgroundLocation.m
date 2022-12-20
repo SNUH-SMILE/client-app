@@ -122,74 +122,87 @@
 
 // 위치 서비스 권한 상태 변경
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMddHHmm"];
-    NSString *todayNow = [formatter stringFromDate:[NSDate new]];
     
-    todayNow = [todayNow substringToIndex:11]; // 10분에 1회씩, 주석처리시 1분에 1회씩
+    NSDictionary *config = [_getStorageValue(@"LOCATION_SERVICE_CONFIG") objectFromJsonString];
+    NSString *checklat = [config objectForKey:@"LAT"];
+    NSString *checklng = [config objectForKey:@"LNG"];
+    NSString *token = [config objectForKey:@"TOKEN"];
+    NSString *loginid = [config objectForKey:@"LOGIN_ID"];
+    NSString *api = [config objectForKey:@"API_URL"];
+    NSString *distance = [config objectForKey:@"DISTANCE"];
+    NSString *interval = [config objectForKey:@"INTERVAL"];
     
-    NSLog(@"%@", todayNow);
-    
-    if (self.locationUpdateToServerDate != nil && [todayNow isEqualToString:self.locationUpdateToServerDate])
+    NSDate *now = [NSDate date];
+ 
+    if (self.locationUpdateToServerDate != nil && [now timeIntervalSinceDate:self.locationUpdateToServerDate] < [interval intValue] * 60)
+    {
+        NSLog(@"interval Check %f", [now timeIntervalSinceDate:self.locationUpdateToServerDate] );
         return;
+    }
     
-    self.locationUpdateToServerDate = todayNow;
+    self.locationUpdateToServerDate = now;
     
     CLLocation *location = [locations lastObject];
         
-    double lat = location.coordinate.latitude;
-    double lon = location.coordinate.longitude;
+    CLLocation *checklocation = [[CLLocation alloc] initWithLatitude:[checklat doubleValue] longitude:[checklng doubleValue]];
+    
+    CLLocationDistance checkdistance = [location distanceFromLocation:checklocation];
+    
+    BOOL check = NO;
+    if([distance doubleValue] < checkdistance)
+    {
+        check = YES;
+    }
+    
+    NSObject<PPNetworkManager>* networkManager = GET_NETWORK_MANGER(@"HTTP_DEV");
+    
+    if (networkManager)
+    {
         
-    // 서버로 데이터 발송
+        PPNetworkOption *option = [[PPNetworkOption alloc] init];
+        [option setEncrypt:NO];
+        [option setDummy:NO];
+        [option setIndicator:NO];
+        [option setTargetServer:@"HTTP_DEV"];
+        [option setJsonUserData:[@{@"token":token} jsonString]];
         
-    NSString *locationUrl = _getStorageValue(@"LOCATION_UPDATE_URL");
-    NSString *userId = _getStorageValue(@"LOCATION_UPDATE_USER_ID");
-    
-    if (locationUrl == nil || userId == nil || [locationUrl isEqualToString:@""] || [userId isEqualToString:@""]) return;
-    
-    // NSString *url = locationUrl;
-    
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    dic[@"userId"] = userId;
-    dic[@"latitude"] = [NSString stringWithFormat:@"%f", lat];
-    dic[@"longitude"] = [NSString stringWithFormat:@"%f", lon];
-    
-    NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
-    dic2[@"body"] = dic;
-        
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dic2 options:NSJSONWritingPrettyPrinted error:nil];
-    NSString* jsonDataStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSDictionary *dic = @{@"quarantineStatusDiv":check ? @"1":@"0", @"loginId":loginid};
 
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:locationUrl]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/text" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:[jsonDataStr dataUsingEncoding:NSUTF8StringEncoding]];
-    [request setTimeoutInterval:20];
-        
-    NSLog(@"%@", locationUrl);
-    NSLog(@"%@", dic2);
-        
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable responseData, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-
-        if (error != nil) {
-            NSLog(@"UPDATE LOCATION ERROR.");
-        } else {
-            NSLog(@"UPDATE LOCATION SUCCESS.");
-            NSLog(@"UPDATE LOCATION RESPONSE = [");
-            if (responseData != nil) {
-                NSString* result = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                NSLog(@"%@", result);
-            }
-            NSLog(@"]");
-        }
-    }];
-        
-    [task resume];
+        [networkManager processWithViewCtrl:[PPNavigationController ppNavigationController].currentViewCtrl
+                                     trcode:api
+                                       data:[dic jsonString]
+                              networkoption:option
+                                   delegate:(id<PPNetworkManagerDelegate>)self
+                                   userinfo:nil];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     NSLog(@"- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error ");
+}
+
+- (void) didFinishNetworkManager:(id<PPNetworkManager>)manager
+                    targetserver:(NSString*)targetserver
+                          trcode:(NSString*)trcode
+                        response:(NSString*)response
+                      cbfunction:(NSString*)cbfunction
+                           tagId:(NSString*)tagId
+                    jsonUserData:(NSString*)jsonUserData
+                        userdata:(NSArray*)userdata
+{
+    
+}
+
+- (void) didFailNetWorkManager:(id<PPNetworkManager>)manager
+                  targetserver:(NSString*)targetserver
+                        trcode:(NSString*)trcode
+                         tagId:(NSString*)tagId
+                  jsonUserData:(NSString*)jsonUserData
+                     errorcode:(NSString*)errorcode
+                      errormsg:(NSString*)errormsg
+                      userdata:(NSArray*)userdata
+{
+    
 }
 
 

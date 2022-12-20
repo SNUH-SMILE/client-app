@@ -38,4 +38,9 @@
     
     return [appDelegate statusLocation];
 }
+
+- (void) startLocationService {
+    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+    [appDelegate startLocation];
+}
 @end
