@@ -38,6 +38,7 @@ import com.opentok.android.Subscriber;
 import com.opentok.android.SubscriberKit;
 import android.opengl.GLSurfaceView;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 /**
  * VonageViewController Class
@@ -65,12 +66,18 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 	private Publisher publisher;
 	private Subscriber subscriber;
 
-	private FrameLayout publisherViewContainer;
-	private FrameLayout subscriberViewContainer;
+	private FrameLayout largeContainer;
+	private FrameLayout smallContainer;
+	private FrameLayout topContainer;
+	private FrameLayout bottomContainer;
+	private LinearLayout halfContainer;
+	private LinearLayout roundContainer;
 
 	private String apikey;
 	private String sessionid;
 	private String token;
+
+	private int btnStatus;
 
 	public VonageViewController() {
 		super();
@@ -148,7 +155,7 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 			publisher = new Publisher.Builder(VonageViewController.this).build();
 			publisher.setPublisherListener(publisherListener);
 			publisher.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, BaseVideoRenderer.STYLE_VIDEO_FILL);
-			publisherViewContainer.addView(publisher.getView());
+			largeContainer.addView(publisher.getView(),0);
 			session.publish(publisher);
 		}
 
@@ -163,7 +170,18 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 				subscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, BaseVideoRenderer.STYLE_VIDEO_FILL);
 				subscriber.setSubscriberListener(subscriberListener);
 				session.subscribe(subscriber);
-				subscriberViewContainer.addView(subscriber.getView());
+				switch (btnStatus)
+				{
+					case 1:
+						smallContainer.addView(subscriber.getView());
+						break;
+					case 2:
+						largeContainer.addView(subscriber.getView());
+						break;
+					case 3:
+						topContainer.addView(subscriber.getView());
+						break;
+				}
 			}
 		}
 
@@ -171,7 +189,18 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 		public void onStreamDropped(Session session, Stream stream) {
 			if (subscriber != null) {
 				subscriber = null;
-				subscriberViewContainer.removeAllViews();
+				switch (btnStatus)
+				{
+					case 1:
+						smallContainer.removeAllViews();
+						break;
+					case 2:
+						largeContainer.removeAllViews();
+						break;
+					case 3:
+						topContainer.removeAllViews();
+						break;
+				}
 			}
 		}
 
@@ -180,10 +209,21 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 		}
 	};
 
+	public void removeContainer()
+	{
+		largeContainer.removeAllViews();
+		smallContainer.removeAllViews();
+		topContainer.removeAllViews();
+		bottomContainer.removeAllViews();
+	}
+
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		btnStatus = 1;
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.vonage);
@@ -199,8 +239,12 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 		
 		CommonLibUtil.activityAnimation(anim, this);
 
-		publisherViewContainer = findViewById(R.id.publisher_container);
-		subscriberViewContainer = findViewById(R.id.subscriber_container);
+		largeContainer = findViewById(R.id.large_container);
+		smallContainer = findViewById(R.id.small_container);
+		topContainer = findViewById(R.id.top_container);
+		bottomContainer = findViewById(R.id.bottom_container);
+		halfContainer = findViewById(R.id.half_container);
+		roundContainer = findViewById(R.id.round_container);
 
 		Parameters receivedParams = new Parameters(getParamsString());
 		apikey = ""+receivedParams.getParam("apikey", "UTF-8");
@@ -215,11 +259,58 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
         	@Override
     		public void onClick(View arg0) {
 				session.disconnect();
-				publisherViewContainer.removeAllViews();
+				removeContainer();
         		onBackPressed();
         	}
         });
-        
+
+		// 1버튼
+		findViewById(R.id.button1).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				btnStatus = 1;
+				removeContainer();
+				if(publisher != null) {
+					largeContainer.addView(publisher.getView());
+					largeContainer.addView(roundContainer);
+				}
+				if (subscriber != null) {
+					smallContainer.addView(subscriber.getView());
+				}
+			}
+		});
+
+		// 2버튼
+		findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				btnStatus = 2;
+				removeContainer();
+				if (subscriber != null) {
+					largeContainer.addView(subscriber.getView());
+				}
+				if(publisher != null) {
+					smallContainer.addView(publisher.getView());
+					smallContainer.addView(roundContainer);
+				}
+			}
+		});
+
+		// 3버튼
+		findViewById(R.id.button3).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				btnStatus = 3;
+				removeContainer();
+				if(publisher != null) {
+					bottomContainer.addView(publisher.getView());
+					bottomContainer.addView(roundContainer);
+				}
+				if (subscriber != null) {
+					topContainer.addView(subscriber.getView());
+				}
+			}
+		});
 	}
 	
 	@Override
