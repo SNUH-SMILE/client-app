@@ -226,7 +226,7 @@
   },
   {
     "order": "64",
-    "question": "기타 증상의 내용을 구체적으로 적어주시길 바랍니다.",
+    "question": "기타 증상의 내용을 구체적으로 적어주시길 바랍니다.(해당 없을 시, '해당 없음' 기입)",
     "answerType": "InputFactory",
     "answers": [{ "type": "text" }],
     "answerRequired": "",
