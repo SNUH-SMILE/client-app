@@ -5,6 +5,8 @@ import { ENUM_DATE_FORMAT, RESPONSE_STATUS } from '@/common/constants';
 import { LOGIN_ID } from '../patient';
 import dayjs from 'dayjs';
 
+/* import 순서에 따른 문제 처리.. */
+const EXERCISE_REGIST_STATUS = 'exercise/registStatus';
 export const SET_INTERVIEW_LIST = 'interview/setInterview';
 export const GET_INTERVIEW_LIST = 'interview/interviewList';
 export const GET_SYMPTOMLIST = 'interview/getSymptomList';
@@ -40,6 +42,10 @@ export default {
     },
     async [SET_INTERVIEW_LIST]({ commit, getters }, { interviewType, interviewDate, answerList }) {
       const loginId = getters[LOGIN_ID];
+      commit(EXERCISE_REGIST_STATUS, {
+        interviewType,
+        answerList,
+      });
       const result = await interviewService.setInterview(loginId, interviewType, interviewDate, answerList);
       return result;
     },

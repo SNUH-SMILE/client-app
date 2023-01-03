@@ -62,6 +62,7 @@ export const STORAGE_KEYS = {
   TOKEN: 'jwt',
   LOGIN_ID: 'loginId',
   BODY_CHECK: 'bodyCheck', // 몸 상태 체크 상태에 대한 키
+  LAST_INTERVIEW_DATE: 'lastBodyCheckDate',
   MOBILE_DATA_ALERT_YN: 'mobildDataAlert',
   SAVE_LOGIN_INPUT: 'saveLoginInput',
   LOCATION_SERVICE_CONFIG: 'LOCATION_SERVICE_CONFIG',

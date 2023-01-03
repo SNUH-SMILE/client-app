@@ -20,15 +20,15 @@
 </template>
 
 <script>
-import { ENUM_BODY_STATUS } from '@/common/constants';
+import { ENUM_BODY_STATUS, ENUM_DATE_FORMAT } from '@/common/constants';
 import { mapActions, mapGetters } from 'vuex';
-import { EXERCISE_ALARMS, EXERCISE_BODY_STATUS } from '../exercise';
+import { EXERCISE_ALARMS, EXERCISE_BODY_STATUS, LAST_INTERVIEW_DATE } from '../exercise';
 export default {
   async activated() {
     await this.fetchAlarms();
   },
   computed: {
-    ...mapGetters({ bodyStatus: EXERCISE_BODY_STATUS, alarms: EXERCISE_ALARMS }),
+    ...mapGetters({ bodyStatus: EXERCISE_BODY_STATUS, alarms: EXERCISE_ALARMS, lastInterviewDate: LAST_INTERVIEW_DATE }),
     alarmDetail() {
       if (this.alarms.length > 0) {
         return this.alarms[0];
@@ -40,18 +40,19 @@ export default {
   methods: {
     ...mapActions({ fetchAlarms: EXERCISE_ALARMS }),
     moveExercise() {
+      if (this.lastInterviewDate !== this.$dayjs().format(ENUM_DATE_FORMAT.YMD)) {
+        return this.$alert('금일 문진을 먼저 진행해주시길 바랍니다.');
+      }
       let name;
+
       switch (this.bodyStatus) {
         case ENUM_BODY_STATUS.STAGE1:
         case ENUM_BODY_STATUS.STAGE2:
           name = 'exercise';
           break;
         case ENUM_BODY_STATUS.BAD:
-          name = 'exercise-none';
-          break;
         default:
-          name = 'exercise-before';
-          break;
+          name = 'exercise-none';
       }
       this.$router.push({ name });
     },
