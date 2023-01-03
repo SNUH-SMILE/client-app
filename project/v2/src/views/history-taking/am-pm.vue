@@ -30,7 +30,7 @@
 <route>
 {
   "meta" : {
-    "title" : "오전/오후 문진"
+    "title" : "일일 문진"
   }
 }
 </route>
@@ -74,7 +74,8 @@ export default {
     async submit() {
       const formData = submitForm(this.state.amForm);
       const submitData = {
-        interviewType: this.getInterviewType(),
+        // interviewType: this.getInterviewType(),
+        interviewType: TYPE_AM,
         interviewDate: this.getInterviewDate(),
         answerList: formData,
       };
@@ -84,10 +85,10 @@ export default {
         this.$router.replace({ name: 'history-taking' });
       }
     },
-    getInterviewType() {
-      const hour = this.$dayjs().get('h');
-      return hour < 12 ? TYPE_AM : TYPE_PM;
-    },
+    // getInterviewType() {
+    //   const hour = this.$dayjs().get('h');
+    //   return hour < 12 ? TYPE_AM : TYPE_PM;
+    // },
     getInterviewDate() {
       const date = this.$dayjs().format('YYYYMMDDhhmm');
       return date;
