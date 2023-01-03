@@ -3,7 +3,7 @@
     <div class="user-info-data">
       <div class="user">
         <strong class="name" v-text="session.patientNm">김하나</strong>
-        <span class="lb-txt green" v-if="quarantine === quarantineStatus.YES">정상</span>
+        <span class="lb-txt green" v-if="quarantine">정상</span>
         <span class="lb-txt red" v-else>이탈</span>
         <!-- <span class="lb-txt orange">격리중</span> -->
       </div>
@@ -43,9 +43,6 @@ export default {
     ...mapGetters({ session: SESSION, info: MAIN_USER_INFO, quarantine: QUARANTINE_STATUS }),
     isolationTypes() {
       return ENUM_ISOLATION_TYPE;
-    },
-    quarantineStatus() {
-      return QUARANTINE_STATUS;
     },
   },
 };

@@ -15,6 +15,7 @@ import { RESPONSE_STATUS } from '@/common/constants';
 import { getCoordinate } from '@/common/helpers';
 import { SET_LOCATION_SERVICE_CONFIG, START_LOCATION_SERVICE } from '@/native/fgService';
 import { SET_QUARANTINE_API_URL } from '@/common/config';
+import { patientService } from '@/services/api';
 export default {
   name: 'home',
   components: {
@@ -26,8 +27,9 @@ export default {
     if (pushData) notificaitonCommonEvent(pushData); // 푸시 이벤트
     try {
       const { code, data } = await this.fetchSession();
-      if (code === RESPONSE_STATUS.SUCCESS) {
-        const { address1 } = data;
+      const { address1, patientNm, birthDate, sex, cellPhone } = data;
+      const { code: code2, data: data2 } = await patientService.identity(patientNm, birthDate, sex, cellPhone);
+      if (code2 === RESPONSE_STATUS.SUCCESS && data2.quarantineDiv === '1' && code === RESPONSE_STATUS.SUCCESS) {
         const { lat, lng } = await getCoordinate(address1);
         this.$nativeScript(SET_LOCATION_SERVICE_CONFIG, lat, lng, this.token, this.loginId, SET_QUARANTINE_API_URL);
         this.$nativeScript(START_LOCATION_SERVICE);

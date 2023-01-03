@@ -86,8 +86,7 @@ export default {
   methods: {
     ...mapActions({ fetchList: GET_INTERVIEW_LIST }),
     async getLists() {
-      const today = this.$dayjs().format('YYYY.MM.DD');
-      const result = await this.fetchList(today);
+      this.fetchList(this.$dayjs().format(ENUM_DATE_FORMAT.YMD));
     },
     historyWrite({ interviewType }) {
       let name;

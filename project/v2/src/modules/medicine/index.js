@@ -27,22 +27,17 @@ export default {
       // commit(MEDICINE_NOTICE_LIST);
       const loginId = getters[LOGIN_ID];
       const result = await drugService.noticeList(loginId, requestDate);
-      const {
-        code,
-        message,
-        data: { noticeList },
-      } = result;
-      commit(MEDICINE_NOTICE_LIST, noticeList);
+      const { code, message, data } = result;
+
+      commit(MEDICINE_NOTICE_LIST, data.result.noticeList);
       return result;
     },
     async [MEDICINE_TIMELINE_LIST]({ commit, getters }, requestDate) {
       // commit(MEDICINE_TIMELINE_LIST);
       const loginId = getters[LOGIN_ID];
       const res = await drugService.timeList(loginId, requestDate);
-      const {
-        data: { timeList },
-      } = res;
-      commit(MEDICINE_TIMELINE_LIST, timeList);
+      const { data } = res;
+      commit(MEDICINE_TIMELINE_LIST, data.result.drugTimeList);
       return res;
     },
   },

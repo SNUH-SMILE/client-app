@@ -3,7 +3,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 import _merge from 'lodash/merge';
 import _maxBy from 'lodash/maxBy';
 import _sumBy from 'lodash/sumBy';
-import { ENUM_DATE_FORMAT, ENUM_ISOLATION_TYPE, ENUM_QUARANTINE } from '@/common/constants';
+import { ENUM_DATE_FORMAT, ENUM_ISOLATION_TYPE, ENUM_QUARANTINE, RESPONSE_STATUS } from '@/common/constants';
 import { mainService } from '@/services/api';
 import { LOGIN_ID } from '../patient';
 import { STATUS } from '@/native/constants';
@@ -103,7 +103,7 @@ export default {
         data: { quarantineStatusDiv },
       } = await mainService.getQuarantineStatus(loginId);
 
-      if (code === STATUS.SUCC) {
+      if (code === RESPONSE_STATUS.SUCCESS) {
         commit(QUARANTINE_STATUS, quarantineStatusDiv);
       }
 

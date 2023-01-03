@@ -15,7 +15,7 @@
           </button>
         </router-link>
         <router-link custom v-slot="{ navigate }" :to="{ name: 'alarm' }">
-          <button type="button" class="btn-hd alarm new" @click="navigate">
+          <button type="button" class="btn-hd alarm" :class="{ new: newAlram }" @click="navigate">
             <span class="txt-blind">알림함</span>
           </button>
         </router-link>
@@ -31,6 +31,10 @@
 </template>
 <script>
 import UserInfo from '@/components/UserInfo.vue';
+import { mainService } from '@/services/api';
+import { mapGetters } from 'vuex';
+import { LOGIN_ID } from '@/modules/patient';
+import { RESPONSE_STATUS } from '@/common/constants';
 export default {
   name: 'default-header',
   components: {
@@ -39,9 +43,11 @@ export default {
   data() {
     return {
       title: '',
+      newAlram: false,
     };
   },
   computed: {
+    ...mapGetters({ loginId: LOGIN_ID }),
     headerLine() {
       return this.$route.meta.headerLine;
     },
@@ -49,10 +55,21 @@ export default {
       return this.$route.meta.headerType;
     },
     headerTitle() {
+      // console.log(this.$route.meta.title);
       return this.$route.meta.title;
     },
     showUser() {
       return this.headerType === 'nav';
+    },
+  },
+  watch: {
+    async $route(to, from) {
+      if (to.name === 'home') {
+        const { code, message, data } = await mainService.mainNotice(this.loginId);
+        if (code === RESPONSE_STATUS.SUCCESS) {
+          this.newAlram = data.existYn === 'Y';
+        }
+      }
     },
   },
 };
