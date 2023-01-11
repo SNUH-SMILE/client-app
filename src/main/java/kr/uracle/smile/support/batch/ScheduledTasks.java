@@ -175,9 +175,10 @@ public class ScheduledTasks {
                 try {
                     String searchResult = HttpClient.executePost(temperatureURL, true, temperatureMap, accessToken);
                     JsonObject obj = new Gson().fromJson(searchResult, JsonObject.class);
-                    if (0 < obj.get("totalCount").getAsInt()){
-                        logger.info("obj : {}", obj.toString());
-                        JsonArray trendArray = obj.get("userTempLocationTrendList").getAsJsonArray();
+                    JsonArray trendArray = obj.get("userTempLocationTrendList").getAsJsonArray() == null
+                                    ? new JsonArray()
+                                    : obj.get("userTempLocationTrendList").getAsJsonArray();
+                    if (0 < trendArray.size()){
                         for (int i=0; i < trendArray.size(); i++) {
                             JsonObject trendObj = trendArray.get(i).getAsJsonObject();
                             Temperature temp = new Temperature();
@@ -205,7 +206,7 @@ public class ScheduledTasks {
 
             for (Temperature temperature : tempList) {
                 HCSendAPIStatusCode statusCode = new HCSendAPIStatusCode();
-                User user = userMapper.getAdditionUserCodeToUser(temperature.getAdditionUserCode());
+                User user = userMapper.getAdditionUserCodeToUser(temperature.getAdditionUserCode(), temperature.getLoginId());
                 // user table에서 loginId, deviceId 조회
                 if (user == null || user.getLoginId() == null || "".equals(user.getLoginId())) {
                     statusCode.setId(temperature.getId());

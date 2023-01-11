@@ -28,7 +28,7 @@
     </select>
     <select id="getTokenToUser" parameterType="String" resultMap="user">
         SELECT
-            LOGIN_ID, DEVICE_ID
+            ID, LOGIN_ID, DEVICE_ID
         FROM USER
         WHERE USER_ACCESS_TOKEN = #{token}
             AND USE_YN = 'Y'
@@ -38,6 +38,7 @@
             LOGIN_ID, DEVICE_ID
         FROM USER
         WHERE ADDITION_USER_CODE = #{additionUserCode}
+          AND LOGIN_ID = #{loginId}
           AND USE_YN = 'Y'
     </select>
     <select id="getLoginIdToUser" parameterType="String" resultMap="user">

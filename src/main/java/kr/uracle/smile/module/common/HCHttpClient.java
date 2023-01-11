@@ -16,11 +16,12 @@ public class HCHttpClient {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("loginId", loginId);
         params.put(listName, list);
-        logger.info("SendAPI params : {} ", params);
+
+        logger.info("SendAPI loginId : {}, api : {}, params : {}", loginId, listName, params);
 
         try {
             String httpResult = HttpClient.executePost(URL, true, params, null);
-
+            logger.info("httpResult : {}", httpResult);
             JsonObject obj = new Gson().fromJson(httpResult, JsonObject.class);
             String code = obj.get("code").getAsString();
             if (code != null && !"00".equals(code)) {

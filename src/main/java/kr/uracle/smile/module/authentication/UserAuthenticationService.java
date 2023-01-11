@@ -26,10 +26,19 @@ public class UserAuthenticationService {
         return userMapper.addUser(user);
     }
 
-    public void dupLoginIdCheck(String loginId) {
+    public void dupLoginIdCheck(String loginId, String userToken) {
         User user = userMapper.getLoginIdToUser(loginId);
         if (user != null) {
-            scheduledTasks.deleteToken(user);
+            if (user.getUserAccessToken().equals(userToken)) {
+                userMapper.editUseYn(user.getId());
+            } else {
+                scheduledTasks.deleteToken(user);
+            }
+        }
+        // 동일한 가민가입정보로 다른 유저가 요청하였을 경우 현재 요청한 유저가 활성화모드로 적용
+        User tokenUser = userMapper.getTokenToUser(userToken);
+        if (tokenUser != null && !loginId.equals(tokenUser.getLoginId())) {
+            userMapper.editUseYn(tokenUser.getId());
         }
     }
 

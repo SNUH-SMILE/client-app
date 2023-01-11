@@ -18,7 +18,7 @@ public interface UserMapper {
 
     User getTokenToUser(String token);
 
-    User getAdditionUserCodeToUser(String additionUserCode);
+    User getAdditionUserCodeToUser(@Param("additionUserCode") String additionUserCode, @Param("loginId") String loginId);
 
     User getLoginIdToUser(String loginId);
 
