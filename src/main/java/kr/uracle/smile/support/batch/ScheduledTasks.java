@@ -175,10 +175,9 @@ public class ScheduledTasks {
                 try {
                     String searchResult = HttpClient.executePost(temperatureURL, true, temperatureMap, accessToken);
                     JsonObject obj = new Gson().fromJson(searchResult, JsonObject.class);
-                    JsonArray trendArray = obj.get("userTempLocationTrendList").getAsJsonArray() == null
-                                    ? new JsonArray()
-                                    : obj.get("userTempLocationTrendList").getAsJsonArray();
-                    if (0 < trendArray.size()){
+                    logger.info("obj : {}" , obj);
+                    if (!obj.get("userTempLocationTrendList").isJsonNull()){
+                        JsonArray trendArray = obj.get("userTempLocationTrendList").getAsJsonArray();
                         for (int i=0; i < trendArray.size(); i++) {
                             JsonObject trendObj = trendArray.get(i).getAsJsonObject();
                             Temperature temp = new Temperature();
