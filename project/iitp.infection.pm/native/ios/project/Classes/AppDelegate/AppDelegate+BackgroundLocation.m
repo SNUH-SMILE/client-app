@@ -122,7 +122,10 @@
 
 // 위치 서비스 권한 상태 변경
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    
+    if(_getStorageValue(@"LOCATION_SERVICE_CONFIG") == nil || [_getStorageValue(@"LOCATION_SERVICE_CONFIG") length] == 0)
+    {
+        return;
+    }
     NSDictionary *config = [_getStorageValue(@"LOCATION_SERVICE_CONFIG") objectFromJsonString];
     NSString *checklat = [config objectForKey:@"LAT"];
     NSString *checklng = [config objectForKey:@"LNG"];
@@ -136,7 +139,7 @@
  
     if (self.locationUpdateToServerDate != nil && [now timeIntervalSinceDate:self.locationUpdateToServerDate] < [interval intValue] * 60)
     {
-        NSLog(@"interval Check %f", [now timeIntervalSinceDate:self.locationUpdateToServerDate] );
+        //NSLog(@"interval Check %f", [now timeIntervalSinceDate:self.locationUpdateToServerDate] );
         return;
     }
     

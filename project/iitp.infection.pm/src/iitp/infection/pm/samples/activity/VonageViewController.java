@@ -167,7 +167,7 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 		public void onStreamReceived(Session session, Stream stream) {
 			if (subscriber == null) {
 				subscriber = new Subscriber.Builder(VonageViewController.this, stream).build();
-				subscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, BaseVideoRenderer.STYLE_VIDEO_FILL);
+				subscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, BaseVideoRenderer.STYLE_VIDEO_FIT);
 				subscriber.setSubscriberListener(subscriberListener);
 				session.subscribe(subscriber);
 				switch (btnStatus)

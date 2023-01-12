@@ -149,7 +149,7 @@
 - (void)doSubscribe:(OTStream*)stream
 {
     _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
-    
+    [_subscriber setViewScaleBehavior:OTVideoViewScaleBehaviorFit];
     OTError *error = nil;
     [_session subscribe:_subscriber error:&error];
     if (error)
