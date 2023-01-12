@@ -1,17 +1,15 @@
 <template>
   <div class="content-wrap">
-    <validation-observer tag="fragment">
-      <div class="content">
-        <div class="cont-inner mb-space30">
-          <div class="terms-wrap" v-html="getTerms()"></div>
-        </div>
+    <div class="content">
+      <div class="cont-inner mb-space30">
+        <div class="terms-wrap" v-html="getTerms()"></div>
       </div>
-      <div class="btn-wrap">
-        <router-link custom v-slot="{ navigate }" :to="{ name: 'agree' }">
-          <button type="button" class="btn-txt navy" @click="navigate">동의</button>
-        </router-link>
-      </div>
-    </validation-observer>
+    </div>
+    <div class="btn-wrap">
+      <router-link custom v-slot="{ navigate }" :to="{ name: 'terms', params: { agree: true } }" replace>
+        <button type="button" class="btn-txt navy" @click="navigate">동의</button>
+      </router-link>
+    </div>
   </div>
 </template>
 <route>

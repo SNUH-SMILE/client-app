@@ -42,6 +42,9 @@
 <script>
 const INIT_STATE = () => ({});
 
+let cachedTerm = [];
+let once = false;
+
 export default {
   data() {
     return {
@@ -59,8 +62,27 @@ export default {
         //   value: 'data',
         // },
       ],
-      selected: [],
+      selected: cachedTerm,
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (from.name === 'terms-id') {
+      if (to.params.agree === true) {
+        if (cachedTerm.indexOf(from.params.id) === -1) {
+          cachedTerm.push(from.params.id);
+        }
+        once = true;
+      }
+    } else {
+      cachedTerm = []; // 초기화
+    }
+    next();
+  },
+  created() {
+    if (once) {
+      this.$router.back();
+      once = false;
+    }
   },
   computed: {
     allTerms: {
@@ -77,6 +99,11 @@ export default {
     },
     invalid() {
       return !this.allTerms;
+    },
+  },
+  watch: {
+    selected(value) {
+      cachedTerm = value;
     },
   },
   methods: {
