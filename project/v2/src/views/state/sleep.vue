@@ -96,7 +96,7 @@ import DateBox from '@/common/components/DateBox.vue';
 import AppSleepChart from '@/modules/chart/AppSleepChart.vue';
 
 import { SLEEP_DETAIL } from '@/modules/health';
-import { INIT_DEEP_DATA, INIT_SHALLOW_DATA, INIT_WAKE_DATA } from '@/modules/chart/sleep';
+import { INIT_DEEP_DATA, INIT_RAM_DATA, INIT_SHALLOW_DATA, INIT_WAKE_DATA } from '@/modules/chart/sleep';
 
 export default {
   components: {
@@ -118,6 +118,7 @@ export default {
         if (item.sleepType === '2') return INIT_WAKE_DATA(item.sleepMin);
         else if (item.sleepType === '1') return INIT_SHALLOW_DATA(item.sleepMin);
         else if (item.sleepType === '0') return INIT_DEEP_DATA(item.sleepMin);
+        else if (item.sleepType === '3') return INIT_RAM_DATA(item.sleepMin);
       });
     },
     totals() {
