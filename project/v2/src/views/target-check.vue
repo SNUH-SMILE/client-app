@@ -75,7 +75,8 @@ export default {
   layout: 'none',
   data() {
     return {
-      state: MODE === ENUM_MODE.PROD ? INIT_STATE() : DEV_INIT_STATE(),
+      // state: MODE === ENUM_MODE.PROD ? INIT_STATE() : DEV_INIT_STATE(),
+      state: INIT_STATE(),
       showReset: false, //인풋 초기화 버튼
     };
   },

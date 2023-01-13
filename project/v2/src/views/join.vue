@@ -162,7 +162,8 @@ export default {
   components: { SearchAddress },
   data() {
     return {
-      state: MODE === ENUM_MODE.PROD ? INIT_STATE() : DEV_INIT_STATE(),
+      // state: MODE === ENUM_MODE.PROD ? INIT_STATE() : DEV_INIT_STATE(),
+      state: INIT_STATE(),
       showAddressSearch: false,
       pass: {
         dupLoginId: '',

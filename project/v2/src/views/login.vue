@@ -67,7 +67,8 @@ export default {
 
   data() {
     return {
-      state: MODE === ENUM_MODE.PROD ? INIT_STATE() : INIT_DEV_STATE(),
+      // state: MODE === ENUM_MODE.PROD ? INIT_STATE() : INIT_DEV_STATE(),
+      state: INIT_STATE(),
       showPassword: false, //비밀번호 보기
     };
   },

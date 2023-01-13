@@ -1,8 +1,8 @@
 /**
  * Native Push 관련
  */
-import { RUNTIME } from '@/common/config';
-import { ENUM_ALARM_TYPE, ENUM_APP_ENV, ENUM_DATE_FORMAT, ENUM_OS_ENV } from '@/common/constants';
+import { RUNTIME, MODE } from '@/common/config';
+import { ENUM_ALARM_TYPE, ENUM_APP_ENV, ENUM_DATE_FORMAT, ENUM_OS_ENV, ENUM_MODE } from '@/common/constants';
 import router from '@/router';
 import dayjs from 'dayjs';
 import Vue from 'vue';
@@ -14,7 +14,7 @@ const IOS_NOTIFICATION_CB_NAME = 'oniOSReceiveNotification';
 const ANDROID_NOTIFICATION_CB_NAME = 'onReceiveNotification';
 
 export const notificaitonCommonEvent = (payload) => {
-  Vue.$alert(`PUSH PAYLOD JSON <br/> ${JSON.stringify(payload)}`);
+  if (MODE !== ENUM_MODE.PROD) Vue.$alert(`PUSH PAYLOD JSON <br/> ${JSON.stringify(payload)}`);
   let ext;
   try {
     ext = JSON.parse(payload.payload.mps.ext);
