@@ -10,7 +10,7 @@ public interface DailyMapper {
 
     int addDaily(DailyRequest.Dailies param);
 
-    int addTimeOffsetHeartRateSamples(DailyRequest.TimeOffsetHeartRateSamples param);
+    int addTimeOffsetHeartRateSamples(List<DailyRequest.TimeOffsetHeartRateSamples> list);
 
     int editDailySendCode(HCSendAPIStatusCode param);
 

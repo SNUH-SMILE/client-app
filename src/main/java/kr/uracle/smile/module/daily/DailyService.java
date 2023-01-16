@@ -43,13 +43,19 @@ public class DailyService {
     }
 
     public void addTimeOffsetHeartRateSamples(int id, Map<String, Integer> timeOffsetHeartRateSample) {
+        List<DailyRequest.TimeOffsetHeartRateSamples> list = new ArrayList<DailyRequest.TimeOffsetHeartRateSamples>();
         for ( String key : timeOffsetHeartRateSample.keySet() ) {
             DailyRequest.TimeOffsetHeartRateSamples map = new DailyRequest.TimeOffsetHeartRateSamples();
             map.setId(id);
             map.setTimeOffsetHeartRateKey(key);
             map.setTimeOffsetHeartRateValue(timeOffsetHeartRateSample.get(key));
-            dailyMapper.addTimeOffsetHeartRateSamples(map);
+            list.add(map);
         }
+
+        if (0 < list.size()) {
+            dailyMapper.addTimeOffsetHeartRateSamples(list);
+        }
+
     }
 
     @Async

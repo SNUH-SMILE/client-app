@@ -36,7 +36,9 @@
         INSERT INTO DAILY_TIME_OFFSET_HEART_RATE_SAMPLE
             (ID, TIME_OFFSET_HEART_RATE_KEY, TIME_OFFSET_HEART_RATE_VALUE)
         VALUES
-            (#{id}, #{timeOffsetHeartRateKey}, #{timeOffsetHeartRateValue})
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.timeOffsetHeartRateKey}, #{item.timeOffsetHeartRateValue})
+        </foreach>
     </insert>
 
     <update id="editDailySendCodeFlag" >
