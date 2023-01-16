@@ -27,7 +27,7 @@ public class DailyController extends Module {
     @PostMapping(value = "/")
     @ResponseBody
     public ResponseEntity<Response<?>> addDaily(@RequestBody DailyRequest dailyRequest) {
-//        logger.info("Daily : {} ", dailyRequest);
+        logger.info("Daily data input ");
         dailyService.addDaily(dailyRequest);
 
         // 헬스커넥트에 산소포화도 데이터 전달(async)
