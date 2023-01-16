@@ -46,7 +46,6 @@ public class EpochService {
         if (0 < epochMapper.editEpochSendCodeFlag()) {
             // code : 1 select
             List<Epoch> epochsList = epochMapper.getHCEpoch();
-            logger.info("hcEpochSendAPI epochList : {} ", epochsList);
 
             for (Epoch epoch : epochsList) {
                 HCSendAPIStatusCode statusCode = new HCSendAPIStatusCode();
