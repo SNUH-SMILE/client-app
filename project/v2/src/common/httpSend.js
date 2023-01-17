@@ -29,7 +29,7 @@ const httpSend = (path, data = {}, server) => {
           resolve({ code, message, data });
         } else {
           Vue.$alert(`${message}(<span style="color:red;display: inline;">${code}</span>)`);
-          reject(code, message);
+          resolve({ code, message, data });
         }
       })
       .catch((code) => {

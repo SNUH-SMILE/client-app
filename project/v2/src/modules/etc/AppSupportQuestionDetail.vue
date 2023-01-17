@@ -11,7 +11,7 @@
       <!-- yesdata -->
       <div v-if="isAnswer">
         <div class="noti-top">
-          <p class="ttl txtc-blue">[답변]{{ answerTitle }}</p>
+          <p class="ttl txtc-blue">[답변] {{ title }}</p>
           <span class="date">등록 일자: {{ answerDate }}</span>
         </div>
         <div class="noti-btm">
@@ -31,7 +31,7 @@ export default {
   props: ['title', 'content', 'date', 'answerTitle', 'answerDate', 'answerContent'],
   computed: {
     isAnswer() {
-      return this.answerTitle && this.answerContent;
+      return this.answerContent && this.answerDate;
     },
   },
 };

@@ -65,7 +65,7 @@ export default {
     [QUESTION_LIST]({ questionList }) {
       return questionList.map((o) => {
         o.questionDateLabel = dayjs(o.questionDate, YMD).format(PeriodYmd);
-        o.answerDateLabel = dayjs(o.anawerDate, YMD).format(PeriodYmd);
+        o.answerDateLabel = dayjs(o.answerDate, YMD).format(PeriodYmd);
         return o;
       });
     },

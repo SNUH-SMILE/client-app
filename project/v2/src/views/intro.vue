@@ -88,11 +88,12 @@ export default {
         const { loginId, password } = saveInput;
         const { code, message } = await this.login({ loginId, password });
         if (RESPONSE_STATUS.SUCCESS === code) {
-          this.$router.replace({ name: 'home' });
+          return this.$router.replace({ name: 'home' });
+        } else {
+          this.$alert('자동 로그인을 실패하였습니다. 다시 로그인해주세요.');
         }
-      } else {
-        return this.$router.replace({ name: 'login' });
       }
+      return this.$router.replace({ name: 'login' });
     },
   },
 };

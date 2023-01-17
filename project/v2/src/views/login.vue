@@ -87,10 +87,8 @@ export default {
           this.$router.replace({ name: 'home' });
         } else {
           // 존재하지 않는 경우
-          this.$router.replace({ name: 'device' });
+          this.$router.replace({ name: 'home', params: { noDevice: true } });
         }
-      } else {
-        this.$alert(message);
       }
     },
     togglePw() {

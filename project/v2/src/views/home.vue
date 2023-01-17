@@ -23,8 +23,12 @@ export default {
     HomeContents,
   },
   async created() {
+    if (this.$route.params.noDevice) {
+      return this.$router.push({ name: 'device' });
+    }
     const pushData = this.$nativeScript(STARTED_PUSH_CHECK);
     if (pushData) notificaitonCommonEvent(pushData); // 푸시 이벤트
+
     try {
       const { code, data } = await this.fetchSession();
       const { address1, patientNm, birthDate, sex, cellPhone } = data;

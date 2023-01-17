@@ -33,7 +33,7 @@
               :title="detail.questionTitle"
               :content="detail.questionBody"
               :date="detail.questionDateLabel"
-              :answerContent="detail.anawerBody"
+              :answerContent="detail.answerBody"
               :answerDate="detail.answerDateLabel"
             />
           </div>

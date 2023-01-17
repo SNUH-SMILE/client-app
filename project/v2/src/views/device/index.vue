@@ -7,7 +7,7 @@
           <li>
             <button type="button" @click="openGarminConnect">가민 기기 연결하기</button>
           </li>
-          <li>
+          <li v-show="false">
             <router-link custom v-slot="{ navigate }" :to="{ name: 'device-list' }">
               <button type="button" @click="navigate">다른 기기 연결하기</button>
             </router-link>
@@ -38,7 +38,7 @@
 </route>
 <script>
 import { mapGetters } from 'vuex';
-import { LOGIN_ID } from '@/modules/patient';
+import { DEVICE_INFO, IS_GARMIN_DEVICE, LOGIN_ID } from '@/modules/patient';
 import { OPEN_GARMIN_OAUTH } from '@/native/band';
 import { BIND_RESTORE_EVENT, UNBIND_RESTORE_EVENT } from '@/native/cycle';
 import { PARAM_DATA } from '@/native/data';
@@ -51,8 +51,11 @@ export default {
       state: INIT_STATE(),
     };
   },
+  beforeRouteLeave(to, from, next) {
+    next();
+  },
   computed: {
-    ...mapGetters({ loginId: LOGIN_ID }),
+    ...mapGetters({ loginId: LOGIN_ID, isGarminDevice: IS_GARMIN_DEVICE }),
   },
   created() {
     this.$nativeScript(BIND_RESTORE_EVENT, this.garminConnectResult);
@@ -72,6 +75,11 @@ export default {
       this.$nativeScript(PARAM_DATA, 'params', {});
     },
     async openGarminConnect() {
+      if (this.isGarminDevice) {
+        if ((await this.$confirm('이미 연동된 가민 디바이스가 존재합니다.<br> 재연결하시겠습니까?')) !== 'submit') {
+          return;
+        }
+      }
       await this.$alert('가민 연동을 시작합니다.');
       this.$nativeScript(OPEN_GARMIN_OAUTH, this.loginId, this.loginId);
     },

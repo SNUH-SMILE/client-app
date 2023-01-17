@@ -24,7 +24,7 @@ const oauthHttp = (path, data) => {
           resolve({ code, message, result });
         } else {
           Vue.$alert(`${message}(<span style="color:red;display: inline;">${code}</span>)`);
-          reject(code, message);
+          resolve({ code, message, result });
         }
       })
       .catch((code) => {
