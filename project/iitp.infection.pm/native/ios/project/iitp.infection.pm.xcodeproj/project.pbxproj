@@ -17,6 +17,10 @@
 		15098280292F2E11005B27D2 /* HttpHealthNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1509827E292F2E11005B27D2 /* HttpHealthNetworkManager.m */; };
 		15354087AC92492FE4291FB0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A64EBE9271F73B81F9C3AA /* SystemConfiguration.framework */; };
 		156D48A6BFAF08C75C659CB2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06424BA7A22A9141C795D069 /* CoreGraphics.framework */; };
+		157DA8F429767E810052C43B /*  001.png in Resources */ = {isa = PBXBuildFile; fileRef = 157DA8F129767E810052C43B /*  001.png */; };
+		157DA8F529767E810052C43B /*  003.png in Resources */ = {isa = PBXBuildFile; fileRef = 157DA8F229767E810052C43B /*  003.png */; };
+		157DA8F629767E810052C43B /*  002.png in Resources */ = {isa = PBXBuildFile; fileRef = 157DA8F329767E810052C43B /*  002.png */; };
+		157DA8F829767FFC0052C43B /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 157DA8F729767FFC0052C43B /* back.png */; };
 		15C24B56B86A59897CE81912 /* MZip.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8A7A4C39BC9DCD663257DEC6 /* MZip.bundle */; };
 		18584734B70E6EB9A896040B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B76D40D3AE75AD556799B080 /* UIKit.framework */; };
 		18A44A0B86FEA049CA759E3E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D574064897BB5C965E71B04 /* Security.framework */; };
@@ -115,6 +119,10 @@
 		1509827E292F2E11005B27D2 /* HttpHealthNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHealthNetworkManager.m; sourceTree = "<group>"; };
 		1509827F292F2E11005B27D2 /* HttpHealthNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHealthNetworkManager.h; sourceTree = "<group>"; };
 		155D4D0494BD111205F92117 /* MNetExt.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MNetExt.bundle; path = MLibrary/m_addon_netExt/MNetExt.bundle; sourceTree = SOURCE_ROOT; };
+		157DA8F129767E810052C43B /*  001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " 001.png"; sourceTree = "<group>"; };
+		157DA8F229767E810052C43B /*  003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " 003.png"; sourceTree = "<group>"; };
+		157DA8F329767E810052C43B /*  002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " 002.png"; sourceTree = "<group>"; };
+		157DA8F729767FFC0052C43B /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		19F64210ACA5324B6DBC4051 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		25404301B1E2E96CD3EDF177 /* MLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MLocation.framework; path = MLibrary/m_plugin_location/MLocation.framework; sourceTree = SOURCE_ROOT; };
 		29C748A7ABAA45C3061ACDD3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -280,11 +288,23 @@
 		15098264292B32B2005B27D2 /* Native */ = {
 			isa = PBXGroup;
 			children = (
+				157DA8F029767E810052C43B /* img */,
 				15098265292B32B2005B27D2 /* VonageViewController.h */,
 				15098266292B32B2005B27D2 /* VonageViewController.xib */,
 				15098267292B32B2005B27D2 /* VonageViewController.m */,
 			);
 			path = Native;
+			sourceTree = "<group>";
+		};
+		157DA8F029767E810052C43B /* img */ = {
+			isa = PBXGroup;
+			children = (
+				157DA8F729767FFC0052C43B /* back.png */,
+				157DA8F129767E810052C43B /*  001.png */,
+				157DA8F229767E810052C43B /*  003.png */,
+				157DA8F329767E810052C43B /*  002.png */,
+			);
+			path = img;
 			sourceTree = "<group>";
 		};
 		304146CEA207A266D79A0B1F /* m_plugin_push_r4 */ = {
@@ -646,19 +666,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				157DA8F529767E810052C43B /*  003.png in Resources */,
 				D5E95BF51C7C22F90049FF1D /* Localizable.strings in Resources */,
 				D5E95BF41C7C22F90049FF1D /* InfoPlist.strings in Resources */,
 				D5E95BDC1C7C22510049FF1D /* Assets.xcassets in Resources */,
+				157DA8F429767E810052C43B /*  001.png in Resources */,
 				611A4FBB96E80AF660F20443 /* res in Resources */,
 				3442458EBE76D9C792F0090F /* MCore.bundle in Resources */,
 				36504F22BE0A5DE77D136F2A /* MDb.bundle in Resources */,
 				4370ABA327549212004A614D /* Launch Screen.storyboard in Resources */,
 				2A754FEC90B88B5FFEF58697 /* MFileIO.bundle in Resources */,
+				157DA8F629767E810052C43B /*  002.png in Resources */,
 				15098268292B32B2005B27D2 /* VonageViewController.xib in Resources */,
 				A16E44638B3D76514FEF309C /* MMedia.bundle in Resources */,
 				2C5C47E4972558324C24EC27 /* MNet.bundle in Resources */,
 				016B446BBAB3FC56BD47026F /* MNetExt.bundle in Resources */,
 				DCB14F3685F5AD96CF0CCDBC /* MPopup.bundle in Resources */,
+				157DA8F829767FFC0052C43B /* back.png in Resources */,
 				15C24B56B86A59897CE81912 /* MZip.bundle in Resources */,
 				B55F44E4847495412DB90D71 /* MLocation.bundle in Resources */,
 				5B7B4C28B6D11826E2FAA857 /* MPush.bundle in Resources */,
