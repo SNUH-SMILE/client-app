@@ -247,27 +247,16 @@ public class GcmNotifyHelper {
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
 
 		{
-
 			int importance = NotificationManager.IMPORTANCE_HIGH;
-
 			NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);
-
-			notificationChannel.setDescription("샘플 푸시 앱에 대한 채널 설명");
-
+			notificationChannel.setDescription("자가격리 알림");
 			notificationChannel.enableLights(true);
-
 			notificationChannel.setLightColor(Color.RED);
-
 			notificationChannel.enableVibration(true);
-
 			notificationChannel.setVibrationPattern(new long[]{100});
-
 			assert mManager != null;
-
 			mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
-
 			mManager.createNotificationChannel(notificationChannel);
-
 		}
 
 		final Notification notify = mBuilder.build();
