@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -176,10 +177,18 @@ public class GcmNotifyHelper {
 
 	private static void defaultNotification(Context context, JSONObject jsonMsg, String strMessage, String psid, String ext, String encryptData, Bitmap loadedIcon) {
 		String alertMessage = strMessage;
+		String title = context.getString(R.string.app_name);
 		try {
 			JSONObject apsJsonObj = jsonMsg.getJSONObject("aps");
 			//JSONObject mpsJsonObj = jsonMsg.getJSONObject("mps");
-			alertMessage = apsJsonObj.getString("alert");
+			String alertString = apsJsonObj.optString("alert");
+			JSONObject alert = new JSONObject(alertString);
+			String _title= alert.optString("title");
+			if(!TextUtils.isEmpty(_title)){
+				title = _title;
+			}
+			alertMessage = alert.optString("body");
+
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -201,7 +210,7 @@ public class GcmNotifyHelper {
 			largeIcon = loadedIcon;
 		}
 
-		String title = context.getString(R.string.app_name);
+
 		//int seqno = Integer.parseInt(jsonMsg.getString("SEQNO"));
 		//boolean isRunningApp = PushUtils.isRunningPushApps(context);
 		Intent intent = new Intent(context, PushMessageManager.class);
