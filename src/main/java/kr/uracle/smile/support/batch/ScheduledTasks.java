@@ -106,7 +106,7 @@ public class ScheduledTasks {
     public void batchTemperature() {
         logger.info("Temperature Start");
         LocalDateTime now = LocalDateTime.now();
-        String startDateTime = now.minusMinutes(20).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:01"));
+        String startDateTime = now.minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:01"));
         String endDateTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00"));
 
         List<User> userList = userMapper.getAdditionUserCode();
