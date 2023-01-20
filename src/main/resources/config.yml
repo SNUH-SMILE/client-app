@@ -24,4 +24,5 @@ seers:
   login:
     url: https://www.apirelease.seers-temp.com/mobiCARETemp/API/Account/Login
   temperature:
-    url: https://www.apirelease.seers-temp.com/mobiCARETemp/API/Manager/SelectUserTempTrendPersonalList
+    url: https://www.apirelease.seers-temp.com/mobiCARETemp/API/Measurement/SelectTemperatureByID
+#    url: https://www.apirelease.seers-temp.com/mobiCARETemp/API/Manager/SelectUserTempTrendPersonalList

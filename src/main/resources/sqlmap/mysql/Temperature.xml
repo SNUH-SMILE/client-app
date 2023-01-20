@@ -41,4 +41,14 @@
         WHERE HEALTHCONNET_SEND_CODE = '1'
     </select>
 
+    <select id="getMeasurementDate" resultMap="trend" >
+        SELECT
+            ID, MEASUREMENT_DATE
+        FROM TEMPERATURE
+        WHERE LOGIN_ID = #{loginId}
+            AND ADDITION_USER_CODE = #{additionUserCode}
+        ORDER BY MEASUREMENT_DATE DESC
+        LIMIT 1
+    </select>
+
 </mapper>

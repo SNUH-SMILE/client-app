@@ -141,7 +141,7 @@ public class ScheduledTasks {
         loginMap.put("encryption", 0);
         loginMap.put("gmtCode", gmtCode);
         loginMap.put("timezone", timezone);
-        loginMap.put("requestDateTime", startDateTime);
+        loginMap.put("requestDateTime", endDateTime);
         loginMap.put("deviceKind", 3);
 
         try {
@@ -157,36 +157,39 @@ public class ScheduledTasks {
         }
 
         // 조회 요청
+        // AdditionUserCode -> id 로 변경되었으나 AdditionUserCode로 계속 사용
         if (accessToken != null) {
             for (User user : userList) {
+                // 해당 유저의 마지막 동기화 시간 조회
+                Temperature temperature = tempMapper.getMeasurementDate(user.getLoginId(), user.getAdditionUserCode());
+
                 HashMap<String, Object> temperatureMap = new HashMap<String, Object>();
                 temperatureMap.put("organizationCode", organizationCode);
                 temperatureMap.put("requestUserCode", requestUserCode);
-                temperatureMap.put("additionalUserCode", user.getAdditionUserCode());
+                temperatureMap.put("id", user.getAdditionUserCode());
                 temperatureMap.put("deviceKind", 3);
-                temperatureMap.put("startDateTime", startDateTime);
+                temperatureMap.put("startDateTime", temperature == null || temperature.getMeasurementDate() == null
+                                                ? startDateTime
+                                                : temperature.getMeasurementDate().plusSeconds(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 temperatureMap.put("endDateTime", endDateTime);
-                temperatureMap.put("trendList", null);
-                temperatureMap.put("order", "DESC");
+                temperatureMap.put("order", "ASC");
                 temperatureMap.put("gmtCode", gmtCode);
                 temperatureMap.put("timezone", timezone);
-                temperatureMap.put("requestDateTime", startDateTime);
+                temperatureMap.put("requestDateTime", endDateTime);
 
                 try {
                     String searchResult = HttpClient.executePost(temperatureURL, true, temperatureMap, accessToken);
                     JsonObject obj = new Gson().fromJson(searchResult, JsonObject.class);
                     logger.info("obj : {}" , obj);
-                    if (!obj.get("userTempLocationTrendList").isJsonNull()){
-                        JsonArray trendArray = obj.get("userTempLocationTrendList").getAsJsonArray();
+                    if (!obj.get("temperatureList").isJsonNull()){
+                        JsonArray trendArray = obj.get("temperatureList").getAsJsonArray();
                         for (int i=0; i < trendArray.size(); i++) {
                             JsonObject trendObj = trendArray.get(i).getAsJsonObject();
                             Temperature temp = new Temperature();
                             temp.setLoginId(user.getLoginId());
                             temp.setAdditionUserCode(user.getAdditionUserCode());
                             temp.setMeasurementDate(LocalDateTime.parse(trendObj.get("dateTime").getAsString(), formatter));
-                            temp.setTemperature(trendObj.get("temperature").getAsFloat());
-                            temp.setTrend(trendObj.get("trend").getAsInt());
-                            temp.setEmergency(trendObj.get("emergency").getAsInt());
+                            temp.setTemperature(trendObj.get("value").getAsFloat());
                             tempMapper.addTemperature(temp);
                         }
                     }
