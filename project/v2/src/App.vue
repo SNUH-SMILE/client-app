@@ -34,6 +34,29 @@ export default {
       }
     });
     this.$store.commit('syncAppInfo');
+
+    const { TYPE_AM, TYPE_CONFIRMED_DAY, TYPE_ISOLATION_DAY, TYPE_ISOLATION_DAY_AFTER_30, TYPE_PM } = import('@/modules/history');
+
+    this.$eventBus.$on('writeInterview', (interviewType) => {
+      let name;
+      switch (interviewType) {
+        case TYPE_CONFIRMED_DAY:
+          name = 'history-taking-confirmed-day';
+          break;
+        case TYPE_ISOLATION_DAY:
+          name = 'history-taking-isolation-clear';
+          break;
+        case TYPE_ISOLATION_DAY_AFTER_30:
+          name = 'history-taking-isolation-clear-30';
+          break;
+        case TYPE_AM:
+        case TYPE_PM:
+        default:
+          name = 'history-taking-am-pm';
+          break;
+      }
+      this.$router.push({ name });
+    });
   },
   computed: {
     ...mapState({

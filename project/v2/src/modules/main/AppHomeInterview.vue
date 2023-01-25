@@ -11,7 +11,7 @@
       <li v-for="(item, index) in interviewList" :key="`question-${index}`">
         <button type="button" :disabled="item.interviewStatus !== '0'">
           <span class="ttl">{{ item.interviewTitle }}</span>
-          <span class="lb-rnd-txt">
+          <span class="lb-rnd-txt" @click="handleInterview(item)">
             <template v-if="item.interviewStatus === '0'">작성하기</template>
             <template v-else-if="item.interviewStatus === '1'">작성예정</template>
             <template v-else-if="item.interviewStatus === '2'">작성불가</template>
@@ -41,6 +41,11 @@ export default {
   },
   methods: {
     ...mapActions({ fetchList: GET_INTERVIEW_LIST }),
+    handleInterview({ interviewStatus, interviewType }) {
+      if (interviewStatus === '0') {
+        this.$eventBus.$emit('writeInterview', interviewType);
+      }
+    },
   },
 };
 </script>

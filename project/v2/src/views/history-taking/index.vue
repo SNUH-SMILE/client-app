@@ -61,15 +61,7 @@
 </route>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import {
-  GET_INTERVIEW_LIST,
-  GET_SYMPTOMLIST,
-  TYPE_AM,
-  TYPE_CONFIRMED_DAY,
-  TYPE_ISOLATION_DAY,
-  TYPE_ISOLATION_DAY_AFTER_30,
-  TYPE_PM,
-} from '@/modules/history';
+import { GET_INTERVIEW_LIST, GET_SYMPTOMLIST } from '@/modules/history';
 import { ENUM_DATE_FORMAT } from '@/common/constants';
 const INIT_STATE = () => ({});
 
@@ -89,24 +81,7 @@ export default {
       this.fetchList(this.$dayjs().format(ENUM_DATE_FORMAT.YMD));
     },
     historyWrite({ interviewType }) {
-      let name;
-      switch (interviewType) {
-        case TYPE_CONFIRMED_DAY:
-          name = 'history-taking-confirmed-day';
-          break;
-        case TYPE_ISOLATION_DAY:
-          name = 'history-taking-isolation-clear';
-          break;
-        case TYPE_ISOLATION_DAY_AFTER_30:
-          name = 'history-taking-isolation-clear-30';
-          break;
-        case TYPE_AM:
-        case TYPE_PM:
-        default:
-          name = 'history-taking-am-pm';
-          break;
-      }
-      this.$router.push({ name });
+      this.$eventBus.$emit('writeInterview', interviewType);
     },
   },
   async created() {
