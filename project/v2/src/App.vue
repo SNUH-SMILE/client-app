@@ -16,7 +16,7 @@ export default {
       exitFlag: true,
     };
   },
-  created() {
+  async created() {
     M.onBack(() => {
       // TODO: 특정 화면에서의 처리 필요 또한
       if (['home', 'login'].includes(this.$route.name)) {
@@ -35,7 +35,7 @@ export default {
     });
     this.$store.commit('syncAppInfo');
 
-    const { TYPE_AM, TYPE_CONFIRMED_DAY, TYPE_ISOLATION_DAY, TYPE_ISOLATION_DAY_AFTER_30, TYPE_PM } = import('@/modules/history');
+    const { TYPE_AM, TYPE_CONFIRMED_DAY, TYPE_ISOLATION_DAY, TYPE_ISOLATION_DAY_AFTER_30, TYPE_PM } = await import('@/modules/history');
 
     this.$eventBus.$on('writeInterview', (interviewType) => {
       let name;
