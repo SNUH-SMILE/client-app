@@ -25,6 +25,25 @@
     
     // NavigationBar 는 사용하지 않으므로 Hidden
     self.navigationController.navigationBarHidden = YES;
+        
+    if([self.openInitUrl hasHttpScheme] && [self.openInitUrl rangeOfString:@"127.0.0.1"].location == NSNotFound)
+    {
+        [self.poperaWebview setFrame:CGRectMake(self.poperaWebview.frame.origin.x, 50, self.poperaWebview.frame.size.width, self.poperaWebview.frame.size.height - 50)];
+        UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+        [tempView setBackgroundColor:[UIColor whiteColor]];
+        UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, 50)];
+        [backBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+        [tempView addSubview:backBtn];
+        UIImageView *btnImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 40, 40)];
+        [btnImage setImage:[UIImage imageNamed:@"back"]];
+        [tempView addSubview:btnImage];
+        [self.backgroundView addSubview:tempView];
+    }
+}
+
+-(void)backClick
+{
+    [self historyBack:nil];
 }
 
 /*
