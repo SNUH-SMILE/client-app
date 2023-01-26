@@ -25,8 +25,8 @@
     
     // NavigationBar 는 사용하지 않으므로 Hidden
     self.navigationController.navigationBarHidden = YES;
-        
-    if([self.openInitUrl hasHttpScheme] && [self.openInitUrl rangeOfString:@"127.0.0.1"].location == NSNotFound)
+            
+    if([self.openInitUrl hasPrefix:@"https://smile.hconnect.co.kr:44300/garmin/oauth"] || [self.openInitUrl hasPrefix:@"https://www.mobile-ok.com"])
     {
         [self.poperaWebview setFrame:CGRectMake(self.poperaWebview.frame.origin.x, 50, self.poperaWebview.frame.size.width, self.poperaWebview.frame.size.height - 50)];
         UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
