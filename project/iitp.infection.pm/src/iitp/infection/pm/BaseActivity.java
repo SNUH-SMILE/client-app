@@ -4,8 +4,11 @@ import iitp.infection.pm.band.BandCont;
 import iitp.infection.pm.samples.utils.ComListener;
 
 import iitp.infection.pm.samples.utils.CommUtils;
+import m.client.android.library.core.control.Controller;
+import m.client.android.library.core.managers.ActivityHistoryManager;
 import m.client.android.library.core.utils.CommonLibUtil;
 import m.client.android.library.core.view.MainActivity;
+import m.client.push.library.common.Logger;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -38,8 +41,8 @@ import android.widget.Toast;
  */
 
 public class BaseActivity extends MainActivity {
-	private int REQUEST_ENABLE_BT = 1;
-	private String CLASS_TAG = BaseActivity.class.getSimpleName();
+	private final int REQUEST_ENABLE_BT = 1;
+	private final String CLASS_TAG = BaseActivity.class.getSimpleName();
 	/**
 	 * Webview가 시작 될 때 호출되는 함수
 	 */
@@ -114,5 +117,15 @@ public class BaseActivity extends MainActivity {
 			return;
 		}
 
+	}
+
+	@Override
+	public void onBackPressed() {
+		if(getWebView().getFilePath().contains("https://www.mobile-ok.com/")
+				||getWebView().getFilePath().contains("https://connect.garmin.com/")
+				||getWebView().getFilePath().contains("https://smile.hconnect.co.kr:44300/garmin/oauth")){
+			finish();
+		}
+		super.onBackPressed();
 	}
 }
