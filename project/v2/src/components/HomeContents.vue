@@ -22,6 +22,7 @@
 
       <app-home-healths @refresh="fetchAndSync" />
       <app-home-medicine />
+      <app-home-medicine-timeline />
       <app-home-exercise />
     </div>
   </div>
@@ -39,13 +40,14 @@ import { DEVICE_INFO, IS_GARMIN_DEVICE, LOGIN_ID, SESSION } from '@/modules/pati
 import { healthService } from '@/services/api';
 import { RESPONSE_STATUS } from '@/common/constants';
 import { addSeersAccount } from '@/common/helpers';
+import AppHomeMedicineTimeline from '@/modules/main/AppHomeMedicineTimeline.vue';
 // import _each from 'lodash/each';
 // const DETAIL_BEALTH_FUNC_NM = '__onDetailHealthCB';
 // const ON_CNANGE_TEMP_FUNC_NM = 'onChangeTemp';
 // const ON_CHANGE_STEP_FUNC_NM = 'onChangeStep';
 // const ON_CHANGE_RATE_FUNC_NM = 'onChangeRate';
 export default {
-  components: { AppHomeHealths, AppHomeExercise, AppHomeMedicine, AppHomeInterview },
+  components: { AppHomeHealths, AppHomeExercise, AppHomeMedicine, AppHomeInterview, AppHomeMedicineTimeline },
   name: 'home-contents',
   data() {
     return {
