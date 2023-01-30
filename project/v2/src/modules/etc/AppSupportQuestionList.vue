@@ -17,9 +17,6 @@ import AppNoticeItem from '@/components/AppNoticeItem.vue';
 
 export default {
   components: { AppNoticeList, AppNoticeItem },
-  async created() {
-    await this.fetchList();
-  },
   computed: {
     ...mapGetters({
       list: QUESTION_LIST,
@@ -27,9 +24,6 @@ export default {
   },
 
   methods: {
-    ...mapActions({
-      fetchList: QUESTION_LIST,
-    }),
     onClickItem(item) {
       this.$emit('selectedItem', item);
     },

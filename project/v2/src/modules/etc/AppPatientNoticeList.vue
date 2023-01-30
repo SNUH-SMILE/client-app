@@ -12,10 +12,10 @@
   </app-notice-list>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import AppNoticeList from '@/components/AppNoticeList.vue';
 import AppNoticeItem from './AppPatientNoticeItem.vue';
-import { PATIENT_NOTICE_LIST } from '@/modules/etc';
+import { LAST_NOTICE_READ_CNT, PATIENT_NOTICE_LIST } from '@/modules/etc';
 
 export default {
   components: { AppNoticeList, AppNoticeItem },
@@ -26,6 +26,7 @@ export default {
   },
   async created() {
     await this.fetchList();
+    this.saveLastNoticeCnt(this.list.length);
   },
   computed: {
     ...mapGetters({
@@ -34,9 +35,8 @@ export default {
   },
 
   methods: {
-    ...mapActions({
-      fetchList: PATIENT_NOTICE_LIST,
-    }),
+    ...mapActions({ fetchList: PATIENT_NOTICE_LIST }),
+    ...mapMutations({ saveLastNoticeCnt: LAST_NOTICE_READ_CNT }),
     onClickItem(item, index) {
       this.selectedItem = this.selectedItem === item ? null : item;
       const $target = this.$refs[`item${index}`];

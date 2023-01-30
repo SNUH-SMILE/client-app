@@ -1,7 +1,9 @@
-import { ENUM_DATE_FORMAT } from '@/common/constants';
+import { ENUM_DATE_FORMAT, STORAGE_KEYS } from '@/common/constants';
+import { executor } from '@/native';
 import { etcService } from '@/services/api';
 import dayjs from 'dayjs';
 import { LOGIN_ID } from '../patient';
+import { STORAGE_DATA } from '@/native/data';
 
 const { YMD, PeriodYmd } = ENUM_DATE_FORMAT;
 
@@ -9,11 +11,15 @@ export const NOTICE_LIST = 'etc/noticeList';
 export const QUESTION_LIST = 'etc/questionList';
 export const QUESTION_REGIST = 'etc/questionRegist';
 export const PATIENT_NOTICE_LIST = 'etc/patientNoticeList';
+export const IS_NEW_NOTICE = 'etc/isNewNotice';
+export const LAST_NOTICE_READ_CNT = 'etc/lastNoticeReadCnt';
+
 export default {
   state: {
     noticeList: [],
     questionList: [],
     patientNoticeList: [],
+    lastPatientNoticeCnt: executor(STORAGE_DATA, STORAGE_KEYS.LAST_ALRAM_NOTICE_CNT) || 0,
   },
   mutations: {
     [NOTICE_LIST](state, payload = []) {
@@ -24,6 +30,10 @@ export default {
     },
     [PATIENT_NOTICE_LIST](state, payload = []) {
       state.patientNoticeList = payload;
+    },
+    [LAST_NOTICE_READ_CNT](state, payload = 0) {
+      state.lastPatientNoticeCnt = payload;
+      executor(STORAGE_DATA, STORAGE_KEYS.LAST_ALRAM_NOTICE_CNT, payload);
     },
   },
   actions: {
@@ -74,6 +84,9 @@ export default {
         o.noticeDateLabel = dayjs(o.noticeDate, YMD).format(PeriodYmd);
         return o;
       });
+    },
+    [IS_NEW_NOTICE]({ lastPatientNoticeCnt, patientNoticeList }) {
+      return patientNoticeList.length > lastPatientNoticeCnt;
     },
   },
 };
