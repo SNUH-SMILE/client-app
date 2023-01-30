@@ -31,10 +31,16 @@
 </template>
 <script>
 import UserInfo from '@/components/UserInfo.vue';
-import { mainService } from '@/services/api';
+// import { mainService } from '@/services/api';
 import { mapGetters } from 'vuex';
 import { LOGIN_ID } from '@/modules/patient';
-import { RESPONSE_STATUS } from '@/common/constants';
+// import { RESPONSE_STATUS } from '@/common/constants';
+import { IS_NEW_NOTICE } from '@/modules/etc';
+/**
+ * 20230130 패치
+ * 신규알림에 대한 내용을 프론트에서 처리함.
+ * 삭제기능이 없다는 가정으로 처리.
+ */
 export default {
   name: 'default-header',
   components: {
@@ -43,11 +49,11 @@ export default {
   data() {
     return {
       title: '',
-      newAlram: false,
+      // newAlram: false,
     };
   },
   computed: {
-    ...mapGetters({ loginId: LOGIN_ID }),
+    ...mapGetters({ loginId: LOGIN_ID, newAlram: IS_NEW_NOTICE }),
     headerLine() {
       return this.$route.meta.headerLine;
     },
@@ -62,16 +68,16 @@ export default {
       return this.headerType === 'nav';
     },
   },
-  watch: {
-    async $route(to, from) {
-      if (to.name === 'home') {
-        const { code, message, data } = await mainService.mainNotice(this.loginId);
-        if (code === RESPONSE_STATUS.SUCCESS) {
-          this.newAlram = data.existYn === 'Y';
-        }
-      }
-    },
-  },
+  // watch: {
+  //   async $route(to, from) {
+  //     if (to.name === 'home') {
+  //       const { code, message, data } = await mainService.mainNotice(this.loginId);
+  //       if (code === RESPONSE_STATUS.SUCCESS) {
+  //         this.newAlram = data.existYn === 'Y';
+  //       }
+  //     }
+  //   },
+  // },
 };
 </script>
 

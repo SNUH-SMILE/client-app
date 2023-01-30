@@ -16,6 +16,7 @@ import { getCoordinate } from '@/common/helpers';
 import { SET_LOCATION_SERVICE_CONFIG, START_LOCATION_SERVICE } from '@/native/fgService';
 import { SET_QUARANTINE_API_URL } from '@/common/config';
 import { patientService } from '@/services/api';
+import { PATIENT_NOTICE_LIST } from '@/modules/etc';
 export default {
   name: 'home',
   components: {
@@ -43,6 +44,9 @@ export default {
       this.$toast('위치정보서비스를 시작하지 못했습니다.');
     }
   },
+  activated() {
+    this.fetchPatientNoticeList();
+  },
   data() {
     return {
       popup: '',
@@ -52,7 +56,7 @@ export default {
     ...mapGetters({ interviewList: GET_INTERVIEW_LIST, loginId: LOGIN_ID, token: ACCESS_TOKEN }),
   },
   methods: {
-    ...mapActions({ fetchSession: SESSION }),
+    ...mapActions({ fetchSession: SESSION, fetchPatientNoticeList: PATIENT_NOTICE_LIST }),
     onHtAlarmAction(action) {
       if (action === 'submit') {
         this.$router.push({ name: 'history-taking' });
