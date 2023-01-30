@@ -6,7 +6,9 @@
 </template>
 <script>
 import { mapState } from 'vuex';
+import _find from 'lodash/find';
 import TopButton from '@/common/components/TopButton.vue';
+import { ENUM_DATE_FORMAT } from './common/constants';
 export default {
   components: {
     TopButton,
@@ -35,9 +37,17 @@ export default {
     });
     this.$store.commit('syncAppInfo');
 
-    const { TYPE_AM, TYPE_CONFIRMED_DAY, TYPE_ISOLATION_DAY, TYPE_ISOLATION_DAY_AFTER_30, TYPE_PM } = await import('@/modules/history');
-
-    this.$eventBus.$on('writeInterview', (interviewType) => {
+    const { TYPE_AM, TYPE_CONFIRMED_DAY, TYPE_ISOLATION_DAY, TYPE_ISOLATION_DAY_AFTER_30, TYPE_PM, GET_INTERVIEW_LIST } = await import(
+      '@/modules/history'
+    );
+    this.$eventBus.$on('writeInterview', async (interviewType) => {
+      // 완료 또는 기한이 지난 경우에 대한 유효성 체크를 한다.
+      const {
+        result: { interviewList },
+      } = await this.$store.dispatch(GET_INTERVIEW_LIST, this.$dayjs().format(ENUM_DATE_FORMAT.YMD));
+      const exist = _find(interviewList, { interviewType });
+      if (!exist) return this.$alert('만료된 문진입니다.');
+      if (exist.interviewStatus !== '0') return this.$alert(`완료된 문진이거나 현재는 문진을 진행할 수 없습니다.<br>(type:${exist.interviewStatus})`);
       let name;
       switch (interviewType) {
         case TYPE_CONFIRMED_DAY:

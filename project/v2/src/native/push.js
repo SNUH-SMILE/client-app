@@ -19,6 +19,7 @@ export const notificaitonCommonEvent = (payload) => {
   try {
     ext = JSON.parse(payload.payload.mps.ext);
   } catch (error) {
+    if (!payload.mps.ext) payload.mps.ext = '{}';
     ext = JSON.parse(payload.mps.ext);
   }
 
@@ -33,6 +34,13 @@ export const notificaitonCommonEvent = (payload) => {
   } else if (ext.action === ENUM_ALARM_TYPE.DOCTOR) {
     const { apikey, sessionId, token } = ext.infomation;
     executor(OPEN_VONAGE_DOCTOR, apikey, sessionId, token);
+  } else if (ext.action === ENUM_ALARM_TYPE.QUESTION) {
+    router.push({
+      name: 'customer-inquiry',
+      params: { questionSeq: parseInt(ext.questionSeq) },
+    });
+  } else if (ext.action === ENUM_ALARM_TYPE.INTERVIEW) {
+    Vue.prototype.$eventBus.$emit('writeInterview', ext.interviewType);
   }
 };
 

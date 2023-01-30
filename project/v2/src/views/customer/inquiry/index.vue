@@ -50,34 +50,60 @@
 }
 </route>
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
+import _find from 'lodash/find';
 import AppSupportQuestionList from '@/modules/etc/AppSupportQuestionList.vue';
 import AppSupportQuestionDetail from '@/modules/etc/AppSupportQuestionDetail.vue';
+import { QUESTION_LIST } from '@/modules/etc';
 
 export default {
+  components: {
+    AppSupportQuestionList,
+    AppSupportQuestionDetail,
+  },
   data() {
     return {
       detail: null,
     };
   },
-  components: {
-    AppSupportQuestionList,
-    AppSupportQuestionDetail,
+  async mounted() {
+    await this.fetchList();
+    if (this.$route.params.questionSeq) {
+      const questionSeq = this.$route.params.questionSeq;
+      const detail = _find(this.list, { questionSeq });
+      if (!detail) {
+        this.$alert('문의내역을 찾을 수 없습니다.');
+        return;
+      }
+      if (this.isMobile) {
+        this.openQuestionDetail({ questionSeq });
+      } else {
+        this.onSelectedItem(detail);
+      }
+    }
   },
   computed: {
     ...mapState({
       isMobile: 'isMobile',
     }),
+    ...mapGetters({
+      list: QUESTION_LIST,
+    }),
   },
   methods: {
+    ...mapActions({
+      fetchList: QUESTION_LIST,
+    }),
     onSelectedItem(item) {
+      // tablet
       this.detail = item;
     },
-    openQuestionDetail(item) {
+    openQuestionDetail({ questionSeq }) {
+      // mobile
       this.$router.push({
         name: 'customer-inquiry-id',
         params: {
-          detail: item,
+          questionSeq,
         },
       });
     },

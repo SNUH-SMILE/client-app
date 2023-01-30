@@ -38,6 +38,8 @@ export const ENUM_ALARM_TYPE = {
   EXERCISE: 'exercise',
   MEDICINE: 'medicine',
   DOCTOR: 'doctor',
+  INTERVIEW: 'interview',
+  QUESTION: 'question',
 };
 
 export const ENUM_QUARANTINE = {
