@@ -30,19 +30,16 @@
                 이상 증상 내역
               </caption>
               <colgroup>
-                <col style="width: 40%" />
                 <col />
               </colgroup>
               <thead>
                 <tr>
-                  <th scope="col">문진 이름</th>
                   <th scope="col">이상 증상</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(item, index) in symptomList" :key="`symptom-${index}`">
-                  <th scope="row">{{ item.interviewTitle }}</th>
-                  <td :class="{ 'txtc-blue': item.symptomTitleLabel }">{{ item.symptomTitleLabel || '이상 증상 없음' }}</td>
+                  <td class="txtc-blue">{{ item }}</td>
                 </tr>
               </tbody>
             </table>
@@ -61,7 +58,7 @@
 </route>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import { GET_INTERVIEW_LIST, GET_SYMPTOMLIST } from '@/modules/history';
+import { GET_INTERVIEW_LIST, GET_SYMPTOMLIST, GET_SYMPTOMLIST_BY_LOCAL } from '@/modules/history';
 import { ENUM_DATE_FORMAT } from '@/common/constants';
 const INIT_STATE = () => ({});
 
@@ -73,7 +70,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ interviewList: GET_INTERVIEW_LIST, symptomList: GET_SYMPTOMLIST }),
+    ...mapGetters({ interviewList: GET_INTERVIEW_LIST, symptomList: GET_SYMPTOMLIST_BY_LOCAL }),
   },
   methods: {
     ...mapActions({ fetchList: GET_INTERVIEW_LIST }),

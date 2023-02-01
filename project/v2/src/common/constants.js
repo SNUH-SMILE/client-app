@@ -69,6 +69,7 @@ export const STORAGE_KEYS = {
   SAVE_LOGIN_INPUT: 'saveLoginInput',
   LOCATION_SERVICE_CONFIG: 'LOCATION_SERVICE_CONFIG',
   LAST_ALRAM_NOTICE_CNT: 'lasAlramNoticeCnt',
+  LAST_AMPM_INTERVIEW_ANSWER: 'lastAmpmInterviewAnswer',
 };
 
 export const RESPONSE_STATUS = {
