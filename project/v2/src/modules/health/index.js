@@ -93,7 +93,7 @@ export default {
     async [SLEEP_DETAIL]({ commit, getters }, { date }) {
       const loginId = getters[LOGIN_ID];
       const yesterday = dayjs(date).subtract(1, 'day').format('YYYYMMDD');
-      const { code, message, data } = await healthService.getSleepTime(loginId, `${yesterday}18`, `${date}18`);
+      const { code, message, data } = await healthService.getSleepTime(loginId, `${yesterday}12`, `${date}12`);
       commit(SLEEP_DETAIL, data);
       return { code, message, data };
     },
