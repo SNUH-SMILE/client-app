@@ -1,6 +1,7 @@
 package iitp.infection.pm.samples.activity;
 
 import m.client.android.library.core.control.Controller;
+import m.client.android.library.core.managers.ActivityHistoryManager;
 import m.client.android.library.core.model.NetReqOptions;
 import m.client.android.library.core.utils.Logger;
 import m.client.android.library.core.view.AbstractActivity;
@@ -59,7 +60,7 @@ import android.widget.LinearLayout;
  */
 public class VonageViewController extends AbstractActivity implements EasyPermissions.PermissionCallbacks {
 	
-	private Activity thisObj;
+	private final Activity thisObj;
 	private static final int PERMISSIONS_REQUEST_CODE = 124;
 
 	private Session session;
@@ -120,7 +121,7 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 		session.connect(token);
 	}
 
-	private PublisherKit.PublisherListener publisherListener = new PublisherKit.PublisherListener() {
+	private final PublisherKit.PublisherListener publisherListener = new PublisherKit.PublisherListener() {
 		@Override
 		public void onStreamCreated(PublisherKit publisherKit, Stream stream) {
 		}
@@ -149,7 +150,7 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 	};
 
 
-	private Session.SessionListener sessionListener = new Session.SessionListener() {
+	private final Session.SessionListener sessionListener = new Session.SessionListener() {
 		@Override
 		public void onConnected(Session session) {
 			publisher = new Publisher.Builder(VonageViewController.this).build();
@@ -408,9 +409,9 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 		// 이전 화면으로 이동
 		
 		// 파라메터 설정
-		Parameters backParam = new Parameters();
-		Controller.getInstance().actionHistoryBack(backParam, "DEFAULT");
-		
+		//Parameters backParam = new Parameters();
+		//Controller.getInstance().actionHistoryBack(backParam, "DEFAULT");
+		finish();
 	}
 
 	/**

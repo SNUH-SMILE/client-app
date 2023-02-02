@@ -56,10 +56,10 @@ import m.client.android.library.core.view.MainActivity;
 import m.client.push.library.common.Logger;
 
 public class IitpFGService extends Service {
-    private String CLASS_TAG = IitpFGService.class.getSimpleName();
-    private String CHANNEL_ID = "iitpFgService";
-    private String CHANNEL_NAME = "국책과제 자가격리 서비스";
-    private String NOTI_TEXT = "자가격리자 위치 체크 중입니다.";
+    private final String CLASS_TAG = IitpFGService.class.getSimpleName();
+    private final String CHANNEL_ID = "iitpFgService";
+    private final String CHANNEL_NAME = "국책과제 자가격리 서비스";
+    private final String NOTI_TEXT = "자가격리자 위치 체크 중입니다.";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -248,6 +248,7 @@ public class IitpFGService extends Service {
         intent.putExtra("TITLE", title);
         intent.putExtra("EXT", ext);
         intent.putExtra("PUSH_TYPE", "GCM");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT|PendingIntent.FLAG_MUTABLE);
         final NotificationManager mManager = (NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);

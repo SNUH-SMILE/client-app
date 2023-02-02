@@ -128,7 +128,7 @@ public class GcmNotifyHelper {
 						defaultNotification(context, jsonMsg, params.get(1), psid, message, encryptData, null);
 					}
 					else {
-						showImageNotification(context, jsonMsg, params.get(1), params.get(2), psid, message);
+						//showImageNotification(context, jsonMsg, params.get(1), params.get(2), psid, message);
 					}
 				}
 				else {
@@ -221,6 +221,8 @@ public class GcmNotifyHelper {
 		intent.putExtra("EXT", ext);
 		intent.putExtra("ENCRYPT", encryptData);
 		intent.putExtra("PUSH_TYPE", "GCM");
+
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		//intent.putExtra("PUSH_STATUS", (isRunningApp)? PushConstants.APP_STATUS_ACTIVE : PushConstants.APP_STATUS_BACKGROUND);
 		//intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
@@ -263,7 +265,7 @@ public class GcmNotifyHelper {
 		mManager.notify("gcm", seqno, notify);
 	}
 	
-	private static void showImageNotification(Context context, final JSONObject jsonMsg, final String strMessage, String img, final String psid, final String ext) {
+	/*private static void showImageNotification(Context context, final JSONObject jsonMsg, final String strMessage, String img, final String psid, final String ext) {
 		final int icon = R.drawable.icon;
 		final String title = context.getString(R.string.app_name);
 		final Context ctx = context;
@@ -302,6 +304,7 @@ public class GcmNotifyHelper {
 		intent.putExtra("TITLE", alertMessage);
 		intent.putExtra("EXT", ext);
 		intent.putExtra("PUSH_TYPE", "UPNS");
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		//intent.putExtra("PUSH_STATUS", (isRunningApp)? PushConstants.APP_STATUS_ACTIVE : PushConstants.APP_STATUS_BACKGROUND);
 		//intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); 
 		int seqno = 0;
@@ -367,5 +370,5 @@ public class GcmNotifyHelper {
 		}
 
 		notificationManager.notify("gcm", seqno, builder.build());
-	}
+	}*/
 }

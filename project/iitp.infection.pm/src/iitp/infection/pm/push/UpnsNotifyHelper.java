@@ -312,6 +312,7 @@ public class UpnsNotifyHelper {
 		intent.putExtra("EXT", ext);
 		intent.putExtra("ENCRYPT", encryptData);
 		intent.putExtra("PUSH_TYPE", "UPNS");
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		//intent.putExtra("PUSH_STATUS", (isRunningApp)? PushConstants.APP_STATUS_ACTIVE : PushConstants.APP_STATUS_BACKGROUND);
 		//intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		int seqno = 0;

@@ -264,5 +264,6 @@
 	<!-- Needed only if your app communicates with already-paired Bluetooth
 		 devices. -->
 	<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+	<uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
 
 </manifest>
