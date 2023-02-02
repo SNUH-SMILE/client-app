@@ -13,7 +13,7 @@ public class PushStatusCheckReceiver extends BroadcastReceiver {
 	
 	@Override   
 	public void onReceive(Context context, Intent intent) {
-		Log.d("PushStatusCheckReceiver", "PushStatusCheckReceiver action:: " + intent.getAction());
+		Log.d("PushStatusCheckReceiver", "PushStatusCheckReceiver action::  " + intent.getAction());
 		boolean isRunningApp = PushUtils.isRunningPushApps(context);
 		Log.d("PushStatusCheckReceiver", "PushStatusCheckReceiver isRunningApp:: " + isRunningApp);
 		Intent pushStartIntent = new Intent(context, PushMessageManager.class);
