@@ -12,4 +12,7 @@ public class Sleep {
     private int startTimeInSeconds;
     private String userAccessToken;
     private String userId;
+    private int durationInSeconds;
+    private String validation;
+    private String calendarDate;
 }

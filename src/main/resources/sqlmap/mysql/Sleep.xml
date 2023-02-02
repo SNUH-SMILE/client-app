@@ -7,6 +7,9 @@
         <result property="startTimeOffsetInSeconds" column="START_TIME_OFFSET_IN_SECONDS" />
         <result property="userAccessToken" column="USER_ACCESS_TOKEN" />
         <result property="userId" column="USER_ID" />
+        <result property="durationInSeconds" column="DURATION_IN_SECONDS" />
+        <result property="validation" column="VALIDATION" />
+        <result property="calendarDate" column="CALENDAR_DATE" />
     </resultMap>
     <resultMap id="HCSleepLevels" type="kr.uracle.smile.module.sleep.SleepLevels">
         <result property="id" column="ID" />
@@ -61,7 +64,7 @@
 
     <select id="getHCSleep" resultMap="HCSleep" >
         SELECT
-            ID, START_TIME_IN_SECONDS, USER_ACCESS_TOKEN, USER_ID
+            ID, START_TIME_IN_SECONDS, USER_ACCESS_TOKEN, USER_ID, DURATION_IN_SECONDS, CALENDAR_DATE, VALIDATION
         FROM SLEEP
         WHERE HEALTHCONNET_SEND_CODE = '1'
     </select>
@@ -71,6 +74,15 @@
             SLEEP_TYPE, START_TIME_IN_SECONDS, END_TIME_IN_SECONDS
         FROM SLEEP_LEVELS_MAP
         WHERE ID = #{id}
+    </select>
+
+    <select id="getSleepToday" resultMap="HCSleep" >
+        SELECT
+            ID, START_TIME_IN_SECONDS, DURATION_IN_SECONDS, VALIDATION
+        FROM SLEEP
+        WHERE USER_ACCESS_TOKEN = #{userAccessToken}
+            AND CALENDAR_DATE = #{calendarDate}
+            AND HEALTHCONNET_SEND_CODE = '2'
     </select>
 
 </mapper>

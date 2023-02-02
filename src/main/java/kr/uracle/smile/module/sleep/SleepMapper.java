@@ -2,6 +2,7 @@ package kr.uracle.smile.module.sleep;
 
 import kr.uracle.smile.module.common.HCSendAPIStatusCode;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,5 +24,7 @@ public interface SleepMapper {
     List<Sleep> getHCSleep();
 
     List<SleepLevels> getHCSleepLevels(int id);
+
+    List<Sleep> getSleepToday(@Param("userAccessToken") String userAccessToken, @Param("calendarDate") String calendarDate);
 
 }

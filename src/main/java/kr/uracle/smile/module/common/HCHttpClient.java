@@ -11,14 +11,29 @@ import java.util.List;
 public class HCHttpClient {
 
     public static String hcHttpClientPost(String loginId, String listName, String URL, List<Object> list) {
-        String resultCode = "2";
-
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("loginId", loginId);
         params.put(listName, list);
 
         logger.info("SendAPI loginId : {}, api : {}", loginId, listName);
 
+        return executePost(URL, params);
+    }
+
+    public static String hcHttpClientPost(String loginId, String listName, String URL, String sleepListKey, String deleteSleepListKey, List<Object> list) {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("loginId", loginId);
+        params.put("sleepListKey", sleepListKey);
+        params.put("deleteSleepListKey", deleteSleepListKey);
+        params.put(listName, list);
+
+        logger.info("SendAPI loginId : {}, api : {}, sleepListKey : {} ", loginId, listName, sleepListKey);
+
+        return executePost(URL, params);
+    }
+
+    public static String executePost(String URL, HashMap<String, Object> params) {
+        String resultCode = "2";
         try {
             String httpResult = HttpClient.executePost(URL, true, params, null);
             JsonObject obj = new Gson().fromJson(httpResult, JsonObject.class);
@@ -30,7 +45,6 @@ public class HCHttpClient {
             resultCode = "3";
             logger.info("URL : {} API call error : {} ", URL , e.getMessage());
         }
-
         return resultCode;
     }
 }

@@ -110,6 +110,50 @@ public class SleepService {
                 String loginId = user.getLoginId();
                 String deviceId = user.getDeviceId();
 
+                // 수면데이터 밸리데이션
+                String deleteSleepListKey = "";
+                // 기존 데이터 조회
+                List<Sleep> sleepTodayList = sleepMapper.getSleepToday(sleep.getUserAccessToken(), sleep.getCalendarDate());
+                if (0 < sleepTodayList.size()) {
+                    boolean isValidation = false;
+                    for (Sleep s : sleepTodayList) {
+                        // 기존 수면 시작시간
+                        int oldStartTimestamp = s.getStartTimeInSeconds();
+                        // 기존 수면 총 시간
+                        int oldDurationTimestamp = s.getDurationInSeconds();
+                        // 기존 수면 끝난 시간
+                        int oldEndTimestamp = oldStartTimestamp + oldDurationTimestamp;
+                        // 현재데이터의 수면 끝난 시간
+                        int endTimestamp = sleep.getStartTimeInSeconds() + sleep.getDurationInSeconds();
+
+                        // 겹치는 시간 밸리데이션
+                        if ((oldStartTimestamp <= sleep.getStartTimeInSeconds() && sleep.getStartTimeInSeconds() < oldEndTimestamp)
+                            || (oldStartTimestamp < endTimestamp && endTimestamp <= oldEndTimestamp)
+                            || (sleep.getStartTimeInSeconds() < oldStartTimestamp && oldEndTimestamp < endTimestamp)) {
+                            HCSendAPIStatusCode statusCode2 = new HCSendAPIStatusCode();
+                            // 우선순위 체크
+                            if (SleepPriority.getCode(s.getValidation()) <= SleepPriority.getCode(sleep.getValidation())) {
+                                // 기존 데이터 상태코드 5로 변경
+                                statusCode2.setId(s.getId());
+                                statusCode2.setCode("5");
+                                // deleteSleepListKey 값 셋팅
+                                deleteSleepListKey = String.valueOf(s.getId());
+                                logger.info("sleep deleteKey : {}", s.getId());
+                            } else {
+                                isValidation = true;
+                                // 기존 데이터 상태코드 4로 변경
+                                statusCode2.setId(sleep.getId());
+                                statusCode2.setCode("4");
+                                logger.info("sleep skipKey : {}", sleep.getId());
+                            }
+                            sleepMapper.editSleepSendCode(statusCode2);
+                        }
+                    }
+                    if (isValidation) {
+                        continue;
+                    }
+                }
+
                 List<SleepLevels> SLList = sleepMapper.getHCSleepLevels(sleep.getId());
 
                 // 헬스커넥트 요청 List
@@ -130,7 +174,7 @@ public class SleepService {
                 }
 
                 statusCode.setId(sleep.getId());
-                statusCode.setCode(HCHttpClient.hcHttpClientPost(loginId, "sleepTimeList", hcSleepURL, sleepTimeList));
+                statusCode.setCode(HCHttpClient.hcHttpClientPost(loginId, "sleepTimeList", hcSleepURL, String.valueOf(sleep.getId()), deleteSleepListKey, sleepTimeList));
 
                 sleepMapper.editSleepSendCode(statusCode);
             }
