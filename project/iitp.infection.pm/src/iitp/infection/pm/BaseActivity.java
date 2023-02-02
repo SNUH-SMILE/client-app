@@ -9,6 +9,7 @@ import m.client.android.library.core.managers.ActivityHistoryManager;
 import m.client.android.library.core.utils.CommonLibUtil;
 import m.client.android.library.core.view.MainActivity;
 import m.client.push.library.common.Logger;
+import m.client.push.library.common.PushConstants;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +20,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * BaseActivity Class
@@ -49,6 +53,7 @@ public class BaseActivity extends MainActivity {
 	@Override
 	public void onPageStarted (WebView view, String url, Bitmap favicon) {
 		super.onPageStarted(view, url, favicon);
+		WebView.setWebContentsDebuggingEnabled(true);
 	}
 	
 	/**
@@ -83,9 +88,20 @@ public class BaseActivity extends MainActivity {
 		super.onResume();
 
 		String push = CommonLibUtil.getVariable("_PUSHDATA");
+
 		if(!TextUtils.isEmpty(push)){
-			CommonLibUtil.setVariable("_PUSHDATA", "");
-			getWebView().loadUrl("javascript:onReceiveNotification("+ push + ")");
+			JSONObject object = null;
+			try {
+				object = new JSONObject(push);
+				Logger.e(object.toString(2));
+				String status = object.optString("status");
+				if(!status.equals(PushConstants.APP_STATUS_START)) {
+					//CommonLibUtil.setVariable("_PUSHDATA", "");
+					getWebView().loadUrl("javascript:onReceiveNotification(" + push + ")");
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 
 

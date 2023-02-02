@@ -25,8 +25,8 @@ import android.view.Window;
 import android.webkit.WebView;
 
 public class PushMessageManager extends Activity {
-	private CommonLibHandler mCommLibHandle = CommonLibHandler.getInstance();
-	private PushManager mPushManager = PushManager.getInstance();
+	private final CommonLibHandler mCommLibHandle = CommonLibHandler.getInstance();
+	private final PushManager mPushManager = PushManager.getInstance();
 	
 	
 	
@@ -46,9 +46,16 @@ public class PushMessageManager extends Activity {
            Logger.e(originData);
            Logger.e("================ !encrypt ================"); 
     	JSONObject payload = null;
+	    MainActivity _activity = (MainActivity) ActivityHistoryManager.getInstance().getTopActivity();
     	try {
 			payload = new JSONObject(notification);
 			payload.put("ns", pushType);
+		    if (mCommLibHandle.g_strExtWNIClassPackageName == null || _activity == null) {
+			    payload.put("status", PushConstants.APP_STATUS_START);
+		    }else{
+			    boolean isRunningApp = PushUtils.isRunningPushApps(this);
+				payload.put("status", (isRunningApp)? PushConstants.APP_STATUS_ACTIVE : PushConstants.APP_STATUS_BACKGROUND);
+		    }
 			notification = payload.toString();
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -59,7 +66,7 @@ public class PushMessageManager extends Activity {
 		// 프로그램이 정상적으로 구동되지 않고 바로 실행되는 경우에는 프로그램 초기화 처리를 거쳐야 한다. 
     	
     	//Log.d("mCommLibHandle.g_strExtWNIClassPackageName",mCommLibHandle.g_strExtWNIClassPackageName);
-		 MainActivity _activity = (MainActivity) ActivityHistoryManager.getInstance().getTopActivity();
+
 
 		if (mCommLibHandle.g_strExtWNIClassPackageName == null || _activity == null) {
 			Log.d("PushMessageManager", "PushMessageManager Process App Init!!");
@@ -156,8 +163,8 @@ public class PushMessageManager extends Activity {
 						tempJSON.put("status", status);
 						tempJSON.put("encrypt", originData);
 						
-						Log.e("PushMessageManager", "Push message!!" + tempJSON.toString());
-						activity.getWebView().loadUrl("javascript:onReceiveNotification("+tempJSON.toString()+")");
+						Log.e("PushMessageManager", "Push message!!" + tempJSON);
+						activity.getWebView().loadUrl("javascript:onReceiveNotification("+ tempJSON +")");
 
 					//	CommonLibUtil.setVariable("_PUSHDATA", payloadVal);
 					} 
