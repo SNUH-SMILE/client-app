@@ -26,6 +26,7 @@
         UPDATE TEMPERATURE
         SET    HEALTHCONNET_SEND_CODE = '1'
         WHERE  HEALTHCONNET_SEND_CODE in ('0', '3')
+          AND DATE_ADD(NOW(), INTERVAL -1 DAY) &lt; REG_DATE
     </update>
 
     <update id="editTempSendCode" parameterType="kr.uracle.smile.module.common.HCSendAPIStatusCode" >
