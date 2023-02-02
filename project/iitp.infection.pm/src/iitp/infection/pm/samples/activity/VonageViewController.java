@@ -220,7 +220,7 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 		}
 		public void onConnectionDestroyed(Session ses, Connection con)
 		{
-			Toast.makeText(getApplicationContext(),"상대방이 화상통화를 종료하였습니다.",Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(),"통화가 종료되었습니다",Toast.LENGTH_LONG).show();
 			session.disconnect();
 			removeContainer();
 			onBackPressed();

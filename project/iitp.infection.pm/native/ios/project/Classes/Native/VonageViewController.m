@@ -229,7 +229,7 @@ connectionDestroyed:(OTConnection *)connection
 
     [self cleanupPublisher];
     
-    [PPToastUtil createSimpleToast:@"상대방이 통화를 종료하였습니다." duration:3000];
+    [PPToastUtil createSimpleToast:@"통화가 종료되었습니다." duration:3000];
     
     [self backPage:nil];
 }
