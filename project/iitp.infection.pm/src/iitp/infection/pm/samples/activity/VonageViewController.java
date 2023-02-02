@@ -33,6 +33,7 @@ import com.opentok.android.BaseVideoRenderer;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
+import com.opentok.android.Connection;
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
 import com.opentok.android.Subscriber;
@@ -40,6 +41,7 @@ import com.opentok.android.SubscriberKit;
 import android.opengl.GLSurfaceView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 /**
  * VonageViewController Class
@@ -118,6 +120,7 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
          */
 		session = new Session.Builder(this, apiKey, sessionId).build();
 		session.setSessionListener(sessionListener);
+		session.setConnectionListener(connectionListener);
 		session.connect(token);
 	}
 
@@ -209,6 +212,21 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 		public void onError(Session session, OpentokError opentokError) {
 		}
 	};
+
+	private final Session.ConnectionListener connectionListener = new Session.ConnectionListener()
+	{
+		public void onConnectionCreated(Session ses, Connection con)
+		{
+		}
+		public void onConnectionDestroyed(Session ses, Connection con)
+		{
+			Toast.makeText(getApplicationContext(),"상대방이 화상통화를 종료하였습니다.",Toast.LENGTH_LONG).show();
+			session.disconnect();
+			removeContainer();
+			onBackPressed();
+		}
+	};
+
 
 	public void removeContainer()
 	{
