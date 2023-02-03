@@ -16,6 +16,7 @@
 @property (nonatomic) OTSession *session;
 @property (nonatomic) OTPublisher *publisher;
 @property (nonatomic) OTSubscriber *subscriber;
+@property (nonatomic) OTSubscriber *subscriber2;
 @end
 
 @implementation VonageViewController
@@ -158,6 +159,18 @@
     }
 }
 
+- (void)doSubscribe2:(OTStream*)stream
+{
+    _subscriber2 = [[OTSubscriber alloc] initWithStream:stream delegate:self];
+    [_subscriber2 setViewScaleBehavior:OTVideoViewScaleBehaviorFit];
+    OTError *error = nil;
+    [_session subscribe:_subscriber2 error:&error];
+    if (error)
+    {
+        [self showAlert:[error localizedDescription]];
+    }
+}
+
 /**
  * Cleans the subscriber from the view hierarchy, if any.
  * NB: You do *not* have to call unsubscribe in your controller in response to
@@ -168,6 +181,12 @@
 {
     [_subscriber.view removeFromSuperview];
     _subscriber = nil;
+}
+
+- (void)cleanupSubscriber2
+{
+    [_subscriber2.view removeFromSuperview];
+    _subscriber2 = nil;
 }
 
 # pragma mark - OTSession delegate callbacks
@@ -194,9 +213,14 @@
   streamCreated:(OTStream *)stream
 {
     NSLog(@"session streamCreated (%@)", stream.streamId);
+    
     if (nil == _subscriber)
     {
         [self doSubscribe:stream];
+    }
+    else if(nil == _subscriber2)
+    {
+        [self doSubscribe2:stream];
     }
 }
 
@@ -208,6 +232,10 @@ streamDestroyed:(OTStream *)stream
     if ([_subscriber.stream.streamId isEqualToString:stream.streamId])
     {
         [self cleanupSubscriber];
+    }
+    else if ([_subscriber2.stream.streamId isEqualToString:stream.streamId])
+    {
+        [self cleanupSubscriber2];
     }
 }
 
@@ -225,6 +253,11 @@ connectionDestroyed:(OTConnection *)connection
          isEqualToString:connection.connectionId])
     {
         [self cleanupSubscriber];
+    }
+    else if ([_subscriber2.stream.connection.connectionId
+         isEqualToString:connection.connectionId])
+    {
+        [self cleanupSubscriber2];
     }
 
     [self cleanupPublisher];
@@ -244,9 +277,33 @@ didFailWithError:(OTError*)error
 
 - (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber
 {
+    NSLog(@"subscriber (%@) hasAudio %d", subscriber.stream.streamId, subscriber.stream.hasAudio);
+//    if(subscriber == _subscriber2)
+//    {
+//        [_subscriber2.view setFrame:CGRectMake(0, 0, self.view.frame.size.width,
+//                                              300)];
+//        [self.view addSubview:_subscriber2.view];
+//        [_subscriber.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+//
+//    }
+    if(subscriber == _subscriber2 && _subscriber2.stream.hasAudio)
+    {
+        return;
+    }
+    else if(subscriber == _subscriber2)
+    {
+        [_subscriber.view removeFromSuperview];
+        [_subscriber2.view setFrame:CGRectMake(0, 0, self.subContainer.frame.size.width,
+                                              self.subContainer.frame.size.height)];
+        [self.subContainer insertSubview:_subscriber2.view atIndex:0];
+        [_subscriber2.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+
+        return;
+    }
+    
     NSLog(@"subscriberDidConnectToStream (%@)",
           subscriber.stream.connection.connectionId);
-    assert(_subscriber == subscriber);
+//    assert(_subscriber == subscriber);
     [_subscriber.view setFrame:CGRectMake(0, 0, self.subContainer.frame.size.width,
                                           self.subContainer.frame.size.height)];
     [self.subContainer insertSubview:_subscriber.view atIndex:0];

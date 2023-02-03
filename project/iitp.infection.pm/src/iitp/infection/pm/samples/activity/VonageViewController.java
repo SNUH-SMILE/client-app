@@ -68,6 +68,7 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 	private Session session;
 	private Publisher publisher;
 	private Subscriber subscriber;
+	private Subscriber subscriber2;
 
 	private FrameLayout largeContainer;
 	private FrameLayout smallContainer;
@@ -187,23 +188,72 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 						break;
 				}
 			}
+			else
+			{
+				subscriber2 = new Subscriber.Builder(VonageViewController.this, stream).build();
+				subscriber2.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, BaseVideoRenderer.STYLE_VIDEO_FIT);
+				session.subscribe(subscriber2);
+
+				if(!stream.hasAudio())
+				{
+					Subscriber subscribertemp = subscriber2;
+					subscriber = subscriber2;
+					subscriber2 = subscribertemp;
+					switch (btnStatus)
+					{
+						case 1:
+							smallContainer.removeAllViews();
+							smallContainer.addView(subscriber.getView());
+							break;
+						case 2:
+							largeContainer.removeAllViews();
+							largeContainer.addView(subscriber.getView());
+							break;
+						case 3:
+							topContainer.removeAllViews();
+							topContainer.addView(subscriber.getView());
+
+							break;
+					}
+				}
+			}
 		}
 
 		@Override
 		public void onStreamDropped(Session session, Stream stream) {
-			if (subscriber != null) {
-				subscriber = null;
-				switch (btnStatus)
-				{
-					case 1:
-						smallContainer.removeAllViews();
-						break;
-					case 2:
-						largeContainer.removeAllViews();
-						break;
-					case 3:
-						topContainer.removeAllViews();
-						break;
+			if(subscriber != null && stream.getStreamId().equals(subscriber.getStream().getStreamId()))
+			{
+				if (subscriber != null) {
+					subscriber = null;
+					switch (btnStatus)
+					{
+						case 1:
+							smallContainer.removeAllViews();
+							break;
+						case 2:
+							largeContainer.removeAllViews();
+							break;
+						case 3:
+							topContainer.removeAllViews();
+							break;
+					}
+				}
+			}
+			else if(subscriber2 != null && stream.getStreamId().equals(subscriber2.getStream().getStreamId()))
+			{
+				if (subscriber2 != null) {
+					subscriber2 = null;
+					switch (btnStatus) {
+						case 1:
+							smallContainer.removeAllViews();
+							break;
+						case 2:
+							largeContainer.removeAllViews();
+							break;
+						case 3:
+							topContainer.removeAllViews();
+							break;
+					}
 				}
 			}
 		}
