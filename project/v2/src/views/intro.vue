@@ -74,7 +74,8 @@ export default {
         }
         if (action === ENUM_RESOURCE_UPDATE_ACTION.REFRESH) {
           // 페이지 리로드
-          return this.$nativeScript(PAGE_RELOAD);
+          // return this.$nativeScript(PAGE_RELOAD);
+          return location.reload();
         }
       } catch (error) {
         console.error(error);
