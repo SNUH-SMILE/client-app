@@ -123,9 +123,9 @@ public class ScheduledTasks {
     }
 
     public void getTemperatures(List<User> userList, String startDateTime, String endDateTime) {
-        final String organizationCode = "KR_SNU";
-        final String requestUserCode = "KR_SNU_snu_manager";
-        final String id = "snu_manager";
+        final String organizationCode = "KR_SNU2";
+        final String requestUserCode = "KR_SNU2_snu_manager2";
+        final String id = "snu_manager2";
         final String password = "a111111";
         final String route = "MANAGER_WEB";
         final String gmtCode = "GMT+0900";

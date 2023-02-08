@@ -141,7 +141,7 @@ public class SleepService {
                                 logger.info("sleep deleteKey : {}", s.getId());
                             } else {
                                 isValidation = true;
-                                // 기존 데이터 상태코드 4로 변경
+                                // 신규 데이터 상태코드 4로 변경
                                 statusCode2.setId(sleep.getId());
                                 statusCode2.setCode("4");
                                 logger.info("sleep skipKey : {}", sleep.getId());
