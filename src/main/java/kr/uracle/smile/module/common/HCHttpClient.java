@@ -27,7 +27,7 @@ public class HCHttpClient {
         params.put("deleteSleepListKey", deleteSleepListKey);
         params.put(listName, list);
 
-        logger.info("SendAPI loginId : {}, api : {}, sleepListKey : {} ", loginId, listName, sleepListKey);
+        logger.info("SendAPI loginId : {}, api : {}, sleepListKey : {}, deleteSleepListKey : {} ", loginId, listName, sleepListKey, deleteSleepListKey);
 
         return executePost(URL, params);
     }
@@ -39,6 +39,7 @@ public class HCHttpClient {
             JsonObject obj = new Gson().fromJson(httpResult, JsonObject.class);
             String code = obj.get("code").getAsString();
             if (code != null && !"00".equals(code)) {
+                logger.info("URL : {} API call fail : {} ", URL , code);
                 resultCode = "4";
             }
         } catch (Exception e) {
