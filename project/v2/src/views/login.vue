@@ -81,7 +81,12 @@ export default {
       const { loginId, password } = this.state;
       const { code, message } = await this.login({ loginId, password });
       if (RESPONSE_STATUS.SUCCESS === code) {
-        await this.fetchDevice();
+        try {
+          await this.fetchDevice();
+        } catch (error) {
+          // error ignore
+        }
+
         if (this.deviceInfo.deviceId) {
           // 기등록한 밴드(디바이스)가 존재하는 경우
           this.$router.replace({ name: 'home' });

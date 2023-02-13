@@ -130,7 +130,7 @@ export default {
       let deep = 0;
 
       this.detail.sleepTimeList.forEach(({ sleepMin, sleepType }) => {
-        sleep += sleepMin;
+        if (sleepType !== '2') sleep += sleepMin;
         if (sleepType === '3') rem += sleepMin;
         else if (sleepType === '2') wake += sleepMin;
         else if (sleepType === '1') shallow += sleepMin;

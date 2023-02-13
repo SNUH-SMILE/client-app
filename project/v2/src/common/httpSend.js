@@ -33,7 +33,9 @@ const httpSend = (path, data = {}, server) => {
         }
       })
       .catch((code) => {
-        Vue.$alert(`ERROR CODE :  path : ${path} ${code}`);
+        if (code != '400') {
+          Vue.$alert(`ERROR CODE :  path : ${path} ${code}`);
+        }
         reject(code);
       })
       .finally(() => {
