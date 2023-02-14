@@ -5,14 +5,17 @@
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
     "points": ["1", "0"],
-    "answerRequired": "required"
+    "answerRequired": "required",
+    "child": ["39"]
   },
   {
     "order": "39",
     "question": "기침이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
     "labels": ["감소", "유지", "증가"],
-    "answerRequired": "required"
+    "answerRequired": "",
+    "parent": "38",
+    "requiredValues": ["1"]
   },
   {
     "order": "40",
@@ -20,14 +23,17 @@
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
     "points": ["1", "0"],
-    "answerRequired": "required"
+    "answerRequired": "required",
+    "child": ["41"]
   },
   {
     "order": "41",
     "question": "가래가 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
     "labels": ["감소", "유지", "증가"],
-    "answerRequired": "required"
+    "answerRequired": "",
+    "parent": "40",
+    "requiredValues": ["1"]
   },
   {
     "order": "42",
@@ -35,14 +41,17 @@
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
     "points": ["1", "0"],
-    "answerRequired": "required"
+    "answerRequired": "required",
+    "child": ["43"]
   },
   {
     "order": "43",
     "question": "발열이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
     "labels": ["감소", "유지", "증가"],
-    "answerRequired": "required"
+    "answerRequired": "",
+    "parent": "42",
+    "requiredValues": ["1"]
   },
   {
     "order": "44",
@@ -50,14 +59,17 @@
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
     "points": ["1", "0"],
-    "answerRequired": "required"
+    "answerRequired": "required",
+    "child": ["45"]
   },
   {
     "order": "45",
     "question": "콧물이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
     "labels": ["감소", "유지", "증가"],
-    "answerRequired": "required"
+    "answerRequired": "",
+    "parent": "44",
+    "requiredValues": ["1"]
   },
   {
     "order": "46",
@@ -65,14 +77,17 @@
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
     "points": ["1", "0"],
-    "answerRequired": "required"
+    "answerRequired": "required",
+    "child": ["47"]
   },
   {
     "order": "47",
     "question": "인후통이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
     "labels": ["감소", "유지", "증가"],
-    "answerRequired": "required"
+    "answerRequired": "",
+    "parent": "46",
+    "requiredValues": ["1"]
   },
   {
     "order": "48",
@@ -80,14 +95,17 @@
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
     "points": ["1", "0"],
-    "answerRequired": "required"
+    "answerRequired": "required",
+    "child": ["49"]
   },
   {
     "order": "49",
     "question": "호흡곤란 증상이 있으신 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
     "labels": ["감소", "유지", "증가"],
-    "answerRequired": "required"
+    "answerRequired": "",
+    "parent": "48",
+    "requiredValues": ["1"]
   },
   {
     "order": "50",
@@ -95,14 +113,17 @@
     "answerType": "RadioFactory",
     "labels": ["예", "아니오"],
     "points": ["1", "0"],
-    "answerRequired": "required"
+    "answerRequired": "required",
+    "child": ["51"]
   },
   {
     "order": "51",
     "question": "흉통이 있는 경우, 빈도가 (감소/유지/증가) 하였나요?",
     "answerType": "RadioFactory",
     "labels": ["감소", "유지", "증가"],
-    "answerRequired": "required"
+    "answerRequired": "",
+    "parent": "50",
+    "requiredValues": ["1"]
   },
   {
     "order": "52",
