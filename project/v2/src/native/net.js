@@ -64,7 +64,17 @@ extend(APP_RESOURCE_UPDATE, () => {
     M.net.res.check({
       callback: function (status, result) {
         if (status !== 'IS_RESOURCE_UPDATE') {
-          if (result.errorCode !== '905') {
+          if (status === 'RECOMMENDED_APP_UPDATING' || status === 'FORCED_APP_UPDATING') {
+            resolve({
+              status: STATUS.FAIL,
+              message: '앱을 업데이트해야 합니다.',
+              action: ENUM_RESOURCE_UPDATE_ACTION.UPDATE,
+              payload: {
+                url: result.download_market_url,
+                result,
+              },
+            });
+          } else if (result.errorCode !== '905') {
             return resolve({
               status: STATUS.FAIL,
               message: '리소스 업데이트 실패',

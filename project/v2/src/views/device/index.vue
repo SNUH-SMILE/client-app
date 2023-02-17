@@ -64,15 +64,16 @@ export default {
     this.$nativeScript(UNBIND_RESTORE_EVENT, this.garminConnectResult);
   },
   methods: {
-    garminConnectResult() {
+    async garminConnectResult() {
       const { code, message } = this.$nativeScript(PARAM_DATA, 'params.garminAuthResult');
+      this.$nativeScript(PARAM_DATA, 'params', {});
       if (code === '200') {
-        this.$alert('가민 연동을 완료하였습니다.');
         patientService.device(this.loginId, [{ deviceId: this.loginId, deviceNm: 'garmin' }]);
+        await this.$alert('가민 연동을 완료하였습니다. <br> 홈으로 이동합니다.');
+        this.$router.replace({ name: 'home' });
       } else {
         this.$alert(`${message || '가민 연동을 실패하였습니다.'}(${code})`);
       }
-      this.$nativeScript(PARAM_DATA, 'params', {});
     },
     async openGarminConnect() {
       if (this.isGarminDevice) {
