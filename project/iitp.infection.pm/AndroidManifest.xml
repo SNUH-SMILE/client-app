@@ -3,7 +3,7 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="iitp.infection.pm"
           android:versionCode="4"
-          android:versionName="1.0.3">
+          android:versionName="1.0.20">
 	<!-- 안드로이드 8.0 이상 필수, 라이브러리 버전 4.1.0.7 이상부터 추가된 리시버 등록 시 권한 등록위해 선언 (없으면 앱 디폴트 권한) -->
 	<permission
 		android:name="${applicationId}.permission.MPUSH_PERMISSION"
@@ -17,6 +17,7 @@
 		android:allowBackup="false"
 		android:icon="@drawable/icon"
 		android:label="@string/app_name"
+		tools:replace="android:allowBackup"
 		android:networkSecurityConfig="@xml/network_security_config"
 		android:supportsRtl="true">
 		<!--  改成你的key，请联系sdk开发者申请提供 -->
