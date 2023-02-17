@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -296,7 +297,7 @@ public class VonageViewController extends AbstractActivity implements EasyPermis
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.vonage);
-		
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		//Orientation Setting 부분 반듯이 호출해야함.(호출하지 않으면 Orientation 관련 Error 발생 )
 		setActivityOrientation();
 		
