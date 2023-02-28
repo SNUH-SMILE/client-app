@@ -99,10 +99,13 @@ public class OAuthController extends Module {
 
         if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             // 유효한 loginId가 요청올 경우 기존 token 삭제
-            userService.dupLoginIdCheck(loginId, responseEntity.getBody().getOauth_token());
-
-            int result = userService.addUser(loginId, deviceId,
+            int result = userService.dupLoginIdCheck(loginId,
                     responseEntity.getBody().getOauth_token(), responseEntity.getBody().getOauth_token_secret());
+            if (result <= 0) {
+                result = userService.addUser(loginId, deviceId,
+                        responseEntity.getBody().getOauth_token(), responseEntity.getBody().getOauth_token_secret());
+            }
+
             if (0 < result) {
                 code = ResponseCode.Ok.getCode();
                 message = getLocalizedString(LocalizedString.OK);

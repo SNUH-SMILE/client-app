@@ -16,6 +16,8 @@ public interface UserMapper {
 
     int editUseYn(@Param("id") int id);
 
+    int editAccessTokenToUser(@Param("loginId") String loginId, @Param("userToken") String userToken, @Param("userSecret") String userSecret);
+
     User getTokenToUser(String token);
 
     User getAdditionUserCodeToUser(@Param("additionUserCode") String additionUserCode, @Param("loginId") String loginId);

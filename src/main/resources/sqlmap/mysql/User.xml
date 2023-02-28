@@ -85,4 +85,13 @@
             MOD_DATE = NOW()
         WHERE ID = #{id}
     </update>
+    <update id="editAccessTokenToUser" >
+        UPDATE USER
+        SET
+            USER_ACCESS_TOKEN = #{userToken},
+            USER_ACCESS_TOKEN_SECRET = #{userSecret},
+            MOD_DATE = NOW()
+        WHERE LOGIN_ID = #{loginId}
+            AND USE_YN = 'Y'
+    </update>
 </mapper>

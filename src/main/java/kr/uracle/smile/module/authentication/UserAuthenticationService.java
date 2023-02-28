@@ -26,18 +26,31 @@ public class UserAuthenticationService {
         return userMapper.addUser(user);
     }
 
-    public void dupLoginIdCheck(String loginId, String userToken) {
+    public int dupLoginIdCheck(String loginId, String userToken, String userSecret) {
+        int result = 0;
         User user = userMapper.getLoginIdToUser(loginId);
         if (user != null) {
+            if (user.getUserAccessToken() == null) {
+                dupTokenCheck(loginId, userToken);
+                // userToken Update
+                result = userMapper.editAccessTokenToUser(loginId, userToken, userSecret);
+                return result;
+            }
             if (user.getUserAccessToken().equals(userToken)) {
                 userMapper.editUseYn(user.getId());
             } else {
                 scheduledTasks.deleteToken(user);
             }
         }
+
+        dupTokenCheck(loginId, userToken);
+        return result;
+    }
+
+    public void dupTokenCheck(String loginId, String userToken) {
         // 동일한 가민가입정보로 다른 유저가 요청하였을 경우 현재 요청한 유저가 활성화모드로 적용
         User tokenUser = userMapper.getTokenToUser(userToken);
-        if (tokenUser != null && !loginId.equals(tokenUser.getLoginId())) {
+        if (tokenUser != null && (loginId != null && !loginId.equals(tokenUser.getLoginId()))) {
             userMapper.editUseYn(tokenUser.getId());
         }
     }
