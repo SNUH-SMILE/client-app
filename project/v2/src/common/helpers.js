@@ -87,7 +87,9 @@ export const getCoordinate = (address) => {
         lat = result[0]['geometry']['location']['lat']();
         lng = result[0]['geometry']['location']['lng']();
       } else {
-        this.$alert('Geocode was not successful for the followingreason: ' + status);
+        Vue.$toast('좌표를 불러오지 못하였습니다. <br/> Status :' + status);
+        lat = 37.57971035693565;
+        lng = 126.99913960343876;
       }
       resolve({ lat, lng });
     });
