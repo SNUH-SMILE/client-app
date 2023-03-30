@@ -15,6 +15,8 @@ import java.util.List;
 import iitp.infection.pm.database.DBConfig;
 import iitp.infection.pm.database.DBHelper;
 import m.client.android.library.core.common.CommonLibHandler;
+import m.client.android.library.core.common.LibDefinitions;
+import m.client.android.library.core.utils.CommonLibUtil;
 
 
 /**
@@ -58,7 +60,11 @@ public class Startup extends Activity {
         DBHelper dbHelper = new DBHelper(getApplicationContext(), DBConfig.COM_DB_NAME,DBConfig.COM_DB_VER);
         dbHelper.getWritableDatabase();
 
-        ////////////////////////////////////////////////////////////////////////////////    
+		CommonLibUtil.setVariableToStorage(LibDefinitions.strings.KEY_USE_LOCAL_SERVER, "true", this);
+
+
+
+		////////////////////////////////////////////////////////////////////////////////
 
 	    PermissionListener permissionlistener = new PermissionListener() {
 		    @Override

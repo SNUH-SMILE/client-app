@@ -3,7 +3,7 @@ package iitp.infection.pm.implementation;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import m.client.android.library.core.R;
+import iitp.infection.pm.R;
 import m.client.android.library.core.common.CommonLibHandler;
 import m.client.android.library.core.common.DataHandler;
 import m.client.android.library.core.common.LibDefinitions;
