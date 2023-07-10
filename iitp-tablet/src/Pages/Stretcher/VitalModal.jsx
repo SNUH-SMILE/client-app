@@ -152,7 +152,7 @@ function RrTable({ list }) {
         <tr>
           <th>측정일</th>
           <th>측정시간</th>
-          <th>체온(℃)</th>
+          <th>호흡수(회/분)</th>
         </tr>
       </thead>
       <tbody>
@@ -201,7 +201,7 @@ function BtTable({ list }) {
         <tr>
           <th>측정일</th>
           <th>측정시간</th>
-          <th>호흡수(회/분)</th>
+          <th>체온(℃)</th>
         </tr>
       </thead>
       <tbody>
@@ -330,9 +330,9 @@ export default function NotesModal({ show, handledClose }) {
       const [btList, dbpList, sbpList, prList, rrList, spo2List] = [
         btResultList,
         dbpResultList,
+        sbpResultList,
         prResultList,
         rrResultList,
-        sbpResultList,
         spo2ResultList,
       ].map((list) => {
         return list
@@ -383,9 +383,7 @@ export default function NotesModal({ show, handledClose }) {
         spo2List,
       };
     });
-    console.log(vitalDatas);
     const sortByTime = (a, b) => {
-      console.log(a, b);
       return b.time - a.time;
     };
     const btList = vitalDatas
@@ -424,7 +422,6 @@ export default function NotesModal({ show, handledClose }) {
       rrList,
       spo2List,
     };
-    console.log(filteredVidatlDatas);
     setVitalList(filteredVidatlDatas);
   };
 
