@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment version="2304" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MMediaCropViewController">
+            <connections>
+                <outlet property="cancelButton" destination="DlR-Bi-bjz" id="8AG-3M-SVX"/>
+                <outlet property="cropView" destination="ykp-qq-bkI" id="ALk-h2-1pL"/>
+                <outlet property="doneButton" destination="xxg-J7-0sJ" id="QER-bw-pi7"/>
+                <outlet property="leftRotateButton" destination="apB-rO-EOf" id="Bxz-Jc-csy"/>
+                <outlet property="navigationBar" destination="CRb-4s-05k" id="EJo-6D-tof"/>
+                <outlet property="navigationItem" destination="FmR-r3-6SY" id="RZ2-f0-lF4"/>
+                <outlet property="rightRotateButton" destination="ODG-za-poP" id="hSS-md-wbk"/>
+                <outlet property="view" destination="GSO-o7-C7D" id="bxF-0W-MIf"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="GSO-o7-C7D">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ykp-qq-bkI" customClass="MMediaCropView">
+                    <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                    <subviews>
+                        <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="20" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="teT-FR-E8i">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <outlet property="delegate" destination="ykp-qq-bkI" id="2ja-Ul-944"/>
+                            </connections>
+                        </scrollView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <outlet property="scrollView" destination="teT-FR-E8i" id="Yy0-qW-BWB"/>
+                    </connections>
+                </view>
+                <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CRb-4s-05k">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="2cj-er-fPi"/>
+                    </constraints>
+                    <items>
+                        <navigationItem title="Crop" id="FmR-r3-6SY">
+                            <barButtonItem key="leftBarButtonItem" title="Cancel" id="DlR-Bi-bjz">
+                                <connections>
+                                    <action selector="cancelAction:" destination="-1" id="YIj-4e-3UN"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem key="rightBarButtonItem" title="Done" id="xxg-J7-0sJ">
+                                <connections>
+                                    <action selector="doneAction:" destination="-1" id="sku-gi-rWd"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apB-rO-EOf">
+                    <rect key="frame" x="10" y="607" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="0gf-rT-5Nf"/>
+                        <constraint firstAttribute="height" constant="50" id="qT4-rH-d9J"/>
+                    </constraints>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <state key="normal" image="IconRotateLeft.tiff"/>
+                    <connections>
+                        <action selector="rotateLeft:" destination="-1" eventType="touchUpInside" id="Let-cP-w2s"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODG-za-poP">
+                    <rect key="frame" x="315" y="607" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="3PZ-Nl-1v9"/>
+                        <constraint firstAttribute="height" constant="50" id="VRH-EO-l3d"/>
+                    </constraints>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <state key="normal" image="IconRotateRight.tiff"/>
+                    <connections>
+                        <action selector="rotateRight:" destination="-1" eventType="touchUpInside" id="kYB-yS-CfO"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="ykp-qq-bkI" firstAttribute="trailing" secondItem="JuL-A5-qRr" secondAttribute="trailing" id="1si-jd-ncy"/>
+                <constraint firstItem="apB-rO-EOf" firstAttribute="leading" secondItem="JuL-A5-qRr" secondAttribute="leading" constant="10" id="2vo-fF-egp"/>
+                <constraint firstItem="ykp-qq-bkI" firstAttribute="top" secondItem="JuL-A5-qRr" secondAttribute="top" constant="44" id="43R-HM-0cE"/>
+                <constraint firstItem="CRb-4s-05k" firstAttribute="leading" secondItem="JuL-A5-qRr" secondAttribute="leading" id="HGc-HL-Mok"/>
+                <constraint firstItem="CRb-4s-05k" firstAttribute="top" secondItem="JuL-A5-qRr" secondAttribute="top" id="SQv-36-DrZ"/>
+                <constraint firstItem="JuL-A5-qRr" firstAttribute="bottom" secondItem="apB-rO-EOf" secondAttribute="bottom" constant="10" id="cIn-G8-KAW"/>
+                <constraint firstItem="JuL-A5-qRr" firstAttribute="bottom" secondItem="ODG-za-poP" secondAttribute="bottom" constant="10" id="gJu-KR-qIB"/>
+                <constraint firstItem="CRb-4s-05k" firstAttribute="trailing" secondItem="JuL-A5-qRr" secondAttribute="trailing" id="imJ-ZP-8Wx"/>
+                <constraint firstItem="ykp-qq-bkI" firstAttribute="leading" secondItem="JuL-A5-qRr" secondAttribute="leading" id="q5r-TH-srL"/>
+                <constraint firstItem="JuL-A5-qRr" firstAttribute="trailing" secondItem="ODG-za-poP" secondAttribute="trailing" constant="10" id="tKj-d6-YVK"/>
+                <constraint firstItem="ykp-qq-bkI" firstAttribute="bottom" secondItem="JuL-A5-qRr" secondAttribute="bottom" id="xsd-dZ-m6Q"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="JuL-A5-qRr"/>
+            <point key="canvasLocation" x="-1014.4927536231885" y="-638.83928571428567"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="IconRotateLeft.tiff" width="128" height="128"/>
+        <image name="IconRotateRight.tiff" width="128" height="128"/>
+    </resources>
+</document>

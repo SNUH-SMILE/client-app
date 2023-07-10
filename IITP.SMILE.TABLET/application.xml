@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<application>
+    	
+    <projectName>IITP.SMILE.TABLET</projectName>
+    	
+    <applicationName>이송환자 모니터링</applicationName>
+    	
+    <android>
+        		
+        <projectName>IITP.SMILE.TABLET</projectName>
+        		
+        <applicationName>이송환자 모니터링</applicationName>
+        		
+        <packageName>iitp.infection.pmtablet</packageName>
+        		
+        <compileSdk>android-31</compileSdk>
+        	
+    </android>
+    	
+    <ios>
+        <projectName>IITP.SMILE.TABLET</projectName>
+        <applicationName>이송환자 모니터링</applicationName>
+        <bundleIdentifier>iitp.infection.pmtablet</bundleIdentifier>
+    </ios>
+    	
+    <components/>
+    	
+    <libraries>
+        <library api="2.1" id="m.client.library.core" revision="8.31" type="core"/>
+        <library api="2.1" id="m.client.library.addon.db" revision="4.11" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.file" revision="4.18" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.media" revision="5.39" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.net" revision="4.22" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.netExt" revision="4.34" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.popup" revision="4.33" type="addon"/>
+        <library api="2.1" id="m.client.library.addon.zip" revision="4.4" type="addon"/>
+    </libraries>
+    
+</application>

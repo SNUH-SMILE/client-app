@@ -1,0 +1,17 @@
+"mp_cancel" = "membatalkan";
+"mp_fail_file_download" = "Download file gagal.";
+"mp_fail_file_upload" = "Berkas meng-upload gagal.";"mp_file_downloading" = "Men-download";
+"mp_file_uploading" = "mengunggah";
+"mp_invalid_connection_info" = "Ada masalah dengan informasi koneksi.";
+"mp_invalid_file_info" = "Ada masalah dengan informasi file.";"mp_network_connection_error" = "Gagal terhubung ke jaringan.";
+"mp_network_error" = "Selama kesalahan komunikasi jaringan telah terjadi.";
+"mp_network_timeout" = "Waktu respon yang telah terlampaui.";
+"mp_network_url_error" = "Jaringan koneksi nilai tidak benar.";
+"mp_network_user_cancel" = "Koneksi jaringan telah dibatalkan.";
+"mp_no" = "tidak";"mp_resource_update_checking" = "Memeriksa pembaruan sumber daya.";
+"mp_resource_update_error" = "Kesalahan terjadi selama update dari sumber daya.";
+"mp_retry_yes_no" = "Apakah Anda ingin mencoba lagi?";"mp_start_file_download" = "Untuk mulai men-download file.";
+"mp_start_file_upload" = "Untuk mulai mengupload file.";"mp_success_file_download" = "Mendownload file telah selesai.";
+"mp_success_file_upload" = "File upload selesai.";"mp_upload_invalid_file" = "Ada masalah dengan file tersebut.";
+"mp_upload_size_over_16m" = "Anda telah melebihi ukuran file upload 16MB.";
+"mp_yes" = "ya";

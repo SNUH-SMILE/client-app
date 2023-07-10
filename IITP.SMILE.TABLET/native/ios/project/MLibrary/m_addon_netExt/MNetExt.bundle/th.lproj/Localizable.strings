@@ -1,0 +1,15 @@
+"mp_fail_file_download" = "ดาวน์โหลดไฟล์ล้มเหลว";
+"mp_fail_file_upload" = "ยื่นอัพโหลดล้มเหลว";
+"mp_file_downloading" = "ดาวน์โหลด";
+"mp_file_uploading" = "อัพโหลด";
+"mp_invalid_connection_info" = "มีปัญหาเกี่ยวกับข้อมูลการเชื่อมต่อเป็น";
+"mp_invalid_file_info" = "มีปัญหาเกี่ยวกับข้อมูลของแฟ้มเป็น";
+"mp_no" = "ไม่";
+"mp_retry_yes_no" = "คุณต้องการที่จะลองอีกครั้ง?";
+"mp_start_file_download" = "ที่จะเริ่มต้นการดาวน์โหลดไฟล์";
+"mp_start_file_upload" = "ที่จะเริ่มต้นการอัปโหลดไฟล์";
+"mp_success_file_download" = "ดาวน์โหลดไฟล์เสร็จสมบูรณ์";
+"mp_success_file_upload" = "อัปโหลดไฟล์เสร็จสมบูรณ์";
+"mp_upload_invalid_file" = "มีปัญหากับไฟล์เป็น";
+"mp_upload_over_max_size" = "ความจุของไฟล์ที่อัปโหลดได้เกินขนาดสูงสุด";
+"mp_yes" = "ใช่";

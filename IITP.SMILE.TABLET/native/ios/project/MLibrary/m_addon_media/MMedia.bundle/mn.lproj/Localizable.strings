@@ -1,0 +1,29 @@
+// common
+"mp_ok" = "확인";
+"mp_cancel" = "취소";
+"mp_notice" = "알림";
+"mp_done" = "확인";
+"mp_loading_please_wait" = "로딩 중입니다.\n잠시만 기다려주세요.";
+
+// voice
+"mp_list" = "목록";
+"mp_recoding" = "녹음";
+"mp_stop" = "정지";
+
+// image
+"mp_select_photo" = "사진 선택";
+"mp_select_video" = "동영상 선택";
+"mp_select_album" = "앨범 선택";
+"mp_select_all" = "항목 선택";
+"mp_select" = "선택";
+"mp_select_index" = "%@개의 항목 선택됨";
+"mp_unselect" = "선택해제";
+"mp_detail_photo" = "사진 상세보기";
+"mp_detail_video" = "동영상 상세보기";
+
+"mp_media_scanning" = "미디어 스캐닝 중...";
+
+// movie
+"mp_movie_player_error" = "동영상 재생에 실패하였습니다.";
+
+"mp_crop_title" = "Crop";

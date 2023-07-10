@@ -1,0 +1,15 @@
+"mp_fail_file_download" = "파일 다운로드에 실패하였습니다.";
+"mp_fail_file_upload" = "파일 업로드에 실패하였습니다.";
+"mp_file_downloading" = "파일 다운로드 중입니다.";
+"mp_file_uploading" = "파일을 업로드 중입니다.";
+"mp_invalid_connection_info" = "접속 정보가 부족합니다.";
+"mp_invalid_file_info" = "파일 정보가 부족합니다.";
+"mp_no" = "아니오";
+"mp_retry_yes_no" = "다시 시도하겠습니까?";
+"mp_start_file_download" = "파일 다운로드를 시작합니다.";
+"mp_start_file_upload" = "파일 업로드를 시작합니다.";
+"mp_success_file_download" = "파일 다운로드가 완료되었습니다.";
+"mp_success_file_upload" = "파일 업로드가 완료되었습니다.";
+"mp_upload_invalid_file" = "업로드 파일에 문제가 있습니다.";
+"mp_upload_over_max_size" = "Файл оруулах чадавхийг хамгийн их хэмжээг давсан байна.";
+"mp_yes" = "예";

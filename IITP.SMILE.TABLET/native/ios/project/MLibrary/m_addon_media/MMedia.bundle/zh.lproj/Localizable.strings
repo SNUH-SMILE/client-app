@@ -1,0 +1,29 @@
+// common
+"mp_ok" = "行";
+"mp_cancel" = "取消";
+"mp_done" = "做完";
+"mp_notice" = "通知";
+"mp_loading_please_wait" = "载入中.\n请稍等片刻.";
+
+// voice
+"mp_list" = "表";
+"mp_recoding" = "记录";
+"mp_stop" = "停止";
+
+// image
+"mp_select_photo" = "选择照片";
+"mp_select_video" = "选择视频";
+"mp_select_album" = "选择相册";
+"mp_select_all" = "选择项目";
+"mp_select" = "选择";
+"mp_select_index" = "%@ 选择";
+"mp_unselect" = "取消选择";
+"mp_detail_photo" = "图片详细";
+"mp_detail_video" = "视频细节";
+
+"mp_media_scanning" = "扫描介质";
+
+// movie
+"mp_movie_player_error" = "无法播放视频.";
+
+"mp_crop_title" = "Crop";

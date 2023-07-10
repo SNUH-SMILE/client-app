@@ -1,0 +1,29 @@
+// common
+"mp_ok" = "được";
+"mp_cancel" = "hủy bỏ";
+"mp_done" = "เสร็จสิ้น";
+"mp_notice" = "Thông báo";
+"mp_loading_please_wait" = "Tải.\nHãy đợi một lát.";
+
+// voice
+"mp_list" = "Danh sách";
+"mp_recoding" = "ghi";
+"mp_stop" = "thôi";
+
+// image
+"mp_select_photo" = "chọn ảnh";
+"mp_select_video" = "chọn video";
+"mp_select_album" = "chọn Album";
+"mp_select_all" = "Chọn nhiều Item";
+"mp_select" = "lựa chọn";
+"mp_select_index" = "%@ lựa chọn";
+"mp_unselect" = "Bỏ chọn";
+"mp_detail_photo" = "hình ảnh chi tiết";
+"mp_detail_video" = "video chi tiết";
+
+"mp_media_scanning" = "quét các phương tiện truyền thông";
+
+// movie
+"mp_movie_player_error" = "Không chơi video.";
+
+"mp_crop_title" = "Crop";

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Popup-->
+    <string name="mp_addon_popup_year">년</string>
+    <string name="mp_addon_popup_month">월</string>
+    <string name="mp_addon_popup_day">일</string>
+    <string name="mp_addon_popup_sunday">(일)</string>
+    <string name="mp_addon_popup_monday">(월)</string>
+    <string name="mp_addon_popup_tuesday">(화)</string>
+    <string name="mp_addon_popup_wednesday">(수)</string>
+    <string name="mp_addon_popup_thursday">(목)</string>
+    <string name="mp_addon_popup_friday">(금)</string>
+    <string name="mp_addon_popup_saturday">(토)</string>
+    
+</resources>

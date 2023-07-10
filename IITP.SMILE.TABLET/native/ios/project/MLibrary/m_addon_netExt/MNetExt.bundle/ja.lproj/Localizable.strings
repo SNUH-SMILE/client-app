@@ -1,0 +1,15 @@
+"mp_fail_file_download" = "ファイルのダウンロードが失敗しました.";
+"mp_fail_file_upload" = "ファイルのアップロードに失敗しました.";
+"mp_file_downloading" = "ダウンロード";
+"mp_file_uploading" = "アップロード";
+"mp_invalid_connection_info" = "接続情報に問題があります.";
+"mp_invalid_file_info" = "ファイル情報に問題があります.";
+"mp_no" = "ノー";
+"mp_retry_yes_no" = "もう一度試したいですか？";
+"mp_start_file_download" = "ファイルのダウンロードを開始します.";
+"mp_start_file_upload" = "ファイルのアップロードを開始します.";
+"mp_success_file_download" = "ファイルのダウンロードは完了です.";
+"mp_success_file_upload" = "ファイルのアップロードは完了です.";
+"mp_upload_invalid_file" = "ファイルに問題があります.";
+"mp_upload_over_max_size" = "アップロードファイルの容量が最大サイズを超えました.";
+"mp_yes" = "はい";

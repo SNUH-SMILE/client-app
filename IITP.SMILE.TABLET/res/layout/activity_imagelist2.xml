@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@android:color/white"
+	>
+	<RelativeLayout android:id="@+id/buttons" 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/background_dark" >
+	
+	    <Button android:id="@+id/cancelBtn" 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:layout_margin="15dp"
+	        android:background="#00ff0000"
+	        android:textColor="@android:color/background_light"
+	        android:text="@string/mp_back" />
+	
+	    <TextView android:id="@+id/title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/mp_select_photo"
+	        android:layout_centerInParent="true"
+	        android:textSize="16sp" />
+	
+	    <Button android:id="@+id/okBtn" 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:layout_margin="15dp"
+	        android:background="#00ff0000"
+	        android:textColor="@android:color/background_light"
+	        android:text="@string/mp_ok" />
+	
+	</RelativeLayout>
+    
+	 <GridView
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/buttons"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="1dp"
+        android:stretchMode="columnWidth"
+        android:numColumns="3"
+        />
+</RelativeLayout>
