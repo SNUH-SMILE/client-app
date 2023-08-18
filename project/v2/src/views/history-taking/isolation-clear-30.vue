@@ -71,15 +71,20 @@ export default {
     ...mapActions({ setInterview: SET_INTERVIEW_LIST }),
     async submit() {
       const formData = submitForm(this.state.isolationForm);
-      const submitData = {
-        interviewType: TYPE_ISOLATION_DAY_AFTER_30,
-        interviewDate: this.getInterviewDate(),
-        answerList: formData,
-      };
-      const { code, message, data } = await this.setInterview(submitData);
-      if (code === RESPONSE_STATUS.SUCCESS) {
-        this.$toast('제출되었습니다.');
+      if (formData.length < 68) {
+        this.$toast('에러가 발생했습니다. 다시 시도해주세요.');
         this.$router.replace({ name: 'history-taking' });
+      } else {
+        const submitData = {
+          interviewType: TYPE_ISOLATION_DAY_AFTER_30,
+          interviewDate: this.getInterviewDate(),
+          answerList: formData,
+        };
+        const { code, message, data } = await this.setInterview(submitData);
+        if (code === RESPONSE_STATUS.SUCCESS) {
+          this.$toast('제출되었습니다.');
+          this.$router.replace({ name: 'history-taking' });
+        }
       }
     },
     getInterviewDate() {

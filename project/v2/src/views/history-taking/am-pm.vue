@@ -73,16 +73,21 @@ export default {
     ...mapActions({ setInterview: SET_INTERVIEW_LIST }),
     async submit() {
       const formData = submitForm(this.state.amForm);
-      const submitData = {
-        // interviewType: this.getInterviewType(),
-        interviewType: TYPE_AM,
-        interviewDate: this.getInterviewDate(),
-        answerList: formData,
-      };
-      const { code, message, data } = await this.setInterview(submitData);
-      if (code === RESPONSE_STATUS.SUCCESS) {
-        this.$toast('제출되었습니다.');
+      debugger;
+      if (formData.length < 17) {
+        this.$toast('에러가 발생했습니다. 다시 시도해주세요.');
         this.$router.replace({ name: 'history-taking' });
+      } else {
+        const submitData = {
+          interviewType: TYPE_AM,
+          interviewDate: this.getInterviewDate(),
+          answerList: formData,
+        };
+        const { code, message, data } = await this.setInterview(submitData);
+        if (code === RESPONSE_STATUS.SUCCESS) {
+          this.$toast('제출되었습니다.');
+          this.$router.replace({ name: 'history-taking' });
+        }
       }
     },
     // getInterviewType() {
