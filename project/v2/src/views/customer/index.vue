@@ -29,6 +29,9 @@
                 <button type="button" class="btn-full-detail" @click="navigate">앱 이용 Q&amp;A</button>
               </router-link>
             </li>
+            <li>
+              <button type="button" class="btn-full-detail" @click="goSetting">준비중입니다.</button>
+            </li>
             <!-- 2022.12.14 앱 내 설정 없도록 수정..(기능 관련되어서 문제가 발생될 요지가 있음.) -->
             <!-- <li>
               <div class="hbox jc">
@@ -65,6 +68,7 @@
         <button type="button" class="btn-txt navy" @click="logout">로그아웃</button>
       </div>
     </validation-observer>
+    <AppPasswordConfirm v-if="popup === 'show'" @onClose="popup = ''" @onSubmit="onSubmit"></AppPasswordConfirm>
   </div>
 </template>
 <route>
@@ -75,14 +79,17 @@
 }
 </route>
 <script>
+import AppPasswordConfirm from '@/modules/etc/AppPasswordConfirm.vue';
 import { LOGOUT } from '@/modules/patient';
 import { mapMutations } from 'vuex';
 const INIT_STATE = () => ({});
 
 export default {
+  components: { AppPasswordConfirm },
   data() {
     return {
       state: INIT_STATE(),
+      popup: '',
     };
   },
   methods: {
@@ -90,6 +97,15 @@ export default {
     logout() {
       this.logoutAction();
       this.$router.push({ name: 'login' });
+    },
+    async goSetting() {
+      this.popup = 'show';
+    },
+    onSubmit(password) {
+      this.popup = '';
+      if (password === '1234') {
+        M.page.html('/www/html/index.html');
+      }
     },
   },
 };
