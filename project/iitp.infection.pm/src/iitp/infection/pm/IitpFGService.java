@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -46,6 +47,9 @@ import iitp.infection.pm.database.AlarmDBConfig;
 import iitp.infection.pm.database.AlarmDBHelper;
 import iitp.infection.pm.database.DBConfig;
 import iitp.infection.pm.database.DBHelper;
+import iitp.infection.pm.gps.GpsTracker;
+import iitp.infection.pm.net.RetrofitClient;
+import iitp.infection.pm.net.data.location.LocationInfo;
 import iitp.infection.pm.samples.utils.CommUtils;
 import m.client.android.library.core.common.CommonLibHandler;
 import m.client.android.library.core.managers.ActivityHistoryManager;
@@ -54,6 +58,9 @@ import m.client.android.library.core.utils.FileIoUtil;
 import m.client.android.library.core.utils.FileUtil;
 import m.client.android.library.core.view.MainActivity;
 import m.client.push.library.common.Logger;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class IitpFGService extends Service {
     private final String CLASS_TAG = IitpFGService.class.getSimpleName();
@@ -73,6 +80,7 @@ public class IitpFGService extends Service {
         FGServiceNotiInit();
         bandConnectInit();
         alarmCheck();
+        Locationupload();
         return START_STICKY;//super.onStartCommand(intent, flags, startId);
     }
     private void FGServiceNotiInit(){
@@ -285,5 +293,82 @@ public class IitpFGService extends Service {
 
         final Notification notify = mBuilder.build();
         mManager.notify("alarm", seqno, notify);
+    }
+
+    double latitude;
+    double longitude;
+    long syncTimeInterval = 1000;
+    private void Locationupload(){
+        new LocationTimer().start();
+    }
+    public class LocationTimer extends Thread{
+
+        @Override
+        public void run() {
+            super.run();
+            while(true){
+                Handler mHandler = new Handler(Looper.getMainLooper());
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        locationStart();
+                    }
+                }, 0);
+                try {
+                    if(latitude!=0){
+                        locationSend(latitude,longitude);
+                    }
+                    Thread.sleep(syncTimeInterval);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    private GpsTracker mMyGpsTracker;
+    public void locationStart() {
+        if (mMyGpsTracker == null) {
+            mMyGpsTracker = new GpsTracker(getApplicationContext());
+        }
+        mMyGpsTracker.setOnLocationListener(location -> {
+            //Log.d(CLASS_TAG, "location.getLatitude() = " + location.getLatitude());
+            //Log.d(CLASS_TAG, "location.getLongitude() = " + location.getLongitude());
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        });
+        mMyGpsTracker.startCurrentLocation();
+    }
+
+    public void locationSend(double latitude, double longitude){
+        Date now = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat formatter1 = new SimpleDateFormat("HHmmss");
+        String loginId = CommonLibUtil.getUserConfigInfomation("loginId", getApplicationContext());
+
+        LocationInfo locationInfo = new LocationInfo();
+        locationInfo.loginId = loginId;
+        locationInfo.resultDate = formatter.format(now);
+        locationInfo.resultTime = formatter1.format(now);
+        locationInfo.lat = String.valueOf(latitude);
+        locationInfo.lng = String.valueOf(longitude);
+
+        Call<LocationInfo> rrCall = RetrofitClient.getService(getApplicationContext()).location(locationInfo);
+        rrCall.enqueue(new Callback<LocationInfo>() {
+            @Override
+            public void onResponse(Call<LocationInfo> call, Response<LocationInfo> response) {
+                Log.i("LocationInfo", "server_send.onResponse = " + response);
+                if (response.isSuccessful()) {
+                    Log.i("LocationInfo", "server_send.onResponse = " + response.body());
+                    Log.i("LocationInfo", "server_send.onResponse = " + response.body().interval);
+                    String interval = response.body().interval;
+                    syncTimeInterval = Integer.parseInt(interval);
+                }
+            }
+            @Override
+            public void onFailure(Call<LocationInfo> call, Throwable t) {
+                Log.e("LocationInfo", "server_send.onFailure = " + t);
+            }
+        });
     }
 }

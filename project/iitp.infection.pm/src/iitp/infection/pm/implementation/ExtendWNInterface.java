@@ -16,12 +16,14 @@ import m.client.android.library.core.utils.PLog;
 import m.client.android.library.core.view.AbstractActivity;
 import m.client.android.library.core.view.MainActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -438,6 +440,21 @@ public class ExtendWNInterface extends InterfaceJavascript {
 			}
 		});
 		mMyGpsTracker.startCurrentLocation();
+	}
+
+	public String exWnLastKnownLocation() {
+		JSONObject object = new JSONObject();
+		final LocationManager lm = (LocationManager) callerObject.getSystemService(Context.LOCATION_SERVICE);
+		@SuppressLint("MissingPermission")
+		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		try {
+			object.put("provider", location.getProvider());// 위치정보
+			object.put("longitude", location.getLongitude());// 위도
+			object.put("latitude", location.getLatitude());// 경도
+			object.put("altitude", location.getAltitude());// 고도
+		} catch (JSONException e) {
+		}
+		return object.toString();
 	}
 
 	public void exWnCurrentLocationStop() {

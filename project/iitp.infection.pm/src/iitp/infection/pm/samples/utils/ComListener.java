@@ -13,6 +13,10 @@ public class ComListener {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION
     };
+    public static String[] PERMISSIONS1 = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+            , "android.permission.BLUETOOTH_SCAN"
+    };
     public static PermissionsResultListener mPermissionsResultListener;
     public static BluetoothResultListener mBluetoothResultListener;
 

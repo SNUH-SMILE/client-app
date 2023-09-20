@@ -72,12 +72,22 @@ public class BandScan implements DeviceScanInterfacer, ComListener.PermissionsRe
         ComListener.setBluetoothResultListener(this);
         //퍼미션 체크
         ComListener.setPermissionsResultListener(this);
-        if (!ComListener.hasPermissions(mActivity, ComListener.PERMISSIONS)) {
-            //허용이 안되어 있는 경우
-            ActivityCompat.requestPermissions(mActivity, ComListener.PERMISSIONS, 100);
-        } else {
-            // 허용이 되어 있는 경우
-            scanLeDevice(true);
+        if (android.os.Build.VERSION.SDK_INT >= 31) {
+            if (!ComListener.hasPermissions(mActivity,ComListener.PERMISSIONS1)){
+                //허용이 안되어 있는 경우
+                ActivityCompat.requestPermissions(mActivity, ComListener.PERMISSIONS1, 100);
+            }else{
+                // 허용이 되어 있는 경우
+                scanLeDevice(true);
+            }
+        }else {
+            if (!ComListener.hasPermissions(mActivity, ComListener.PERMISSIONS)) {
+                //허용이 안되어 있는 경우
+                ActivityCompat.requestPermissions(mActivity, ComListener.PERMISSIONS, 100);
+            } else {
+                // 허용이 되어 있는 경우
+                scanLeDevice(true);
+            }
         }
 
     }

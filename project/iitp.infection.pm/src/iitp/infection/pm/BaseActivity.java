@@ -72,14 +72,14 @@ public class BaseActivity extends MainActivity {
 		//추후에는 해당 영역 주석으로 막고 사용자가 자가격리 주소를 저장하고, 로그인을 하는 시점에 foreground 서비스를 화면단에서 호출하는 형태로 변
 		boolean isForegroundRunning = new CommUtils().isServiceRunning(this,IitpFGService.class.getName());
 		Log.d(CLASS_TAG,"onCreate() isForegroundRunning:"+isForegroundRunning);
-		if(!isForegroundRunning){
+		/*if(!isForegroundRunning){
 			Intent intent = new Intent(this, IitpFGService.class);
 			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 				startForegroundService(intent);
 			}else{
 				startService(intent);
 			}
-		}
+		}*/
 
 	}
 
