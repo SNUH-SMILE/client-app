@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="iitp.infection.pm"
     android:versionCode="4"
-    android:versionName="1.0.23">
+    android:versionName="1.0.24">
 
     <!-- 안드로이드 8.0 이상 필수, 라이브러리 버전 4.1.0.7 이상부터 추가된 리시버 등록 시 권한 등록위해 선언 (없으면 앱 디폴트 권한) -->
 

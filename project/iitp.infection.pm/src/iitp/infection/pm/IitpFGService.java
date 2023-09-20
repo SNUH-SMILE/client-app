@@ -297,7 +297,7 @@ public class IitpFGService extends Service {
 
     double latitude;
     double longitude;
-    long syncTimeInterval = 1000;
+    long syncTimeInterval = 1000*60; //기본 1분
     private void Locationupload(){
         new LocationTimer().start();
     }
@@ -315,6 +315,10 @@ public class IitpFGService extends Service {
                     }
                 }, 0);
                 try {
+                    String strinterval = CommonLibUtil.getUserConfigInfomation("interval", getApplicationContext());
+                    if (!strinterval.equals("")){
+                        syncTimeInterval = Long.parseLong(strinterval);
+                    }
                     if(latitude!=0){
                         locationSend(latitude,longitude);
                     }
@@ -359,10 +363,9 @@ public class IitpFGService extends Service {
             public void onResponse(Call<LocationInfo> call, Response<LocationInfo> response) {
                 Log.i("LocationInfo", "server_send.onResponse = " + response);
                 if (response.isSuccessful()) {
-                    Log.i("LocationInfo", "server_send.onResponse = " + response.body());
-                    Log.i("LocationInfo", "server_send.onResponse = " + response.body().interval);
-                    String interval = response.body().interval;
-                    syncTimeInterval = Integer.parseInt(interval);
+                    Log.i("LocationInfo", "onResponse = " + response.body());
+                    Log.i("LocationInfo", "interval = " + response.body().interval);
+                    CommonLibUtil.setUserConfigInfomation("interval",response.body().interval,getApplicationContext());
                 }
             }
             @Override

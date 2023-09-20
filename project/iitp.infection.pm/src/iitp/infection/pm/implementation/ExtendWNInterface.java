@@ -9,12 +9,18 @@ import iitp.infection.pm.band.CommConfig;
 import iitp.infection.pm.band.DataQuery;
 import iitp.infection.pm.database.DBConfig;
 import iitp.infection.pm.gps.GpsTracker;
+import iitp.infection.pm.net.RetrofitClient;
+import iitp.infection.pm.net.data.location.LocationInfo;
 import iitp.infection.pm.samples.utils.CommUtils;
 import m.client.android.library.core.bridge.InterfaceJavascript;
 import m.client.android.library.core.managers.ActivityHistoryManager;
+import m.client.android.library.core.utils.CommonLibUtil;
 import m.client.android.library.core.utils.PLog;
 import m.client.android.library.core.view.AbstractActivity;
 import m.client.android.library.core.view.MainActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
@@ -36,7 +42,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -443,18 +452,60 @@ public class ExtendWNInterface extends InterfaceJavascript {
 	}
 
 	public String exWnLastKnownLocation() {
+		String result = "";
 		JSONObject object = new JSONObject();
 		final LocationManager lm = (LocationManager) callerObject.getSystemService(Context.LOCATION_SERVICE);
 		@SuppressLint("MissingPermission")
 		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		double latitude = location.getLatitude();
+		double longitude = location.getLongitude();
+		double altitude = location.getAltitude();
+		String provider = location.getProvider();
 		try {
-			object.put("provider", location.getProvider());// 위치정보
-			object.put("longitude", location.getLongitude());// 위도
-			object.put("latitude", location.getLatitude());// 경도
-			object.put("altitude", location.getAltitude());// 고도
+			object.put("provider", provider);// 위치정보
+			object.put("latitude", latitude);// 위도
+			object.put("longitude", longitude);// 경도
+			object.put("altitude", altitude);// 고도
+			result = object.toString();
 		} catch (JSONException e) {
+			Log.e("JSONException::",e.getMessage());
 		}
-		return object.toString();
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat formatter1 = new SimpleDateFormat("HHmmss");
+		Date now = Calendar.getInstance().getTime();
+		String loginId = CommonLibUtil.getUserConfigInfomation("loginId",callerObject);
+
+		if (!loginId.isEmpty()){
+			LocationInfo locationInfo = new LocationInfo();
+			locationInfo.loginId = loginId;
+			locationInfo.resultDate = formatter.format(now);
+			locationInfo.resultTime = formatter1.format(now);
+			locationInfo.lat = String.valueOf(latitude);
+			locationInfo.lng = String.valueOf(longitude);
+
+			Call<LocationInfo> rrCall = RetrofitClient.getService(callerObject.getApplicationContext()).location(locationInfo);
+			rrCall.enqueue(new Callback<LocationInfo>() {
+				@Override
+				public void onResponse(Call<LocationInfo> call, Response<LocationInfo> response) {
+					Log.i("LocationInfo", "server_send.onResponse = " + response);
+					if (response.isSuccessful()) {
+						Toast.makeText(callerObject.getApplicationContext(), "Send OK", Toast.LENGTH_SHORT).show();
+					}else{
+						Toast.makeText(callerObject.getApplicationContext(), "Send Fail", Toast.LENGTH_SHORT).show();
+					}
+				}
+				@Override
+				public void onFailure(Call<LocationInfo> call, Throwable t) {
+					Log.e("LocationInfo", "server_send.onFailure = " + t);
+					Toast.makeText(callerObject.getApplicationContext(), "SEND_ERROR", Toast.LENGTH_SHORT).show();
+				}
+			});
+		}else{
+			result = "로그인후에 이용이 가능합니다.";
+		}
+
+		return result;
 	}
 
 	public void exWnCurrentLocationStop() {
